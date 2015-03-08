@@ -1,0 +1,111 @@
+@charset "utf-8";
+
+@font-face{
+	font-family: altea;
+	src:url(../fuentes/ALTEA.TTF);
+}
+p#titulo{
+	font-family: altea,"Times New Roman", Times, serif;
+	position:relative;
+	text-align:center;
+	clear:both;
+	top:50px;
+	color:#060;
+	font-size:40px;
+	z-index: -2;
+}
+/*seccion de la presentacion de imagenes*/
+section#presentacion{
+	float:left;
+	margin-left:5%;
+	margin-top:90px;
+}
+/*seccion del formulario*/
+section#tipotorneo{
+	float:left;
+	margin-top:10px;
+	margin-left:5%;
+}
+section#tipotorneo p{
+	text-align:left;
+	color:red;
+	font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
+	font-size:25px;
+}
+
+
+section#tipotorneo{
+	height:350px;
+	margin-right:80px;
+	width:600px;
+        margin-top: 100px;
+}
+section#tipotorneo li{
+	margin-left: 10px;
+}
+/*
+section#tipotorneo a{
+    padding: 20px;
+} 
+ul#tipostorneo{
+	width:220px;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+ul#tipostorneo li{
+	width:165px;
+	height:45px;
+	background-image:url(../imagenes/boton1.png);
+	background-repeat:no-repeat;
+}
+
+ul#tipostorneo li a{
+	color:#000;
+	display:block;
+	text-decoration:none;
+	padding: 20px;
+	transition:all 2s;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+	text-align: center;
+	letter-spacing:1px;
+	font-weight: 800;
+	padding-bottom:22px;
+}
+
+ul#tipostorneo li a:hover{
+	background-image:url(../imagenes/boton2.png);
+	background-repeat:no-repeat;
+}
+*/
+section#informacion{
+	clear:both;
+}
+@font-face{
+	font-family:champagne;
+	src:url(../fuentes/cac_champagne.ttf);
+}
+
+p.info{
+	font-family:champagne;
+	font-size:31px;
+	
+}
+p.info:hover{
+	color:#F00;
+	cursor:pointer;
+	text-decoration:underline;
+}
+
+p#qcopa {
+	font-family: times new roman, arial narrow, arial
+}
+
+#btn{
+	visibility:hidden;
+}
+
+
+
+

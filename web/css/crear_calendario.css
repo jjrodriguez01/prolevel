@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+main {
+	margin: 80px auto
+}
+
+div#sel_torneo {text-align:center}
+@font-face{
+	font-family:fuente;
+	src:url(../fuentes/Walkway%20Bold.ttf);
+}
+
+h1 {
+	
+	top:40px;
+	font-family:fuente;
+	color:#6C0;
+	text-shadow: 1px 1px 3px #000000;
+	text-align:center;
+}
+
+select{
+	margin-top:50px;
+	height: 40px;
+	width: 180px;
+    font-family:"Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+	color:#00F;
+}
+
+option {
+	height: 30px;
+	width: 100%;
+	size: 40px;
+
+	background-color:#6F6;
+	 
+}
+
+option:hover {
+	background-color:#FFF;
+	text-decoration:underline;
+}
+
+input {
+	position:relative;
+	top:150px;
+	right:140px;
+	height:60px;
+	width: 130px;
+	font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
+	font-size: 24px;
+	color:#FFF;
+	background: linear-gradient(to bottom right, #0CF , #06F);
+	text-shadow: 1px 1px 2px #000000;
+}
+
+input:hover{
+	cursor:pointer;
+	transform:scale(1.5,1.5);
+}
+
+footer {
+	position:relative;
+	top:180px;
+}

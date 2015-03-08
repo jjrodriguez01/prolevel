@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>New preliminary round</title>
+<link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
+<link href="../css/estiloseliminatoria.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript" src="../js/additional-methods.js"></script>
+
+</head>
+<body>
+<header>
+<img src="../imagenes/banner.jpg" width="100%" height="150px"/img>
+<nav>
+    <ul id="nav">
+      <li><a href="start.html"><img src="../imagenes/inicio.png" width="24px" height="24px" />HOME</a></li>
+      <li><a href="#"><span><img src="../imagenes/copa.png" width="24px" height="24px" /> TOURNAMENTS</span></a>
+        <div class="subs">
+          <div class="col">
+            <ul>
+              <li><a href="#"><img src="../imagenes/micopa.png" width="24px" height="24px" />MY TOURNAMENTS</a></li>
+              <li><a href="create_tournament.html"><img src="../imagenes/crear.png" width="24px" height="24px" />CREATE TOURNAMENTS</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li><a href="#"><span><img src="../imagenes/telefono.png" width="24px" height="24px" />RESERVE</span></a>
+        <div class="subs">
+          <ul>
+            <li><a href="#"><img src="../imagenes/cancha.png" width="24px" height="24px" />RESERVE</a></li>
+            <li><a href="#"><img src="../imagenes/instructivo.png" width="24px" height="24px" />INSTRUCTIONS</a></li>
+            <li><a href="#"><img src="../imagenes/informe.png" width="24px" height="24px" />RESERVE'S INFORMATION</a></li>
+          </ul>
+        </div>
+      <li><a href="#"><img src="../imagenes/servicios.png" width="24px" height="24px" />SERVICES</a></li>
+      <li><a href="#"><img src="../imagenes/contacto.png" width="24px" height="24px" />CONTACT US</a></li>
+    </ul>
+</nav>
+</header>
+<main>
+  <h1>Create new preliminary round</h1>
+  <form id="eliminatoria">
+    <fieldset>
+      <label for="nombreTorneo">Tournament's name</label>
+      <input id="nombreTorneo" name="nombreTorneo" type="text" maxlength="25" required>
+      <label for="capacidad">Number of teams</label>
+      <input type="number" id="capacidad" required>
+      <label for="idaVuelta">Go and return matches?</label>/
+      <select id="idaVuelta" name="idaVuelta" required>
+        <option></option>
+        <option id="idVueltaSi">Si</option>
+        <option id="idaVueltaNo">No, sudden death</option>
+        </select>
+      <label for="finalIdaVuelta">Go and return in final match?</label>
+      <select id="finalIdaVuelta" required>
+        <option></option>
+        <option id="finaIidaVueltaSi">Si</option>
+        <option id="finalIdaVueltaNo">No, single match</option>
+        </select><br/>
+      <button type="submit">CREATE</button>
+      <button onClick="window.location.href='index.html'">BACK</button>
+      
+    </fieldset>
+  </form>
+  <section>
+    <div id="animacionbalon">
+      <img src="../imagenes/balon.png" width="50" height="50"  alt=""/> 
+    </div>
+  </section>
+</main>
+<script>
+   $().ready(function(){
+       $("#eliminatoria").validate({
+	            rules:{
+				  nombreTorneo:{
+				    required: true,
+					minlength: 3
+				  },
+				  capacidad:{
+            		 required: true,
+         			 maxlength: 4,
+      			     number:true
+        			  },
+				 grupos:{
+				  	required: true
+				  },
+          			idaVuelta:{
+            		required: true,
+          		  },
+				  	finalIdaVuelta:{
+					required: true
+				  },
+				  tercer:{
+				  required: true
+        		}
+		  
+		       }		  
+	   
+	       });
+	   });
+</script>
+<footer>
+<p class="pie">2014 PRO-LEVEL - All rights reserv | Change language <a href="../eliminatoria.html" hreflang="en"><img src="../imagenes/english.png" width="40px" height="30px" /></a></p> 
+<img src="../imagenes/cesped.png" width="100%" height="100px"/> </footer>
+</body>
+</html>

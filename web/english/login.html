@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Formulario de registro</title>
+<link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
+<link href="../css/estiloslogin.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript" src="../js/additional-methods.js"></script>
+
+</head>
+<body>
+<header>
+<img src="../imagenes/banner.jpg" width="100%" height="150px"/img>
+<nav>
+    <ul id="nav">
+      <li><a href="#"><img src="../imagenes/inicio.png" width="24px" height="24px" />HOME</a></li>
+      <li><a href="#"><span><img src="../imagenes/copa.png" width="24px" height="24px" /> TOURNAMENTS</span></a>
+        <div class="subs">
+          <div class="col">
+            <ul>
+              <li><a href="#"><img src="../imagenes/micopa.png" width="24px" height="24px" />MY TOURNAMENTS</a></li>
+              <li><a href="#"><img src="../imagenes/crear.png" width="24px" height="24px" />CREATE TOURNAMENTS</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li><a href="#"><span><img src="../imagenes/telefono.png" width="24px" height="24px" />RESERVE</span></a>
+        <div class="subs">
+          <ul>
+            <li><a href="#"><img src="../imagenes/cancha.png" width="24px" height="24px" />RESERVE</a></li>
+            <li><a href="#"><img src="../imagenes/instructivo.png" width="24px" height="24px" />INSTRUCTIONS</a></li>
+            <li><a href="#"><img src="../imagenes/informe.png" width="24px" height="24px" />RESERVE'S INFORMATION</a></li>
+          </ul>
+        </div>
+      <li><a href="#"><img src="../imagenes/servicios.png" width="24px" height="24px" />SERVICES</a></li>
+      <li><a href="#"><img src="../imagenes/contacto.png" width="24px" height="24px" />CONTACT US</a></li>
+    </ul>
+</nav>
+</header>
+<main>
+  <center> <form id="formRegistro" name="form1" method="post" action="">
+    <fieldset>
+      <h1>PRO-LEVEL</h1>
+      <h1>LOGIN FORM</h1>
+      <label class="requerido" for="nombre">First name:</label>
+      <input name="nome" id="nombre" type="text" placeholder="Digite Su Nombre" tabindex="1" required>
+      
+      <label for="nombree">Second name:</label>
+      <input name="nomee" id="nombree" type="text" placeholder="Digite Su Segundo Nombre" tabindex="2" >
+      
+      <label class="requerido" for="namenone">First lastname</label>
+      <input name="sobrenome" id="namenone" type="text" placeholder="Digite Su Apellido" tabindex="3" required>
+      
+      <label for="namenonee">Second last name:</label>
+      <input name="sobrenomee" id="namenonee" type="text" placeholder="Digite Su Segundo Apellido" tabindex="4" >
+      
+      <label  class="requerido" for="documento">Document:</label>
+      <input name="documento" id="documento"  type="text" placeholder="Digite su documento" tabindex="5" required>
+      
+      <label class="requerido" for="usuario">E-mail:</label>
+      <input name="usuario" id="usuario" type="email" placeholder="Digite su correo electrónico" tabindex="6" required>
+      
+      <label class="requerido" for="Tel">Telephone:</label>
+      <input name="telefono" id="Tel"  type="tel" placeholder="Digite su Telefono" tabindex="7" required>
+      
+      
+      <label class="requerido" for="clave">Password:</label>
+      <input name="senha" id="clave" type="password" placeholder="Digite su Contraseña" tabindex="9" required>
+      
+      <label class="requerido" for="repetir_clave">Confirm:</label>
+      <input name="repetir_senha" id="repetir_clave" type="password" placeholder="repita su Contraseña" tabindex="10" required>
+      <label id="requerido">Places with <span class="asterisco">*</span> are necesaries</label>
+      
+      <button type="submit">Registrarse</button>
+      <button >Volver</button>
+  </fieldset>
+  </form></center>
+</main>
+<script>
+   $().ready(function(){
+       $("#formRegistro").validate({
+	            rules:{
+				  nome:{
+				    required: true,
+					minlength: 3,
+					lettersonly:true
+				  },
+				  nomee:{
+            		 required: true,
+         			 minlength: 3,
+      			    lettersonly:true
+        			  },
+				 sobrenome:{
+				  	required: true,
+					minlength: 3,
+					lettersonly:true
+				  },
+          			sobrenomee:{
+            		required: true,
+          			minlength: 3,
+          			lettersonly:true
+          		  },
+				  	documento:{
+					required: true,
+					minlength: 8,
+					maxlength:10,
+					digits:true
+				  },
+				  usuario:{
+				  required: true,
+				  minlength: 6,
+				  letterswithbasicpunc:true
+        		},
+        			telefono:{
+          			required: true,
+          			minlength: 7,
+          			maxlength:10,
+          			digits:true
+		          },
+				  direccion:{
+				  required: true,
+				  minlength: 6,
+				  letterswithbasicpunc:true          
+          			},
+				  senha:{
+				  required: true,
+				  minlength: 6,
+				  alphanumeric: true	  
+				  },
+				  repetir_senha:{
+				  required: true,
+				  minlength: 6,
+				  alphanumeric: true,
+				  equalTo:"#clave"
+				  }
+		  
+		  }
+	   
+	       });
+	   });
+</script>
+<footer>
+<p class="pie">2014 PRO-LEVEL - All rights reserv | Change language <a href="../index.html" hreflang="en"><img src="../imagenes/english.png" width="40px" height="30px" /></a></p> 
+<img src="../imagenes/cesped.png" width="100%" height="100px"/> </footer>
+</body>
+</html>

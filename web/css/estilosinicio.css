@@ -1,0 +1,182 @@
+@charset "utf-8";
+
+
+#uno {
+	background-image:url(../imagenes/fondos/fondoinicio.JPG);
+	background-repeat:no-repeat;
+	opacity:50;
+	height:750px;
+	max-width:100%;
+}
+
+#dos {
+	height:750px;
+	position:relative;
+	background-image:url(../imagenes/fondos/futbol1.jpg);
+	background-repeat:no-repeat;
+}
+
+#tres {
+	background-color:#CFC; 
+	height:750px;
+}
+
+#abajo {
+	opacity:25;
+	cursor:pointer;
+	position:absolute;
+	bottom:8px;
+	margin:0 auto
+}
+@font-face{
+	font-family:mifuente;
+	src:url(../fuentes/Kingthings%20Calligraphica.ttf);
+}
+.primer {
+	position:absolute;
+	margin-top:300px;
+	width:90%
+}
+
+section.primer h1,h5 {
+	text-align:center;
+}
+
+section.primer h1 {
+	font-family:mifuente,'times new roman',arial,tahoma;
+	font-size:44px;
+	font-weight:700;
+	color:#FFF;
+	letter-spacing:5px;
+}
+section.primer h5{
+	color:#FFF;
+	font-family:cursiva,times new roman,arial narrow;
+	font-size:26px;
+	letter-spacing:3px;
+	text-shadow:1px 1px 8px #000;
+}
+
+#flipbox {
+	position:relative;
+	top:100px;
+	margin:0 auto;
+	width: 800px;
+	height: 300px;
+	background-color:#3C9;
+	font-family:times new roman, sains serif, helvetica;
+	font-size: 2.5em;
+	color: #ffffff;
+	text-align: center;
+	border-radius: 14px;
+	opacity:.60;
+}
+#flipPad {
+	position:relative;
+	top:150px;
+	margin:0 auto;
+	width: 800px;
+	text-align: center;
+}
+#flipPad a {
+	padding: 5px 15px;
+	background: #1e90ff;
+	border: 2px solid #1e90ff;
+	border-radius: 2px;
+	color:#FFF;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 1em;
+	font-family: Helvetica, Tahoma, Verdana, sans-serif;
+	height: 30px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-box-shadow: 1px 1px 2px #999999;
+	-webkit-box-shadow: 1px 1px 2px #999999;
+	-webkit-transition-duration: 1s;
+	}
+#flipPad a:hover {
+	background-color:#06C;
+	border: 2px solid #ff9000;
+}
+
+#masabajo {
+	cursor:pointer;
+	position:absolute;
+	bottom:5px;
+}
+#masabajo {
+	cursor:pointer;
+}
+.container {
+	position: absolute;
+	width: 1200px;
+	margin-left:auto;
+	margin-right:auto;
+	left:0;
+	right:0;
+	margin-top:100px;
+}
+
+#three-column {
+	overflow: hidden;
+	padding: 10px 0px 50px 0px;
+}
+
+#three-column #tbox1 {
+	float: left;
+	width: 384px;
+	margin-right: 20px;
+}
+
+#three-column #tbox2 {
+	float: left;
+	width: 384px;
+}
+
+#three-column #tbox3 {
+	float: right;
+	width: 384px;
+}
+#three-column #box-style01 {
+	background-color:red;
+}
+.box-style {
+	background: #6FC;
+}
+
+.box-style01,.box-style02,.box-style03
+{
+	border-bottom: 5px solid #DE5635;
+}
+
+.box-style h2 {
+	padding: 10px 0px;
+	letter-spacing: -1px;
+	font-size: 22px;
+	color: #F00;
+}
+
+.box-style .image {
+	width: 324px;
+}
+
+.box-style:hover{
+	opacity: 0.7;
+}
+#content {
+	float: left;
+	width: 752px;
+	padding: 0px 0px 0px 0px;
+}
+
+.box-style .content {
+	overflow: hidden;
+	width: 324px;
+	padding: 30px;
+}
+
+footer {
+	margin-top:-160px
+}
+

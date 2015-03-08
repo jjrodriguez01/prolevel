@@ -1,0 +1,224 @@
+<!doctype html>
+<html><!-- InstanceBegin template="Templates/layout.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta charset="utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Documento sin título</title>
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<meta charset="utf-8">
+<title>Formulario de registro</title>
+<link href="css/estiloslayout.css" rel="stylesheet" type="text/css">
+<link href="css/estiloslogin.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
+<script type="text/javascript" src="js/additional-methods.js"></script>
+<!-- InstanceEndEditable -->
+</head>
+<body>
+<header>
+
+<nav>
+    <ul id="nav" class="nav">
+      		<li><a href="inicio.html"><img src="imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
+      		<li><a href="#"><span><img src="imagenes/copa.png" width="24" height="24" alt="copa" /> TORNEOS</span></a><
+        <div class="subs">
+          <div class="col">
+            <ul>
+              <li><a><img src="imagenes/micopa.png" width="24" height="24" alt="micopa"/>MIS TORNEOS</a>
+              		<div class="subs">
+                    	<div class="col">
+                        	<ul>
+                            	<li><a><span>Torneo relámpago</span></a></li>
+                                <li><a><span>Copa Navidad</span></a></li>
+                                <li><a><span>Copa Navidad Femenino</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                  </li>
+              <li><a href="crear_torneo.html"><img src="imagenes/crear.png" width="24" height="24" alt="crear" />CREAR TORNEOS</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li><a href="#"><span><img src="imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
+        <div class="subs">
+          <ul>
+            <li><a href="#"><img src="imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
+            <li><a href="#"><img src="imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
+            <li><a href="#"><img src="imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
+          </ul>
+        </div>
+        </li>
+      <li><a href="#"><img src="imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+      <li><a href="#"><span><img src="imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
+      	<div class="subs">
+        	<ul>
+            	<li><a href="#"><img src="imagenes/ajustes.png" width="24" height="24" alt="ajustes" />ADMINISTRAR</a></li>
+            </ul>
+        </div>
+        </li>
+    </ul>
+</nav>
+</header>
+<!-- InstanceBeginEditable name="body" -->
+<main>
+<center> <form id="formRegistro" name="form1" method="post" action="">
+   <fieldset>
+    <h1>PRO-LEVEL</h1>
+   	<h1>FROMULARIO DE REGISTRO</h1>
+   		<label class="requerido" for="nombre">Primer Nombre:</label>
+   		<input name="nome" id="nombre" type="text" placeholder="Digite Su Nombre" tabindex="1" required>
+
+      	<label for="nombree">Segundo Nombre:</label>
+   		<input name="nomee" id="nombree" type="text" placeholder="Digite Su Segundo Nombre" tabindex="2" >
+   
+   		<label class="requerido" for="namenone">Primer Apellido</label>
+  	 	<input name="sobrenome" id="namenone" type="text" placeholder="Digite Su Apellido" tabindex="3" required>
+
+   		<label for="namenonee">Segundo Apellido:</label>
+   		<input name="sobrenomee" id="namenonee" type="text" placeholder="Digite Su Segundo Apellido" tabindex="4" >
+   
+   		<label  class="requerido" for="documento">Documento:</label>
+   		<input name="documento" id="documento"  type="text" placeholder="Digite su documento" tabindex="5" required>
+   
+    	<label class="requerido" for="usuario">E-mail:</label>
+   		<input name="usuario" id="usuario" type="email" placeholder="Digite su correo electrónico" tabindex="6" required>
+
+     	<label class="requerido" for="Tel">Telefono:</label>
+   		<input name="telefono" id="Tel"  type="tel" placeholder="Digite su Telefono" tabindex="7" required>
+
+   		<label for="direccion">Direccion:</label>
+   		<input name="direccion" id="direccion" type="text" placeholder="Digite su Direccion" tabindex="8" >
+   
+    	<label class="requerido" for="clave">Contraseña:</label>
+   		<input name="senha" id="clave" type="password" placeholder="Digite su Contraseña" tabindex="9" required>
+   
+    	<label class="requerido" for="repetir_clave">Repetir:</label>
+   		<input name="repetir_senha" id="repetir_clave" type="password" placeholder="repita su Contraseña" tabindex="10" required>
+        <label id="requerido">Los campos con <span class="asterisco">*</span> son obligatorios</label>
+   
+   			<button type="submit">Registrarse</button>
+   			<button >Volver</button>
+</fieldset>
+</form></center>
+</main>
+<script>
+   $().ready(function(){
+       $("#formRegistro").validate({
+	            rules:{
+				  nome:{
+				    required: true,
+					minlength: 3,
+					lettersonly:true
+				  },
+				  nomee:{
+            		 required: true,
+         			 minlength: 3,
+      			    lettersonly:true
+        			  },
+				 sobrenome:{
+				  	required: true,
+					minlength: 3,
+					lettersonly:true
+				  },
+          			sobrenomee:{
+            		required: true,
+          			minlength: 3,
+          			lettersonly:true
+          		  },
+				  	documento:{
+					required: true,
+					minlength: 8,
+					maxlength:10,
+					digits:true
+				  },
+				  usuario:{
+				  required: true,
+				  minlength: 6,
+				  letterswithbasicpunc:true
+        		},
+        			telefono:{
+          			required: true,
+          			minlength: 7,
+          			maxlength:10,
+          			digits:true
+		          },
+				  direccion:{
+				  required: true,
+				  minlength: 6,
+				  letterswithbasicpunc:true          
+          			},
+				  senha:{
+				  required: true,
+				  minlength: 6,
+				  alphanumeric: true	  
+				  },
+				  repetir_senha:{
+				  required: true,
+				  minlength: 6,
+				  alphanumeric: true,
+				  equalTo:"#clave"
+				  }
+		  
+		       },
+		        messages:{
+		      nome:{
+					required:"Campo Requerido",
+				    minlength: "Minimo{0} caracteres"					  
+				   },
+             nomee:{
+					required:"Camopo Requerido",
+					minlength: "minimo {0} caracteres"
+		          },
+			sobrenome:{
+					required:"campo requerido",
+				    minlength: "minimo {0} caracteres"
+					  },
+        	sobrenomee:{
+            		required:"campo requerido",
+            		minlength: "minimo {0} caracteres"
+            			},
+		    documento:{
+					  required:"campo requerido",
+				      minlength: "minimo {0} caracteres",
+					  mixlength: "Maximo {0}caracteres",
+					  digits:"solodigitos"  
+					  },
+        	usuario:{
+            	    required:"Campo Requerido",
+              		minlength: "Minimo {0} caracteres",
+					email:"Por favor digita un correo electrónivo válido"
+                	},
+    	    telefono:{
+            		 required: "Campo Requerido",
+         			 minlength: "Minimo {0} Caracteres",
+         			 maxlength:"Minimo {0} Caracteres",
+         			 digits:"Solo Digitos"
+        },
+     	   direccion:{
+          			required: "Campo requerido",
+          			minlength: "Minimo {0} Caracteres"
+         			  }, 
+					  
+          senha:{
+				 required: "Campo Requerido",
+				 minlength: "Minimo {0} Caracteres"
+           		},
+          repetir_senha:{
+				   required: "Campo Requerido",
+				   minlength: "Minimo {0} Caracteres",
+				   equalTo:"Las Contraseñas Deben Coincidir"
+          }			  
+		  }
+	   
+	       });
+	   });
+</script>
+<footer>
+<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#"><img src="imagenes/español.png" width="40px" height="30px" /></a></p> 
+<img src="imagenes/cesped.png" width="100%" height="100px"/> </footer>
+
+<!-- InstanceEndEditable -->
+</body>
+<!-- InstanceEnd --></html>
