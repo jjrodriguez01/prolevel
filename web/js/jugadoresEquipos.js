@@ -22,7 +22,7 @@ function getJugador(codigo) {
 
 function resultadoJugadores() {
     if (xmlHttp.readyState === 4) {
-        document.getElementById("jugadorunico").innerHTML = xmlHttp.responseText;
+        document.getElementById("jugadores").innerHTML = xmlHttp.responseText;
     }
 }
 

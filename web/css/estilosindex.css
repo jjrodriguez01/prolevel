@@ -4,17 +4,17 @@ body{
 	background-repeat:no-repeat;
 	background-position:center;
 }
-#logo {
+/*#logo {
     margin-left: 40px;
-}
-#header{
+}*/
+/*#header{
     height: 120px;
 }
 #titulo{
     font-family: castellar,algerian, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
     position: absolute;
     display: inline;
-}
+}*/
 #formulario {
     width: 70%;
     margin-top: 20px;
@@ -43,6 +43,9 @@ div.error{
      margin-left:50px;
      z-index:100;
      padding: 2px;
+}
+a{
+    padding: 6px;
 }
 p.pie{
 	position:relative;

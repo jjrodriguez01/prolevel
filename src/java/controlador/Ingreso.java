@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.UsuariosDTO;
+import persistencia.RolUsuarioDAO;
 import persistencia.UsuariosDAO;
 
 /**
@@ -40,18 +41,23 @@ public class Ingreso extends HttpServlet {
                 String contraseña = request.getParameter("pass");
                 UsuariosDAO usu = new UsuariosDAO();
                 UsuariosDTO datosUsuario = new UsuariosDTO();
+                RolUsuarioDAO rol = new RolUsuarioDAO();
                 
                 datosUsuario = usu.validarUsuario(email, contraseña);
-                Boolean Logeado=usu.ValidarRol(datosUsuario);
-                if(datosUsuario!=null){   
-                     HttpSession miSesion = request.getSession(true);
+                int numerorol = rol.getRol(datosUsuario);
+                if(datosUsuario!=null && numerorol!=0){   
+                    HttpSession miSesion = request.getSession(true);
                     miSesion.setAttribute("usr", datosUsuario);
-                    response.sendRedirect("inicio.jsp");               
+                    miSesion.setAttribute("rol", numerorol);
+                    response.sendRedirect("paginas/inicio.jsp");               
                 }
                 else{
-                response.sendRedirect("index.html?auto=No_Ingreso");
+                response.sendRedirect("index.jsp?auto=No_Ingreso");
                 }
-        }
+            }else if(request.getParameter("logout")!=null){
+                    request.getSession().invalidate();
+                    response.sendRedirect("index.jsp?sesion=cerrada");
+                }
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

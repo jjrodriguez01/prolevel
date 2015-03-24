@@ -13,10 +13,10 @@ import persistencia.*;
  */
 public class main {
     public static void main (String args[]){
-        TorneoDAO TDAO = new TorneoDAO();
-        ArrayList t = (ArrayList) TDAO.ListaPaginacion(0, 5);
-        for (int i = 0; i < t.size(); i++) {
-            System.out.println(t.get(i));
-        }
-    }
+        UsuariosDAO usu = new UsuariosDAO();
+        String pas="jscotamo8@misena.edu.co";
+        String r = usu.recuperar(pas);
+        System.out.println(r);
+        
+}
 }

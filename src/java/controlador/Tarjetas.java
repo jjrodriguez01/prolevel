@@ -37,19 +37,22 @@ public class Tarjetas extends HttpServlet {
        
             if (request.getParameter("asigtarjetas")!=null && request.getParameter("tarjetas")!=null) {
                 TarjetasDTO tar = new TarjetasDTO();
-                tar.setIdJugador(Integer.parseInt(request.getParameter("jugadorunico")));
+                tar.setIdJugador(Integer.parseInt(request.getParameter("jugadores")));
                 tar.setIdtorneo(Integer.parseInt(request.getParameter("idTorneo")));
                 tar.setTarjetaAzul(Integer.parseInt(request.getParameter("azules")));
                 tar.setTarjetaRoja(Integer.parseInt(request.getParameter("rojas")));
                 TarjetasDAO tardao = new TarjetasDAO();
                 LinkedList<TarjetasDTO> listar = new LinkedList();
                 listar = tardao.listarUno(tar.getIdtorneo(), tar.getIdJugador());
+                //si no existe en la tabla de goleadores ese jugador en ese torneo quiere decir q es la
+                //primera vez q se va a insertar su registro de tarjetas por lo que
+                //lo hacemos sin el procedimiento, de lo contrario insertamos con el oprocedimienrto
                 if (listar.isEmpty()) {
                     String itarjetas = tardao.insertarPrimer(tar);
-                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo());
+                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
                 }else{
                     String itarjetas = tardao.insertar(tar);
-                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo());
+                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
                 }
             }
             

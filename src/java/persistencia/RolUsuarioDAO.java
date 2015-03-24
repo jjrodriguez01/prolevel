@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
+import modelo.UsuariosDTO;
 
 public class RolUsuarioDAO {
     
@@ -138,28 +139,30 @@ public class RolUsuarioDAO {
         return listarUsuarios;
 
     }
-
-    public String listarUno(RolUsuarioDTO usuario) {
+    /**
+     * Retorna el numero de rol del objeto UsuariosDTO
+     * @param UsuariosDTO usuario a obtener umero de rol
+     * @return int con el numero de rol del objeto UsuariosDTO especificado
+     */
+    public int getRol(UsuariosDTO usuario) {
+        int rol = 0;
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT UsuarioIdUsuario,"
-                    + "rolesIdRol FROM RolUsuario "
-                    + "WHERE idUsuario = ? ;");
-            statement.setInt(1, usuario.getUsuarioIdUsuario());
+                    + "rolesIdRol FROM rol_usuario "
+                    + "WHERE usuarioIdUsuario = ?;");
+            statement.setLong(1, usuario.getIdUsuario());
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
-                usuario.setUsuarioIdUsuario(rs.getInt("IdUsuario"));
-                usuario.setRolesidRol(rs.getInt("Roles"));
-                
-
+                rol = rs.getInt("rolesIdRol");
             }
 
         } catch (SQLException ex) {
             mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
         }
         //devolvemos el usuario que se encontro
-        return "" + usuario;
+        return rol;
     }
 
 }

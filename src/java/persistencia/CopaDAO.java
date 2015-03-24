@@ -33,7 +33,7 @@ public class CopaDAO {
         conexion = Conexion.getInstance();
     }
     
-    public String insertar(CopaDTO copa){
+    public synchronized String insertar(CopaDTO copa){
         try {
         call = conexion.prepareCall("{call sp_torneocopa(?,?,?,?,?,?,?,?,?,?,?) }");
         call.setInt(1, copa.getIdCopa());

@@ -7,131 +7,195 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-<link href="css/estiloslayout.css" rel="stylesheet" type="text/css">
-<link href="css/estiloslogin.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript" src="js/additional-methods.js"></script>
-    </head>
-     
-    <body>
-        <header>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Pro-level - Registro</title>
+<link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script src="css/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/datepicker/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+    $(function() {
+   $(".datepicker").datepicker(
+   {
+        changeMonth: true,
+        changeYear: true
+   });
+   $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+  });
+});
+</script>
+<script>
 
-<nav>
-    <ul id="nav" class="nav">
-      		<li><a href="inicio.html"><img src="imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
-      		<li><a href="#"><span><img src="imagenes/copa.png" width="24" height="24" alt="copa" /> TORNEOS</span></a><
-        <div class="subs">
-          <div class="col">
-            <ul>
-              <li><a><img src="imagenes/micopa.png" width="24" height="24" alt="micopa"/>MIS TORNEOS</a>
-              		<div class="subs">
-                    	<div class="col">
-                        	<ul>
-                            	<li><a><span>Torneo relámpago</span></a></li>
-                                <li><a><span>Copa Navidad</span></a></li>
-                                <li><a><span>Copa Navidad Femenino</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                  </li>
-              <li><a href="crear_torneo.html"><img src="imagenes/crear.png" width="24" height="24" alt="crear" />CREAR TORNEOS</a></li>
-            </ul>
-          </div>
+// Hover states on the static widgets
+$( "#dialog-link, #icons li" ).hover(
+	function() {
+		$( this ).addClass( "ui-state-hover" );
+	},
+	function() {
+		$( this ).removeClass( "ui-state-hover" );
+	}
+);
+});
+</script>
+<style>
+body{
+    padding-top: 5px;
+    margin: 0 10%;
+}
+nav{
+    background: linear-gradient(white, whitesmoke);
+}
+h1{
+    font-family: 'times new roman', verdana, thaoma;
+    text-align: center;
+}
+label.error{
+    color:red;
+    font-weight: bold;
+    font-style: italic;
+}
+input.error{
+    border: 1px solid red;
+}
+input.valid{
+    border: 1px solid green;
+}
+label.required::after{
+    content: "*" "(" attr(style='color:red') ")";
+}
+span.required{
+    color: red;
+}
+select.ui-datepicker-year, select.ui-datepicker-month{
+    color: black;
+}
+</style>
+</head>
+<body>
+<header>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menunav">
+        <span class="sr-only">Menu</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="#">
+            <img alt="pro-level" src="imagenes/logo.png" style="width: 35px; height: 40px">
+        </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="menunav">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Ingresar</a></li>  
+        <li><a href="reestablecer.jsp">Reestablecer contraseña <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Registrarme</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Buscar...">
         </div>
-      </li>
-      <li><a href="#"><span><img src="imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-        <div class="subs">
-          <ul>
-            <li><a href="#"><img src="imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-            <li><a href="#"><img src="imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-            <li><a href="#"><img src="imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
+        <button type="submit" class="btn btn-default">Buscar en Pro-level</button>
+      </form>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nosotros <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">¿Quienes Somos?</a></li>
+            <li><a href="#">Contáctanos</a></li>
           </ul>
-        </div>
-        </li>
-      <li><a href="#"><img src="imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
-      <li><a href="#"><span><img src="imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
-      	<div class="subs">
-        	<ul>
-            	<li><a href="#"><img src="imagenes/ajustes.png" width="24" height="24" alt="ajustes" />ADMINISTRAR</a></li>
-            </ul>
-        </div>
         </li>
     </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
 </header>
-<!-- InstanceBeginEditable name="body" -->
-<main>
+    <main class="container">
+    <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="index.jsp">Inicio</a></li>
+                    <li class="active"><a href="#">Registro</a></li>
+                </ol>
+            </div>
+        </div>
+<article>
+    <h1>Formulario De Registro <small>Usuario Nuevo</small></h1>
  <form id="datosp" name="datospers" method="post" action="RegistroUsuario" class="form-horizontal center-block">
-            	<div class="form-group">
-            	<label for="cc" class="control-label col-md-6">Cedula</label>
-                <div class="col-md-6">
-                <input type="text" id="cc" name="cc"/>
-                </div>
-                </div>
-                <div class="form-group">
-            	<label for="nombre" class="control-label col-md-6">Primer Nombre</label>
-                <div class="col-md-6">
-                <input type="text" id="nombre" name="nombre"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="snombre" class="control-label col-md-6">Segundo Nombre</label>
-                <div class="col-md-6">
+     <div class="form-group">
+        <label for="cc" class="control-label col-md-6">Cedula<span class="required"> *</span></label>
+            <div class="col-md-6">
+                <input type="text" id="cc" name="cc" required/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="nombre" class="control-label col-md-6">Primer Nombre<span class="required"> *</span></label>
+            <div class="col-md-6">
+                <input type="text" id="nombre" name="nombre" required/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="snombre" class="control-label col-md-6">Segundo Nombre</label>
+            <div class="col-md-6">
                 <input type="text" id="snombre" name="snombre"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="ape" class="control-label col-md-6">Primer Apellido</label>
-                <div class="col-md-6">
-                <input type="text" id="ape" name="ape"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="sape" class="control-label col-md-6">Segundo Apellido</label>
-                <div class="col-md-6">
+            </div>
+        </div>
+    <div class="form-group">
+        <label for="ape" class="control-label col-md-6">Primer Apellido<span class="required"> *</span></label>
+            <div class="col-md-6">
+                <input type="text" id="ape" name="ape" required/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="sape" class="control-label col-md-6">Segundo Apellido</label>
+            <div class="col-md-6">
                 <input type="text" id="sape" name="sape"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="nac"  class="control-label col-md-6">Fecha De Nacimiento<span class="required"> *</span></label>
+            <div class="col-md-6">
+                    <input type="text" id="nac" name="nac" class="datepicker" required/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="tel"  class="control-label col-md-6">Telefono<span class="required"> *</span></label>
+            <div class="col-md-6">
+                <input type="text" id="tel" name="tel" required/>
+            </div>
+    </div>
+                <div class="form-group">
+                <label for="email"  class="control-label col-md-6">Correo Electrónico<span class="required"> *</span></label>
+                <div class="col-md-6">
+                <input type="text" id="email" name="email" required/>
                 </div>
                 </div>
                 <div class="form-group">
-                <label for="nac"  class="control-label col-md-6">Fecha De Nacimiento</label>
+                <label for="pass"  class="control-label col-md-6">Contraseña<span class="required"> *</span></label>
                 <div class="col-md-6">
-                <input type="text" id="nac" name="nac"/>
+                <input type="text" id="pass" name="pass" required/>
                 </div>
                 </div>
                 <div class="form-group">
-                <label for="tel"  class="control-label col-md-6">Telefono</label>
+                <label for="confpass"  class="control-label col-md-6">Confirmar Contraseña<span class="required"> *</span></label>
                 <div class="col-md-6">
-                <input type="text" id="tel" name="tel"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="email"  class="control-label col-md-6">Correo Electrónico</label>
-                <div class="col-md-6">
-                <input type="text" id="email" name="email"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="pass"  class="control-label col-md-6">Contraseña</label>
-                <div class="col-md-6">
-                <input type="text" id="pass" name="pass"/>
-                </div>
-                </div>
-                <div class="form-group">
-                <label for="confpass"  class="control-label col-md-6">Confirmar Contraseña</label>
-                <div class="col-md-6">
-                <input type="text" id="confpass" name="confpass"/>
+                <input type="text" id="confpass" name="confpass" required/>
                 </div>
                 </div>
                 <div class="col-lg-10 center-block btn">
-               <input type="submit" value="Guardar Cambios" name="enviar"/>
-                <input type="hidden" value="datos" name="enviar1"/>
-                
+                    <input type="submit" value="Registrarme" name="enviar" class="btn btn-success"/>
+                <input type="hidden" value="datos" name="enviar1"/> 
                 </div>
             </form>
+    </article>
 </main>
 <script>
    $().ready(function(){
@@ -239,10 +303,10 @@
 	      });
 	   });
 </script>
-<footer>
-<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#"><img src="imagenes/español.png" width="40px" height="30px" /></a></p> 
-<img src="imagenes/cesped.png" width="100%" height="100px"/> </footer>
-
-<!-- InstanceEndEditable -->
-    </body>
+<footer class="col-lg-12">
+<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
+<a href="#"><img src="imagenes/español.png" width="40" height="30" /></a></p> 
+<img src="imagenes/cesped.png" style="width: 100%; "/> 
+</footer>
+</body>
 </html>

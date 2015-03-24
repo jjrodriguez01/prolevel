@@ -33,13 +33,13 @@ public class UsuariosDAO {
         conexion = Conexion.getInstance();
     }
 
-    public String insertar(UsuariosDTO usu) {
+    public synchronized String insertar(UsuariosDTO usu) {
 
         try {
             //sentencia sql
             String sql = "INSERT INTO Usuarios(idUsuario,primerNombre, "
                     + "segundoNombre,primerApellido,segundoApellido,fechaNac,telefono,email,contraseña) "
-                    + "VALUES(md5(?),?,?,?,?,?,?,?,?)";
+                    + "VALUES(?,?,?,?,?,?,?,?,md5(?)";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
@@ -57,7 +57,7 @@ public class UsuariosDAO {
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                System.out.println("se insertaron:" + rtdo + "Datos");
+                System.out.println("se inserto el usaurio correctamente");
                 //si no se afecto la tabla
             } else {
                 mensaje = "Error";
@@ -196,7 +196,7 @@ public class UsuariosDAO {
         ResultSet rs = null;
         try {
             statement = conexion.prepareStatement("SELECT * "
-                    + "from usuarios where email=? and contraseña=?");
+                    + "from usuarios where email=? and contraseña=?;");
 
             statement.setString(1, email);
             statement.setString(2, password);
@@ -246,11 +246,27 @@ public class UsuariosDAO {
     if(usu!=null){
     return logeado=true;
     }
-    }catch(SQLException ex){
-        
+    }catch(SQLException sqle){
+        mensaje = "Ha ocurrido un error " + sqle.getMessage();
     }
     return logeado; 
     }
-
+    
+    public String recuperar (String email){
+        String password = ""; 
+        UsuariosDTO udto = new UsuariosDTO();
+        try{
+            statement = conexion.prepareStatement("SELECT * FROM usuarios "
+                    + "WHERE email = ?;");
+        statement.setString(1,email);
+        rs = statement.executeQuery();
+            while (rs.next()) {
+                password = rs.getString("contraseña");
+            }
+    }catch(SQLException sqle){
+        mensaje = "Ha ocurrido un error " + sqle.getMessage();
+    }
+        return password;
+    }
 }
 

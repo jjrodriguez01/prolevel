@@ -232,11 +232,11 @@
 }
 #wowslider-container0 a.ws_next{
 	background-position: 100% 0;
-	right:-2px;
+	right:-15px;
 }
 #wowslider-container0 a.ws_prev {
 	background-position: 0 0; 
-	left:0px;
+	left:15px;
 }
 #wowslider-container0 a.ws_next:hover{
 	background-position: 100% 100%;

@@ -12,12 +12,14 @@
 <title>Pro-level</title>
 <meta charset="utf-8">
 <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="css/estiloslayout.css" rel="stylesheet" type="text/css">
-<link href="css/estilosindex.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="engine1/styles.css" />
-<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript" src="css/bootstrap/js/boostrap.js"></script>
+<link href="js/lightslider/css/lightSlider.css" rel="stylesheet" type="text/css">
+<link href="js/lightGallery/css/lightGallery.css" rel="stylesheet" type="text/css">
+<link href="css/animate.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/lightslider/js/jquery.lightSlider.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script src="css/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/lightGallery/js/lightGallery.js"></script>
 <script>
    $().ready(function(){
        $("#login").validate({
@@ -108,37 +110,155 @@
 	      });
 	   });
 </script>
+<style>
+body{
+        padding-top: 5px;
+        margin: 0 10%;
+    }
+nav{
+    background: linear-gradient(white, whitesmoke);
+}
+label{
+    color: #000000;
+    font-size: 2em;
+    font-family: centaur,tahoma,verdana,'arial narrow',arial;
+}
+#link{
+    margin-top: 20px;
+}
+a.link{
+    color: #000000;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+}
+div.error{
+     background:white;
+     border: 1px solid #F00;
+     position:absolute;
+     margin-top:20px;
+     margin-left:50px;
+     z-index:100;
+     padding: 2px;
+}
+a{
+    padding: 6px;
+}
+p.pie{
+	position:relative;
+	text-align:center;
+	top: 120px;
+	color:#000000;
+	clear:both;
+}
+li img {
+    width: 560px;
+    height: 460px;
+}
+</style>
+<script>
+    $(document).ready(function() {
+    $("#imagenes").lightSlider({
+    gallery:true,
+    item:1,
+    thumbItem:6,
+    slideMargin:0,
+    currentPagerPosition:'left',
+    onSliderLoad: function(plugin) {
+    plugin.lightGallery();
+    }
+    });
+    });
+</script>
+<script>
+            $(document).ready(function(){
+                $("#menunav li a").on("mouseover", function(){
+                    $(this).addClass("zoomIn animated");
+                    $("#menunav li a").on("mouseout",function(){
+                        $("#menunav li a").removeClass();
+                    });
+                });
+            });
+        </script>
 </head>
-<body>
+<body onload="mialerta()">
 <header>
-    <div id="header">
-        <img src="imagenes/logo.png" width="95" height="100"  alt="pro-level" id="logo"/>
-        <h1 id="titulo">Bienvenido a Pro-level</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menunav">
+        <span class="sr-only">Menu</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="#">
+            <img alt="pro-level" src="imagenes/logo.png" style="width: 35px; height: 40px">
+        </a>
     </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="menunav">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.jsp">Ingresar</a></li>  
+        <li><a href="reestablecer.jsp">Reestablecer contraseña <span class="sr-only">(current)</span></a></li>
+        <li><a href="registro.jsp">Registrarme</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Buscar...">
+        </div>
+        <button type="submit" class="btn btn-default">Buscar en Pro-level</button>
+      </form>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nosotros <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">¿Quienes Somos?</a></li>
+            <li><a href="#">Contáctanos</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 </header>
-<main>
-	<div id="wowslider-container0">
-	<div class="ws_images"><ul>
-		<li><img src="data1/images/img1.jpg" alt="" title="" id="wows0_0"/></li>
-		<li><img src="data1/images/img2.jpg" alt="" title="" id="wows0_1"/></li>
-		<li><img src="data1/images/img3.jpg" alt="" title="" id="wows0_2"/></li>
-		<li><img src="data1/images/img4.jpg" alt="" title="" id="wows0_3"/></li>
-		<li><img src="data1/images/img5.jpg" alt="" title="" id="wows0_4"/></li>
-		<li><img src="data1/images/img6.jpg" alt="img6" title="img6" id="wows0_5"/></li>
-	</ul></div>
-	<div class="ws_bullets"><div>
-		<a href="#" title=""><span><img src="data1/tooltips/img1.jpg" alt=""/>1</span></a>
-		<a href="#" title=""><span><img src="data1/tooltips/img2.jpg" alt="img2"/>2</span></a>
-		<a href="#" title=""><span><img src="data1/tooltips/img3.jpg" alt="img3"/>3</span></a>
-		<a href="#" title=""><span><img src="data1/tooltips/img4.jpg" alt="img4"/>4</span></a>
-		<a href="#" title=""><span><img src="data1/tooltips/img5.jpg" alt="img5"/>5</span></a>
-		<a href="#" title=""><span><img src="data1/tooltips/img6.jpg" alt="img6"/>6</span></a>
-	</div></div>
-	<div class="ws_shadow"></div>
-	</div>	
-        <script type="text/javascript" src="engine1/wowsliders.js"></script>
-        <script type="text/javascript" src="engine1/scriptt.js"></script>
-  <div id="formulario">
+<main class="container">
+    <section class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Inicio</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                <div class="center">
+                    <ul id="imagenes" style="list-style: none">
+                        <li data-thumb="imagenes/inicio/thumb/img1.jpg" data-src="imagenes/inicio/img1.jpg">
+                            <img src="imagenes/inicio/img1.jpg" alt="imagen" />
+                        </li>
+                        <li data-thumb="imagenes/inicio/thumb/img2.jpg" data-src="imagenes/inicio/img2.jpg">
+                            <img src="imagenes/inicio/img2.jpg" alt="imagen" />
+                        </li>
+                        <li data-thumb="imagenes/inicio/thumb/img3.jpg" data-src="imagenes/inicio/img3.jpg">
+                            <img src="imagenes/inicio/img3.jpg" alt="imagen" />
+                        </li>
+                        <li data-thumb="imagenes/inicio/thumb/img4.jpg" data-src="imagenes/inicio/img4.jpg">
+                            <img src="imagenes/inicio/img4.jpg" alt="imagen" />
+                        </li>
+                        <li data-thumb="imagenes/inicio/thumb/img6.jpg" data-src="imagenes/inicio/img6.jpg">
+                            <img src="imagenes/inicio/img6.jpg" alt="imagen" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>  
+    <div id="formulario" class="row">
       <form method="POST" action="Ingreso" id="login" class="form-inline">
     <div class="form-group">
       <label for="email">Usuario:</label>
@@ -152,13 +272,7 @@
       <label><input type="checkbox"> Recordarme</label>
     </div>
           <button type="submit" class="btn btn-default" name="ingresar">Ingresar</button>
-      </form>
-      <div id="link">
-        <a href="reestablecer_contraseña.html" class="link">
-        <img src="imagenes/balon.png" width="15" height="15"/>¿Olvidó su contraseña?</a>
-        <a href="reestablecer.html" class="link">
-        <img src="imagenes/balon.png" width="15" height="15"/>¿No tiene cuenta?</a>
-     </div>    
+      </form>   
   </div>
 </main>
 <footer>

@@ -32,7 +32,7 @@ public class LigaDAO {
         conexion = Conexion.getInstance();
     }
 
-    public String insertar (LigaDTO liga) {
+    public synchronized String insertar (LigaDTO liga) {
 
         try {
             //sentencia sql

@@ -16,10 +16,6 @@ and open the template in the editor.
     color: #1e90ff;
 }
 
-#tarjetas {
-    width: 700px;
-    min-width: 350px;
-}
 #tarjetas label,select {
     display: block;
 }
@@ -28,27 +24,9 @@ and open the template in the editor.
 }
 .confirmt {
     font-style: italic;
-    color: red;
+    color: #22892a;
 }
-#tarjetas {
-    position: absolute;
-    top: 50%; /* Buscamos el centro horizontal (relativo) del navegador */
-    left: 50%; /* Buscamos el centro vertical (relativo) del navegador */
-    width: 600 px; /* Definimos el ancho del objeto a centrar */
-    height: 400px; /* Definimos el alto del objeto a centrar */
-    margin-top: -200px; /* Restamos la mitad de la altura del objeto con un margin-top */
-    margin-left: -300px; /* Restamos la mitad de la anchura del objeto con un margin-left */
-}
-.opaco {
-        position:absolute;
-	top:0px;
-	left:0px;
-	width:100%;
-	height:100%;
-	background-color:#fff;
-	filter: alpha(opacity=50);
-	opacity: .5;
-}
+
 @font-face{
 	font-family: altea;
 	src:url(../fuentes/ALTEA.TTF);
@@ -68,71 +46,123 @@ tr th:hover {
     background-color: #000;
     color: #ffffff;
 }
-table { 
-	font: 0.8em Arial, Helvetica, sans-serif;
-	border-collapse:collapse;	
-	background:#e8eef7;
-	color:#000; 
-	}
-#itsthetable > table {width:99%;}
-#itsthetable {
-	height:350px;
-	overflow:auto;
-	background:#c6dbff; 
-	padding-bottom:3px;
-	}
-caption { 
-	height:102px;
-	font-size:000000.1em;  
-	color:#c6dbff; 
-	background:#c6dbff url("caption.gif") left top  no-repeat;  
-	}
-caption:hover{ 
-	font-size:000000.1em; 
-	color:#c6dbff;
-	background:transparent url("caption.gif") center bottom no-repeat;
-	}
-th {font-weight:300;}
-tr th, tr td {border-bottom:1px solid #ccc;}
-table a, table a:link {text-decoration:none; color:#666;}
-table a:visited {color:#999;} 
-table a:hover {color:#f00; background:#fafafa; display:block;} 
-tbody tr th  {
-	width:80px;
-	vertical-align:top;
-	padding-left: 50px; 
-	background:transparent url("det1gmail.gif") left top no-repeat;
-	}
-tbody tr td  {
-	height:1.7em;
-	vertical-align:top;
-	padding-left:10px; 
-	background:transparent url("det2gmail.gif") left top no-repeat; 
-	}
-thead { background:#fff;}
-tr th + td + td + td + td {
-	width:60px; 
-	padding-left:20px;
-	font-size:0.9em; 
-	background:transparent url("det3gmail.gif") 0 0  no-repeat;
-	} 
-tr.odd th + td + td + td + td {
-	width:60px; 
-	padding-left:20px;
-	font-size:0.9em; 
-	background:none;
-	} 
-tfoot th, tfoot td {
-	height:105px;
-	font-weight:bold; 
-	height:2.0em; 
-	padding-left:10px; 
-	vertical-align: top;
-	}
-tfoot th{
-	height:102px;
-	background:#c6dbff url("footerth.gif") right top no-repeat; 
-	}
-tfoot td {height:102px;
-	background:#c6dbff url("footertd.gif") left top no-repeat; 
-	}
+/*estilo de las tablas*/
+table {
+		border-collapse:collapse;
+		background:#EFF4FB url(http://www.roscripts.com/images/teaser.gif) repeat-x;
+		border-left:1px solid #686868;
+		border-right:1px solid #686868;
+		font:0.8em/145% 'Trebuchet MS',helvetica,arial,verdana;
+		color: #333;
+}
+
+td, th {
+		padding:5px;
+}
+
+caption {
+		padding: 0 0 .5em 0;
+		text-align: left;
+		font-size: 1.4em;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #333;
+		background: transparent;
+}
+
+/* =links
+----------------------------------------------- */
+
+table a {
+		color:#950000;
+		text-decoration:none;
+}
+
+table a:link {}
+
+table a:visited {
+		font-weight:normal;
+		color:#666;
+		text-decoration: line-through;
+}
+
+table a:hover {
+		border-bottom: 1px dashed #bbb;
+}
+
+/* =head =foot
+----------------------------------------------- */
+
+thead th, tfoot th, tfoot td {
+		background:#333 url(http://www.roscripts.com/images/llsh.gif) repeat-x;
+		color:#fff
+}
+
+tfoot td {
+		text-align:right
+}
+
+/* =body
+----------------------------------------------- */
+
+tbody th, tbody td {
+		border-bottom: dotted 1px #333;
+}
+
+tbody th {
+		white-space: nowrap;
+}
+
+tbody th a {
+		color:#333;
+}
+
+.odd {}
+
+tbody tr:hover {
+		background:#fafafa
+}
+
+.tooltip_elemento {
+        position: relative;
+    }
+
+.tooltips {
+        display: none;
+        position: absolute;
+        width: 200px;    
+        padding: 10px;
+        margin: 0 0 12px 0;    
+        z-index: 100;
+        bottom: 100%;
+        background: #FDD017;
+        color: #000;
+        text-align: center;
+        font-weight: bold;
+        font-size: 11px;
+        border-radius: 5px;
+}
+
+.tooltips:after {
+        content: "";
+        position: absolute;
+        bottom: -14px;
+        z-index: 100;
+        border: 0 solid #FDD017;
+        border-bottom: 14px solid transparent;
+        border-left-width: 10px;
+        width: 50%;
+        left: 50%;
+}
+ 
+.tooltips:before {
+        content: "";
+        position: absolute;
+        border: 0 solid #FDD017;
+        bottom: -14px;
+        z-index: 100;
+        border-right-width: 10px;
+        border-bottom: 14px solid transparent;
+        width: 50%;
+        right: 50%;
+}

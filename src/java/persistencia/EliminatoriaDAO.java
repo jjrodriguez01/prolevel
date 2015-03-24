@@ -34,7 +34,7 @@ public class EliminatoriaDAO {
         conexion = Conexion.getInstance();
     }
     
-    public String insertar(EliminatoriaDTO eliminatoria){
+    public synchronized String insertar(EliminatoriaDTO eliminatoria){
         try {
         call = conexion.prepareCall("{call sp_torneoeliminatoria(null,?,?,?,?,?,?,?) }");
         call.setInt(1, eliminatoria.getIdEliminatoria());
