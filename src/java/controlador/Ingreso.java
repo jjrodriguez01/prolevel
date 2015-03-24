@@ -51,7 +51,7 @@ public class Ingreso extends HttpServlet {
                     miSesion.setAttribute("rol", numerorol);
                     response.sendRedirect("paginas/inicio.jsp");               
                 }
-                else{
+                else if(datosUsuario == null){
                 response.sendRedirect("index.jsp?auto=No_Ingreso");
                 }
             }else if(request.getParameter("logout")!=null){

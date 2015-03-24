@@ -19,7 +19,7 @@ public class Conexion {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             //la conexion mediante el metodo getConnection toma 
             //la direccion de la bd en localhost,el usuario de bd y la contraseña 
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbprolevel", "root", "j3216514086");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbprolevel", "gerente", "j3216514086");
         } catch (SQLException sqlException) {
             System.out.println("Error de MySQL: " + sqlException.getMessage());
         } catch (Exception exception) {

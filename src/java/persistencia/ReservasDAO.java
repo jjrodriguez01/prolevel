@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import modelo.ReservaDTO;
+import modelo.ReservasDTO;
 import utilidades.Conexion;
 public class ReservasDAO {
     
@@ -30,7 +30,7 @@ public class ReservasDAO {
         conexion = Conexion.getInstance();
     }
 
-    public String insertar(ReservaDTO res) {
+    public String insertar(ReservasDTO res) {
 
         try {
             //sentencia sql
@@ -63,7 +63,7 @@ public class ReservasDAO {
         return mensaje;
     }
 
-    public String actualizar (ReservaDTO res) {
+    public String actualizar (ReservasDTO res) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE reservas  SET fecha=?,hora=?,usuarioIdUsuario=?,numeroCancha=? WHERE numeroCancha=?;";
@@ -113,9 +113,9 @@ public class ReservasDAO {
         return mensaje;
     }
 
-    public LinkedList<ReservaDTO> listarTodo() {
+    public LinkedList<ReservasDTO> listarTodo() {
         //creamos el array que va a contener los datos de la consulta    
-        LinkedList<ReservaDTO> listarReservas = new LinkedList();
+        LinkedList<ReservasDTO> listarReservas = new LinkedList();
 
         try {
             String query = "SELECT  * "
@@ -125,7 +125,7 @@ public class ReservasDAO {
             //mientras que halla registros cree un nuevo dto y pasele la info
             while (rs.next()) {
                 //crea un nuevo dto
-                ReservaDTO res = new ReservaDTO();
+                ReservasDTO res = new ReservasDTO();
                 //le pasamos los datos que se encuentren
                 res.setCodigo(rs.getInt("codigo"));
                 res.setFecha(rs.getString("fecha"));
@@ -148,8 +148,8 @@ public class ReservasDAO {
 
     }
 
-    public ReservaDTO listarUno(int codigo) {
-        ReservaDTO reservas = new ReservaDTO();
+    public ReservasDTO listarUno(int codigo) {
+        ReservasDTO reservas = new ReservasDTO();
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT codigo,"

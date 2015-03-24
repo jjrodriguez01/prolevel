@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+
+#tabla_reserva{
+    clear:both;
+	border:2px;
+	boder-color:green;
+	margin-top:0;
+	background-color:#6FC;
+	border:1px black solid;
+
+	
+	}
+#tabla_reserva>th{
+	
+	}
+
+section#section_reserva{
+		clear:both;
+		
+}
+tabla th,td,tr{
+	background-color:#FFF;
+	border:1px solid #000;
+	transition:all 0.5s;
+	}
+	#tabla_reserva:hover{
+	
+		background-color:#6F0;
+		
+		
+		}
+		#tabla_reserva tr,td:hover{
+			background-color:#6F9;
+			
+			}
+

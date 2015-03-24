@@ -9,7 +9,7 @@ package modelo;
  *
  * @author jeisson
  */
-public class ReservaDTO {
+public class ReservasDTO {
     private int codigo;
     private String fecha;
     private String hora;
