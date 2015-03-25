@@ -220,8 +220,7 @@
 <footer>
 <div id="pie">
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#">
-        <img src="../imagenes/english.png" width="40" height="30" /></a></p> 
-<img src="../imagenes/cesped.png" style="width: 100%; height: 100px" alt="pie"/> 
+        <img src="../imagenes/english.png" width="40" height="30" /></a></p>  
 </div>
 </footer>
 </body>

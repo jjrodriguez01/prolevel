@@ -360,7 +360,6 @@
             <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
             <a href="index_english.html"><img src="../../imagenes/english.png" width="40" height="30" alt="ingles" /></a>
             </p> 
-            <img src="../../imagenes/cesped.png" style='width: 100%' height="100"  alt="pie de pagina"/>
         </footer>
     </body>
 </html>

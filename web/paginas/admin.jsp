@@ -891,7 +891,6 @@ $(document).ready(function() {
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
     <a href="#"><img src="../imagenes/english.png" width="30" height="25" alt="idioma" />
     </a>Contáctanos<a href="#"><img src="../imagenes/phone.png" width="40" height="40" alt="tel"/></a></p> 
-<img src="../imagenes/cesped.png" style="width: 100%" height="100" alt="pie"/> 
 </footer>
 </body>
 </html>

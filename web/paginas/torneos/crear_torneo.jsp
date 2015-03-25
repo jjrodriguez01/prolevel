@@ -81,9 +81,9 @@
 </div>
 
 <section id="informacion">
-		<p class="info" onClick="copa()"><img src="imagenes/flecha.png" width="24" height="24" />¿Que es una copa?</p>
-		<p class="info" onClick="liga()"><img src="imagenes/flecha.png" width="24" height="24" />¿Que es una liga?</p>
-		<p class="info" onClick="eliminatoria()"><img src="imagenes/flecha.png" width="24" height="24" />¿Que es una eliminatoria?</p>
+		<p class="info" onClick="copa()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una copa?</p>
+		<p class="info" onClick="liga()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una liga?</p>
+		<p class="info" onClick="eliminatoria()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una eliminatoria?</p>
 		<p id="qcopa"></p>
 	<button id="btn" onClick="cerrar()">Cerrar</button>
 <script>
@@ -114,8 +114,8 @@
 </main>
 <footer>
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
-    <a href="#"><img src="../../imagenes/español.png" width="40" height="30" /></a></p> 
-<img src="../../imagenes/cesped.png" style="width: 100%"/> </footer>
+    <a href="#"><img src="../../imagenes/español.png" width="40" height="30" /></a></p>  
+</footer>
     </body>
 </html>
 

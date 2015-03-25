@@ -172,13 +172,16 @@ ul#nav > li:hover > a {
 footer{
 	margin-bottom:1px;
 	height:40px;
+        background-image: url(../imagenes/cesped.png);
+        background-size: 100%;
+        background-repeat: repeat-y;
+        border: 2px solid red;
 }
-p.pie{
-	position:relative;
+footer p{
 	text-align:center;
 	margin-bottom:1px;
 	top:100px;
-	color:#FFF;
+	color: #000;
 	clear:both;
 }
 
