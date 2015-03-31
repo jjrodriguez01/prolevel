@@ -43,16 +43,18 @@ public class Ingreso extends HttpServlet {
                 UsuariosDTO datosUsuario = new UsuariosDTO();
                 RolUsuarioDAO rol = new RolUsuarioDAO();
                 
-                datosUsuario = usu.validarUsuario(email, contraseña);
-                int numerorol = rol.getRol(datosUsuario);
-                if(datosUsuario!=null && numerorol!=0){   
+                long cc = usu.validarUsuario(email, contraseña);
+                if (cc != 0) {
+                    datosUsuario = usu.listarUno(cc);
+                    int numerorol = rol.getRol(datosUsuario);
+                    if(datosUsuario!=null && numerorol!=0){   
                     HttpSession miSesion = request.getSession(true);
                     miSesion.setAttribute("usr", datosUsuario);
                     miSesion.setAttribute("rol", numerorol);
-                    response.sendRedirect("paginas/inicio.jsp");               
-                }
-                else if(datosUsuario == null){
-                response.sendRedirect("index.jsp?auto=No_Ingreso");
+                    response.sendRedirect("paginas/inicio.jsp"); 
+                    }              
+                }else {
+                response.sendRedirect("index.jsp?auth=noauth");
                 }
             }else if(request.getParameter("logout")!=null){
                     request.getSession().invalidate();

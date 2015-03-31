@@ -11,6 +11,7 @@
 <meta charset="utf-8">
 <title>Pro-level</title>
 <meta charset="utf-8">
+<link rel="shortcut icon" href="imagenes/favicon.ico">
 <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="js/lightslider/css/lightSlider.css" rel="stylesheet" type="text/css">
 <link href="js/lightGallery/css/lightGallery.css" rel="stylesheet" type="text/css">
@@ -173,7 +174,7 @@ li img {
 <script>
             $(document).ready(function(){
                 $("#menunav li a").on("mouseover", function(){
-                    $(this).addClass("zoomIn animated");
+                    $(this).addClass("pulse animated");
                     $("#menunav li a").on("mouseout",function(){
                         $("#menunav li a").removeClass();
                     });
@@ -181,7 +182,7 @@ li img {
             });
         </script>
 </head>
-<body onload="mialerta()">
+<body>
 <header>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -194,14 +195,14 @@ li img {
         <span class="icon-bar"></span>
       </button>
         <a class="navbar-brand" href="#">
-            <img alt="pro-level" src="imagenes/logo.png" style="width: 35px; height: 40px">
+            <img alt="pro-level" src="imagenes/logo.png" style="width: 35px; height: 40px; padding-bottom: 3px">
         </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="menunav">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.jsp">Ingresar</a></li>  
+        <li><a href="index.jsp">Ingresar</a></li>  
         <li><a href="reestablecer.jsp">Reestablecer contraseña <span class="sr-only">(current)</span></a></li>
         <li><a href="registro.jsp">Registrarme</a></li>
       </ul>
@@ -225,7 +226,7 @@ li img {
 </nav>
 </header>
 <main class="container">
-    <section class="container">
+    
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
@@ -234,8 +235,8 @@ li img {
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                <div class="center">
+            <div class="col-lg-6 col-md-6 col-sm-8 hidden-xs">
+
                     <ul id="imagenes" style="list-style: none">
                         <li data-thumb="imagenes/inicio/thumb/img1.jpg" data-src="imagenes/inicio/img1.jpg">
                             <img src="imagenes/inicio/img1.jpg" alt="imagen" />
@@ -253,12 +254,9 @@ li img {
                             <img src="imagenes/inicio/img6.jpg" alt="imagen" />
                         </li>
                     </ul>
-                </div>
             </div>
-        </div>
-
-    </section>  
-    <div id="formulario" class="row">
+     
+    <div id="formulario" class="col-lg-6 col-md-6 col-sd-4 col-xs-12">
       <form method="POST" action="Ingreso" id="login" class="form-inline">
     <div class="form-group">
       <label for="email">Usuario:</label>
@@ -272,12 +270,27 @@ li img {
       <label><input type="checkbox"> Recordarme</label>
     </div>
           <button type="submit" class="btn btn-default" name="ingresar">Ingresar</button>
-      </form>   
+      </form>
+    <%
+        if (request.getParameter("auth")!=null&&request.getParameter("auth").equals("noauth")) {
+    %>
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Datos de usuario inválidos.
+    </div>
+    <%
+            }
+    %>
   </div>
+    </div>
 </main>
 <footer>
-<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="index_english.html">
-<img src="imagenes/english.png" width="40" height="30" /></a></p> 
+<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
+    <a href="index_english.html">
+        <img src="imagenes/english.png" width="40" height="30" />   
+    </a>
+</p> 
 </footer>
 </body>
 </html>

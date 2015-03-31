@@ -62,27 +62,26 @@ public class EquipoDAO {
         return mensaje;
     }
 
-    public String actualizar(EquipoDTO usu) {
+    public String actualizar(EquipoDTO eq) {
         try {
             //preparamos la sentencia sql
-            String sql = "UPDATE equipo SET codigo=?,nombre=? WHERE codigo=?;";
+            String sql = "UPDATE equipo SET nombre=? WHERE codigo=?;";
             //pasamos el query a la conexion
            //sacamos los datos del dto de la tabla
             statement = conexion.prepareStatement(sql);
-            statement.setString(2, usu.getNombre());
-           
+            statement.setString(1, eq.getNombre());
+            statement.setInt(2, eq.getCodigo());
             //el resulset trae el numero de rows afectadas
             rtdo = statement.executeUpdate();
             if (rtdo != 0) {
 
-              mensaje="El Campo Se a modificado:" + rtdo + "saludes";
+              mensaje="Se ha modificado el equipo";
 
             } else {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-
         }
 
         return mensaje;

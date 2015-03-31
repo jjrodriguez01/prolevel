@@ -16,6 +16,10 @@ import java.util.Locale;
 import modelo.UsuariosDTO;
 import org.jboss.logging.Logger;
 import utilidades.Conexion;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class UsuariosDAO {
 
@@ -26,9 +30,13 @@ public class UsuariosDAO {
     private String mensaje = "";
     //variable que cuenta las filas afectadas
     private int rtdo = 0;
-
-    ResultSet rs;
-
+    //result set 
+    private ResultSet rs;
+    //llave
+    private final String llaveSimetrica = "passwordprolevel";
+    SecretKeySpec key = new SecretKeySpec(llaveSimetrica.getBytes(), "AES");
+    Cipher cipher;
+    
     public UsuariosDAO() {
         conexion = Conexion.getInstance();
     }
@@ -190,12 +198,11 @@ public class UsuariosDAO {
         return usuario;
     }
     
-        public UsuariosDTO validarUsuario(String email, String password) {
-        UsuariosDTO user = new UsuariosDTO();
-        String mensaje = "";
-        ResultSet rs = null;
+        public long validarUsuario(String email, String password) {
+
+        long cc = 0;
         try {
-            statement = conexion.prepareStatement("SELECT * "
+            statement = conexion.prepareStatement("SELECT idUsuario "
                     + "from usuarios where email=? and contraseña=?;");
 
             statement.setString(1, email);
@@ -204,19 +211,9 @@ public class UsuariosDAO {
             rs = statement.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                user.setIdUsuario(rs.getLong("idUsuario"));
-                user.setPrimerNombre(rs.getString("primerNombre"));
-                user.setSegundoNombre(rs.getString("segundoNombre"));
-                user.setPrimerApellido(rs.getString("primerApellido"));
-                user.setSegundoApellido(rs.getString("segundoApellido"));
-                user.setFecha(rs.getString("fechaNac"));
-                user.setEmail(rs.getString("email"));
-                user.setTelefono(rs.getString("telefono"));
-                user.setContraseña(rs.getString("contraseña"));
+                cc = rs.getLong("idUsuario");
                 }
                 
-            } else {
-                user=null;
             }
         } catch (SQLException sqle) {
 
@@ -225,7 +222,7 @@ public class UsuariosDAO {
         } finally {
         }
 
-        return user;
+        return cc;
     }
     public boolean ValidarRol(UsuariosDTO usu){
     boolean logeado=false;
