@@ -47,7 +47,7 @@ public class RegistroUsuario extends HttpServlet {
           udto.setContraseña(request.getParameter("pass"));
           
           String ins = udao.insertar(udto);
-          response.sendRedirect("index.html?mensaje="+ins);
+          response.sendRedirect("registro.jsp?registro="+ins);
           
         }else if (request.getParameter("actudatos")!=null && request.getParameter("datos")!=null) {
             udto = new UsuariosDTO();

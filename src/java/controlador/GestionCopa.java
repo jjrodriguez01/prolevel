@@ -1,6 +1,9 @@
 
 package controlador;
 
+import AbstractFactory.Copa;
+import AbstractFactory.Torneo;
+import FactoryMethod.TorneoFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,9 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.CopaDTO;
-import modelo.EliminatoriaDTO;
-import modelo.LigaDTO;
+import modelo.TorneoDTO;
 import persistencia.CopaDAO;
 import persistencia.EliminatoriaDAO;
 import persistencia.LigaDAO;
@@ -37,24 +38,23 @@ public class GestionCopa extends HttpServlet {
         
         
         if ( request.getParameter("copa")!=null && request.getParameter("enviarcopa")!=null) {
-            
-            CopaDTO copa = new CopaDTO();
-           
-            
+            int numgrupos = 4;
+            TorneoDTO copa = new TorneoDTO();
+
             copa.setIdTorneo(0);
             copa.setNombre(request.getParameter("nombreTorneo"));
             copa.setFechaInicio(request.getParameter("inicio"));
             copa.setFechaFin(request.getParameter("fin"));
             copa.setGenero(request.getParameter("tipo"));
             copa.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
-            copa.setEquiposGrupos(Integer.parseInt(request.getParameter("numgrupos")));
-            copa.setOctavosCuartosSemifinalFinalIdaVuelta(Boolean.parseBoolean(request.getParameter("idavueltaeli")));
-            copa.setFinalidavuelta(Boolean.parseBoolean(request.getParameter("finalIdaVuelta")));
+            copa.setEquiposGrupos(numgrupos);
+            copa.setOctavosCuartosSemifinalFinalIdaVuelta(true);
+            copa.setFinalidavuelta(true);
             copa.setTercerPuesto(Boolean.parseBoolean(request.getParameter("tercer")));
-            
-            CopaDAO cup = new CopaDAO();
-            cup.insertar(copa);
-            response.sendRedirect("copa.jsp?mensaje=ok");
+            TorneoFactory fabrica = new TorneoFactory();
+            Torneo cup = fabrica.crearTorneo(1, copa);
+            String crearcopa = cup.crear(copa);
+            response.sendRedirect("paginas/torneos/crear_torneo.jsp?copa="+crearcopa+"#ftorneos");
         }
     
      else {

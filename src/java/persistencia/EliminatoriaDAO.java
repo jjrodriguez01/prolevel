@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.EliminatoriaDTO;
 import utilidades.Conexion;
 
 /**
@@ -34,10 +33,10 @@ public class EliminatoriaDAO {
         conexion = Conexion.getInstance();
     }
     
-    public synchronized String insertar(EliminatoriaDTO eliminatoria){
+    public synchronized String insertar(TorneoDTO eliminatoria){
         try {
         call = conexion.prepareCall("{call sp_torneoeliminatoria(null,?,?,?,?,?,?,?) }");
-        call.setInt(1, eliminatoria.getIdEliminatoria());
+        call.setInt(1, eliminatoria.getIdTorneo());
         call.setString(2, eliminatoria.getNombre());
         call.setString(3, eliminatoria.getFechaInicio());
         call.setString(4, eliminatoria.getFechaFin());
@@ -83,30 +82,27 @@ public class EliminatoriaDAO {
     public String actualizar(TorneoDTO eliminatoria){
         
         try {
-            statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, fechaInicio= ?,fechaFin= ?, genero= ?, capacidadEquipos = ? WHERE idTorneo = ?");
+            statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, "
+                    + "fechaInicio= ?,fechaFin= ?, genero= ?, capacidadEquipos = ? WHERE idTorneo = ?");
             statement.setString(1, eliminatoria.getNombre());
             statement.setString(2, eliminatoria.getFechaInicio());
             statement.setString(3, eliminatoria.getFechaFin());
             statement.setString(4, eliminatoria.getGenero());
             statement.setInt(5, eliminatoria.getCapacidadEquipos());
-            statement.setInt(6, eliminatoria.getIdTorneo());
-            
-            rtdo = statement.executeUpdate();
-            
+            statement.setInt(6, eliminatoria.getIdTorneo());            
+            rtdo = statement.executeUpdate();            
             if (rtdo != 0) {
-
-                System.out.println("Se han modificado :" + rtdo + " registro");
-
+                System.out.println("Se ha modificado la eliminatoria");
             } else {
-                mensaje = "Error";
+                mensaje = "Error, no se pudo modificar";
             }
         }catch(SQLException sqle){
             mensaje = "Error: "+ sqle.getMessage();
-        }
-        
+        }       
         return mensaje;
     }
-     public String listarUno(EliminatoriaDTO eliminatoria) {
+     public TorneoDTO listarUno() {
+         TorneoDTO eliminatoria = new TorneoDTO();
         try {
             //preparamos la consulta       
             statement = conexion.prepareStatement("SELECT * from torneo where idTorneo = ?;");
@@ -120,40 +116,33 @@ public class EliminatoriaDAO {
                 eliminatoria.setFechaFin(rs.getString("fechaFin"));
                 eliminatoria.setGenero(rs.getString("genero"));
                 eliminatoria.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
-                eliminatoria.setIdEliminatoria(rs.getInt("Ideliminatoria"));
-                eliminatoria.setIdaVuelta(rs.getBoolean("idaVuelta"));
-             
-                
+                eliminatoria.setIdaVuelta(rs.getBoolean("idaVuelta"));             
             }
 
         } catch (SQLException ex) {
             mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
         }
         //devolvemos el usuario que se encontro
-        return "" +eliminatoria;
+        return eliminatoria;
     }
     
     public List ListarTodo(){
         
-        ArrayList<EliminatoriaDTO> listarEliminatorias = new ArrayList();
+        ArrayList<TorneoDTO> listarEliminatorias = new ArrayList();
         try{
             String sql= "SELECT * FROM dbprolevel.torneo inner join eliminatoria on" +
-"torneo.idTorneo = eliminatoria.idEliminatoria;";
-                                         
-            statement = conexion.prepareStatement(sql);
-            
-            rs = statement.executeQuery();
-            
+"torneo.idTorneo = eliminatoria.idEliminatoria;";                                         
+            statement = conexion.prepareStatement(sql);           
+            rs = statement.executeQuery();           
             while(rs.next()){
-                EliminatoriaDTO cup = new EliminatoriaDTO();
+                TorneoDTO cup = new TorneoDTO();
                 
-                cup.setIdTorneo(rs.getInt("idTorneo"));
+                cup.setIdTorneo(rs.getInt("idEliminatoria"));
                 cup.setNombre(rs.getString("nombre"));
                 cup.setFechaInicio(rs.getString("fechaInicio"));
                 cup.setFechaFin(rs.getString("fechaFin"));
                 cup.setGenero(rs.getString("genero"));
                 cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
-                cup.setIdEliminatoria(rs.getInt("idEliminatoria"));
                 cup.setIdaVuelta(rs.getBoolean("idaVuelta"));
                 
                 listarEliminatorias.add(cup);

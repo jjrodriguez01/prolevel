@@ -76,8 +76,7 @@
             });
 </script>
 <script>
-			$(function(){
-				
+			$(function(){				
 				$("#flipPad a:not(.revert)").bind("click",function(){
 					var $this = $(this);
 					$("#flipbox").flip({
@@ -130,7 +129,7 @@
                         </div>
                     </div>
                   </li>
-              <li><a href="crear_torneo.jsp"><img src="../imagenes/crear.png" width="24" height="24" alt="crear" />CREAR TORNEOS</a></li>
+              <li><a href="torneos/crear_torneo.jsp"><img src="../imagenes/crear.png" width="24" height="24" alt="crear" />CREAR TORNEOS</a></li>
             </ul>
           </div>
         </div>

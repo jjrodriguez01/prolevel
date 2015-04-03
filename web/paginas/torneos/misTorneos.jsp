@@ -67,9 +67,6 @@
     and
     tablaposiciones.idTorneo = ? <sql:param value="${param.idTorneo}"/>
     ORDER BY puntos DESC
-    LIMIT <c:if test="${param.pgtp == null}"><%--pdtp=parametro paginacion de tablaposicionse--%>
-            0
-        </c:if>${param.pgtp},10
 </sql:query>
 <%--  Query para la tabla de goleadores --%>            
 <sql:query var="tablagoleadores" dataSource="jdbc/pro-level">
@@ -113,21 +110,24 @@
 <html>
     <head>
         <title>${detallestorneo.nombre}</title>
+        <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
         <link href="../../css/estilosMisTorneos.css" rel="stylesheet" type="text/css">
+        <link href="../../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/jquery.validate.js"></script>
-        <script type="text/javascript" src="../../js/select/jquery-ui.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
-        <link href="../../js/select/jquery-ui.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jugadoresEquipos.js"></script>
+        <script type="text/javascript" src="../../js/dataTables/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="../../js/dataTables/js/datatablesbootstrap.js"></script>
         <script>
-            $(document).ready(function () {
-                $(".select")
-                        .selectmenu()
-                        .selectmenu("menuWidget")
-                        .addClass("overflow");
+            $(document).ready(function(){
+                $("#tposiciones, #tgoleadores, #ttarjetas").dataTable({
+                    language:{
+                        url: "../../js/dataTables/js/dataespañol.json"
+                    }
+                });
             });
         </script>
         <script>//script del tooltip de los th
@@ -138,7 +138,7 @@
 			
             if (textoTooltip.length > 0) {
                 $(this).append('<div class="tooltips">' + textoTooltip + '</div>');
-                $("th > div.tooltips").css("left", "" + posMouse - 103 + "px");
+                $("th > div.tooltips").css("left", "" + posMouse - 50 + "px");
                 $("th > div.tooltips").fadeIn(300);
             }
         });
@@ -205,7 +205,7 @@
             </hgroup>
             <div class="row">
                 <div class="col-md-9 col-sm-9">
-                    <table class="table table-responsive">
+                    <table id="tposiciones" class="table table-responsive">
                         <!-- column headers -->
                         <thead>
                             <tr>
@@ -237,25 +237,12 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <div>
-                        <ul class="pager">
-    <% int flechas; 
-    if (request.getParameter("pgtp")==null) {
-            flechas= 1;
-        }else{
-         flechas= Integer.parseInt(request.getParameter("pgtp"));
-    }
-    %>   
-    <li><a class="previous" href="?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>&pgtp=<%=0%>">&laquo;</a></li>
-    <li><a class="next" href="?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>&pgtp=<%=10%>">&raquo;</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-4">
                     <h3 class="tablatit">Tabla Goleadores</h3>
-                    <table class="table">
+                    <table id="tgoleadores" class="table">
                         <!-- column headers -->
                         <thead>
                             <tr>
@@ -283,7 +270,7 @@
                 </div>
                 <div id="tablatarjetas" class="col-md-6 col-sm-4">
                     <h3 class="tablatit">Tabla De Tarjetas</h3>
-                    <table class="table">
+                    <table id="ttarjetas" class="table">
                         <!-- column headers -->
                         <thead>
                             <tr>
@@ -305,7 +292,7 @@
                         </tbody>
                     </table>
                     <button class="bottom" id="btntar" data-toggle="modal" data-target="#tarjetas">Asignar Tarjetas</button>
-                                        <% 
+                    <% 
                 if (request.getParameter("tarjetas")!=null) {
                     %>
                     <span class='confirmt'>!Se insertaron las tarjetas¡</span>

@@ -7,8 +7,8 @@ package utilidades;
  */
 public class MiExcepcion extends Exception {
 
-    public MiExcepcion(String mensaje) {
-        super(mensaje);
+    public MiExcepcion(String mensaje, Throwable t) {
+        super(mensaje, t);
     }
     
     

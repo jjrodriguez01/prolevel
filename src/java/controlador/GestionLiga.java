@@ -1,14 +1,15 @@
 
 package controlador;
 
+import AbstractFactory.Torneo;
+import FactoryMethod.TorneoFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.LigaDTO;
-import persistencia.LigaDAO;
+import modelo.TorneoDTO;
 
 /**
  *
@@ -31,20 +32,19 @@ public class GestionLiga extends HttpServlet {
         if ( request.getParameter("liga")!=null && request.getParameter("enviarliga")!=null) {
             
             
-           LigaDTO ligdto = new LigaDTO();
-           LigaDAO ligdao = new LigaDAO();
+           TorneoDTO ligdto = new TorneoDTO();
             
-            ligdto.setIdLiga(0);
+            ligdto.setIdTorneo(0);
             ligdto.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
             ligdto.setFechaFin(request.getParameter("fin"));
             ligdto.setFechaInicio(request.getParameter("inicio"));
             ligdto.setGenero(request.getParameter("tipo"));
-            ligdto.setIdaVuelta(Boolean.parseBoolean(request.getParameter("idaVuelta")));
+            ligdto.setIdaVuelta(true);
             ligdto.setNombre(request.getParameter("nombreTorneo"));
-           
-            ligdao.insertar(ligdto);         
-            
-               response.sendRedirect("liga.jsp?mensaje=ok");
+            TorneoFactory fabrica = new TorneoFactory();
+            Torneo liga = fabrica.crearTorneo(1, ligdto);
+            String crearliga = liga.crear(ligdto);         
+            response.sendRedirect("paginas/torneos/crear_torneo.jsp?liga="+crearliga+"#ftorneos");
         }
           else {
             response.sendRedirect("liga.html");

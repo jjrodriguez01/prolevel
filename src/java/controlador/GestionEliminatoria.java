@@ -1,14 +1,15 @@
 
 package controlador;
 
+import AbstractFactory.Torneo;
+import FactoryMethod.TorneoFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.EliminatoriaDTO;
-import persistencia.EliminatoriaDAO;
+import modelo.TorneoDTO;
 
 /**
  *
@@ -31,19 +32,19 @@ public class GestionEliminatoria extends HttpServlet {
         if ( request.getParameter("eliminatoria")!=null && request.getParameter("enviareli")!=null) {
             
             
-            EliminatoriaDTO elidto = new EliminatoriaDTO();
-            EliminatoriaDAO elidao = new EliminatoriaDAO();
+            TorneoDTO elidto = new TorneoDTO();
             
-            elidto.setIdEliminatoria(0);
+            elidto.setIdTorneo(0);
             elidto.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
             elidto.setFechaFin(request.getParameter("fin"));
             elidto.setFechaInicio(request.getParameter("inicio"));
             elidto.setGenero(request.getParameter("tipo"));
-            elidto.setIdaVuelta(Boolean.parseBoolean(request.getParameter("idaVuelta")));
+            elidto.setIdaVuelta(true);
             elidto.setNombre(request.getParameter("nombreTorneo"));
-          
-            elidao.insertar(elidto);
-               response.sendRedirect("index.html? mensaje=ok");
+            TorneoFactory fabrica = new TorneoFactory();
+            Torneo cup = fabrica.crearTorneo(1, elidto);
+            String crearelim = cup.crear(elidto);
+               response.sendRedirect("paginas/torneos/crear_torneo.jsp?eliminatoria="+crearelim+"#ftorneos");
         }
           else {
             response.sendRedirect("eliminatoria.html");

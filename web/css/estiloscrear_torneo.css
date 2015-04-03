@@ -1,86 +1,42 @@
 @charset "utf-8";
 
+html {
+    font-size: 10pt;
+}
+
+body{
+    margin: 0 1px;
+}
+
 @font-face{
-	font-family: altea;
-	src:url(../fuentes/ALTEA.TTF);
+    font-family: altea;
+    src:url(../fuentes/ALTEA.TTF);
 }
-p#titulo{
-	font-family: altea,"Times New Roman", Times, serif;
-	position:relative;
-	text-align:center;
-	clear:both;
-	top:50px;
-	color:#060;
-	font-size:40px;
-	z-index: -2;
+hgroup > h1{
+    font-family: altea,"Times New Roman", Times, serif;
+    text-align:center;
+    clear:both;
+    color:#060;
+    font-size:4rem;
 }
-/*seccion de la presentacion de imagenes*/
-section#presentacion{
-	float:left;
-	margin-left:5%;
-	margin-top:90px;
+hgroup h2{
+    font-family: altea,"Times New Roman", Times, serif;
+    text-align:center;
+    clear:both;
+    color:#060;
+    font-size:2rem;
 }
-/*seccion del formulario*/
-section#tipotorneo{
-	float:left;
-	margin-top:10px;
-	margin-left:5%;
+section > h6{
+    font-size: 2rem;
+    font-family: Haettenschweiler,Elephant,Gungsuh,verdana,arial;
 }
-section#tipotorneo p{
-	text-align:left;
-	color:red;
-	font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
-	font-size:25px;
+section#informacion p.descripcion{
+    font-size: 1.5em;
+    font-family: Centaur,'Franklin Gothic Book',Ebrima,verdana;
 }
-
-
-section#tipotorneo{
-	height:350px;
-	margin-right:80px;
-	width:600px;
-        margin-top: 100px;
-}
-section#tipotorneo li{
-	margin-left: 10px;
-}
-/*
-section#tipotorneo a{
-    padding: 20px;
-} 
-ul#tipostorneo{
-	width:220px;
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-
-ul#tipostorneo li{
-	width:165px;
-	height:45px;
-	background-image:url(../imagenes/boton1.png);
-	background-repeat:no-repeat;
-}
-
-ul#tipostorneo li a{
-	color:#000;
-	display:block;
-	text-decoration:none;
-	padding: 20px;
-	transition:all 2s;
-	font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
-	text-align: center;
-	letter-spacing:1px;
-	font-weight: 800;
-	padding-bottom:22px;
-}
-
-ul#tipostorneo li a:hover{
-	background-image:url(../imagenes/boton2.png);
-	background-repeat:no-repeat;
-}
-*/
-section#informacion{
-	clear:both;
+div#encabezado{
+    clear:both;
+    background-color: ghostwhite;
 }
 @font-face{
 	font-family:champagne;
@@ -88,7 +44,7 @@ section#informacion{
 }
 
 p.info{
-	font-family:champagne;
+	font-family:champagne, 'times new roman', verdana, arial, castellar;
 	font-size:31px;
 	
 }
@@ -98,14 +54,30 @@ p.info:hover{
 	text-decoration:underline;
 }
 
-p#qcopa {
-	font-family: times new roman, arial narrow, arial
-}
 
 #btn{
 	visibility:hidden;
 }
-
+.row header h3{
+    display: inline;
+    font-family: sains-serif, verdana, 'times new roman', caligraphy;
+    color: green;
+}
+#ftorneos{
+    padding-top: 5%;
+}
+label{
+    font-size: 1em;
+    font-family: Tahoma;
+}
+/*label.error{
+    color:red;
+    font-style: italic;
+}
+input,select.error{
+    border: 1px solid red;
+    box-shadow: 1px 1px 8px red;
+}*/
 
 
 

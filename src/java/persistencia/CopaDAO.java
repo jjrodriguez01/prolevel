@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-import modelo.CopaDTO;
 import utilidades.Conexion;
 /**
  *
@@ -33,10 +32,10 @@ public class CopaDAO {
         conexion = Conexion.getInstance();
     }
     
-    public synchronized String insertar(CopaDTO copa){
+    public synchronized String insertar(TorneoDTO copa){
         try {
         call = conexion.prepareCall("{call sp_torneocopa(?,?,?,?,?,?,?,?,?,?,?) }");
-        call.setInt(1, copa.getIdCopa());
+        call.setInt(1, copa.getIdTorneo());
         call.setString(2, copa.getNombre());
         call.setString(3, copa.getFechaInicio());
         call.setString(4, copa.getFechaFin());
@@ -62,7 +61,7 @@ public class CopaDAO {
     }
     
     public String eliminar (int id){
-        CopaDTO copa = new CopaDTO();
+        TorneoDTO copa = new TorneoDTO();
         try {
             statement = conexion.prepareStatement("Delete from torneo where idTorneo = ?;");
             //obtenemos el id del item a eliminar del dto
@@ -81,8 +80,7 @@ public class CopaDAO {
         return mensaje;
     }
     
-    public String actualizar (int id){
-        CopaDTO copa = new CopaDTO();
+    public String actualizar (TorneoDTO copa){
         try {
             statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, "
                     + "fechaInicio= ?,fechaFin= ?, genero= ?, "
@@ -92,7 +90,7 @@ public class CopaDAO {
             statement.setString(3, copa.getFechaFin());
             statement.setString(4, copa.getGenero());
             statement.setInt(5, copa.getCapacidadEquipos());
-            statement.setInt(6, id);
+            statement.setInt(6, copa.getIdTorneo());
             
             rtdo = statement.executeUpdate();
             
@@ -109,8 +107,8 @@ public class CopaDAO {
         
         return mensaje;
     }
-     public CopaDTO listarUno(int id) {
-        CopaDTO copa = new CopaDTO();
+     public TorneoDTO listarUno(int id) {
+        TorneoDTO copa = new TorneoDTO();
         try {
             //preparamos la consulta
             statement = conexion.prepareStatement("SELECT * from torneo inner join copa on"
@@ -128,7 +126,6 @@ public class CopaDAO {
                 copa.setFechaFin(rs.getString(4));
                 copa.setGenero(rs.getString(5));
                 copa.setCapacidadEquipos(rs.getInt(6));
-                copa.setIdCopa(rs.getInt(7));
                 copa.setTercerPuesto(rs.getBoolean(8));
                 copa.setEquiposGrupos(rs.getInt(9));
                 copa.setOctavosCuartosSemifinalFinalIdaVuelta(rs.getBoolean(10));
@@ -142,9 +139,9 @@ public class CopaDAO {
         return copa;
     }
     
-    public ArrayList<CopaDTO> ListarTodo(){
+    public ArrayList<TorneoDTO> ListarTodo(){
         
-        ArrayList<CopaDTO> listarCopas = new ArrayList();
+        ArrayList<TorneoDTO> listarCopas = new ArrayList();
         try{                     
             statement = conexion.prepareStatement("SELECT idTorneo, nombre,"
                     + "fechaInicio, fechaFin, genero, capacidadEquipos"
@@ -154,14 +151,13 @@ public class CopaDAO {
             rs=statement.executeQuery();
             if (rs != null) {
             while(rs.next()){
-                CopaDTO cup = new CopaDTO();
-                cup.setIdTorneo(rs.getInt("idTorneo"));
+                TorneoDTO cup = new TorneoDTO();
+                cup.setIdTorneo(rs.getInt("idCopa"));
                 cup.setNombre(rs.getString("nombre"));
                 cup.setFechaInicio(rs.getString("fechaInicio"));
                 cup.setFechaFin(rs.getString("fechaFin"));
                 cup.setGenero(rs.getString("genero"));
                 cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
-                cup.setIdCopa(rs.getInt("idCopa"));
                 cup.setTercerPuesto(rs.getBoolean("tercerPuesto"));
                 cup.setEquiposGrupos(rs.getInt("equiposGrupos"));
                 cup.setOctavosCuartosSemifinalFinalIdaVuelta(rs.getBoolean("octavosCuartosSemifinalFinalIdaVuelta"));

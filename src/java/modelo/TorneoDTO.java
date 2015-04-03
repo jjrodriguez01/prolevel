@@ -12,20 +12,11 @@ public class TorneoDTO {
     private String fechaFin;
     private String genero;
     private int capacidadEquipos;
-
-    public TorneoDTO(int idTorneo, String nombre, String fechaInicio, String fechaFin, String genero, int capacidadEquipos) {
-        this.idTorneo = idTorneo;
-        this.nombre = nombre;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.genero = genero;
-        this.capacidadEquipos = capacidadEquipos;
-    }
-
-    public TorneoDTO() {
-    }
-    
-    
+    private boolean tercerPuesto;
+    private int equiposGrupos;
+    private boolean octavosCuartosSemifinalFinalIdaVuelta;
+    private boolean finalidavuelta; 
+    private boolean idaVuelta;
 
     public int getIdTorneo() {
         return idTorneo;
@@ -75,16 +66,51 @@ public class TorneoDTO {
         this.capacidadEquipos = capacidadEquipos;
     }
 
+    public boolean isTercerPuesto() {
+        return tercerPuesto;
+    }
+
+    public void setTercerPuesto(boolean tercerPuesto) {
+        this.tercerPuesto = tercerPuesto;
+    }
+
+    public int getEquiposGrupos() {
+        return equiposGrupos;
+    }
+
+    public void setEquiposGrupos(int equiposGrupos) {
+        this.equiposGrupos = equiposGrupos;
+    }
+
+    public boolean isOctavosCuartosSemifinalFinalIdaVuelta() {
+        return octavosCuartosSemifinalFinalIdaVuelta;
+    }
+
+    public void setOctavosCuartosSemifinalFinalIdaVuelta(boolean octavosCuartosSemifinalFinalIdaVuelta) {
+        this.octavosCuartosSemifinalFinalIdaVuelta = octavosCuartosSemifinalFinalIdaVuelta;
+    }
+
+    public boolean isFinalidavuelta() {
+        return finalidavuelta;
+    }
+
+    public void setFinalidavuelta(boolean finalidavuelta) {
+        this.finalidavuelta = finalidavuelta;
+    }
+
+    public boolean isIdaVuelta() {
+        return idaVuelta;
+    }
+
+    public void setIdaVuelta(boolean idVuelta) {
+        this.idaVuelta = idaVuelta;
+    }
+
     @Override
     public String toString() {
-        return "TorneoDTO" 
-                + "\nidTorneo :" + idTorneo 
-                + "\nnombre :" + nombre 
-                + "\nfechaInicio :" + fechaInicio 
-                + "\nfechaFin : " + fechaFin 
-                + "\ngenero: " + genero 
-                + "\ncapacidadEquipos: " + capacidadEquipos;
+        return "TorneoDTO{" + "idTorneo=" + idTorneo + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", genero=" + genero + ", capacidadEquipos=" + capacidadEquipos + ", tercerPuesto=" + tercerPuesto + ", equiposGrupos=" + equiposGrupos + ", octavosCuartosSemifinalFinalIdaVuelta=" + octavosCuartosSemifinalFinalIdaVuelta + ", finalidavuelta=" + finalidavuelta + ", idaVuelta=" + idaVuelta + '}';
     }
+    
     
     
 }

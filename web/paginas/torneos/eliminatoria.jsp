@@ -156,7 +156,7 @@ $( "#dialog-link, #icons li" ).hover(
     <input type="text" class="datepicker" name="fin" required>
     <br/>
 
-    <button type="submit" name="eliminato^ria">CREAR</button>
+    <button type="submit" name="eliminatoria">CREAR</button>
     <input type="hidden" name="enviareli" />
     </fieldset>
 </form>

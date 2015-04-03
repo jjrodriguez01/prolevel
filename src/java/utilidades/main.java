@@ -14,9 +14,9 @@ import persistencia.*;
 public class main {
     public static void main (String args[]){
         UsuariosDAO usu = new UsuariosDAO();
-        String pas="jscotamo8@misena.edu.co";
-        String r = usu.recuperar(pas);
-        System.out.println(r);
+        String pas="j3216514086";
+        long id = 1016036010;
+        System.out.println(usu.cambiarPass(id, pas));
         
 }
 }

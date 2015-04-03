@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import modelo.UsuariosDTO;
 import persistencia.RolUsuarioDAO;
 import persistencia.UsuariosDAO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -69,6 +70,8 @@ public class Ingreso extends HttpServlet {
             out.println("<h1>Servlet Ingreso at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+        }catch(MiExcepcion mie){
+            response.sendRedirect("index.jsp?error="+mie.getMessage());
         }
     }
 

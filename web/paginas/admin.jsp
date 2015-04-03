@@ -48,18 +48,13 @@
 <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/perfiladmin.css" rel="stylesheet" type="text/css">
 <link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
-<link href="../js/acordeon/jquery-ui.css" rel="stylesheet" type="text/css">
-<link href="../js/acordeon/jquery-ui.theme.css" rel="stylesheet" type="text/css">
 <link href="../js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
-<script type="text/javascript" src="../js/acordeon/jquery-ui.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
 <script type="text/javascript" src="../js/datepicker/jquery-ui.js"></script>
-<script type="text/javascript" src="../js/select/jquery-ui.js"></script>
-<link href="../js/select/jquery-ui.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../js/listaTorneo.js"></script>
 <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/jquery_table.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/jquery.dataTables.js"></script>
 <script>
 $(document).ready(function() {
     $(function() {
@@ -552,25 +547,30 @@ $(document).ready(function() {
             <div class="form-group">
             <label for="nombre" class="control-label col-md-6">Nombre Del Torneo</label>
                 <div class="col-md-6">
-                    <input type="text" id="nombre" name="nombre" placeholder="<%=request.getParameter("nombre")%>" maxlength="14"/>
+                    <input type="text" id="nombre" name="nombre" placeholder="<%=request.getParameter("nombre")%>" maxlength="14" required/>
                 </div>
                 </div>
                 <div class="form-group">
                 <label for="finicio" class="control-label col-md-6">Fecha De Inicio</label>
                 <div class="col-md-6">
-                    <input type="text" class="datepicker" id="finicio" name="finicio" placeholder="<%=request.getParameter("finicio")%>"/>
+                    <input type="text" class="datepicker" id="finicio" name="finicio" placeholder="<%=request.getParameter("finicio")%>" required/>
                 </div>
                 </div>
                 <div class="form-group">
                 <label for="ffin" class="control-label col-md-6">Fecha De Fin</label>
                 <div class="col-md-6">
-                    <input type="text" class="datepicker" id="ffin" name="ffin" placeholder="<%=request.getParameter("ffin")%>"/>
+                    <input type="text" class="datepicker" id="ffin" name="ffin" placeholder="<%=request.getParameter("ffin")%>" required/>
                 </div>
                 </div>
                 <div class="form-group">
                 <label for="genero" class="control-label col-md-6">Genero</label>
                 <div class="col-md-6">
-                    <input type="text" id="genero" name="genero" placeholder="<%=request.getParameter("genero")%>"/>
+                    <select id="genero" name="genero" required>
+                        <option></option>
+                        <option value="Femenino"<%if(request.getParameter("genero").equalsIgnoreCase("Femenino")){%> selected <%}%>>Femenino</option>
+                        <option value="Masculino"<%if(request.getParameter("genero").equalsIgnoreCase("Masculino")){%>selected <%}%>>Masculino</option>
+                    </select>
+                    <input type="text" id="genero" name="genero" placeholder="<%=request.getParameter("genero")%>" />
                 </div>
                 </div>
                 <div class="form-group">
@@ -599,7 +599,7 @@ $(document).ready(function() {
             <div class="form-group">
             <label for="nombre" class="control-label col-md-6">Nombre Del Torneo</label>
                 <div class="col-md-6">
-                    <input type="text" id="nombre" name="nombre" value="<%=request.getParameter("nombre")%>" maxlength="14" readonly=""/>
+                    <input type="text" id="nombre" name="nombre" value="<%=request.getParameter("nombre")%>" maxlength="14" readonly="readonly"/>
                 </div>
                 </div>
                 <div class="form-group">

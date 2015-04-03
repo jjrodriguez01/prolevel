@@ -271,7 +271,7 @@ li img {
     </div>
           <button type="submit" class="btn btn-default" name="ingresar">Ingresar</button>
       </form>
-    <%
+    <%  //si hay mensaje de autenticacion
         if (request.getParameter("auth")!=null&&request.getParameter("auth").equals("noauth")) {
     %>
     <div class="alert alert-danger" role="alert">
@@ -279,7 +279,14 @@ li img {
         <span class="sr-only">Error:</span>
         Datos de usuario inválidos.
     </div>
-    <%
+    <%  //si hay mensaje de error
+            }else if(request.getParameter("error")!=null){
+     %>
+     <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong><%=request.getParameter("error")%></strong> 
+    </div>
+     <%
             }
     %>
   </div>

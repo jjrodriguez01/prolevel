@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.LigaDTO;
+import modelo.TorneoDTO;
 import utilidades.Conexion;
 
 /**
@@ -32,21 +32,22 @@ public class LigaDAO {
         conexion = Conexion.getInstance();
     }
 
-    public synchronized String insertar (LigaDTO liga) {
+    public synchronized String insertar (TorneoDTO liga) {
 
         try {
             //sentencia sql
-            call = conexion.prepareCall("call sp_torneoliga (?,?,?,?,?,?,?)");
+            call = conexion.prepareCall("call sp_torneoliga (?,?,?,?,?,?,?,?);");
             //pasamos la sentencia la conexion mediante el prepare staement
-            call.setString(1, liga.getNombre());
-            call.setString(2, liga.getFechaInicio());
-            call.setString(3, liga.getFechaFin());
-            call.setString(4, liga.getGenero());
-            call.setInt(5, liga.getCapacidadEquipos());
-            call.setBoolean(6, liga.isIdaVuelta());
-            call.registerOutParameter(7, Types.INTEGER);
+            call.setInt(1, liga.getIdTorneo());
+            call.setString(2, liga.getNombre());
+            call.setString(3, liga.getFechaInicio());
+            call.setString(4, liga.getFechaFin());
+            call.setString(5, liga.getGenero());
+            call.setInt(6, liga.getCapacidadEquipos());
+            call.setBoolean(7, liga.isIdaVuelta());
+            call.registerOutParameter(8, Types.INTEGER);
             call.execute();
-            int salida = call.getInt(7);
+            int salida = call.getInt(8);
             
             if (salida == 1) {
                 mensaje = "Nueva liga creada.";
@@ -61,7 +62,7 @@ public class LigaDAO {
         return mensaje;
     }
 
-    public String actualizar(LigaDTO liga) {
+    public String actualizar(TorneoDTO liga) {
         try {
             statement = conexion.prepareStatement("UPDATE torneo SET nombre=?, "
                     + "fechaInicio =?, fechaFin = ?, genero = ?, "
@@ -107,9 +108,9 @@ public class LigaDAO {
         return mensaje;
     }
 
-    public List<LigaDTO> listarTodo() {
+    public List<TorneoDTO> listarTodo() {
         //creamos el array que va a contener los datos de la consulta    
-        ArrayList<LigaDTO> listarLiga = new ArrayList();
+        ArrayList<TorneoDTO> listarLiga = new ArrayList();
 
         try {
             statement = conexion.prepareStatement("SELECT * FROM torneo"
@@ -117,21 +118,18 @@ public class LigaDAO {
                     + "on torneo.idTorneo = liga.idLiga");
             rs = statement.executeQuery();
             while (rs.next()) {
-               LigaDTO liga = new LigaDTO();
-                liga.setIdTorneo(rs.getInt("idTorneo"));
+               TorneoDTO liga = new TorneoDTO();
+                liga.setIdTorneo(rs.getInt("idLiga"));
                 liga.setNombre(rs.getString("nombre"));
                 liga.setFechaInicio(rs.getString("fechaInicio"));
                 liga.setFechaFin(rs.getString("fechaFin"));
                 liga.setGenero(rs.getString("genero"));
-                liga.setIdLiga(rs.getInt("idLiga"));
                 liga.setIdaVuelta(rs.getBoolean("idaVuelta"));
                 
                 listarLiga.add(liga);
-
             }
         } catch (SQLException sqlexception) {
            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-
         } finally {
 
         }
@@ -140,8 +138,8 @@ public class LigaDAO {
 
     }
 
-    public List<LigaDTO> listarUno(int id) {
-        ArrayList<LigaDTO> listarLiga = new ArrayList();
+    public TorneoDTO listarUno(int id) {
+        TorneoDTO liga = new TorneoDTO();
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT * from torneo"
@@ -153,20 +151,18 @@ public class LigaDAO {
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
-                LigaDTO liga = new LigaDTO();
-                liga.setIdTorneo(rs.getInt("idTorneo"));
+                
+                liga.setIdTorneo(rs.getInt("idLiga"));
                 liga.setNombre(rs.getString("nombre"));
                 liga.setFechaInicio(rs.getString("fechaInicio"));
                 liga.setFechaFin(rs.getString("fechaFin"));
                 liga.setGenero(rs.getString("genero"));
-                liga.setIdLiga(rs.getInt("idLiga"));
                 liga.setIdaVuelta(rs.getBoolean("idaVuelta"));
-                listarLiga.add(liga);
             }
 
         } catch (SQLException ex) {
             mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
         }
-        return listarLiga;
+        return liga;
     }
 }
