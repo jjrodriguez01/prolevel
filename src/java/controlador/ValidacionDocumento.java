@@ -7,18 +7,20 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.CanchaDTO;
-import persistencia.CanchaDAO;
+import persistencia.UsuariosDAO;
+import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
-public class Canchas extends HttpServlet {
+public class ValidacionDocumento extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,30 +32,37 @@ public class Canchas extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        CanchaDTO cdto = null;
-        CanchaDAO cdao = null;
-        if (request.getParameter("ecancha")!=null) {
-            cdao = new CanchaDAO();
-            int numeroCancha = Integer.parseInt(request.getParameter("numero"));
-            String eliminada = cdao.eliminar(numeroCancha);
-            response.sendRedirect("paginas/admin.jsp?eliminada="+eliminada);
-        }else if (request.getParameter("icancha")!=null) {
-            cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
-            cdto.setNumeroCancha(Integer.parseInt(request.getParameter("numero")));
-            cdto.setDescripcion(request.getParameter("des"));
-            String ins = cdao.insertar(cdto);
-            response.sendRedirect("paginas/admin.jsp?inscancha="+ins);
-        }else if (request.getParameter("ac")!=null & request.getParameter("confirmac")!=null){
-            cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
-            cdto.setNumeroCancha(Integer.parseInt(request.getParameter("num")));
-            cdto.setDescripcion(request.getParameter("descripcion"));
-            String ac = cdao.actualizar(cdto);
-            response.sendRedirect("paginas/admin.jsp?ac="+ac);
-        }
+        PrintWriter out = response.getWriter();
+            if (request.getParameter("jugador")!=null) {
+            StringBuilder respuesta = new StringBuilder("");
+            UsuariosDAO udao = new UsuariosDAO();
+            long cc = Long.parseLong(request.getParameter("jugador").trim());
+            respuesta.append(udao.validarDocumento(cc));
+            this.writeResponse(response, respuesta.toString());
+        }else{
+               try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet validacionDocumento</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet validacionDocumento at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }finally{
+                   out.close();
+               } 
+            }  
+    }
+    public void writeResponse(HttpServletResponse response, String output)throws IOException{
+        response.setContentType("text/plain");
+        response.setHeader("cache-control", "no-cache");
+        response.setHeader("content","text/html; charset=utf-8");
+        response.getWriter().write(output);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,7 +77,11 @@ public class Canchas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(ValidacionDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -82,7 +95,11 @@ public class Canchas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(ValidacionDocumento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

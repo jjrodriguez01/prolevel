@@ -47,14 +47,14 @@ public class CRUDTorneo extends HttpServlet {
                 
                 tdao = new TorneoDAO();
                 String msj = tdao.actualizar(tdto);
-                response.sendRedirect("perfil_admin.jsp?updatet="+msj);
+                response.sendRedirect("paginas/admin.jsp?updatet="+msj);
                 
             }else if (request.getParameter("et")!=null && request.getParameter("realizaret")!=null)  {
                 tdto = new TorneoDTO();
                 int id = (Integer.parseInt(request.getParameter("idTorneo")));
                 tdao = new TorneoDAO();
                 String elit = tdao.eliminar(id);
-                response.sendRedirect("perfil_admin.jsp?elimt="+elit);
+                response.sendRedirect("paginas/admin.jsp?elimt="+elit);
             }
         }
     }

@@ -38,8 +38,8 @@ public class Ingreso extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if (request.getParameter("ingresar") != null) {
-                String email = request.getParameter("email");
-                String contraseña = request.getParameter("pass");
+                String email = request.getParameter("email").trim();
+                String contraseña = request.getParameter("pass").trim();
                 UsuariosDAO usu = new UsuariosDAO();
                 UsuariosDTO datosUsuario = new UsuariosDTO();
                 RolUsuarioDAO rol = new RolUsuarioDAO();

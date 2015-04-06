@@ -171,7 +171,6 @@ $(document).ready(function() {
         <select id="grupos" name="numgrupos" required>
             <option></option>
             <option>4</option>
-            <option>8</option>
         </select>
     </div>
     <div class="form-group">
@@ -263,8 +262,8 @@ $(document).ready(function() {
         <label for="capacidad">Capacidad de equipos</label>
         <select id="capacidad" name="capacidad">
             <option></option>
-            <option>16</option>
-            <option>32</option>
+            <option>12</option>
+            <option>20</option>
         </select>
     </div>
     <div class="form-group">

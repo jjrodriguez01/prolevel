@@ -61,7 +61,7 @@ public class RegistroUsuario extends HttpServlet {
             udto.setEmail(request.getParameter("email"));
             udto.setContraseña(request.getParameter("pass"));
             String conf = udao.actualizar(udto);
-            response.sendRedirect("perfil_admin.jsp?conf="+conf);
+            response.sendRedirect("paginas/admin.jsp?conf="+conf);
         }
     }
 

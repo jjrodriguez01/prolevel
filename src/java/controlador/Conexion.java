@@ -7,18 +7,24 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.CanchaDTO;
-import persistencia.CanchaDAO;
+import javax.sql.DataSource;
 
 /**
  *
  * @author jeisson
  */
-public class Canchas extends HttpServlet {
+@WebServlet(name = "Conexion", urlPatterns = {"/Conexion"})
+public class Conexion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,28 +38,34 @@ public class Canchas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        CanchaDTO cdto = null;
-        CanchaDAO cdao = null;
-        if (request.getParameter("ecancha")!=null) {
-            cdao = new CanchaDAO();
-            int numeroCancha = Integer.parseInt(request.getParameter("numero"));
-            String eliminada = cdao.eliminar(numeroCancha);
-            response.sendRedirect("paginas/admin.jsp?eliminada="+eliminada);
-        }else if (request.getParameter("icancha")!=null) {
-            cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
-            cdto.setNumeroCancha(Integer.parseInt(request.getParameter("numero")));
-            cdto.setDescripcion(request.getParameter("des"));
-            String ins = cdao.insertar(cdto);
-            response.sendRedirect("paginas/admin.jsp?inscancha="+ins);
-        }else if (request.getParameter("ac")!=null & request.getParameter("confirmac")!=null){
-            cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
-            cdto.setNumeroCancha(Integer.parseInt(request.getParameter("num")));
-            cdto.setDescripcion(request.getParameter("descripcion"));
-            String ac = cdao.actualizar(cdto);
-            response.sendRedirect("paginas/admin.jsp?ac="+ac);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Conexion</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Conexion at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
+    }
+    public static Connection getConnection(){
+        Connection conexion = null;
+        String salida = "";
+        Context ctx;
+        try {
+            ctx = new InitialContext();
+            DataSource ds = (DataSource) ctx.lookup("jdbc/pro-level");
+            conexion = ds.getConnection(); 
+
+        } catch (NamingException ex) {
+            salida += ex.getMessage();
+            } catch (SQLException sqle) {
+            salida += sqle.getMessage();
+        }
+        return conexion;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

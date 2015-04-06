@@ -38,7 +38,7 @@ h1#titulo{
 	font-family:altea,'times new roman', tahoma, sans-serif, 'lucida-grande';
 	color:#0F0;
 	text-shadow: 0 0 5px #000000;
-	padding-top: 80px;
+	padding-top: 20px;
 	font-size:50px;
 }
 tr th:hover {
@@ -167,3 +167,7 @@ tbody tr:hover {
         right: 50%;
 }
 
+.menu-opciones{
+    clear: both;
+    padding-top: 10px;
+}

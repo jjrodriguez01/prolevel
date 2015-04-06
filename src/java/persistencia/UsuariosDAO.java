@@ -317,5 +317,23 @@ public class UsuariosDAO {
         }
         return mensaje;
     }
+    
+    public StringBuilder validarDocumento(long cc)throws MiExcepcion{
+        StringBuilder salida = new StringBuilder("");
+        try {
+            statement = conexion.prepareStatement("SELECT idUsuario FROM usuarios"
+                    + " WHERE idusuario = ?;");
+            statement.setLong(1, cc);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                salida.append("El usuario ").append(cc).append(" ya se encuentra en el sistema");
+            }else{
+                salida.append("El usuario no se encuentra registrado en el sistema");
+            }
+        } catch (SQLException sqle) {
+            throw new MiExcepcion("Error ", sqle); 
+        }
+        return salida;
+    }
 }
 

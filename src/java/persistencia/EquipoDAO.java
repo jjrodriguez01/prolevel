@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.JugadoresporequipoDTO;
+import utilidades.MiExcepcion;
 
 public class EquipoDAO {
      Connection conexion = null;
@@ -33,23 +36,20 @@ public class EquipoDAO {
         conexion = Conexion.getInstance();
     }
 
-    public String insertar(EquipoDTO equ) {
-
+    public String insertar(String nombre) {
         try {
             //sentencia sql
-            String sql = "INSERT INTO equipo(codigo,nombre,)VALUES(?,?)";
+            String sql = "INSERT INTO equipo(codigo,nombre) VALUES(null,?);";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
-            statement.setInt(1, equ.getCodigo());
-            statement.setString(2, equ.getNombre());
-            
+            statement.setString(1, nombre);            
 
             //ejecuta el insert
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                System.out.println("se insertaron:" + rtdo + "Datos");
+                mensaje = "Se inserto el equipo";
                 //si no se afecto la tabla
             } else {
                 mensaje = "Error";
@@ -191,6 +191,21 @@ public class EquipoDAO {
             mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
         }
         return equ;
+    }
+    
+    public int existeEquipo(String nombre) throws MiExcepcion{
+        int codigo = 0;
+         try {
+             statement = conexion.prepareStatement("SELECT codigo FROM equipo Where nombre= ?;");
+             statement.setString(1, nombre);
+             rs = statement.executeQuery();
+             if (rs.next()) {
+                 codigo = rs.getInt("codigo");
+             }
+         } catch (SQLException sqle) {
+             throw new MiExcepcion("Error ", sqle);
+         }
+        return codigo;
     }
 
 }

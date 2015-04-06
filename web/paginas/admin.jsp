@@ -29,22 +29,11 @@
                     int rol = (Integer)miSession.getAttribute("rol");
                     if(rol == 1){
                     
-        %>
-<% 
-    int regtorneo = tdao.contarRegistros();
-    int numpg = regtorneo/5;//divide en 5 la cantidad total de registros de la tabla 
-    int pg = 0;
-    // si no hay parametro pagina se establece 1 por defecto
-    if (request.getParameter("pg")==null) {
-        pg = 1;
-        }else{
-        pg = Integer.parseInt(request.getParameter("pg"));
-    }
-    
-%> 
+        %> 
 <!doctype html>
 <html>
 <head>
+    <link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
 <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/perfiladmin.css" rel="stylesheet" type="text/css">
 <link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
@@ -55,12 +44,18 @@
 <script type="text/javascript" src="../js/listaTorneo.js"></script>
 <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/dataTables/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/datatablesbootstrap.js"></script>
 <script>
 $(document).ready(function() {
-    $(function() {
    $( ".datepicker" ).datepicker( "option", "minDate", 0 );
    $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-  });
+   $("#ttorneos,#tcanchas").dataTable({
+                    language:{
+                        url: "../js/dataTables/js/dataespañol.json"
+                    },
+                    searching: 
+                });
+} );
 });
 </script>
 <script>
@@ -282,11 +277,6 @@ $(document).ready(function() {
         });
     });
 });
-</script>
-<script type="text/javascript">
-			$(document).ready(function() {
-				$('#divTabla').buscoloquemesaledelospeones('inputFiltro');
-			});
 </script>	
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pro-level :: Mi Perfil</title>
@@ -329,7 +319,7 @@ $(document).ready(function() {
       <li><a href="#"><span><img src="../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
       	<div class="subs">
         	<ul>
-            	<li><a href="#"><img src="i../magenes/ajustes.png" width="24" height="24" alt="ajustes" />ADMINISTRAR</a></li>
+            	<li><a href="#"><img src="../imagenes/ajustes.png" width="24" height="24" alt="ajustes" />ADMINISTRAR</a></li>
                 <li><a href="../Ingreso?logout=cerrar"><img src="../imagenes/out.png" width="24" height="24" alt="cerrar" />CERRAR CESIÓN</a></li>
             </ul>
         </div>
@@ -342,19 +332,19 @@ $(document).ready(function() {
 <div class="" id="contenedor">
 <section id="menu" class="container">
         <h3>Administra tu perfil</h3>
-    		<div class="jumbotron">
-                	<div class="">
-                            <img src="../imagenes/settings.png" id="datos" width="128" height="128"  alt="Modificar datos personales" class="img-circle img-responsive"/> 
-                        <h3>DATOS PERSONALES</h3>
+            <div class="jumbotron">
+                <div class="">
+                    <img src="../imagenes/settings.png" id="datos" width="128" height="128"  alt="Modificar datos personales" class="img-circle img-responsive"/> 
+                    <h3>DATOS PERSONALES</h3>
+                </div>
+                <div class="">
+                    <img src="../imagenes/copa.png" id="copas" width="128" height="128"  alt="torneos" class="img-circle img-responsive"/>
+                        <h3>TORNEOS</h3>
                     </div>
-                		<div class="">
-                                    <img src="../imagenes/copa.png" id="copas" width="128" height="128"  alt="torneos" class="img-circle img-responsive"/>
-                            <h3>TORNEOS</h3>
-                        </div>
-                			<div class="">
-                                            <img src="../imagenes/fondoindex.jpg" id="campos" width="128" height="128"  alt="canchas" class="img-circle img-responsive"/> 
-                            	<h3>CANCHAS</h3>
-                            </div>
+            <div class="">
+                <img src="../imagenes/fondoindex.jpg" id="campos" width="128" height="128"  alt="canchas" class="img-circle img-responsive"/> 
+                <h3>CANCHAS</h3>
+            </div>
             </div>
 </section> 
 <section id="formulario" class="item">
@@ -418,13 +408,13 @@ $(document).ready(function() {
     <div class="form-group">
         <label for="pass"  class="control-label col-md-6">Contraseña</label>
             <div class="col-md-6">
-                <input type="password" id="pass" name="pass" placeholder="<%=udto.getContraseña()  %>"/>
+                <input type="password" id="pass" name="pass" placeholder="****"/>
             </div>
     </div>
     <div class="form-group">
         <label for="confpass"  class="control-label col-md-6">Confirmar Contraseña</label>
             <div class="col-md-6">
-                <input type="password" id="confpass" name="confpass" placeholder="<%=udto.getContraseña() %>"/>
+                <input type="password" id="confpass" name="confpass" placeholder="****"/>
             </div>
     </div>
     <div class="center-block btn">
@@ -443,10 +433,10 @@ $(document).ready(function() {
 </script>
 <div class="alert alert-warning alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>¡Torneo editado correctamente!</strong>
-</div>
+    <strong><span class="glyphicon glyphicon-ok"></span><%=request.getParameter("conf")%></strong>
+</div> 
 <%            
-        }
+       }
 %>
 </div>
 </section>
@@ -461,11 +451,7 @@ $(document).ready(function() {
                 </ol>
             </div>
                 <h1>Torneos</h1>      
-                <div>
-                    <span style="font-weight:bold;">Búsqueda Avanzada:&nbsp;</span>
-                    <input id="inputFiltro" type="text" />
-                </div>
-                <table id="divTabla" class="table table-responsive">
+                <table id="ttorneos" class="table table-responsive">
     <!-- column headers -->
                 <thead>
                     <tr>
@@ -478,13 +464,10 @@ $(document).ready(function() {
                         <th>Eliminar</th>
                     </tr>
                 </thead>
+                <tbody>
     <% 
         ArrayList<TorneoDTO> ttorneos = new ArrayList();
-        ttorneos = (ArrayList<TorneoDTO>) tdao.ListaPaginacion(pg, 5);
-    %>
- 
-<tbody>
-    <% 
+        ttorneos = (ArrayList<TorneoDTO>) tdao.ListarTodo();
         for (TorneoDTO t: ttorneos){
     %>
 <tr>
@@ -515,25 +498,10 @@ $(document).ready(function() {
         </form>
     </td>
 </tr>
+<%  }  %>
 </tbody>
-    <%  }  %>
-<tfoot>
-<ul class="pagination">
-    <% int flechas; 
-    if (request.getParameter("pg")==null) {
-            flechas= 1;
-        }else{
-         flechas= Integer.parseInt(request.getParameter("pg"));
-    }
-    %>   
-    <li><a href="?pg=<%=flechas-1%>">&laquo;</a></li>
-  <% for (int i=0; i<numpg + 1; i++){ %>
-  <li><a href="?pg=<%=i+1%>" class="npag"><%=i+1%></a></li>
-  <%  }  %>
-  <li><a href="?pg=<%=flechas+1%>">&raquo;</a></li>
-</ul>
-</tfoot>
 </table>
+    <%--ventana modal de actualizar torneo--%>
 <div class="modal fade" id="atorneo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -567,10 +535,9 @@ $(document).ready(function() {
                 <div class="col-md-6">
                     <select id="genero" name="genero" required>
                         <option></option>
-                        <option value="Femenino"<%if(request.getParameter("genero").equalsIgnoreCase("Femenino")){%> selected <%}%>>Femenino</option>
-                        <option value="Masculino"<%if(request.getParameter("genero").equalsIgnoreCase("Masculino")){%>selected <%}%>>Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Masculino">Masculino</option>
                     </select>
-                    <input type="text" id="genero" name="genero" placeholder="<%=request.getParameter("genero")%>" />
                 </div>
                 </div>
                 <div class="form-group">
@@ -586,6 +553,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+<%--ventana modal de eliminar torneo--%>
 <div class="modal fade" id="etorneo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -633,17 +601,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-<%-- si hubo click en la paginacion de la tabla torneo autoclick para el icono copas --%>
-<%  if (request.getParameter("pg")!=null) {
-%>
-<script>
-    $(document).ready(function(){
-         $("#copas").trigger("click");
-    });
-</script>
-<%
-    }
-%> 
+
 <%-- si hubo click en editar autoclick para la ventana modal y el icono copas --%>
 <%  if (request.getParameter("actutorneo")!=null) {
 %>
@@ -668,7 +626,7 @@ $(document).ready(function() {
 </script>
 <div class="alert alert-warning alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>¡Torneo editado correctamente!</strong>
+    <strong><%=request.getParameter("updatet")%></strong>
 </div>
 <%            
         }
@@ -697,7 +655,7 @@ $(document).ready(function() {
 </script>
 <div class="alert alert-warning alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>¡Torneo eliminado correctamente!</strong>
+    <strong><%=request.getParameter("elimt")%></strong>
 </div>
 <%            
         }
@@ -720,7 +678,7 @@ $(document).ready(function() {
                     SELECT *  FROM cancha
                 </sql:query>
                 <h2>Canchas</h2>     
-                <table class="table table-responsive">
+                <table id="tcanchas" class="table table-responsive">
                     <thead>
                         <tr>
                             <th>Cancha</th>
@@ -843,7 +801,7 @@ $(document).ready(function() {
                         <article>
                             <h1>Añadir Cancha</h1>
                 <div class="col-md-4">
-                <form id="nuevacancha" action="Canchas">
+                <form id="nuevacancha" action="../Canchas">
                 <label for="numero" class="control-label col-md-6">Número De La Cancha</label>
                     <input type="text" id="numero" name="numero"/><br/><br/>
                     <label for="des"  class="control-label col-md-6">Descripcion</label>

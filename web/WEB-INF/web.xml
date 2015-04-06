@@ -40,6 +40,14 @@
         <servlet-name>Recuperar</servlet-name>
         <servlet-class>controlador.Recuperar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ValidacionDocumento</servlet-name>
+        <servlet-class>controlador.ValidacionDocumento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistroEquipos</servlet-name>
+        <servlet-class>controlador.RegistroEquipos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -84,6 +92,14 @@
         <error-code>404</error-code>
         <location>/errorPages/error404.html</location>
     </error-page>
+    <servlet-mapping>
+        <servlet-name>ValidacionDocumento</servlet-name>
+        <url-pattern>/ValidacionDocumento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistroEquipos</servlet-name>
+        <url-pattern>/RegistroEquipos</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

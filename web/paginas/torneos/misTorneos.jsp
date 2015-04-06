@@ -23,30 +23,19 @@
                     int rol = (Integer)miSession.getAttribute("rol");
                     if(rol == 1){
         %>
-<% 
-    int regtpos = tpdao.contarRegistros(Integer.parseInt(request.getParameter("idTorneo")));
-    int numpg = regtpos/10;
-    int pg = 0;
-    if (request.getParameter("pgtp")==null) {
-        pg = 1;
-        }else{
-        pg = Integer.parseInt(request.getParameter("pgtp"));
-    }
-    
-%> 
-<%--  Query para el menu desplegable de torneos --%>
+<%--  Query para con la info de torneos --%>
 <sql:query var="torneo" dataSource="jdbc/pro-level">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="vareliminatoria" dataSource="jdbc/pro-level">
+<sql:query var="infotorneo" dataSource="jdbc/pro-level">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
 <sql:query var="tposregistros" dataSource="jdbc/pro-level">
     SELECT count(*) from tablaposiciones where idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>    
-<c:set var="detallestorneo" value="${vareliminatoria.rows[0]}"/>
+<c:set var="detallestorneo" value="${infotorneo.rows[0]}"/>
 <%--  Query para la tabla de posiciones --%>
 <sql:query var="tablaposiciones" dataSource="jdbc/pro-level">
     SELECT equipo.nombre, 
@@ -166,7 +155,7 @@
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="?${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -198,7 +187,27 @@
                 </ul>
             </nav>
         </header>
-        <main class="container">
+<main class="container">
+    <div class="row">
+    <div class="col-lg-12 menu-opciones">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="#">Calendario</a></li>
+            <li role="presentation"><a href="#">Resultados</a></li>
+            <li role="presentation" class="active"><a href="#">Tablas</a></li>
+            <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}">Inscribir equipos</a></li>
+        </ul>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-2 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="../inicio.jsp">Inicio</a></li>
+                <li><a href="#">Torneos</a></li>
+                <li class="active">Tablas</li>
+            </ol>
+        </div>
+    </div>
             <hgroup>
                 <h1 id="titulo">${detallestorneo.nombre}</h1>
                 <h3 class="tablatit">Tabla De Posiciones</h3>
@@ -342,7 +351,7 @@
                     </div>
                 </div>     
             </div>
-        </main>
+</main>
         <footer>
             <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
             <a href="index_english.html"><img src="../../imagenes/english.png" width="40" height="30" alt="ingles" /></a>
@@ -356,6 +365,6 @@
                         }
             }
             else{
-                response.sendRedirect("../../../index.jsp");
+                response.sendRedirect("../../index.jsp?auth=prohibido");
             }                 
 %>

@@ -111,8 +111,7 @@ public class TorneoDAO {
             rs=statement.executeQuery();
             
             while(rs.next()){
-                TorneoDTO cup = new TorneoDTO();
-                
+                TorneoDTO cup = new TorneoDTO();                
                 cup.setIdTorneo(rs.getInt("idTorneo"));
                 cup.setNombre(rs.getString("nombre"));
                 cup.setFechaInicio(rs.getString("fechaInicio"));

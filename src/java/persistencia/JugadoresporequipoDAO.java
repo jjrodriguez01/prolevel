@@ -35,23 +35,22 @@ public class JugadoresporequipoDAO {
         conexion = Conexion.getInstance();
     }
 
-    public String insertar(int equipo, int jugador) {
+    public synchronized String insertar(int equipo, int jugador) {
 
         try {
             //sentencia sql
-            String sql = "INSERT INTO Jugadoresporequipo(codigoequipo,codigojugador)VALUES(?,?)";
+            String sql = "INSERT INTO jugadoresporequipo(codigoEquipo, codigoJugador) VALUES(?,?);";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, equipo);
             statement.setInt(2, jugador);
             
-
             //ejecuta el insert
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                System.out.println("se insertaron:" + rtdo + "Datos");
+                System.out.println("Se insertaron los jugadores");
                 //si no se afecto la tabla
             } else {
                 mensaje = "Error";
