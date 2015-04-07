@@ -30,8 +30,7 @@ public class GestionEliminatoria extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if ( request.getParameter("eliminatoria")!=null && request.getParameter("enviareli")!=null) {
-            
-            
+            int tipotorneo = 3;//en bd tres es una eliminatoria
             TorneoDTO elidto = new TorneoDTO();
             
             elidto.setIdTorneo(0);
@@ -39,10 +38,11 @@ public class GestionEliminatoria extends HttpServlet {
             elidto.setFechaFin(request.getParameter("fin"));
             elidto.setFechaInicio(request.getParameter("inicio"));
             elidto.setGenero(request.getParameter("tipo"));
+            elidto.setTipo(tipotorneo);
             elidto.setIdaVuelta(true);
             elidto.setNombre(request.getParameter("nombreTorneo"));
             TorneoFactory fabrica = new TorneoFactory();
-            Torneo cup = fabrica.crearTorneo(1, elidto);
+            Torneo cup = fabrica.crearTorneo(elidto);
             String crearelim = cup.crear(elidto);
                response.sendRedirect("paginas/torneos/crear_torneo.jsp?eliminatoria="+crearelim+"#ftorneos");
         }

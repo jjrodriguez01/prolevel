@@ -12,6 +12,7 @@ public class TorneoDTO {
     private String fechaFin;
     private String genero;
     private int capacidadEquipos;
+    private int tipo;
     private boolean tercerPuesto;
     private int equiposGrupos;
     private boolean octavosCuartosSemifinalFinalIdaVuelta;
@@ -109,6 +110,14 @@ public class TorneoDTO {
     @Override
     public String toString() {
         return "TorneoDTO{" + "idTorneo=" + idTorneo + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", genero=" + genero + ", capacidadEquipos=" + capacidadEquipos + ", tercerPuesto=" + tercerPuesto + ", equiposGrupos=" + equiposGrupos + ", octavosCuartosSemifinalFinalIdaVuelta=" + octavosCuartosSemifinalFinalIdaVuelta + ", finalidavuelta=" + finalidavuelta + ", idaVuelta=" + idaVuelta + '}';
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
     
     

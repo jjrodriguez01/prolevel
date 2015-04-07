@@ -38,12 +38,12 @@ public class LigaDAO {
             //sentencia sql
             call = conexion.prepareCall("call sp_torneoliga (?,?,?,?,?,?,?,?);");
             //pasamos la sentencia la conexion mediante el prepare staement
-            call.setInt(1, liga.getIdTorneo());
-            call.setString(2, liga.getNombre());
-            call.setString(3, liga.getFechaInicio());
-            call.setString(4, liga.getFechaFin());
-            call.setString(5, liga.getGenero());
-            call.setInt(6, liga.getCapacidadEquipos());
+            call.setString(1, liga.getNombre());
+            call.setString(2, liga.getFechaInicio());
+            call.setString(3, liga.getFechaFin());
+            call.setString(4, liga.getGenero());
+            call.setInt(5, liga.getCapacidadEquipos());
+            call.setInt(6, liga.getTipo());
             call.setBoolean(7, liga.isIdaVuelta());
             call.registerOutParameter(8, Types.INTEGER);
             call.execute();
@@ -124,6 +124,7 @@ public class LigaDAO {
                 liga.setFechaInicio(rs.getString("fechaInicio"));
                 liga.setFechaFin(rs.getString("fechaFin"));
                 liga.setGenero(rs.getString("genero"));
+                liga.setTipo(rs.getInt("tipo"));
                 liga.setIdaVuelta(rs.getBoolean("idaVuelta"));
                 
                 listarLiga.add(liga);
@@ -157,6 +158,7 @@ public class LigaDAO {
                 liga.setFechaInicio(rs.getString("fechaInicio"));
                 liga.setFechaFin(rs.getString("fechaFin"));
                 liga.setGenero(rs.getString("genero"));
+                liga.setTipo(rs.getInt("tipo"));
                 liga.setIdaVuelta(rs.getBoolean("idaVuelta"));
             }
 

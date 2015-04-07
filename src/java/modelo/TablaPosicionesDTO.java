@@ -16,7 +16,7 @@ public class TablaPosicionesDTO {
     private int partidosEmpatados;
     private int partidosPerdidos;
     private int golesAnotados;
-    private int golesResividos;
+    private int golesRecibidos;
 
     /**
      * @return the Idtorneo
@@ -145,22 +145,22 @@ public class TablaPosicionesDTO {
     }
 
     /**
-     * @return the golesResividos
+     * @return the golesRecibidos
      */
-    public int getGolesResividos() {
-        return golesResividos;
+    public int getGolesRecibidos() {
+        return golesRecibidos;
     }
 
     /**
-     * @param golesResividos the golesResividos to set
+     * @param golesRecibidos the golesRecividos to set
      */
-    public void setGolesResividos(int golesResividos) {
-        this.golesResividos = golesResividos;
+    public void setGolesRecibidos(int golesRecibidos) {
+        this.golesRecibidos = golesRecibidos;
     }
 
     @Override
     public String toString() {
-        return "TablaPosicionesDTO{" + "Idtorneo=" + Idtorneo + ", Idequipo=" + Idequipo + ", posicion=" + posicion + ", puntos=" + puntos + ", partidosJugados=" + partidosJugados + ", partidosGanados=" + partidosGanados + ", partidosEmpatados=" + partidosEmpatados + ", partidosPerdidos=" + partidosPerdidos + ", golesAnotados=" + golesAnotados + ", golesResividos=" + golesResividos + '}';
+        return "TablaPosicionesDTO{" + "Idtorneo=" + Idtorneo + ", Idequipo=" + Idequipo + ", posicion=" + posicion + ", puntos=" + puntos + ", partidosJugados=" + partidosJugados + ", partidosGanados=" + partidosGanados + ", partidosEmpatados=" + partidosEmpatados + ", partidosPerdidos=" + partidosPerdidos + ", golesAnotados=" + golesAnotados + ", golesRecibidos=" + golesRecibidos + '}';
     }
     
     

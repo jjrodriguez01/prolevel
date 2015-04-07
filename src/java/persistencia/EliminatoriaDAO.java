@@ -35,13 +35,13 @@ public class EliminatoriaDAO {
     
     public synchronized String insertar(TorneoDTO eliminatoria){
         try {
-        call = conexion.prepareCall("{call sp_torneoeliminatoria(null,?,?,?,?,?,?,?) }");
-        call.setInt(1, eliminatoria.getIdTorneo());
-        call.setString(2, eliminatoria.getNombre());
-        call.setString(3, eliminatoria.getFechaInicio());
-        call.setString(4, eliminatoria.getFechaFin());
-        call.setString(5, eliminatoria.getGenero());
-        call.setInt(6, eliminatoria.getCapacidadEquipos());
+        call = conexion.prepareCall("{call sp_torneoeliminatoria (?,?,?,?,?,?,?,?) }");
+        call.setString(1, eliminatoria.getNombre());
+        call.setString(2, eliminatoria.getFechaInicio());
+        call.setString(3, eliminatoria.getFechaFin());
+        call.setString(4, eliminatoria.getGenero());
+        call.setInt(5, eliminatoria.getCapacidadEquipos());
+        call.setInt(6, eliminatoria.getTipo());
         call.setBoolean(7, eliminatoria.isIdaVuelta());
        
        
@@ -116,6 +116,7 @@ public class EliminatoriaDAO {
                 eliminatoria.setFechaFin(rs.getString("fechaFin"));
                 eliminatoria.setGenero(rs.getString("genero"));
                 eliminatoria.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
+                eliminatoria.setTipo(rs.getInt("tipo"));
                 eliminatoria.setIdaVuelta(rs.getBoolean("idaVuelta"));             
             }
 
@@ -143,6 +144,7 @@ public class EliminatoriaDAO {
                 cup.setFechaFin(rs.getString("fechaFin"));
                 cup.setGenero(rs.getString("genero"));
                 cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
+                cup.setTipo(rs.getInt("tipo"));
                 cup.setIdaVuelta(rs.getBoolean("idaVuelta"));
                 
                 listarEliminatorias.add(cup);

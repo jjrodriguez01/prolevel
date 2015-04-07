@@ -35,10 +35,10 @@ public class GestionCopa extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
+              
         if ( request.getParameter("copa")!=null && request.getParameter("enviarcopa")!=null) {
             int numgrupos = 4;
+            int tipotorneo = 1;
             TorneoDTO copa = new TorneoDTO();
 
             copa.setIdTorneo(0);
@@ -47,12 +47,13 @@ public class GestionCopa extends HttpServlet {
             copa.setFechaFin(request.getParameter("fin"));
             copa.setGenero(request.getParameter("tipo"));
             copa.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
+            copa.setTipo(tipotorneo);
             copa.setEquiposGrupos(numgrupos);
             copa.setOctavosCuartosSemifinalFinalIdaVuelta(true);
             copa.setFinalidavuelta(true);
-            copa.setTercerPuesto(Boolean.parseBoolean(request.getParameter("tercer")));
+            copa.setTercerPuesto(true);
             TorneoFactory fabrica = new TorneoFactory();
-            Torneo cup = fabrica.crearTorneo(1, copa);
+            Torneo cup = fabrica.crearTorneo(copa);
             String crearcopa = cup.crear(copa);
             response.sendRedirect("paginas/torneos/crear_torneo.jsp?copa="+crearcopa+"#ftorneos");
         }

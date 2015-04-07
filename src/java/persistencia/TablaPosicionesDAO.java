@@ -40,7 +40,7 @@ public class TablaPosicionesDAO {
             call.setInt(1, tab.getIdtorneo());
             call.setInt(2, tab.getIdequipo());
             call.setInt(3, tab.getGolesAnotados());
-            call.setInt(4, tab.getGolesResividos());
+            call.setInt(4, tab.getGolesRecibidos());
             call.setInt(5, tab.getPartidosEmpatados());
             call.setInt(6, tab.getPartidosGanados());
             call.setInt(7, tab.getPartidosJugados());
@@ -66,7 +66,7 @@ public class TablaPosicionesDAO {
     public String eliminar(TablaPosicionesDTO tab) {
 
         try {
-            statement = conexion.prepareStatement("Delete from torneo where idTorneo = ? and idEquipo;");
+            statement = conexion.prepareStatement("Delete from tablaposiciones where idTorneo = ? and idEquipo;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, tab.getIdequipo());
             statement.setInt(2,tab.getIdtorneo());
@@ -86,18 +86,20 @@ public class TablaPosicionesDAO {
   public String actualizar(TablaPosicionesDTO tab){
         
         try {
-            statement = conexion.prepareStatement("UPDATE tablaPosiciones set golesAnotados= ?, golesResividos= ?,= ?, partidosEmpatados= ?,"
-                    + " partidosGanados = ? ,partidosJugados = ?, partidosPerdidos = ?, posicion=?, puntos = ? WHERE idTorneo = ? and idEquipo=?");
+            statement = conexion.prepareStatement("UPDATE tablaPosiciones set golesAnotados= ?, "
+                    + "golesRecibidos= ?,= ?, partidosEmpatados= ?,"
+                    + " partidosGanados = ? ,partidosJugados = ?, partidosPerdidos = ?, posicion=?, puntos = ? "
+                    + "WHERE idTorneo = ? and idEquipo=?");
             statement.setInt(1, tab.getGolesAnotados());
-            statement.setInt(2, tab.getGolesResividos());
-            statement.setInt(3, tab.getIdequipo());
-            statement.setInt(4, tab.getPartidosEmpatados());
-            statement.setInt(5, tab.getPartidosGanados());
-            statement.setInt(7, tab.getPartidosJugados());
-            statement.setInt(8, tab.getPartidosPerdidos());
-            statement.setInt(9, tab.getPosicion());
-            statement.setInt(10, tab.getPuntos());
-            statement.setInt(10, tab.getIdtorneo());
+            statement.setInt(2, tab.getGolesRecibidos());
+            statement.setInt(3, tab.getPartidosEmpatados()); 
+            statement.setInt(4, tab.getPartidosGanados());
+            statement.setInt(5, tab.getPartidosJugados());
+            statement.setInt(6, tab.getPartidosPerdidos());
+            statement.setInt(7, tab.getPosicion());
+            statement.setInt(8, tab.getPuntos());
+            statement.setInt(9, tab.getIdtorneo());
+            statement.setInt(10, tab.getIdequipo());
             
             rtdo = statement.executeUpdate();
             
@@ -114,10 +116,12 @@ public class TablaPosicionesDAO {
         
         return mensaje;
     }
-     public String listarUno(TablaPosicionesDTO tab) {
+     public TablaPosicionesDTO listarUno() {
+         TablaPosicionesDTO tab = new TablaPosicionesDTO();
         try {
             //preparamos la consulta       
-            statement = conexion.prepareStatement("SELECT * from tablaPosiciones where idTorneo = ? and idEquipo=?;");
+            statement = conexion.prepareStatement("SELECT * from tablaPosiciones "
+                    + "where idTorneo = ? and idEquipo=?;");
             statement.setInt(1, tab.getIdtorneo());
             statement.setInt(1, tab.getIdequipo());
             rs = statement.executeQuery();
@@ -132,16 +136,14 @@ public class TablaPosicionesDAO {
                 tab.setPartidosEmpatados(rs.getInt("PartidosEmpatados"));
                 tab.setPartidosPerdidos(rs.getInt("PartidosPerdidos"));
                 tab.setGolesAnotados(rs.getInt("GolesAnotados"));
-                tab.setGolesResividos(rs.getInt("Golesresividos"));
-             
-                
+                tab.setGolesRecibidos(rs.getInt("Golesresividos"));             
             }
 
         } catch (SQLException ex) {
             mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
         }
         //devolvemos el usuario que se encontro
-        return "" +tab;
+        return tab;
     }
     
     public List ListarTodo(){
@@ -165,7 +167,7 @@ public class TablaPosicionesDAO {
                 cup.setPartidosGanados(rs.getInt("PartidosGanados"));
                 cup.setPartidosEmpatados(rs.getInt("PartidosEmpatados"));
                 cup.setGolesAnotados(rs.getInt("GolesAnotados"));
-                cup.setGolesResividos(rs.getInt("GolesResividos"));
+                cup.setGolesRecibidos(rs.getInt("GolesResividos"));
                 cup.setPartidosPerdidos(rs.getInt("PartiosPerdidos"));
                 
                 listarTablaPosiciones.add(cup);
@@ -214,7 +216,7 @@ public class TablaPosicionesDAO {
                 cup.setPartidosGanados(rs.getInt("PartidosGanados"));
                 cup.setPartidosEmpatados(rs.getInt("PartidosEmpatados"));
                 cup.setGolesAnotados(rs.getInt("GolesAnotados"));
-                cup.setGolesResividos(rs.getInt("GolesResividos"));
+                cup.setGolesRecibidos(rs.getInt("GolesResividos"));
                 cup.setPartidosPerdidos(rs.getInt("PartiosPerdidos"));
                 
                 listarTablaPosiciones.add(cup);

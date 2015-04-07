@@ -35,11 +35,11 @@ public class CopaDAO {
     public synchronized String insertar(TorneoDTO copa){
         try {
         call = conexion.prepareCall("{call sp_torneocopa(?,?,?,?,?,?,?,?,?,?,?) }");
-        call.setInt(1, copa.getIdTorneo());
-        call.setString(2, copa.getNombre());
-        call.setString(3, copa.getFechaInicio());
-        call.setString(4, copa.getFechaFin());
-        call.setString(5, copa.getGenero());
+        call.setString(1, copa.getNombre());
+        call.setString(2, copa.getFechaInicio());
+        call.setString(3, copa.getFechaFin());
+        call.setString(4, copa.getGenero());
+        call.setInt(5, copa.getTipo());
         call.setInt(6, copa.getCapacidadEquipos());
         call.setBoolean(7, copa.isTercerPuesto());
         call.setInt(8, copa.getEquiposGrupos());
@@ -126,6 +126,7 @@ public class CopaDAO {
                 copa.setFechaFin(rs.getString(4));
                 copa.setGenero(rs.getString(5));
                 copa.setCapacidadEquipos(rs.getInt(6));
+                copa.setTipo(rs.getInt("tipo"));
                 copa.setTercerPuesto(rs.getBoolean(8));
                 copa.setEquiposGrupos(rs.getInt(9));
                 copa.setOctavosCuartosSemifinalFinalIdaVuelta(rs.getBoolean(10));
@@ -158,6 +159,7 @@ public class CopaDAO {
                 cup.setFechaFin(rs.getString("fechaFin"));
                 cup.setGenero(rs.getString("genero"));
                 cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
+                cup.setTipo(rs.getInt("tipo"));
                 cup.setTercerPuesto(rs.getBoolean("tercerPuesto"));
                 cup.setEquiposGrupos(rs.getInt("equiposGrupos"));
                 cup.setOctavosCuartosSemifinalFinalIdaVuelta(rs.getBoolean("octavosCuartosSemifinalFinalIdaVuelta"));

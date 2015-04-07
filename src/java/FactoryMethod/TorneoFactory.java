@@ -26,13 +26,13 @@ public class TorneoFactory implements TorneoFactoryMethod{
      * @return  Torneo
      */
     @Override
-    public Torneo crearTorneo(int tipo, TorneoDTO torneo) {
-        if (tipo==1) {
+    public Torneo crearTorneo(TorneoDTO torneo) {
+        if (torneo.getTipo()==1) {
             return fabrica.CreaCopa(torneo);
-        }else if(tipo==2){
+        }else if(torneo.getTipo()==2){
             return fabrica.creaLiga(torneo);
         }
-        else if(tipo==3){
+        else if(torneo.getTipo()==3){
             return fabrica.creaEliminatoria(torneo);
         }
         else{

@@ -85,6 +85,7 @@ public class RegistroEquipos extends HttpServlet {
         for (int i = 0; i < docs.length; i++) {
             jpequipo.insertar(codigo, docs[i]);//insertamos en la tabla jugadorespor equipo 
         }
+        
         response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
                     }else{
                         response.sendError(500, equipoatorneo);

@@ -13,5 +13,5 @@ import modelo.TorneoDTO;
  * @author jeisson
  */
 public interface TorneoFactoryMethod {
-    public Torneo crearTorneo(int tipo,TorneoDTO torneo);
+    public Torneo crearTorneo(TorneoDTO torneo);
 }

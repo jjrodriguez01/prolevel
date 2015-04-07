@@ -30,10 +30,8 @@ public class GestionLiga extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if ( request.getParameter("liga")!=null && request.getParameter("enviarliga")!=null) {
-            
-            
            TorneoDTO ligdto = new TorneoDTO();
-            
+            int tipotorneo = 2;//en bd dos es una liga
             ligdto.setIdTorneo(0);
             ligdto.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
             ligdto.setFechaFin(request.getParameter("fin"));
@@ -42,7 +40,7 @@ public class GestionLiga extends HttpServlet {
             ligdto.setIdaVuelta(true);
             ligdto.setNombre(request.getParameter("nombreTorneo"));
             TorneoFactory fabrica = new TorneoFactory();
-            Torneo liga = fabrica.crearTorneo(1, ligdto);
+            Torneo liga = fabrica.crearTorneo(ligdto);//la fabrica toma el tipo de torneo y como es dos me crea una liga
             String crearliga = liga.crear(ligdto);         
             response.sendRedirect("paginas/torneos/crear_torneo.jsp?liga="+crearliga+"#ftorneos");
         }

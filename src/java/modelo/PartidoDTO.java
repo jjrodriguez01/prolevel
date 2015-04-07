@@ -10,95 +10,125 @@ package modelo;
  * @author Rambo
  */
 public class PartidoDTO {
-    private int idTabla;
-    private int idPartido;
-    private int marcadorEquipo1;
-    private int marcadorEquipo2;
-    private int numeroCancha;
+    private int ronda;
+    private int marcador1;
+    private int equipo1;
+    private int equipo2;
+    private int marcador2;
+    private String fecha;
+    private String hora;
+    private int idTorneo;
+    private int cancha;
+    private EquipoDTO equipouno;
+    private EquipoDTO equipodos;
+    private TorneoDTO torneo;
+    private CanchaDTO canchas;
 
-    /**
-     * @return the idTabla
-     */
-    public int getIdTabla() {
-        return idTabla;
+    public int getRonda() {
+        return ronda;
     }
 
-    /**
-     * @param idTabla the idTabla to set
-     */
-    public void setIdTabla(int idTabla) {
-        this.idTabla = idTabla;
+    public void setRonda(int ronda) {
+        this.ronda = ronda;
     }
 
-    /**
-     * @return the idPartido
-     */
-    public int getIdPartido() {
-        return idPartido;
+    public int getMarcador1() {
+        return marcador1;
     }
 
-    /**
-     * @param idPartido the idPartido to set
-     */
-    public void setIdPartido(int idPartido) {
-        this.idPartido = idPartido;
+    public void setMarcador1(int marcador1) {
+        this.marcador1 = marcador1;
     }
 
-    /**
-     * @return the marcadorEquipo1
-     */
-    public int getMarcadorEquipo1() {
-        return marcadorEquipo1;
+    public int getEquipo1() {
+        return equipo1;
     }
 
-    /**
-     * @param marcadorEquipo1 the marcadorEquipo1 to set
-     */
-    public void setMarcadorEquipo1(int marcadorEquipo1) {
-        this.marcadorEquipo1 = marcadorEquipo1;
+    public void setEquipo1(int equipo1) {
+        this.equipo1 = equipo1;
     }
 
-    /**
-     * @return the marcadorEquipo2
-     */
-    public int getMarcadorEquipo2() {
-        return marcadorEquipo2;
+    public int getEquipo2() {
+        return equipo2;
     }
 
-    /**
-     * @param marcadorEquipo2 the marcadorEquipo2 to set
-     */
-    public void setMarcadorEquipo2(int marcadorEquipo2) {
-        this.marcadorEquipo2 = marcadorEquipo2;
+    public void setEquipo2(int equipo2) {
+        this.equipo2 = equipo2;
     }
 
-    /**
-     * @return the numeroCancha
-     */
-    public int getNumeroCancha() {
-        return numeroCancha;
+    public int getMarcador2() {
+        return marcador2;
     }
 
-    /**
-     * @param numeroCancha the numeroCancha to set
-     */
-    public void setNumeroCancha(int numeroCancha) {
-        this.numeroCancha = numeroCancha;
+    public void setMarcador2(int marcador2) {
+        this.marcador2 = marcador2;
     }
 
-    @Override
-    public String toString() {
-        return "PartidoDTO \n" 
-     + "\n idTabla=" + idTabla
-     + "\n idPartido=" + idPartido 
-     + "\n marcadorEquipo1=" + marcadorEquipo2
-     + "\n numeroCancha=" + numeroCancha;
+    public String getFecha() {
+        return fecha;
     }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public int getIdTorneo() {
+        return idTorneo;
+    }
+
+    public void setIdTorneo(int idTorneo) {
+        this.idTorneo = idTorneo;
+    }
+
+    public int getCancha() {
+        return cancha;
+    }
+
+    public void setCancha(int cancha) {
+        this.cancha = cancha;
+    }
+
+    public EquipoDTO getEquipouno() {
+        return equipouno;
+    }
+
+    public void setEquipouno(EquipoDTO equipouno) {
+        this.equipouno = equipouno;
+    }
+
+    public EquipoDTO getEquipodos() {
+        return equipodos;
+    }
+
+    public void setEquipodos(EquipoDTO equipodos) {
+        this.equipodos = equipodos;
+    }
+
+    public TorneoDTO getTorneo() {
+        return torneo;
+    }
+
+    public void setTorneo(TorneoDTO torneo) {
+        this.torneo = torneo;
+    }
+
+    public CanchaDTO getCanchas() {
+        return canchas;
+    }
+
+    public void setCanchas(CanchaDTO canchas) {
+        this.canchas = canchas;
+    }
+
     
 }
-
-  
-        
-    
     
 

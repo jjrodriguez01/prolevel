@@ -10,8 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.EquiposdeltorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -51,5 +55,24 @@ public class EquiposDelTorneoDAO {
             mensaje = "Ha ocurrido un error "+ex.getMessage();
         }
         return mensaje;
+    }
+    
+    public List<EquiposdeltorneoDTO> listarTodo(int idTorneo) throws MiExcepcion{
+        ArrayList<EquiposdeltorneoDTO> equipos = new ArrayList();
+        try {
+            statement = conexion.prepareStatement("SELECT equipocodigo, torneoidtorneo"
+                    + "FROM equiposdeltorneo WHERE torneoidtorneo = ?;");
+            statement.setInt(1, idTorneo);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                EquiposdeltorneoDTO eq = new EquiposdeltorneoDTO();
+                eq.setEquipoCodigo(rs.getInt("equipocodigo"));
+                eq.setTorneoIdTorneo(rs.getInt("torneoidtorneo"));
+                equipos.add(eq);
+            }
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error", ex);
+        }
+        return equipos;
     }
 }

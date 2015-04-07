@@ -203,6 +203,11 @@ if (request.getParameter("registro")!=null) {
             </div>
             </c:forEach>
         </div>
+        <c:if test="${inscritos.capacidad == detallestorneo.capacidadEquipos}">
+            <button name="iniciar" value="${detallestorneo.idTorneo}" class="btn btn-lg btn-danger">
+                Iniciar Torneo
+            </button>
+        </c:if>
     </section>
 </main>
     </body>
