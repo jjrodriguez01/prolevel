@@ -47,8 +47,8 @@ nav{
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Reestablecer contraseña <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Ingresar</a></li>
-        <li><a href="#">Registrarme</a></li>
+        <li><a href="index.jsp">Ingresar</a></li>
+        <li><a href="registro.jsp">Registrarme</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">

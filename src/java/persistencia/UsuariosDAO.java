@@ -140,7 +140,7 @@ public class UsuariosDAO {
         return mensaje;
     }
     
-    public List<UsuariosDTO> listarTodo() {
+    public List<UsuariosDTO> listarTodo() throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<UsuariosDTO> listarUsuarios = new ArrayList();
 
@@ -166,10 +166,15 @@ public class UsuariosDAO {
             }
         }
         } catch (SQLException sqlexception) {
-            mensaje = "Ocurrio un error" + sqlexception.getMessage();
+            throw new MiExcepcion("Error sql", sqlexception);
 
         } finally {
-
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                throw new MiExcepcion("Error cerrando prepare",ex);
+            }
+;
         }
         //devolvemos el arreglo
         return listarUsuarios;

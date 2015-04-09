@@ -48,6 +48,10 @@
         <servlet-name>RegistroEquipos</servlet-name>
         <servlet-class>controlador.RegistroEquipos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Conexion</servlet-name>
+        <servlet-class>controlador.Conexion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>RegistroEquipos</servlet-name>
         <url-pattern>/RegistroEquipos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Conexion</servlet-name>
+        <url-pattern>/Conexion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

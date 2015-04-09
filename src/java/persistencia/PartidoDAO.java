@@ -70,34 +70,34 @@ public class PartidoDAO {
         return mensaje;
     }
 
-//    public String actualizar(PartidoDTO cal) {
-//        try {
-//            //preparamos la sentencia sql
-//            String sql = "UPDATE Calendario SET ronda=?,equipo1=?,equipo2=?,fecha=?,hora=?,idTorneo=?,"
-//                    + "calendariocol=? WHERE codigoCalendario=?;";
-//            //pasamos el query a la conexion
-//           //sacamos los datos del dto de la tabla
-//            statement = conexion.prepareStatement(sql);
-//            statement.setInt(2, cal.getEquipo1());
-//            statement.setInt(3, cal.getEquipo2());
-//            statement.setString(4, cal.getFecha());
-//            statement.setString(5,cal.getHora());
-//            statement.setInt(7, cal.getIdTorneo());
-//            
-//            //el resulset trae el numero de rows afectadas
-//            rtdo = statement.executeUpdate();
-//            if (rtdo != 0) {
-//                mensaje = "elCampo se ha modificado: "+rtdo+ "saludes";
-//
-//            } else {
-//                mensaje = "Error";
-//            }
-//        } catch (SQLException sqlexception) {
-//         mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-//        }
-//
-//        return mensaje;
-//    }
+    public String actualizar(PartidoDTO cal) {
+        try {
+            //preparamos la sentencia sql
+            String sql = "UPDATE partidos SET fecha = ?, hora = ? "
+                    + "WHERE ronda=? and equipo1=? and equipo2=? and idTorneo=?;";
+            //pasamos el query a la conexion
+           //sacamos los datos del dto de la tabla
+            statement = conexion.prepareStatement(sql);
+            statement.setString(1, cal.getFecha());
+            statement.setString(2,cal.getHora());
+            statement.setInt(3, cal.getRonda());
+            statement.setInt(4, cal.getEquipo1());
+            statement.setInt(5, cal.getEquipo2());
+            statement.setInt(6, cal.getIdTorneo());
+            
+            //el resulset trae el numero de rows afectadas
+            rtdo = statement.executeUpdate();
+            if (rtdo != 0) {
+                mensaje = "Se modificaron las fechas";
+
+            } else {
+                mensaje = "Error";
+            }
+        } catch (SQLException sqlexception) {
+         mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+        }
+        return mensaje;
+    }
 
     public String eliminar(PartidoDTO cal) {
         try {
@@ -182,7 +182,69 @@ public class PartidoDAO {
         }
         //devolvemos el arreglo
         return listar;
+    }
+    public List<PartidoDTO> listarTodoPronda(int idtorneo) throws MiExcepcion {
+        //creamos el array que va a contener los datos de la consulta    
+        ArrayList<PartidoDTO> listar = new ArrayList();
+        try {
 
+            statement = conexion.prepareStatement("SELECT DISTINCT "
+                +"ronda, "
+                +"partidos.equipo1 as ceq1, "
+                +"partidos.equipo2 as ceq2, "
+                +"(select equipo.nombre from equipo where codigo=partidos.equipo1)as equipo1, "
+                +"(select equipo.nombre from equipo where codigo=partidos.equipo2)as equipo2, " 
+                +"torneo.nombre as Torneo, "
+                +"cancha.descripcion as descripcion "
+                +"FROM " 
+                +"partidos " 
+                +"INNER JOIN equiposdeltorneo " 
+                +"ON partidos.equipo1 = equiposdeltorneo.equipoCodigo " 
+                +"INNER JOIN equipo " 
+                +"ON equiposdeltorneo.equipoCodigo = equipo.codigo " 
+                +"INNER JOIN torneo " 
+                +"ON partidos.idTorneo = torneo.idTorneo " 
+                +"INNER JOIN cancha " 
+                +"ON partidos.cancha = cancha.numeroCancha " 
+                +"WHERE torneo.idtorneo = 11 AND partidos.ronda = 1;");
+            statement.setInt(1, idtorneo);
+            rs = statement.executeQuery();
+            //mientras que halla registros cree un nuevo dto y pasele la info
+            while (rs.next()) {
+                //crea un nuevo dto
+                PartidoDTO cal = new PartidoDTO();
+                EquipoDTO equipouno = new EquipoDTO();
+                EquipoDTO equipodos = new EquipoDTO();
+                TorneoDTO torneo = new TorneoDTO();
+                CanchaDTO cancha = new CanchaDTO();
+                
+                //le pasamos los datos que se encuentren
+                cal.setRonda(rs.getInt("ronda"));
+                equipouno.setNombre(rs.getString("equipo1"));
+                equipouno.setCodigo(rs.getInt("ceq1"));
+                cal.setEquipouno(equipouno);
+                equipodos.setNombre(rs.getString("equipo2"));
+                equipodos.setCodigo(rs.getInt("ceq2"));
+                cal.setEquipodos(equipodos);
+                torneo.setNombre(rs.getString("Torneo"));
+                cal.setTorneo(torneo);
+                cancha.setDescripcion(rs.getString("descripcion"));
+                cal.setCanchas(cancha);
+                //agregamos el objeto dto al arreglo
+                listar.add(cal);
+            }
+        } catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error ", sqlexception);
+
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                throw new MiExcepcion("Error sql ", ex);
+            }
+        }
+        //devolvemos el arreglo
+        return listar;
     }
 
     public List<PartidoDTO> listarUno(int ronda, int idTorneo) throws MiExcepcion {

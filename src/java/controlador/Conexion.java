@@ -13,7 +13,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,6 @@ import javax.sql.DataSource;
  *
  * @author jeisson
  */
-@WebServlet(name = "Conexion", urlPatterns = {"/Conexion"})
 public class Conexion extends HttpServlet {
 
     /**
@@ -51,6 +49,7 @@ public class Conexion extends HttpServlet {
             out.println("</html>");
         }
     }
+    
     public static Connection getConnection(){
         Connection conexion = null;
         String salida = "";

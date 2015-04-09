@@ -34,7 +34,7 @@ public class RegistroUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         UsuariosDAO udao = null;
         UsuariosDTO udto = null;
-        if(request.getParameter("enviar")!= null && request.getParameter("enviar1")!= null){
+        if(request.getParameter("enviar")!= null && request.getParameter("registro")!= null){
           udao = new UsuariosDAO();
           udto = new UsuariosDTO();
           udto.setIdUsuario(Long.parseLong(request.getParameter("cc")));

@@ -95,7 +95,7 @@ select.ui-datepicker-year, select.ui-datepicker-month{
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="menunav">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Ingresar</a></li>  
+        <li class="active"><a href="index.jsp">Ingresar</a></li>  
         <li><a href="reestablecer.jsp">Reestablecer contraseña <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Registrarme</a></li>
       </ul>
@@ -191,11 +191,43 @@ select.ui-datepicker-year, select.ui-datepicker-month{
                 </div>
                 </div>
                 <div class="col-lg-10 center-block btn">
+                    <label><input type="checkbox" required>Acepto los terminos y condiciones</label>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#terminos">
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </button>
+                </div>
+                <div class="col-lg-10 center-block btn">
                     <input type="submit" value="Registrarme" name="enviar" class="btn btn-success"/>
-                <input type="hidden" value="datos" name="enviar1"/> 
+                <input type="hidden" value="datos" name="registro"/> 
                 </div>
             </form>
+ <% 
+     if (request.getParameter("ins")!=null) {
+ %>
+ <div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong><%=request.getParameter("ins")%></strong>
+</div>
+ <%
+         }
+ %>
     </article>
+    <div class="modal fade" id="terminos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Terminos Y Condiciones De Uso</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 <script>
    $().ready(function(){

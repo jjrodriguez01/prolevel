@@ -5,7 +5,7 @@
  */
 package persistencia;
 
-import controlador.Conexion;
+import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.EquiposdeltorneoDTO;
+import modelo.UsuariosDTO;
 import utilidades.MiExcepcion;
 
 /**
@@ -35,7 +36,7 @@ public class EquiposDelTorneoDAO {
     ResultSet rs;
 
     public EquiposDelTorneoDAO() {
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
     public synchronized String insertar(int codigoequipo, int idTorneo){
@@ -74,5 +75,33 @@ public class EquiposDelTorneoDAO {
             throw new MiExcepcion("Error", ex);
         }
         return equipos;
+    }
+    
+    public List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo)throws MiExcepcion{
+        List<String> correos = new ArrayList();
+        try {
+            statement = conexion.prepareStatement("select distinct email from usuarios "
+                    + "inner join jugadoresporequipo as je " +
+"on usuarios.idUsuario = je.codigoJugador " +
+"inner join equiposdeltorneo as et " +
+"on et.equipoCodigo = je.codigoEquipo " +
+"where et.torneoIdTorneo = ? and et.equipoCodigo=?;");
+            statement.setInt(1, idTorneo);
+            statement.setInt(2,codigoEquipo);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                String email = new String(rs.getString("email"));
+                correos.add(email);
+            }
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error sql",ex);
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                throw new MiExcepcion("Error cerrando prepared ",ex);
+            }
+        }
+        return correos;
     }
 }
