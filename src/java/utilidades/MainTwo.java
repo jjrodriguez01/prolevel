@@ -18,9 +18,9 @@ public class MainTwo {
         ArrayList<String> arr2 = new ArrayList();
         StringBuilder s = new StringBuilder("");
         arr.add("hola");
-        arr.add("tatiiz");
-        arr.add("teamo");
-        arr2.add("peroteolvidare");
+        arr.add("esto");
+        arr.add("es una");
+        arr2.add("prueba");
         arr.addAll(arr2);
         for(int i= 0; i < arr.size(); i++){
             s.append(arr.get(i));
