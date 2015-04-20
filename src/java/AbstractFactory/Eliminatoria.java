@@ -5,17 +5,19 @@
  */
 package AbstractFactory;
 
+import controlador.Conexion;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import modelo.EquipoDTO;
 import modelo.EquiposdeltorneoDTO;
 import modelo.PartidoDTO;
 import modelo.TorneoDTO;
 import persistencia.EliminatoriaDAO;
 import persistencia.EquiposDelTorneoDAO;
 import persistencia.PartidoDAO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -23,30 +25,38 @@ import persistencia.PartidoDAO;
  */
 public class Eliminatoria extends Torneo {
 
-    EliminatoriaDAO eli = new EliminatoriaDAO();
+    EliminatoriaDAO eli;
+    Connection conexion;
+
+    public Eliminatoria() {
+        eli = new EliminatoriaDAO();
+        conexion = Conexion.getConnection();
+    }
+    
+    
     @Override
     public String crear(TorneoDTO torneo) {
-        return eli.insertar(torneo);
+        return eli.insertar(torneo,conexion);
     }
 
     @Override
     public String modificar(TorneoDTO torneo) {
-        return eli.actualizar(torneo);
+        return eli.actualizar(torneo,conexion);
     }
 
     @Override
     public String eliminar(int id) {
-        return eli.eliminar(id);
+        return eli.eliminar(id,conexion);
     }
 
     @Override
-    public List listarTodo() {
-        return eli.ListarTodo();
+    public List listarTodo() throws MiExcepcion {
+        return eli.ListarTodo(conexion);
     }
 
     @Override
-    public TorneoDTO listarUno(int id) {
-        return eli.listarUno();
+    public TorneoDTO listarUno(int id) throws MiExcepcion {
+        return eli.listarUno(id,conexion);
     }
     
     public void primeraRondaDiesciseis(List<EquiposdeltorneoDTO> arr){

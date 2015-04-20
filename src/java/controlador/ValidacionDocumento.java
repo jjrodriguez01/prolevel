@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -13,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistencia.UsuariosDAO;
 import utilidades.MiExcepcion;
 
 /**
@@ -37,9 +37,9 @@ public class ValidacionDocumento extends HttpServlet {
         PrintWriter out = response.getWriter();
             if (request.getParameter("jugador")!=null) {
             StringBuilder respuesta = new StringBuilder("");
-            UsuariosDAO udao = new UsuariosDAO();
+            FachadaUsuarios facadeUsu = new FachadaUsuarios();
             long cc = Long.parseLong(request.getParameter("jugador").trim());
-            respuesta.append(udao.validarDocumento(cc));
+            respuesta.append(facadeUsu.validarDocumento(cc));
             this.writeResponse(response, respuesta.toString());
         }else{
                try {

@@ -5,15 +5,13 @@
  */
 package controlador;
 
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistencia.EquipoDAO;
-import persistencia.EquiposDelTorneoDAO;
-import persistencia.JugadoresporequipoDAO;
 import utilidades.MiExcepcion;
 
 /**
@@ -37,13 +35,12 @@ public class RegistroEquipos extends HttpServlet {
         int idTorneo = Integer.parseInt(request.getParameter("idTorneo"));//id del torneo
         String nombre = request.getParameter("nombre");//nombre equipo
         if (request.getParameter("crearEquipo")!=null) {
-            EquipoDAO  equipo = new EquipoDAO();                       
+            FachadaTorneos facadetorneos = new FachadaTorneos();                       
             try{
-            int codigo =equipo.existeEquipo(nombre);
+            int codigo = facadetorneos.existeEquipo(nombre);
             //si el codigo no es cero significa que este equipo ya esta registrado solo lo insertamos al torneo 
             if (codigo!=0) {
-                EquiposDelTorneoDAO edtdao = new EquiposDelTorneoDAO();
-                String  nuevoequipo = edtdao.insertar(codigo, idTorneo);//insertamos en la tabla equipos del torneo
+                String  nuevoequipo = facadetorneos.inscribirEquipos(codigo, idTorneo);//insertamos en la tabla equipos del torneo
                 if (nuevoequipo.equals("Se inserto el equipo al torneo")) {
                     JugadoresporequipoDAO jpequipo = new JugadoresporequipoDAO();
     int juno = Integer.parseInt(request.getParameter("juno"));
@@ -63,13 +60,12 @@ public class RegistroEquipos extends HttpServlet {
                 }//si el codigo de equipo es cero es porq no esta registrado
                 //hay que registrarlo y repetir el proceso
             }else{
-                String registroequipo = equipo.insertar(nombre);
+                String registroequipo = facadetorneos.insertarEquipo(nombre);
                 if (registroequipo.equals("Se inserto el equipo")) {//si se registro correctamente
-                    EquiposDelTorneoDAO edtdao = new EquiposDelTorneoDAO();
                     //hay q buscar el codigo con el que se inserto el equipo
-                    int nuevoequipo = equipo.existeEquipo(nombre);
+                    int nuevoequipo = facadetorneos.existeEquipo(nombre);
                     //ahora lo insertamos al torneo
-                    String equipoatorneo = edtdao.insertar(nuevoequipo, idTorneo);
+                    String equipoatorneo = facadetorneos.inscribirEquipos(nuevoequipo, idTorneo);
                     if (equipoatorneo.equals("Se inserto el equipo al torneo")) {
                         JugadoresporequipoDAO jpequipo = new JugadoresporequipoDAO();
     int juno = Integer.parseInt(request.getParameter("juno"));

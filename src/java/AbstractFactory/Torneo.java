@@ -7,6 +7,7 @@ package AbstractFactory;
 
 import java.util.List;
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -18,6 +19,6 @@ public abstract class Torneo {
     public abstract String crear(TorneoDTO torneo);
     public abstract String modificar(TorneoDTO torneo);
     public abstract String eliminar(int id);
-    public abstract List listarTodo();
-    public abstract TorneoDTO listarUno(int id);
+    public abstract List listarTodo() throws MiExcepcion;
+    public abstract TorneoDTO listarUno(int id) throws MiExcepcion;
 }

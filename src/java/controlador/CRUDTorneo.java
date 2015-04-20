@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.TorneoDTO;
-import persistencia.TorneoDAO;
 
 /**
  *
@@ -34,7 +34,7 @@ public class CRUDTorneo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
         TorneoDTO tdto = null;
-        TorneoDAO tdao = null;    
+        FachadaTorneos facadetorneos = null;    
             if (request.getParameter("at")!=null && request.getParameter("confirmactu")!=null) {
             tdto = new TorneoDTO();    
                 
@@ -45,16 +45,15 @@ public class CRUDTorneo extends HttpServlet {
                 tdto.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidad")));
                 tdto.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
                 
-                tdao = new TorneoDAO();
-                String msj = tdao.actualizar(tdto);
-                response.sendRedirect("paginas/admin.jsp?updatet="+msj);
+                facadetorneos = new FachadaTorneos();
+                String msj = facadetorneos.actualizarTorneo(tdto);
+                response.sendRedirect("paginas/admin.jsp?updatet="+msj+"#atorneo");
                 
-            }else if (request.getParameter("et")!=null && request.getParameter("realizaret")!=null)  {
-                tdto = new TorneoDTO();
+            }else if (request.getParameter("et")!=null && request.getParameter("celiminar")!=null)  {
                 int id = (Integer.parseInt(request.getParameter("idTorneo")));
-                tdao = new TorneoDAO();
-                String elit = tdao.eliminar(id);
-                response.sendRedirect("paginas/admin.jsp?elimt="+elit);
+                facadetorneos = new FachadaTorneos();
+                String elit = facadetorneos.eliminarTorneo(id);
+                response.sendRedirect("paginas/admin.jsp?elimt="+elit+"#etorneo");
             }
         }
     }

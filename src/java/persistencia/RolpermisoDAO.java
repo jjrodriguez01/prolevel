@@ -7,7 +7,6 @@ package persistencia;
 
 import modelo.RolpermisoDTO;
 
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 public class RolpermisoDAO {
-  Connection conexion = null;
+
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -25,11 +24,8 @@ public class RolpermisoDAO {
 
     ResultSet rs;
 
-    public RolpermisoDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public String insertar (RolpermisoDTO ins) {
+    public String insertar (RolpermisoDTO ins, Connection conexion) {
 
         try {
             //sentencia sql
@@ -59,7 +55,7 @@ public class RolpermisoDAO {
         return mensaje;
     }
 
-    public String modificar(RolpermisoDTO ins) {
+    public String modificar(RolpermisoDTO ins, Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Rolpermiso SET idRol=?,IdPermiso=?,Nombre=?";
@@ -88,7 +84,7 @@ public class RolpermisoDAO {
 
     }
 
-    public String eliminar(RolpermisoDTO usu) {
+    public String eliminar(RolpermisoDTO usu, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from Rolpermiso where idRol=?;");
             //obtenemos el id del item a eliminar del dto
@@ -108,7 +104,7 @@ public class RolpermisoDAO {
         return mensaje;
     }
 
-    public List<RolpermisoDTO> listarTodo() {
+    public List<RolpermisoDTO> listarTodo(Connection conexion) {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<RolpermisoDTO> listarUsuarios = new ArrayList();
 
@@ -141,7 +137,7 @@ public class RolpermisoDAO {
 
     }
 
-    public String listarUno(RolpermisoDTO usuario) {
+    public String listarUno(RolpermisoDTO usuario, Connection conexion) {
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT idRol,"

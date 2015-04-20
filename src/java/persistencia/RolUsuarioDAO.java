@@ -6,8 +6,6 @@
 package persistencia;
 
 import modelo.RolUsuarioDTO;
-
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,10 +13,10 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import modelo.UsuariosDTO;
+import utilidades.MiExcepcion;
 
 public class RolUsuarioDAO {
     
-    Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -28,11 +26,8 @@ public class RolUsuarioDAO {
 
     ResultSet rs;
 
-    public RolUsuarioDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public String insertar(RolUsuarioDTO usu) {
+    public String insertar(RolUsuarioDTO usu,Connection conexion) {
 
         try {
             //sentencia sql
@@ -61,7 +56,7 @@ public class RolUsuarioDAO {
         return mensaje;
     }
 
-    public String actualizar(RolUsuarioDTO usu) {
+    public String actualizar(RolUsuarioDTO usu,Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE RolUsuario SET RolesidRol=?,UsuarioIdUsuario=? WHERE RolesidRol=?;";
@@ -88,7 +83,7 @@ public class RolUsuarioDAO {
 
     }
 
-    public String eliminar(RolUsuarioDTO usu) {
+    public String eliminar(RolUsuarioDTO usu,Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from usuarios where idUsuario=?;");
             //obtenemos el id del item a eliminar del dto
@@ -108,7 +103,7 @@ public class RolUsuarioDAO {
         return mensaje;
     }
 
-    public List<RolUsuarioDTO> listarTodo() {
+    public List<RolUsuarioDTO> listarTodo(Connection conexion) {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<RolUsuarioDTO> listarUsuarios = new ArrayList();
 
@@ -144,7 +139,7 @@ public class RolUsuarioDAO {
      * @param UsuariosDTO usuario a obtener umero de rol
      * @return int con el numero de rol del objeto UsuariosDTO especificado
      */
-    public int getRol(UsuariosDTO usuario) {
+    public int getRol(UsuariosDTO usuario,Connection conexion) throws MiExcepcion {
         int rol = 0;
         try {
             //preparamos la consulta 
@@ -159,7 +154,7 @@ public class RolUsuarioDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error obteniendo rol", ex);
         }
         //devolvemos el usuario que se encontro
         return rol;

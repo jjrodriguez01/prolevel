@@ -93,8 +93,12 @@
         <url-pattern>/Recuperar</url-pattern>
     </servlet-mapping>
     <error-page>
-        <error-code>404</error-code>
-        <location>/errorPages/error404.html</location>
+        <error-code>500</error-code>
+        <location>/errorPages/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/errorPages/error404.jsp</location>
     </error-page>
     <servlet-mapping>
         <servlet-name>ValidacionDocumento</servlet-name>

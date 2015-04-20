@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.CanchaDTO;
-import persistencia.CanchaDAO;
 
 /**
  *
@@ -33,25 +33,25 @@ public class Canchas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         CanchaDTO cdto = null;
-        CanchaDAO cdao = null;
+        FachadaTorneos facadetorneos = null; 
         if (request.getParameter("ecancha")!=null) {
-            cdao = new CanchaDAO();
+            facadetorneos = new FachadaTorneos();
             int numeroCancha = Integer.parseInt(request.getParameter("numero"));
-            String eliminada = cdao.eliminar(numeroCancha);
+            String eliminada = facadetorneos.eliminarCancha(numeroCancha);
             response.sendRedirect("paginas/admin.jsp?eliminada="+eliminada);
         }else if (request.getParameter("icancha")!=null) {
             cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
+            facadetorneos = new FachadaTorneos();
             cdto.setNumeroCancha(Integer.parseInt(request.getParameter("numero")));
             cdto.setDescripcion(request.getParameter("des"));
-            String ins = cdao.insertar(cdto);
+            String ins = facadetorneos.insertarCancha(cdto);
             response.sendRedirect("paginas/admin.jsp?inscancha="+ins);
         }else if (request.getParameter("ac")!=null & request.getParameter("confirmac")!=null){
             cdto = new CanchaDTO();
-            cdao = new CanchaDAO();
+            facadetorneos = new FachadaTorneos();
             cdto.setNumeroCancha(Integer.parseInt(request.getParameter("num")));
             cdto.setDescripcion(request.getParameter("descripcion"));
-            String ac = cdao.actualizar(cdto);
+            String ac = facadetorneos.actualizarCancha(cdto);
             response.sendRedirect("paginas/admin.jsp?ac="+ac);
         }
     }

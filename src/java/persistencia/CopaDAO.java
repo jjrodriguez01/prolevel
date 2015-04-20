@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-import utilidades.Conexion;
+import utilidades.MiExcepcion;
 /**
  *
  * @author jeisson
  */
 public class CopaDAO {
   
-    private Connection conexion = null;
     //instanciamos preparestatment
     private PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -28,11 +27,7 @@ public class CopaDAO {
 
     ResultSet rs;
     
-    public CopaDAO (){
-        conexion = Conexion.getInstance();
-    }
-    
-    public synchronized String insertar(TorneoDTO copa){
+    public synchronized String insertar(TorneoDTO copa, Connection conexion){
         try {
         call = conexion.prepareCall("{call sp_torneocopa(?,?,?,?,?,?,?,?,?,?,?) }");
         call.setString(1, copa.getNombre());
@@ -60,7 +55,7 @@ public class CopaDAO {
         return mensaje;
     }
     
-    public String eliminar (int id){
+    public String eliminar (int id, Connection conexion){
         TorneoDTO copa = new TorneoDTO();
         try {
             statement = conexion.prepareStatement("Delete from torneo where idTorneo = ?;");
@@ -80,7 +75,7 @@ public class CopaDAO {
         return mensaje;
     }
     
-    public String actualizar (TorneoDTO copa){
+    public String actualizar (TorneoDTO copa, Connection conexion){
         try {
             statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, "
                     + "fechaInicio= ?,fechaFin= ?, genero= ?, "
@@ -107,7 +102,7 @@ public class CopaDAO {
         
         return mensaje;
     }
-     public TorneoDTO listarUno(int id) {
+     public TorneoDTO listarUno(int id, Connection conexion) throws MiExcepcion {
         TorneoDTO copa = new TorneoDTO();
         try {
             //preparamos la consulta
@@ -134,13 +129,13 @@ public class CopaDAO {
             }
             }
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error al listar las copas", ex);
         }
         //devolvemos el usuario que se encontro
         return copa;
     }
     
-    public ArrayList<TorneoDTO> ListarTodo(){
+    public ArrayList<TorneoDTO> ListarTodo(Connection conexion) throws MiExcepcion{
         
         ArrayList<TorneoDTO> listarCopas = new ArrayList();
         try{                     
@@ -168,7 +163,7 @@ public class CopaDAO {
             }
             }
         }catch(SQLException sqle){
-            mensaje = "Error: "+ sqle.getMessage();
+            throw new MiExcepcion("Error al listar las copas", sqle);
         }
         return listarCopas;
     }

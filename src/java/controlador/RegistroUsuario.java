@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.UsuariosDTO;
-import persistencia.UsuariosDAO;
 
 /**
  *
@@ -32,10 +32,10 @@ public class RegistroUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UsuariosDAO udao = null;
+        FachadaUsuarios facadeUsu = null;
         UsuariosDTO udto = null;
         if(request.getParameter("enviar")!= null && request.getParameter("registro")!= null){
-          udao = new UsuariosDAO();
+          facadeUsu = new FachadaUsuarios();
           udto = new UsuariosDTO();
           udto.setIdUsuario(Long.parseLong(request.getParameter("cc")));
           udto.setPrimerNombre(request.getParameter("nombre"));
@@ -46,12 +46,12 @@ public class RegistroUsuario extends HttpServlet {
           udto.setTelefono(request.getParameter("tel"));
           udto.setContraseña(request.getParameter("pass"));
           
-          String ins = udao.insertar(udto);
+          String ins = facadeUsu.insertarUsuario(udto);
           response.sendRedirect("registro.jsp?registro="+ins);
           
         }else if (request.getParameter("actudatos")!=null && request.getParameter("datos")!=null) {
             udto = new UsuariosDTO();
-            udao = new UsuariosDAO();
+            facadeUsu = new FachadaUsuarios();
             udto.setIdUsuario(Long.parseLong(request.getParameter("cc")));
             udto.setPrimerNombre(request.getParameter("nombre"));
             udto.setSegundoNombre(request.getParameter("snombre"));
@@ -60,7 +60,7 @@ public class RegistroUsuario extends HttpServlet {
             udto.setTelefono(request.getParameter("tel"));
             udto.setEmail(request.getParameter("email"));
             udto.setContraseña(request.getParameter("pass"));
-            String conf = udao.actualizar(udto);
+            String conf = facadeUsu.actualizarUsuario(udto);
             response.sendRedirect("paginas/admin.jsp?conf="+conf);
         }
     }

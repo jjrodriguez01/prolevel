@@ -5,17 +5,13 @@
  */
 package persistencia;
 
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.EquiposdeltorneoDTO;
-import modelo.UsuariosDTO;
 import utilidades.MiExcepcion;
 
 /**
@@ -25,7 +21,6 @@ import utilidades.MiExcepcion;
 
 public class EquiposDelTorneoDAO {
 
-    Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -35,11 +30,8 @@ public class EquiposDelTorneoDAO {
 
     ResultSet rs;
 
-    public EquiposDelTorneoDAO() {
-        conexion = Conexion.getInstance();
-    }
     
-    public synchronized String insertar(int codigoequipo, int idTorneo){
+    public synchronized String insertar(int codigoequipo, int idTorneo, Connection conexion){
         try {
             statement = conexion.prepareStatement("INSERT INTO equiposdeltorneo (equipocodigo, torneoidtorneo)"
                     + " VALUES (?,?);");
@@ -58,7 +50,7 @@ public class EquiposDelTorneoDAO {
         return mensaje;
     }
     
-    public List<EquiposdeltorneoDTO> listarTodo(int idTorneo) throws MiExcepcion{
+    public List<EquiposdeltorneoDTO> listarTodo(int idTorneo, Connection conexion) throws MiExcepcion{
         ArrayList<EquiposdeltorneoDTO> equipos = new ArrayList();
         try {
             statement = conexion.prepareStatement("SELECT equipocodigo, torneoidtorneo"
@@ -77,7 +69,7 @@ public class EquiposDelTorneoDAO {
         return equipos;
     }
     
-    public List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo)throws MiExcepcion{
+    public synchronized List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo, Connection conexion)throws MiExcepcion{
         List<String> correos = new ArrayList();
         try {
             statement = conexion.prepareStatement("select distinct email from usuarios "

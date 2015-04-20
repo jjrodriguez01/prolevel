@@ -5,10 +5,7 @@
  */
 package persistencia;
 
-
-
 import modelo.EquipoDTO;
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,13 +13,9 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modelo.JugadoresporequipoDTO;
 import utilidades.MiExcepcion;
 
 public class EquipoDAO {
-     Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -32,11 +25,7 @@ public class EquipoDAO {
 
     ResultSet rs;
 
-    public EquipoDAO() {
-        conexion = Conexion.getInstance();
-    }
-
-    public String insertar(String nombre) {
+    public synchronized String insertar(String nombre, Connection conexion) {
         try {
             //sentencia sql
             String sql = "INSERT INTO equipo(codigo,nombre) VALUES(null,?);";
@@ -62,7 +51,7 @@ public class EquipoDAO {
         return mensaje;
     }
 
-    public String actualizar(EquipoDTO eq) {
+    public String actualizar(EquipoDTO eq, Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE equipo SET nombre=? WHERE codigo=?;";
@@ -88,7 +77,7 @@ public class EquipoDAO {
 
     }
 
-    public String eliminar(int equipo) {
+    public String eliminar(int equipo, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from equipo where codigo=?;");
             //obtenemos el id del item a eliminar del dto
@@ -108,7 +97,7 @@ public class EquipoDAO {
         return mensaje;
     }
 
-    public LinkedList<EquipoDTO> listarTodo() {
+    public List<EquipoDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<EquipoDTO> equipos = new LinkedList();
 
@@ -130,7 +119,7 @@ public class EquipoDAO {
 
             }
         } catch (SQLException sqlexception) {
-           mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+           throw new MiExcepcion("Error ", sqlexception);
 
         } finally {
 
@@ -138,7 +127,7 @@ public class EquipoDAO {
         //devolvemos el arreglo
         return equipos;
     }
-        public LinkedList<EquipoDTO> listarTodoTorneo(int torneo) {
+        public List<EquipoDTO> listarTodoTorneo(int torneo, Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<EquipoDTO> equipos = new LinkedList();
 
@@ -163,7 +152,7 @@ public class EquipoDAO {
 
             }
         } catch (SQLException sqlexception) {
-           mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+           throw new MiExcepcion("Error ", sqlexception);
 
         } finally {
 
@@ -172,14 +161,14 @@ public class EquipoDAO {
         return equipos;
         }
 
-    public EquipoDTO listarUno(int id) {
+    public EquipoDTO listarUno(int codigo, Connection conexion) throws MiExcepcion {
         EquipoDTO equ = new EquipoDTO();
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT codigo,"
                     + "nombre FROM equipo "
                     + "WHERE codigo = ? ;");
-            statement.setInt(1, id);
+            statement.setInt(1, codigo);
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
@@ -188,12 +177,12 @@ public class EquipoDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error ", ex);
         }
         return equ;
     }
     
-    public int existeEquipo(String nombre) throws MiExcepcion{
+    public int existeEquipo(String nombre, Connection conexion) throws MiExcepcion{
         int codigo = 0;
          try {
              statement = conexion.prepareStatement("SELECT codigo FROM equipo Where nombre= ?;");

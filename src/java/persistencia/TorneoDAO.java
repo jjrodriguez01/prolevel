@@ -1,5 +1,6 @@
 package persistencia;
 
+import controlador.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,14 +10,14 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.TorneoDTO;
-import utilidades.Conexion;
+import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
 public class TorneoDAO {
-        private Connection conexion = null;
+    Connection conexion;
     //instanciamos preparestatment
     private PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -27,23 +28,22 @@ public class TorneoDAO {
     CallableStatement call;
 
     ResultSet rs;
-    
-    public TorneoDAO (){
-        conexion = Conexion.getInstance();
+
+    public TorneoDAO() {
+        conexion = Conexion.getConnection();
     }
     
-
     
-    public String eliminar (int idTorneo){
+    
+    public String eliminar (int idTorneo, Connection conexion){
         
         try {
             statement = conexion.prepareStatement("Delete from torneo where idTorneo = ?;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, idTorneo);
             rtdo = statement.executeUpdate();
-
             if (rtdo != 0) {
-                System.out.println("Se eliminó el torneo");
+                mensaje = "Se eliminó el torneo";
             } else {
                 mensaje = "Ocurrió Un Error";
             }
@@ -54,7 +54,7 @@ public class TorneoDAO {
         return mensaje;
     }
     
-    public String actualizar (TorneoDTO copa){
+    public String actualizar (TorneoDTO copa, Connection conexion){
         
         try {
             statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, fechaInicio= ?,fechaFin= ?, genero= ?, capacidadEquipos = ? WHERE idTorneo = ?");
@@ -80,7 +80,7 @@ public class TorneoDAO {
         
         return mensaje;
     }
-     public TorneoDTO listarUno(int id) {
+     public TorneoDTO listarUno(int id, Connection conexion) throws MiExcepcion {
          TorneoDTO torneo = new TorneoDTO(); 
         try {     
             statement = conexion.prepareStatement("SELECT * from torneo where idTorneo = ?;");
@@ -95,12 +95,12 @@ public class TorneoDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage();
+            throw new MiExcepcion("Error al listar los torneos", ex);
         }
         return torneo;
     }
     
-    public List ListarTodo(){
+    public List ListarTodo(Connection conexion) throws MiExcepcion{
         
         ArrayList<TorneoDTO> listarCopas = new ArrayList();
         try{
@@ -124,53 +124,8 @@ public class TorneoDAO {
             }
             
         }catch(SQLException sqle){
-            mensaje = "Error: "+ sqle.getMessage();
+            throw new MiExcepcion("Error al listar los torneos", sqle);
         }
         return listarCopas;
-    }
-    public List ListaPaginacion(int pg, int numreg){
-        
-        ArrayList<TorneoDTO> listarCopas = new ArrayList();
-        try{                               
-            statement = conexion.prepareStatement("SELECT * FROM torneo LIMIT "+(pg-1)*numreg+","+numreg+";");
-            rs=statement.executeQuery();
-            
-            while(rs.next()){
-                TorneoDTO cup = new TorneoDTO();
-                
-                cup.setIdTorneo(rs.getInt("idTorneo"));
-                cup.setNombre(rs.getString("nombre"));
-                cup.setFechaInicio(rs.getString("fechaInicio"));
-                cup.setFechaFin(rs.getString("fechaFin"));
-                cup.setGenero(rs.getString("genero"));
-                cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
-                           
-                listarCopas.add(cup);
-                
-            }
-            
-        }catch(SQLException sqle){
-            mensaje = "Error: "+ sqle.getMessage();
-        }
-        return listarCopas;
-    }
-    public int contarRegistros(){
-        int registros = 0;
-        try{
-            statement=conexion.prepareStatement("SELECT * FROM torneo;");
-            rs = statement.executeQuery();
-            
-            if (rs!=null) {
-                while(rs.next()){
-                registros++;
-            }
-            return registros;
-            }
-              
-            
-        }catch(SQLException sqle){
-            mensaje = sqle.getMessage();
-        }
-        return registros;
     }
 }

@@ -5,8 +5,7 @@
  */
 package persistencia;
 
-
-import utilidades.Conexion;
+import controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +13,10 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import modelo.CanchaDTO;
+import utilidades.MiExcepcion;
 
 public class CanchaDAO {
  
-
-     Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -28,11 +26,7 @@ public class CanchaDAO {
 
     ResultSet rs;
 
-    public CanchaDAO() {
-        conexion = Conexion.getInstance();
-    }
-
-    public String insertar(CanchaDTO can) {
+    public String insertar(CanchaDTO can, Connection conexion) {
 
         try {
             statement = conexion.prepareStatement("INSERT INTO Cancha(numeroCancha,descripcion)VALUES(?,?)");
@@ -57,7 +51,7 @@ public class CanchaDAO {
         return mensaje;
     }
 
-    public String actualizar(CanchaDTO can) {
+    public String actualizar(CanchaDTO can, Connection conexion) {
         try {
             statement = conexion.prepareStatement("UPDATE Cancha SET numeroCancha=?, descripcion=? "
                     + "WHERE numeroCancha=?;");
@@ -82,7 +76,7 @@ public class CanchaDAO {
 
     }
 
-    public String eliminar(int numero) {
+    public String eliminar(int numero, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from Cancha where numeroCancha=?;");
             //obtenemos el id del item a eliminar del dto
@@ -102,7 +96,7 @@ public class CanchaDAO {
         return mensaje;
     }
 
-    public List<CanchaDTO> listarTodo() {
+    public List<CanchaDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<CanchaDTO> listarCancha = new ArrayList();
 
@@ -124,7 +118,7 @@ public class CanchaDAO {
 
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error al listar las canchas", sqlexception);
 
         } finally {
 
@@ -134,7 +128,7 @@ public class CanchaDAO {
 
     }
 
-    public CanchaDTO listarUno(int numeroCancha) {
+    public CanchaDTO listarUno(int numeroCancha, Connection conexion) throws MiExcepcion {
         CanchaDTO can = new CanchaDTO();
         try {
             //preparamos la consulta 
@@ -149,7 +143,7 @@ public class CanchaDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error al listar la cancha", ex);
         }
         //devolvemos el usuario que se encontro
         return can;

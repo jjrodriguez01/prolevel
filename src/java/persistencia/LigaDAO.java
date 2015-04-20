@@ -10,7 +10,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.TorneoDTO;
-import utilidades.Conexion;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -18,7 +18,6 @@ import utilidades.Conexion;
  */
 public class LigaDAO {
     
-    Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -28,11 +27,8 @@ public class LigaDAO {
     CallableStatement call=null;
     ResultSet rs=null;
 
-    public LigaDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public synchronized String insertar (TorneoDTO liga) {
+    public synchronized String insertar (TorneoDTO liga, Connection conexion) {
 
         try {
             //sentencia sql
@@ -62,7 +58,7 @@ public class LigaDAO {
         return mensaje;
     }
 
-    public String actualizar(TorneoDTO liga) {
+    public String actualizar(TorneoDTO liga, Connection conexion) {
         try {
             statement = conexion.prepareStatement("UPDATE torneo SET nombre=?, "
                     + "fechaInicio =?, fechaFin = ?, genero = ?, "
@@ -88,7 +84,7 @@ public class LigaDAO {
 
     }
 
-    public String eliminar(int id) {
+    public String eliminar(int id, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from torneo where idTorneo=?;");
             //obtenemos el id del item a eliminar del dto
@@ -108,7 +104,7 @@ public class LigaDAO {
         return mensaje;
     }
 
-    public List<TorneoDTO> listarTodo() {
+    public List<TorneoDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<TorneoDTO> listarLiga = new ArrayList();
 
@@ -130,7 +126,7 @@ public class LigaDAO {
                 listarLiga.add(liga);
             }
         } catch (SQLException sqlexception) {
-           mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+           throw new MiExcepcion("Error al obtener las ligas",sqlexception );
         } finally {
 
         }
@@ -139,7 +135,7 @@ public class LigaDAO {
 
     }
 
-    public TorneoDTO listarUno(int id) {
+    public TorneoDTO listarUno(int id, Connection conexion) throws MiExcepcion {
         TorneoDTO liga = new TorneoDTO();
         try {
             //preparamos la consulta 
@@ -163,7 +159,7 @@ public class LigaDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error al obtener la liga",ex);
         }
         return liga;
     }

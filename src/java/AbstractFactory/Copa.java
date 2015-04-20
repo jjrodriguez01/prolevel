@@ -5,35 +5,45 @@
  */
 package AbstractFactory;
 
+import controlador.Conexion;
+import java.sql.Connection;
 import java.util.List;
 import modelo.TorneoDTO;
 import persistencia.CopaDAO;
+import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
 public class Copa extends Torneo {
-    CopaDAO cup = new CopaDAO();
+    CopaDAO cup;
+    Connection conexion;
+
+    public Copa() {
+        cup = new CopaDAO();
+        conexion = Conexion.getConnection();
+    }
+    
     @Override
     public String crear(TorneoDTO copa){     
-        return cup.insertar(copa);
+        return cup.insertar(copa,conexion);
     }
     @Override
     public String modificar(TorneoDTO copa){
-        return cup.actualizar(copa);
+        return cup.actualizar(copa, conexion);
     }
     @Override
     public String eliminar(int id){
-        return cup.eliminar(id);
+        return cup.eliminar(id, conexion);
     }
     @Override
-    public List listarTodo(){
-        return cup.ListarTodo();
+    public List listarTodo() throws MiExcepcion{
+        return cup.ListarTodo(conexion);
     }
 
     @Override
-    public TorneoDTO listarUno(int id) {
-        return cup.listarUno(id);
+    public TorneoDTO listarUno(int id) throws MiExcepcion {
+        return cup.listarUno(id,conexion);
     }
 }

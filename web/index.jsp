@@ -10,7 +10,6 @@
 <head>
 <meta charset="utf-8">
 <title>Pro-level</title>
-<meta charset="utf-8">
 <link rel="shortcut icon" href="imagenes/favicon.ico">
 <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="js/lightslider/css/lightSlider.css" rel="stylesheet" type="text/css">

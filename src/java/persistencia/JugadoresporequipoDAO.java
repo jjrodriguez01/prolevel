@@ -7,7 +7,6 @@ package persistencia;
 
 import modelo.JugadoresporequipoDTO;
 
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,13 +14,10 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import utilidades.MiExcepcion;
 
 public class JugadoresporequipoDAO {
-  
 
-
-
-     Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -31,11 +27,7 @@ public class JugadoresporequipoDAO {
 
     ResultSet rs;
 
-    public JugadoresporequipoDAO() {
-        conexion = Conexion.getInstance();
-    }
-
-    public synchronized String insertar(int equipo, int jugador) {
+    public synchronized String insertar(int equipo, int jugador, Connection conexion) throws MiExcepcion {
 
         try {
             //sentencia sql
@@ -57,13 +49,13 @@ public class JugadoresporequipoDAO {
             }
         } 
         catch (SQLException sqlexception) {
-            System.out.println("Ocurrio Un Error" + sqlexception.getMessage());
+            throw new MiExcepcion("Error insertando jugadores", sqlexception);
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
 
-    public String actualizar(int equipo, int jugador) {
+    public String actualizar(int equipo, int jugador, Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Jugadoresporequipo SET "
@@ -94,7 +86,7 @@ public class JugadoresporequipoDAO {
 
     }
 
-    public String eliminar(int jugador, int equipo) {
+    public String eliminar(int jugador, int equipo, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from Jugadoresporequipo "
                     + "where CodigoEquipo=? and codigoJugador=?;");
@@ -116,7 +108,7 @@ public class JugadoresporequipoDAO {
         return mensaje;
     }
 
-    public LinkedList<JugadoresporequipoDTO> listarTodo() {
+    public LinkedList<JugadoresporequipoDTO> listarTodo(Connection conexion) {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
 
@@ -150,7 +142,7 @@ public class JugadoresporequipoDAO {
 
     }
 
-    public LinkedList<JugadoresporequipoDTO> listarUno(int equipo, int jugador) {
+    public LinkedList<JugadoresporequipoDTO> listarUno(int equipo, int jugador, Connection conexion) {
          LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
         try {
             statement = conexion.prepareStatement("SELECT codigoEquipo,codigoJugador "
@@ -174,7 +166,7 @@ public class JugadoresporequipoDAO {
         //devolvemos el usuario que se encontro
         return jugadoreseq;
     }
- public LinkedList<JugadoresporequipoDTO> listarJugadoresEq(int equipo) {
+ public LinkedList<JugadoresporequipoDTO> listarJugadoresEq(int equipo, Connection conexion) {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
 

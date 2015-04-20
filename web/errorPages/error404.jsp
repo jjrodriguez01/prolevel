@@ -1,11 +1,14 @@
-<%-- 
-    Document   : error
-    Created on : 11/03/2015, 01:01:36 AM
-    Author     : jeisson
---%>
-
+<%@page import="persistencia.UsuariosDAO"%>
+<%@page import="modelo.UsuariosDTO"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<sql:query var="torneo" dataSource="jdbc/pro-level">
+    SELECT idTorneo, nombre FROM torneo
+</sql:query>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page isErrorPage="true" import="java.util.*" %>
+<%
+    
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -275,7 +278,7 @@ footer p{
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        <h2>Lo sentimos, ha ocurrido un error <%=exception.getMessage()%></h2>
+                        <h2>Lo sentimos, la pagina no ha sido encontrada</h2>
                     </div>
                 </div>
             </div>

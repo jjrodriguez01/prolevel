@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import utilidades.Conexion;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -17,7 +17,6 @@ import utilidades.Conexion;
  */
 public class EliminatoriaDAO {
     
-    private Connection conexion = null;
     //instanciamos preparestatment
     private PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -29,11 +28,7 @@ public class EliminatoriaDAO {
 
     ResultSet rs;
     
-     public EliminatoriaDAO (){
-        conexion = Conexion.getInstance();
-    }
-    
-    public synchronized String insertar(TorneoDTO eliminatoria){
+    public synchronized String insertar(TorneoDTO eliminatoria, Connection conexion){
         try {
         call = conexion.prepareCall("{call sp_torneoeliminatoria (?,?,?,?,?,?,?,?) }");
         call.setString(1, eliminatoria.getNombre());
@@ -59,7 +54,7 @@ public class EliminatoriaDAO {
         return mensaje;
     }
     
-    public String eliminar(int id){
+    public String eliminar(int id, Connection conexion){
         
         try {
             statement = conexion.prepareStatement("Delete from torneo where idTorneo = ?;");
@@ -79,7 +74,7 @@ public class EliminatoriaDAO {
         return mensaje;
     }
     
-    public String actualizar(TorneoDTO eliminatoria){
+    public String actualizar(TorneoDTO eliminatoria, Connection conexion){
         
         try {
             statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, "
@@ -101,12 +96,12 @@ public class EliminatoriaDAO {
         }       
         return mensaje;
     }
-     public TorneoDTO listarUno() {
+     public TorneoDTO listarUno(int idTorneo, Connection conexion) throws MiExcepcion {
          TorneoDTO eliminatoria = new TorneoDTO();
         try {
             //preparamos la consulta       
             statement = conexion.prepareStatement("SELECT * from torneo where idTorneo = ?;");
-            statement.setInt(1, eliminatoria.getIdTorneo());
+            statement.setInt(1, idTorneo);
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
@@ -121,13 +116,13 @@ public class EliminatoriaDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error al listar la eliminatoria",ex);
         }
         //devolvemos el usuario que se encontro
         return eliminatoria;
     }
     
-    public List ListarTodo(){
+    public List ListarTodo(Connection conexion) throws MiExcepcion{
         
         ArrayList<TorneoDTO> listarEliminatorias = new ArrayList();
         try{
@@ -151,7 +146,7 @@ public class EliminatoriaDAO {
             }
             
         }catch(SQLException sqle){
-            mensaje = "Error: "+ sqle.getMessage();
+            throw new MiExcepcion("Error al listar las eliminatorias",sqle);
         }
         return listarEliminatorias;
     }

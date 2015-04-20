@@ -5,9 +5,12 @@
  */
 package AbstractFactory;
 
+import controlador.Conexion;
+import java.sql.Connection;
 import java.util.List;
 import modelo.TorneoDTO;
 import persistencia.LigaDAO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -15,30 +18,38 @@ import persistencia.LigaDAO;
  */
 public class Liga extends Torneo{
 
-    LigaDAO liga = new LigaDAO();
+    LigaDAO liga;
+    Connection conexion;
+
+    public Liga() {
+        liga = new LigaDAO();
+        conexion = Conexion.getConnection();
+    }
+    
+    
     @Override
     public String crear(TorneoDTO torneo) {
-        return liga.insertar(torneo);
+        return liga.insertar(torneo, conexion);
     }
 
     @Override
     public String modificar(TorneoDTO torneo) {
-        return liga.actualizar(torneo);
+        return liga.actualizar(torneo, conexion);
     }
 
     @Override
     public String eliminar(int id) {
-        return liga.eliminar(id);
+        return liga.eliminar(id, conexion);
     }
 
     @Override
-    public List listarTodo() {
-        return liga.listarTodo();
+    public List listarTodo() throws MiExcepcion {
+        return liga.listarTodo(conexion);
     }
 
     @Override
-    public TorneoDTO listarUno(int id) {
-        return liga.listarUno(id);
+    public TorneoDTO listarUno(int id) throws MiExcepcion {
+        return liga.listarUno(id, conexion);
     }
     
 }

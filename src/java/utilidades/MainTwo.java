@@ -5,6 +5,7 @@
  */
 package utilidades;
 
+import controlador.correo.Correo;
 import java.util.ArrayList;
 import persistencia.*;
 import modelo.*;
@@ -14,32 +15,17 @@ import modelo.*;
  */
 public class MainTwo {
     public static void main(String[] args){
-        ArrayList<String> arr = new ArrayList();
-        ArrayList<String> arr2 = new ArrayList();
-        StringBuilder s = new StringBuilder("");
-        arr.add("hola");
-        arr.add("esto");
-        arr.add("es una");
-        arr2.add("prueba");
-        arr.addAll(arr2);
-        for(int i= 0; i < arr.size(); i++){
-            s.append(arr.get(i));
-            
-            if (i != arr.size() -1 && arr.size() > 0) {
-                s.append(" ,");
-            }
+       String asunto ="prueba";
+       String cuerpo ="esto";
+       String to = "jeisson.j_Rodriguez@hotmail.com";
+       try{
+        if (Correo.sendMail(asunto, cuerpo, to)) {
+            System.out.println("si");
+        }else{
+            System.out.println("no");
         }
-        System.out.println(s);
-        try{
-        EquiposDelTorneoDAO edt = new EquiposDelTorneoDAO();
-        ArrayList<String> eq1 = new ArrayList();
-        eq1=(ArrayList)edt.correosJugadoresEquipo(1, 1);
-        eq1.addAll((ArrayList)edt.correosJugadoresEquipo(1, 2));
-        for(String str : eq1){
-            System.out.println(str);
-        }
-        }catch(MiExcepcion mi){
-            System.out.println(mi.toString());
-        }
+       }catch (MiExcepcion mie){
+           System.out.println(mie.getMessage());
+       }
     }
 }

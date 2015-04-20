@@ -5,17 +5,15 @@
  */
 package controlador;
 
+import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.UsuariosDTO;
-import persistencia.RolUsuarioDAO;
-import persistencia.UsuariosDAO;
 import utilidades.MiExcepcion;
 
 /**
@@ -40,14 +38,13 @@ public class Ingreso extends HttpServlet {
             if (request.getParameter("ingresar") != null) {
                 String email = request.getParameter("email").trim();
                 String contraseña = request.getParameter("pass").trim();
-                UsuariosDAO usu = new UsuariosDAO();
+                FachadaUsuarios facadeUsu = new FachadaUsuarios();
                 UsuariosDTO datosUsuario = new UsuariosDTO();
-                RolUsuarioDAO rol = new RolUsuarioDAO();
                 
-                long cc = usu.validarUsuario(email, contraseña);
+                long cc = facadeUsu.validarUsuario(email, contraseña);
                 if (cc != 0) {
-                    datosUsuario = usu.listarUno(cc);
-                    int numerorol = rol.getRol(datosUsuario);
+                    datosUsuario = facadeUsu.getUsuario(cc);
+                    int numerorol = facadeUsu.getRol(datosUsuario);
                     if(datosUsuario!=null && numerorol!=0){   
                     HttpSession miSesion = request.getSession(true);
                     miSesion.setAttribute("usr", datosUsuario);
@@ -60,18 +57,11 @@ public class Ingreso extends HttpServlet {
             }else if(request.getParameter("logout")!=null){
                     request.getSession().invalidate();
                     response.sendRedirect("index.jsp?sesion=cerrada");
-                }
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Ingreso</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Ingreso at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            }else{
+                response.sendRedirect("index.jsp?action=noaction");
+            }
         }catch(MiExcepcion mie){
-            response.sendRedirect("index.jsp?error="+mie.getMessage());
+            response.sendError(500, mie.getMessage());
         }
     }
 

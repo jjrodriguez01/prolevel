@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import modelo.UsuariosDTO;
-import utilidades.Conexion;
 import static controlador.seguridad.Encriptacion.encriptar;
 import static controlador.seguridad.Encriptacion.desencriptar;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +25,6 @@ import javax.crypto.NoSuchPaddingException;
 import utilidades.MiExcepcion;
 public class UsuariosDAO {
 
-    private Connection conexion = null;
     //instanciamos preparestatment
     private PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -37,9 +35,6 @@ public class UsuariosDAO {
     private ResultSet rs;
     //llave
     
-    public UsuariosDAO() {
-        conexion = Conexion.getInstance();
-    }
     /**
      * Inserta un usuario en la bd
      *
@@ -48,7 +43,7 @@ public class UsuariosDAO {
      * @throws  MiException
      *          Excepcion peersonalizada
      */
-    public synchronized String insertar(UsuariosDTO usu){
+    public synchronized String insertar(UsuariosDTO usu, Connection conexion){
         try {
             //sentencia sql
             String sql = "INSERT INTO Usuarios(idUsuario,primerNombre, "
@@ -92,7 +87,7 @@ public class UsuariosDAO {
         return mensaje;
     }
     
-    public String actualizar(UsuariosDTO usu) {
+    public String actualizar(UsuariosDTO usu, Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Usuarios SET primerNombre=?, "
@@ -122,7 +117,7 @@ public class UsuariosDAO {
         return mensaje;
     }
 
-    public String eliminar(Long id) {
+    public String eliminar(Long id, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from usuarios where idUsuario=?;");
             //obtenemos el id del item a eliminar del dto
@@ -140,7 +135,7 @@ public class UsuariosDAO {
         return mensaje;
     }
     
-    public List<UsuariosDTO> listarTodo() throws MiExcepcion {
+    public List<UsuariosDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<UsuariosDTO> listarUsuarios = new ArrayList();
 
@@ -188,7 +183,7 @@ public class UsuariosDAO {
      *          Excepcion personalizada
      * @return objeto UsuarioDTO con los datos existentes o null si no se encontro con ese id
      */
-    public UsuariosDTO listarUno(Long id)throws MiExcepcion {
+    public UsuariosDTO listarUno(Long id, Connection conexion)throws MiExcepcion {
         UsuariosDTO usuario = new UsuariosDTO();
         try {
             //preparamos la consulta 
@@ -224,7 +219,7 @@ public class UsuariosDAO {
      * @param  password
      *         contraseña del usuario
      */
-        public long validarUsuario(String email, String password) throws MiExcepcion {
+        public long validarUsuario(String email, String password, Connection conexion) throws MiExcepcion {
         long cc = 0;
         try {
             statement = conexion.prepareStatement("SELECT idUsuario "
@@ -262,7 +257,7 @@ public class UsuariosDAO {
      * @throws MiExcepcion
      *          excepcion personalizada
      */
-    public boolean ValidarRol(UsuariosDTO usu)throws MiExcepcion{
+    public boolean ValidarRol(UsuariosDTO usu, Connection conexion)throws MiExcepcion{
     boolean logeado=false;
     try{
       statement = conexion.prepareStatement("select * from usuarios as u  inner join rol_usuario as r"
@@ -287,7 +282,7 @@ public class UsuariosDAO {
     return logeado; 
     }
     
-    public String recuperar (String email){
+    public String recuperar (String email, Connection conexion) throws MiExcepcion{
         String password = ""; 
         UsuariosDTO udto = new UsuariosDTO();
         try{
@@ -299,12 +294,12 @@ public class UsuariosDAO {
                 password = rs.getString("contraseña");
             }
     }catch(SQLException sqle){
-        mensaje = "Ha ocurrido un error " + sqle.getMessage();
+        throw new MiExcepcion("Error recuperando contraseña", sqle);
     }
         return password;
     }
     
-    public String cambiarPass(long id, String newpass){
+    public String cambiarPass(long id, String newpass, Connection conexion) throws MiExcepcion{
         try {
             statement =conexion.prepareStatement("UPDATE usuarios SET contraseña = ? "
                     + "WHERE idUsuario = ?;");
@@ -316,14 +311,14 @@ public class UsuariosDAO {
                 mensaje = "Se cambió la contraseña";
             }
         } catch (SQLException ex) {
-            mensaje = "Ha ocurrido un error = "+ ex.getMessage();
+            throw new MiExcepcion("Error cambiando contraseña", ex);
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
-            mensaje = "Ha ocurrido un error encriptando la contraseña";
+            throw new MiExcepcion("Error cambiando contraseña", e);
         }
         return mensaje;
     }
     
-    public StringBuilder validarDocumento(long cc)throws MiExcepcion{
+    public StringBuilder validarDocumento(long cc, Connection conexion)throws MiExcepcion{
         StringBuilder salida = new StringBuilder("");
         try {
             statement = conexion.prepareStatement("SELECT idUsuario FROM usuarios"

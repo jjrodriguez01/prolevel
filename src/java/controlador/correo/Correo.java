@@ -18,6 +18,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import utilidades.MiExcepcion;
 
 /**
  * @author @date
@@ -31,7 +32,7 @@ public class Correo {
      * @param paraEmail : Email receptor del mensaje
      * @return true si el envío es conforme y false si no es así.
      */
-    public static synchronized boolean sendMail(String titulo, String mensaje, String paraEmail) {
+    public static synchronized boolean sendMail(String titulo, String mensaje, String paraEmail)throws MiExcepcion {
         boolean envio = false;
 
         try {
@@ -40,7 +41,7 @@ public class Correo {
             Properties propiedad = new Properties();
             //se leen el archivo .properties
 
-            final ResourceBundle props = ResourceBundle.getBundle("controladores.ConfigMail");
+            final ResourceBundle props = ResourceBundle.getBundle("controlador.correo.ConfigMail");
 
             Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 
@@ -68,7 +69,7 @@ public class Correo {
             MimeMessage message = new MimeMessage(session);
             message.setSender(new InternetAddress(props.getString("mail.email")));
             message.setSubject(titulo);
-            message.setContent("<h1>"+mensaje+"</h1><strong>fue una prueba enviando etiquetas html</strong>", "text/html; charset=utf-8");
+            message.setContent("<html><head></head><h1>Pro-level</h1><br/><br/>"+mensaje+"</html>", "text/html; charset=utf-8");
             message.setFrom(new InternetAddress(props.getString("mail.smtp.mail.sender")));
             message.setReplyTo(InternetAddress.parse(props.getString("mail.smtp.mail.sender")));
 
@@ -82,11 +83,9 @@ public class Correo {
             Transport.send(message);
             envio = true;
 
-        } catch (Throwable e) {
+        } catch (Throwable mie) {
             envio = false;
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
-
+            throw new MiExcepcion("Error al enviar Correos", mie);
         } finally {
             return envio;
         }

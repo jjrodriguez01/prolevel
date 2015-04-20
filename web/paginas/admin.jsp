@@ -4,7 +4,6 @@
     Author     : jeisson
 --%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="persistencia.UsuariosDAO"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@page import="modelo.TorneoDTO"%>
 <%@page import="persistencia.TorneoDAO"%>
@@ -22,7 +21,6 @@
 <% 
             if (request.getSession()!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
-                    UsuariosDAO udao = new UsuariosDAO();
                     TorneoDAO tdao = new TorneoDAO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
@@ -52,11 +50,9 @@ $(document).ready(function() {
    $("#ttorneos,#tcanchas").dataTable({
                     language:{
                         url: "../js/dataTables/js/dataespañol.json"
-                    },
-                    searching: 
+                    } 
                 });
-} );
-});
+ });
 </script>
 <script>
 $(document).ready(function() {
@@ -360,19 +356,19 @@ $(document).ready(function() {
     <div class="form-group">
         <label for="cc" class="control-label col-md-6">Cedula</label>
             <div class="col-md-6">
-                    <input type="text" id="cc" name="cc" value="<%=udto.getIdUsuario()  %>" readonly="readonly"/>
+                    <input type="text" id="cc" name="cc" value="<%=udto.getIdUsuario()%>" readonly="readonly"/>
             </div>
     </div>
     <div class="form-group">
     <label for="nombre" class="control-label col-md-6">Primer Nombre</label>
         <div class="col-md-6">
-            <input type="text" id="nombre" name="nombre" placeholder="<%=udto.getPrimerNombre()  %>"/>
+            <input type="text" id="nombre" name="nombre" placeholder="<%=udto.getPrimerNombre()%>"/>
         </div>
     </div>
     <div class="form-group">
     <label for="snombre" class="control-label col-md-6">Segundo Nombre</label>
         <div class="col-md-6">
-            <input type="text" id="snombre" name="snombre" placeholder="<%=udto.getSegundoNombre()  %>"/>
+            <input type="text" id="snombre" name="snombre" placeholder="<%=udto.getSegundoNombre()%>"/>
         </div>
     </div>
     <div class="form-group">
@@ -384,25 +380,25 @@ $(document).ready(function() {
     <div class="form-group">
         <label for="sape" class="control-label col-md-6">Segundo Apellido</label>
             <div class="col-md-6">
-                <input type="text" id="sape" name="sape" placeholder="<%=udto.getSegundoApellido()  %>"/>
+                <input type="text" id="sape" name="sape" placeholder="<%=udto.getSegundoApellido()%>"/>
             </div>
     </div>
     <div class="form-group">
         <label for="nac"  class="control-label col-md-6">Fecha De Nacimiento</label>
             <div class="col-md-6">
-                <input type="text" id="nac" name="nac" value="<%=udto.getFecha()  %>" readonly="readonly"/>
+                <input type="text" id="nac" name="nac" value="<%=udto.getFecha()%>" readonly="readonly"/>
             </div>
     </div>
     <div class="form-group">
         <label for="tel"  class="control-label col-md-6">Telefono</label>
             <div class="col-md-6">
-                <input type="text" id="tel" name="tel" placeholder="<%=udto.getTelefono()  %>"/>
+                <input type="text" id="tel" name="tel" placeholder="<%=udto.getTelefono()%>"/>
             </div>
     </div>
     <div class="form-group">
         <label for="email"  class="control-label col-md-6">Correo Electrónico</label>
             <div class="col-md-6">
-                <input type="email" id="email" name="email" placeholder="<%=udto.getEmail()  %>"/>
+                <input type="email" id="email" name="email" placeholder="<%=udto.getEmail()%>"/>
             </div>
     </div>
     <div class="form-group">
@@ -595,7 +591,7 @@ $(document).ready(function() {
                 </div>
                 </div>
                 <button name="et" class="btn btn-info" value="realizaret">Eliminar</button>
-                <input type="hidden" name="confirmactu" value="cat" />
+                <input type="hidden" name="celiminar" value="cat" />
                     </form>
             </div>
         </div>

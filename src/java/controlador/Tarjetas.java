@@ -49,10 +49,10 @@ public class Tarjetas extends HttpServlet {
                 //lo hacemos sin el procedimiento, de lo contrario insertamos con el oprocedimienrto
                 if (listar.isEmpty()) {
                     String itarjetas = tardao.insertarPrimer(tar);
-                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
+                    response.sendRedirect("paginas/torneos/misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
                 }else{
                     String itarjetas = tardao.insertar(tar);
-                    response.sendRedirect("misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
+                    response.sendRedirect("paginas/torneos/misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
                 }
             }
             

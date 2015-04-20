@@ -40,14 +40,10 @@
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
-        <link href="../../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
+        <link href="../../css/estilos_resultadoseli.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
-        <script type="text/javascript" src="../../js/jquery.validate.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../js/jugadoresEquipos.js"></script>
-        <script type="text/javascript" src="../../js/dataTables/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../js/dataTables/js/datatablesbootstrap.js"></script>
-        <script type="text/javascript" src="../../js/validaDocumento.js"></script>
         <style>
             .menu-opciones{
                  clear: both;
@@ -101,7 +97,8 @@
                 </ul>
             </nav>
         </header>
-<main class="container">
+<main>
+    <section class="container">
     <div class="row">
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
@@ -117,16 +114,39 @@
         <div class="col-md-4 col-sm-2 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="../inicio.jsp">Inicio</a></li>
-                <li><a href="#">Torneos</a></li>
-                <li class="active">Inscribir equipos</li>
+                <li><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Torneos</a></li>
+                <li class="active">Resultados</li>
             </ol>
         </div>
     </div>
+    </section>
             <%--si el torneo es tipo 3 es eliminatoria--%>
 <c:if test="${detallestorneo.tipo==3}">
 <%--si la capacidad de este torneo es de 16--%>
 <c:if test="${detallestorneo.capacidadEquipos==16}">
-    
+    <section>
+        <div class="page-header">
+            <h1>Resultados</h1>
+        </div>
+        <div class="container-fluid">
+            <div class="arbol_eli16">
+                <div>
+                    <table id="eq1" class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 </c:if><%--si es de 16 equipos--%>
 </c:if><%--si es eliminatoria--%>
 </main>

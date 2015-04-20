@@ -37,7 +37,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Inscripciones a ${detallestorneo.nombre}</title>
+        <title>Fechas de ${detallestorneo.nombre}</title>
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
@@ -115,10 +115,10 @@ $(document).ready(function() {
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li role="presentation"><a href="#">Calendario</a></li>
-            <li role="presentation"><a href="#">Resultados</a></li>
-            <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Tablas</a></li>
-            <li role="presentation" class="active"><a href="#">Inscribir equipos</a></li>
+            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
+            <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
         </ul>
     </div>
     </div>
@@ -126,8 +126,8 @@ $(document).ready(function() {
         <div class="col-md-4 col-sm-2 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="../inicio.jsp">Inicio</a></li>
-                <li><a href="#">Torneos</a></li>
-                <li class="active">Inscribir equipos</li>
+                <li><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Torneos</a></li>
+                <li class="active">Calendario</li>
             </ol>
         </div>
     </div>
@@ -139,7 +139,30 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h1>Modifica Fechas Y Horas</h1>
+                    <h1 id="hfechasoctavos" data-toggle="popover" 
+title="Hecho" data-content="Se han establecido las fechas"
+ data-placement="top">Modifica Fechas Y Horas</h1>
+<%--confirmacion de fechas octavos--%>
+<%
+if (request.getParameter("octavos")!=null) {
+%>
+<script>
+    $(document).ready(function(){
+        $("#hfechasoctavos").trigger("click");
+    });
+</script>
+<script>
+$('[data-toggle="popover"]').popover(
+                {
+                    trigger: 'click',
+                    html: true,
+                    delay: 500,
+                }
+            );
+</script>
+<%
+    }
+%>
                     <%--query de la primera ronda octavos en eli de 16 equipos--%> 
                     <sql:query var="calendario" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
@@ -149,7 +172,9 @@ $(document).ready(function() {
                         partidos.cancha,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -164,7 +189,7 @@ $(document).ready(function() {
                     </sql:query>
                     <div class="panel panel-primary">
                     <div class="panel-heading">Octavos De Final</div>
-                    <form>
+                    <form action="../../GestionEliminatoria" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -186,15 +211,15 @@ $(document).ready(function() {
                                 <td>
                                     <select name="cp${vs.index}">
                                         <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> placeholder="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> placeholder="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -211,6 +236,7 @@ $(document).ready(function() {
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-primary">

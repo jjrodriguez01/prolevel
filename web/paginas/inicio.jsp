@@ -3,7 +3,6 @@
     Created on : 28/01/2015, 11:50:40 PM
     Author     : jeisson
 --%>
-<%@page import="persistencia.UsuariosDAO"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
@@ -13,8 +12,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
             if (request.getSession() != null) { 
-                UsuariosDTO udto = new UsuariosDTO();
-                    UsuariosDAO udao = new UsuariosDAO();
+                    UsuariosDTO udto = new UsuariosDTO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
@@ -223,6 +221,7 @@
 </div>
 </footer>
 </body>
+</html>
 <% }//si el rol fue uno se muestra la anterior pagina
     else if (rol == 2) {
                             
