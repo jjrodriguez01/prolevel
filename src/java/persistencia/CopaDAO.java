@@ -51,6 +51,12 @@ public class CopaDAO {
         }
         catch(SQLException sqle){
             mensaje = "Error :" + sqle.getMessage();
+        }finally{
+            try {
+                statement.close();
+            }catch (SQLException sqlexception) {
+                    mensaje = "Error :" + sqlexception.getMessage();
+            }
         }
         return mensaje;
     }
@@ -71,6 +77,13 @@ public class CopaDAO {
         } catch (SQLException sqlexception) {
             System.out.println("Ocurrió un error" + sqlexception.getMessage());
 
+        }finally{
+                try {
+                    statement.close();
+                    conexion.close();
+                } catch (SQLException sqlexception) {
+                    mensaje = "Error :" + sqlexception.getMessage();
+                }
         }
         return mensaje;
     }
@@ -98,6 +111,13 @@ public class CopaDAO {
             }
         }catch(SQLException sqle){
             mensaje = "Error: "+ sqle.getMessage();
+        }finally{
+                try {
+                    statement.close();
+                    conexion.close();
+                } catch (SQLException sqlexception) {
+                    mensaje = "Error :" + sqlexception.getMessage();
+                }
         }
         
         return mensaje;
@@ -130,6 +150,13 @@ public class CopaDAO {
             }
         } catch (SQLException ex) {
             throw new MiExcepcion("Error al listar las copas", ex);
+        }finally{
+                try {
+                    statement.close();
+                    conexion.close();
+                } catch (SQLException sqlexception) {
+                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+                }
         }
         //devolvemos el usuario que se encontro
         return copa;
@@ -164,6 +191,12 @@ public class CopaDAO {
             }
         }catch(SQLException sqle){
             throw new MiExcepcion("Error al listar las copas", sqle);
+        }finally{
+            try {
+                 statement.close();
+            }catch (SQLException sqlexception) {
+                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+                }
         }
         return listarCopas;
     }

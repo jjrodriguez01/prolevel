@@ -5,6 +5,7 @@
  */
 package persistencia;
 
+import controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +14,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import modelo.ReservasDTO;
-import utilidades.Conexion;
+
 public class ReservasDAO {
     
-    Connection conexion = null;
+    Connection conexion;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -27,7 +28,7 @@ public class ReservasDAO {
     ResultSet rs;
 
     public ReservasDAO() {
-        conexion = Conexion.getInstance();
+        conexion = Conexion.getConnection();
     }
 
     public String insertar(ReservasDTO res) {

@@ -3,21 +3,16 @@
     Created on : 10/02/2015, 07:20:21 PM
     Author     : jeisson
 --%>
-<%@page import="persistencia.TablaPosicionesDAO"%>
-<%@page import="persistencia.TorneoDAO"%>
-<%@page import="persistencia.UsuariosDAO"%>
+<%@page import="utilidades.MiExcepcion"%>
+<%@page import="facade.FachadaTorneos"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="modelo.EquipoDTO"%>
-<%@page import="persistencia.EquipoDAO"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
             if (request.getSession()!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
-                    UsuariosDAO udao = new UsuariosDAO();
-                    TorneoDAO tdao = new TorneoDAO();
-                    TablaPosicionesDAO  tpdao = new TablaPosicionesDAO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
@@ -323,14 +318,20 @@
                     <select name="equipo" class="" onchange="getJugador(this.value);">
                         <option>Seleccione equipo</option>
                         <%
-                            EquipoDAO edao = new EquipoDAO(); 
+                            FachadaTorneos facadeTorneos = new FachadaTorneos(); 
+                            try{
                             LinkedList<EquipoDTO> Equipos = new LinkedList <EquipoDTO>();
-                            Equipos = edao.listarTodoTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+                            Equipos = (LinkedList) facadeTorneos.listarEquiposEnTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+                            
                             for (EquipoDTO edto : Equipos) {
                         %>
                         <option value="<%=edto.getCodigo()%>"> <%=edto.getNombre()%></option>
                         <%
                           }
+                            
+                        }catch(MiExcepcion mie){ 
+                            response.sendError(500, mie.getMessage());//si hubo error reenvio el error
+                        }
                         %>
                     </select>            
                     <label>Seleccione el jugador a aplicar tarjetas</label>

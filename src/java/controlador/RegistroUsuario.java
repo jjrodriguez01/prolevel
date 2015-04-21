@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.UsuariosDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -35,6 +36,7 @@ public class RegistroUsuario extends HttpServlet {
         FachadaUsuarios facadeUsu = null;
         UsuariosDTO udto = null;
         if(request.getParameter("enviar")!= null && request.getParameter("registro")!= null){
+            try{
           facadeUsu = new FachadaUsuarios();
           udto = new UsuariosDTO();
           udto.setIdUsuario(Long.parseLong(request.getParameter("cc")));
@@ -48,8 +50,12 @@ public class RegistroUsuario extends HttpServlet {
           
           String ins = facadeUsu.insertarUsuario(udto);
           response.sendRedirect("registro.jsp?registro="+ins);
+            }catch(MiExcepcion mie){
+                response.sendError(500, mie.getMessage());
+            }
           
         }else if (request.getParameter("actudatos")!=null && request.getParameter("datos")!=null) {
+            try{
             udto = new UsuariosDTO();
             facadeUsu = new FachadaUsuarios();
             udto.setIdUsuario(Long.parseLong(request.getParameter("cc")));
@@ -62,6 +68,9 @@ public class RegistroUsuario extends HttpServlet {
             udto.setContraseña(request.getParameter("pass"));
             String conf = facadeUsu.actualizarUsuario(udto);
             response.sendRedirect("paginas/admin.jsp?conf="+conf);
+            }catch(MiExcepcion mie){
+                response.sendError(500, mie.getMessage());
+            }
         }
     }
 

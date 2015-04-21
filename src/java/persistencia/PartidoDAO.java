@@ -5,25 +5,20 @@
  */
 package persistencia;
 
-
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
-import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.CanchaDTO;
 import modelo.EquipoDTO;
 import modelo.PartidoDTO;
 import modelo.TorneoDTO;
 import utilidades.MiExcepcion;
+
 public class PartidoDAO {
  
-     Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -33,11 +28,8 @@ public class PartidoDAO {
 
     ResultSet rs;
 
-    public PartidoDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public synchronized String insertar(PartidoDTO cal) {
+    public synchronized String insertar(PartidoDTO cal,Connection conexion) throws MiExcepcion {
 
         try {
             //sentencia sql
@@ -64,13 +56,19 @@ public class PartidoDAO {
             }
         } 
         catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error insertando partidos", sqlexception);
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error insertando partidos", sqlexception);
+            }
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
 
-    public String actualizar(PartidoDTO cal) {
+    public String actualizar(PartidoDTO cal,Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE partidos SET fecha = ?, hora = ? "
@@ -94,12 +92,18 @@ public class PartidoDAO {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-         mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+         throw new MiExcepcion("Error modificando partidos", sqlexception);
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error insertando partidos", sqlexception);
+            }
         }
         return mensaje;
     }
 
-    public String eliminar(PartidoDTO cal) {
+    public String eliminar(PartidoDTO cal,Connection conexion) throws MiExcepcion {
         try {
             statement = conexion.prepareStatement("Delete from partidos where idTorneo = ?;");
             //obtenemos el id del item a eliminar del dto
@@ -112,14 +116,19 @@ public class PartidoDAO {
                 mensaje = "Ocurrio Un Error";
             }
         } catch (SQLException sqlexception) {
-             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-
+             throw new MiExcepcion("Error eliminando partidos", sqlexception);
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error insertando partidos", sqlexception);
+            }
         }
 
         return mensaje;
     }
 
-    public List<PartidoDTO> listarTodo() throws MiExcepcion {
+    public List<PartidoDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<PartidoDTO> listar = new ArrayList();
         try {
@@ -172,18 +181,17 @@ public class PartidoDAO {
             }
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error ", sqlexception);
-
-        } finally {
-            try {
+        }finally{
+            try{
                 statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error ", ex);
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error ", sqlexception);
             }
         }
         //devolvemos el arreglo
         return listar;
     }
-    public List<PartidoDTO> listarTodoPronda(int idtorneo) throws MiExcepcion {
+    public List<PartidoDTO> listarTodoPronda(int idtorneo,Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<PartidoDTO> listar = new ArrayList();
         try {
@@ -247,7 +255,7 @@ public class PartidoDAO {
         return listar;
     }
 
-    public List<PartidoDTO> listarUno(int ronda, int idTorneo) throws MiExcepcion {
+    public List<PartidoDTO> listarUno(int ronda, int idTorneo,Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<PartidoDTO> listar = new ArrayList();
         try {

@@ -4,6 +4,7 @@ package controlador;
 import AbstractFactory.Torneo;
 import FactoryMethod.TorneoFactory;
 import controlador.correo.Correo;
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.PartidoDTO;
 import modelo.TorneoDTO;
-import persistencia.EquiposDelTorneoDAO;
-import persistencia.PartidoDAO;
 import utilidades.MiExcepcion;
 
 /**
@@ -59,8 +58,7 @@ public class GestionEliminatoria extends HttpServlet {
             int ronda = 1;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
-            PartidoDAO pdao = new PartidoDAO();
-            EquiposDelTorneoDAO edt = new EquiposDelTorneoDAO();
+            FachadaTorneos facadeTorneo = new FachadaTorneos();
             try{
             //pregunto si hay datos de partido 1
             if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
@@ -73,12 +71,12 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setHora(request.getParameter("hora0"));
             p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
             p1.setIdTorneo(idTorneo);
-            pdao.actualizar(p1);
+            facadeTorneo.actualizarPartido(p1);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
+            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
+            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
             for (int i = 0; i < correosp1eq.size(); i++) {
                 emailsp1.append(correosp1eq.get(i));
                 if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
@@ -107,12 +105,12 @@ public class GestionEliminatoria extends HttpServlet {
             p2.setHora(request.getParameter("hora1"));
             p2.setCancha(Integer.parseInt(request.getParameter("cp1")));
             p2.setIdTorneo(idTorneo);
-            pdao.actualizar(p2);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p2);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp2 = new StringBuilder("");//emails 
             ArrayList<String> correosp2eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp2eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
-            correosp2eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
+            correosp2eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
+            correosp2eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
             for (int i = 0; i < correosp2eq.size(); i++) {
                 emailsp2.append(correosp2eq.get(i));
                 if (i != correosp2eq.size() -1 && correosp2eq.size() > 0) {
@@ -141,12 +139,12 @@ public class GestionEliminatoria extends HttpServlet {
             p3.setHora(request.getParameter("hora2"));
             p3.setCancha(Integer.parseInt(request.getParameter("cp2")));
             p3.setIdTorneo(idTorneo);
-            pdao.actualizar(p3);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p3);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp3 = new StringBuilder("");//emails 
             ArrayList<String> correosp3eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp3eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo1")));
-            correosp3eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo2"))));
+            correosp3eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo1")));
+            correosp3eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo2"))));
             for (int i = 0; i < correosp3eq.size(); i++) {
                 emailsp3.append(correosp3eq.get(i));
                 if (i != correosp3eq.size() -1 && correosp3eq.size() > 0) {
@@ -175,12 +173,12 @@ public class GestionEliminatoria extends HttpServlet {
             p4.setHora(request.getParameter("hora3"));
             p4.setCancha(Integer.parseInt(request.getParameter("cp3")));
             p4.setIdTorneo(idTorneo);
-            pdao.actualizar(p4);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p4);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp4 = new StringBuilder("");//emails 
             ArrayList<String> correosp4eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp4eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo1")));
-            correosp4eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo2"))));
+            correosp4eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo1")));
+            correosp4eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo2"))));
             for (int i = 0; i < correosp4eq.size(); i++) {
                 emailsp4.append(correosp4eq.get(i));
                 if (i != correosp4eq.size() -1 && correosp4eq.size() > 0) {
@@ -209,12 +207,12 @@ public class GestionEliminatoria extends HttpServlet {
             p5.setHora(request.getParameter("hora4"));
             p5.setCancha(Integer.parseInt(request.getParameter("cp4")));
             p5.setIdTorneo(idTorneo);
-            pdao.actualizar(p5);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p5);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp5 = new StringBuilder("");//emails 
             ArrayList<String> correosp5eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp5eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("4equipo1")));
-            correosp5eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("4equipo2"))));
+            correosp5eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("4equipo1")));
+            correosp5eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("4equipo2"))));
             for (int i = 0; i < correosp5eq.size(); i++) {
                 emailsp5.append(correosp5eq.get(i));
                 if (i != correosp5eq.size() -1 && correosp5eq.size() > 0) {
@@ -243,12 +241,12 @@ public class GestionEliminatoria extends HttpServlet {
             p6.setHora(request.getParameter("hora5"));
             p6.setCancha(Integer.parseInt(request.getParameter("cp5")));
             p6.setIdTorneo(idTorneo);
-            pdao.actualizar(p6);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p6);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp6 = new StringBuilder("");//emails 
             ArrayList<String> correosp6eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp6eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("5equipo1")));
-            correosp6eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("5equipo2"))));
+            correosp6eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("5equipo1")));
+            correosp6eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("5equipo2"))));
             for (int i = 0; i < correosp6eq.size(); i++) {
                 emailsp6.append(correosp6eq.get(i));
                 if (i != correosp6eq.size() -1 && correosp6eq.size() > 0) {
@@ -277,12 +275,12 @@ public class GestionEliminatoria extends HttpServlet {
             p7.setHora(request.getParameter("hora6"));
             p7.setCancha(Integer.parseInt(request.getParameter("cp6")));
             p7.setIdTorneo(idTorneo);
-            pdao.actualizar(p7);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p7);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp7 = new StringBuilder("");//emails 
             ArrayList<String> correosp7eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp7eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("6equipo1")));
-            correosp7eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("6equipo2"))));
+            correosp7eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("6equipo1")));
+            correosp7eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("6equipo2"))));
             for (int i = 0; i < correosp7eq.size(); i++) {
                 emailsp7.append(correosp7eq.get(i));
                 if (i != correosp7eq.size() -1 && correosp7eq.size() > 0) {
@@ -311,12 +309,12 @@ public class GestionEliminatoria extends HttpServlet {
             p8.setHora(request.getParameter("hora7"));
             p8.setCancha(Integer.parseInt(request.getParameter("cp7")));
             p8.setIdTorneo(idTorneo);
-            pdao.actualizar(p8);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p8);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp8 = new StringBuilder("");//emails 
             ArrayList<String> correosp8eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp8eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("7equipo1")));
-            correosp8eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("7equipo2"))));
+            correosp8eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("7equipo1")));
+            correosp8eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("7equipo2"))));
             for (int i = 0; i < correosp8eq.size(); i++) {
                 emailsp8.append(correosp8eq.get(i));
                 if (i != correosp8eq.size() -1 && correosp8eq.size() > 0) {
@@ -345,8 +343,7 @@ public class GestionEliminatoria extends HttpServlet {
             int ronda = 2;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
-            PartidoDAO pdao = new PartidoDAO();
-            EquiposDelTorneoDAO edt = new EquiposDelTorneoDAO();
+            FachadaTorneos facadeTorneo = new FachadaTorneos();
             try{
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
@@ -357,12 +354,12 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setHora(request.getParameter("hora0"));
             p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
             p1.setIdTorneo(idTorneo);
-            pdao.actualizar(p1);
+            facadeTorneo.actualizarPartido(p1);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
+            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
+            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
             for (int i = 0; i < correosp1eq.size(); i++) {
                 emailsp1.append(correosp1eq.get(i));
                 if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
@@ -389,12 +386,12 @@ public class GestionEliminatoria extends HttpServlet {
             p2.setHora(request.getParameter("hora1"));
             p2.setCancha(Integer.parseInt(request.getParameter("cp1")));
             p2.setIdTorneo(idTorneo);
-            pdao.actualizar(p2);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p2);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp2 = new StringBuilder("");//emails 
             ArrayList<String> correosp2eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp2eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
-            correosp2eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
+            correosp2eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
+            correosp2eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
             for (int i = 0; i < correosp2eq.size(); i++) {
                 emailsp2.append(correosp2eq.get(i));
                 if (i != correosp2eq.size() -1 && correosp2eq.size() > 0) {
@@ -421,12 +418,12 @@ public class GestionEliminatoria extends HttpServlet {
             p3.setHora(request.getParameter("hora2"));
             p3.setCancha(Integer.parseInt(request.getParameter("cp2")));
             p3.setIdTorneo(idTorneo);
-            pdao.actualizar(p2);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p3);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp3 = new StringBuilder("");//emails 
             ArrayList<String> correosp3eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp3eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo1")));
-            correosp3eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo2"))));
+            correosp3eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo1")));
+            correosp3eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("2equipo2"))));
             for (int i = 0; i < correosp3eq.size(); i++) {
                 emailsp3.append(correosp3eq.get(i));
                 if (i != correosp3eq.size() -1 && correosp3eq.size() > 0) {
@@ -453,12 +450,12 @@ public class GestionEliminatoria extends HttpServlet {
             p4.setHora(request.getParameter("hora3"));
             p4.setCancha(Integer.parseInt(request.getParameter("cp3")));
             p4.setIdTorneo(idTorneo);
-            pdao.actualizar(p4);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p4);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp4 = new StringBuilder("");//emails 
             ArrayList<String> correosp4eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp4eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo1")));
-            correosp4eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo2"))));
+            correosp4eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo1")));
+            correosp4eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo2"))));
             for (int i = 0; i < correosp4eq.size(); i++) {
                 emailsp3.append(correosp4eq.get(i));
                 if (i != correosp4eq.size() -1 && correosp4eq.size() > 0) {
@@ -483,8 +480,7 @@ public class GestionEliminatoria extends HttpServlet {
             int ronda = 3;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
-            PartidoDAO pdao = new PartidoDAO();
-            EquiposDelTorneoDAO edt = new EquiposDelTorneoDAO();
+            FachadaTorneos facadeTorneo = new FachadaTorneos();
             try{
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
@@ -495,12 +491,12 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setHora(request.getParameter("hora0"));
             p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
             p1.setIdTorneo(idTorneo);
-            pdao.actualizar(p1);
+            facadeTorneo.actualizarPartido(p1);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
+            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
+            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
             for (int i = 0; i < correosp1eq.size(); i++) {
                 emailsp1.append(correosp1eq.get(i));
                 if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
@@ -527,12 +523,12 @@ public class GestionEliminatoria extends HttpServlet {
             p2.setHora(request.getParameter("hora1"));
             p2.setCancha(Integer.parseInt(request.getParameter("cp1")));
             p2.setIdTorneo(idTorneo);
-            pdao.actualizar(p2);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.actualizarPartido(p2);//pilas aca se envia el dto con el partido no repetir
             StringBuilder emailsp2 = new StringBuilder("");//emails 
             ArrayList<String> correosp2eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp2eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
-            correosp2eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
+            correosp2eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
+            correosp2eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
             for (int i = 0; i < correosp2eq.size(); i++) {
                 emailsp2.append(correosp2eq.get(i));
                 if (i != correosp2eq.size() -1 && correosp2eq.size() > 0) {
@@ -558,8 +554,7 @@ public class GestionEliminatoria extends HttpServlet {
             int ronda = 4;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
-            PartidoDAO pdao = new PartidoDAO();
-            EquiposDelTorneoDAO edt = new EquiposDelTorneoDAO();
+            FachadaTorneos facadeTorneo = new FachadaTorneos();
             try{
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
@@ -570,12 +565,12 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setHora(request.getParameter("hora0"));
             p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
             p1.setIdTorneo(idTorneo);
-            pdao.actualizar(p1);
+            facadeTorneo.actualizarPartido(p1);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) edt.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
+            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
+            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
             for (int i = 0; i < correosp1eq.size(); i++) {
                 emailsp1.append(correosp1eq.get(i));
                 if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {

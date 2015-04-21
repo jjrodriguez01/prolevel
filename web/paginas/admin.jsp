@@ -3,10 +3,11 @@
     Created on : 2/02/2015, 03:40:42 AM
     Author     : jeisson
 --%>
+<%@page import="utilidades.MiExcepcion"%>
+<%@page import="facade.FachadaTorneos"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@page import="modelo.TorneoDTO"%>
-<%@page import="persistencia.TorneoDAO"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%--query de lista desplegable--%>
@@ -19,9 +20,10 @@
 </sql:query>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
+            try{
             if (request.getSession()!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
-                    TorneoDAO tdao = new TorneoDAO();
+                    FachadaTorneos facadeTorneos = new FachadaTorneos();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
@@ -463,7 +465,7 @@ $(document).ready(function() {
                 <tbody>
     <% 
         ArrayList<TorneoDTO> ttorneos = new ArrayList();
-        ttorneos = (ArrayList<TorneoDTO>) tdao.ListarTodo();
+        ttorneos = (ArrayList<TorneoDTO>) facadeTorneos.listarTorneos(); 
         for (TorneoDTO t: ttorneos){
     %>
 <tr>
@@ -857,4 +859,8 @@ $(document).ready(function() {
     }else{
                 response.sendRedirect("../../../index.jsp");
             }
+            
+    }catch(MiExcepcion mie){
+        response.sendError(500, mie.getMessage());
+    }
 %>

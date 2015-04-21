@@ -11,6 +11,11 @@ import java.util.List;
 import modelo.CanchaDTO;
 import modelo.EquipoDTO;
 import modelo.EquiposdeltorneoDTO;
+import modelo.GoleadoresDTO;
+import modelo.JugadoresporequipoDTO;
+import modelo.PartidoDTO;
+import modelo.TablaPosicionesDTO;
+import modelo.TarjetasDTO;
 import modelo.TorneoDTO;
 import persistencia.CanchaDAO;
 import persistencia.EquipoDAO;
@@ -40,6 +45,7 @@ public class FachadaTorneos {
     TablaPosicionesDAO tpdao;
     Connection conexion;
     public FachadaTorneos() {
+        tdao = new TorneoDAO();
         cdao = new CanchaDAO();
         tardao = new TarjetasDAO();
         jequipodao = new JugadoresporequipoDAO();
@@ -105,6 +111,10 @@ public class FachadaTorneos {
         return equipodao.eliminar(codigo, conexion);
     }
     
+    public List<EquipoDTO> listarEquiposEnTorneo(int idTorneo) throws MiExcepcion{
+        return equipodao.listarTodoTorneo(idTorneo, conexion);
+    }
+    
     public int existeEquipo(String nombre) throws MiExcepcion{
         return equipodao.existeEquipo(nombre, conexion);
     }
@@ -125,5 +135,87 @@ public class FachadaTorneos {
     
 //    SIGO CON JUGADORESPOREQUIPODAO
             
-    public String inscribirJugadoraEquipo()
+    public String inscribirJugadorAEquipo(int equipo, long jugador) throws MiExcepcion{
+        return jequipodao.insertar(equipo, jugador, conexion);
+    }
+    
+    public String actualizarJugadorInscrito(int equipo, long jugador) throws MiExcepcion{
+        return jequipodao.actualizar(equipo, jugador, conexion);
+    }
+    
+    public String eliminarJugadorInscrito(int equipo, long jugador) throws MiExcepcion{
+        return jequipodao.eliminar(jugador, equipo, conexion);
+    }
+    
+    public List<JugadoresporequipoDTO> listarInscritos() throws MiExcepcion{
+        return jequipodao.listarTodo(conexion);
+    }
+    
+    public List<JugadoresporequipoDTO> jugadorDeEquipo(int equipo, long jugador) throws MiExcepcion{
+        return jequipodao.listarUno(equipo, equipo, conexion);
+    }
+    
+    public List<JugadoresporequipoDTO> jugadoresDeEquipo(int equipo) throws MiExcepcion{
+        return jequipodao.listarJugadoresEq(equipo, conexion);
+    }
+    
+//    AHORA PARTIDODAO
+    
+    public String insertarPartido(PartidoDTO partido) throws MiExcepcion{
+        return partidodao.insertar(partido, conexion);
+    }
+    
+    public String actualizarPartido(PartidoDTO partido) throws MiExcepcion{
+        return partidodao.actualizar(partido, conexion);
+    }
+    
+    public String eliminarPartido(PartidoDTO partido) throws MiExcepcion{
+        return partidodao.eliminar(partido, conexion);
+    }
+    
+    public List<PartidoDTO> listarPartidos() throws MiExcepcion{
+        return partidodao.listarTodo(conexion);
+    }
+    
+    public List<PartidoDTO> listarPrimeraRonda(int idTorneo) throws MiExcepcion{
+        return partidodao.listarTodoPronda(idTorneo, conexion);
+    }
+    
+    public List<PartidoDTO> listarUnPartido(int ronda,int idTorneo) throws MiExcepcion{
+        return partidodao.listarUno(ronda, idTorneo, conexion);
+    }
+    
+//    AHORA SIGO CON TARJETAS
+    
+    public String insertarTarjetas(TarjetasDTO tarjeta) throws MiExcepcion{
+        return tardao.insertar(tarjeta, conexion);
+    }
+    
+    public String insertarPrimera(TarjetasDTO tarjeta) throws MiExcepcion{
+        return tardao.insertarPrimer(tarjeta, conexion);
+    }
+    
+    public String actualizarTarjetas(TarjetasDTO tarjeta) throws MiExcepcion{
+        return tardao.actualizar(tarjeta, conexion);
+    }
+    
+    public String eliminarTarjetas(long jugador, int idTorneo) throws MiExcepcion{
+        return tardao.eliminar(jugador, idTorneo, conexion);
+    }
+    
+    public List<TarjetasDTO> listarTarjetasJugador(int torneo, int jugador) throws MiExcepcion{
+        return tardao.listarUno(torneo, jugador, conexion);
+    }
+//    AHORA GOLEADORES DAO
+    
+    public String insertarGoles(GoleadoresDTO gol) throws MiExcepcion{
+        return goleadoresdao.insertar(gol, conexion);
+    }
+    
+//    AHORA POSICIONES
+            
+    public String insertarPosicion(TablaPosicionesDTO tp) throws MiExcepcion{
+        return tpdao.insertar(tp, conexion);
+    }    
+    
 }

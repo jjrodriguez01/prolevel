@@ -10,11 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import modelo.GoleadoresDTO;
-import utilidades.Conexion;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -22,8 +22,6 @@ import java.util.List;
  */
 public class GoleadoresDAO {
     
-    
-    Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -34,11 +32,7 @@ public class GoleadoresDAO {
     ResultSet rs =null;
     CallableStatement call= null;
 
-    public GoleadoresDAO() {
-        conexion = Conexion.getInstance();
-    }
-
-    public String insertar(GoleadoresDTO gol) {
+    public synchronized String insertar(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
 
         try {
             
@@ -58,13 +52,13 @@ public class GoleadoresDAO {
             }
         } 
         catch (SQLException sqlexception) {
-         mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+         throw new MiExcepcion("Error insertando goles", sqlexception);
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
 
-    public String actualizar(GoleadoresDTO gol) {
+    public String actualizar(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE tablaGoleadores SET numeroGoles=?, idTorneo=?, idJugador=? ,idEquipo=?  WHERE idJugador=? and idTorneo=? and idEquipo=?;";
@@ -87,7 +81,7 @@ public class GoleadoresDAO {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-         mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+         throw new MiExcepcion("Error actualizando goles", sqlexception);
 
         }
 
@@ -95,7 +89,7 @@ public class GoleadoresDAO {
 
     }
 
-    public String eliminar(GoleadoresDTO gol) {
+    public String eliminar(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
         try {
             statement = conexion.prepareStatement("Delete from tablaGoleadores where idTorneo=? and idJugador and idEquipo;");
             //obtenemos el id del item a eliminar del dto
@@ -111,14 +105,14 @@ public class GoleadoresDAO {
                 mensaje = "Ocurrio Un Error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error eliminando goles", sqlexception);
 
         }
 
         return mensaje;
     }
 
-    public List<GoleadoresDTO> listarTodo() {
+    public List<GoleadoresDTO> listarTodo( Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<GoleadoresDTO> listarGoleadores = new ArrayList();
 
@@ -143,7 +137,7 @@ public class GoleadoresDAO {
 
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error listando goles", sqlexception);
 
         } finally {
 
@@ -153,7 +147,7 @@ public class GoleadoresDAO {
 
     }
 
-    public String listarUno(GoleadoresDTO gol) {
+    public String listarUno(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT numeroGoles,idJugador, idTorneo, idEquipo"
@@ -173,7 +167,7 @@ public class GoleadoresDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error listando goles", ex);
         }
         //devolvemos el usuario que se encontro
         return "" + gol;

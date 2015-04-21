@@ -7,7 +7,6 @@ package persistencia;
 
 import modelo.Equipos_eliminadosDTO;
 
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EquiposEliminadosDAO {
-      Connection conexion = null;
+
     //instanciamos preparestatment
     PreparedStatement statement;
     //variable que devuelve el metodo con el mensaje
@@ -26,11 +25,8 @@ public class EquiposEliminadosDAO {
 
     ResultSet rs;
 
-    public EquiposEliminadosDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public synchronized String insertar(Equipos_eliminadosDTO ee) {
+    public synchronized String insertar(Equipos_eliminadosDTO ee, Connection conexion) {
 
         try {
             //sentencia sql
@@ -58,7 +54,7 @@ public class EquiposEliminadosDAO {
         return mensaje;
     }
 
-    public String actulizar(Equipos_eliminadosDTO ee) {
+    public String actulizar(Equipos_eliminadosDTO ee, Connection conexion) {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Equipos_eliminados SET CodigoEquipo=?,IdTorneo=? "
@@ -89,7 +85,7 @@ public class EquiposEliminadosDAO {
 
     }
 
-    public String eliminar(int codigoEquipo, int idTorneo) {
+    public String eliminar(int codigoEquipo, int idTorneo, Connection conexion) {
         try {
             statement = conexion.prepareStatement("Delete from Equipos_eliminados"
                     + " where CodigoEquipo=? and idTorneo=?;");
@@ -111,7 +107,7 @@ public class EquiposEliminadosDAO {
         return mensaje;
     }
 
-    public List<Equipos_eliminadosDTO> listarTodo() {
+    public List<Equipos_eliminadosDTO> listarTodo(Connection conexion) {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<Equipos_eliminadosDTO> listar = new ArrayList();
 
@@ -142,7 +138,7 @@ public class EquiposEliminadosDAO {
 
     }
 
-    public List<Equipos_eliminadosDTO> listarUno(int codigoEquipo, int idTorneo) {
+    public List<Equipos_eliminadosDTO> listarUno(int codigoEquipo, int idTorneo, Connection conexion) {
         ArrayList<Equipos_eliminadosDTO> listar = new ArrayList();
         try {
             //preparamos la consulta 

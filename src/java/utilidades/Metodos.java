@@ -12,9 +12,6 @@ import persistencia.*;
  */
 public class Metodos {
     public static void main(String[] args){
-        TorneoDAO tdao = new TorneoDAO();
-        int num = 9;
-        System.out.println(tdao.eliminar(num));
     }
     
     

@@ -36,8 +36,7 @@ public class RolUsuarioDAO {
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, usu.getRolesidRol());
-            statement.setInt(2, usu.getUsuarioIdUsuario());
-            
+            statement.setInt(2, usu.getUsuarioIdUsuario());           
 
             //ejecuta el insert
             rtdo = statement.executeUpdate();
@@ -139,7 +138,7 @@ public class RolUsuarioDAO {
      * @param UsuariosDTO usuario a obtener umero de rol
      * @return int con el numero de rol del objeto UsuariosDTO especificado
      */
-    public int getRol(UsuariosDTO usuario,Connection conexion) throws MiExcepcion {
+    public synchronized int getRol(UsuariosDTO usuario,Connection conexion) throws MiExcepcion {
         int rol = 0;
         try {
             //preparamos la consulta 
@@ -155,6 +154,12 @@ public class RolUsuarioDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error obteniendo rol", ex);
+        }finally{
+            try{
+                statement.close();
+            }catch (SQLException ex) {
+            throw new MiExcepcion("Error obteniendo rol", ex);
+        }
         }
         //devolvemos el usuario que se encontro
         return rol;

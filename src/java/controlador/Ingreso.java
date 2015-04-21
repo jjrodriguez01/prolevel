@@ -33,9 +33,8 @@ public class Ingreso extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
             if (request.getParameter("ingresar") != null) {
+                try{
                 String email = request.getParameter("email").trim();
                 String contraseña = request.getParameter("pass").trim();
                 FachadaUsuarios facadeUsu = new FachadaUsuarios();
@@ -54,15 +53,16 @@ public class Ingreso extends HttpServlet {
                 }else {
                 response.sendRedirect("index.jsp?auth=noauth");
                 }
+                }catch(MiExcepcion mie){
+//                    response.sendError(500, mie.getMessage());
+                    response.sendRedirect("index.jsp?error="+mie.getMessage());
+                }
             }else if(request.getParameter("logout")!=null){
                     request.getSession().invalidate();
                     response.sendRedirect("index.jsp?sesion=cerrada");
             }else{
                 response.sendRedirect("index.jsp?action=noaction");
             }
-        }catch(MiExcepcion mie){
-            response.sendError(500, mie.getMessage());
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -103,5 +103,4 @@ public class Ingreso extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -27,7 +27,7 @@ public class JugadoresporequipoDAO {
 
     ResultSet rs;
 
-    public synchronized String insertar(int equipo, int jugador, Connection conexion) throws MiExcepcion {
+    public synchronized String insertar(int equipo, long jugador, Connection conexion) throws MiExcepcion {
 
         try {
             //sentencia sql
@@ -36,13 +36,13 @@ public class JugadoresporequipoDAO {
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, equipo);
-            statement.setInt(2, jugador);
+            statement.setLong(2, jugador);
             
             //ejecuta el insert
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                System.out.println("Se insertaron los jugadores");
+                mensaje = "Se insertaron los jugadores";
                 //si no se afecto la tabla
             } else {
                 mensaje = "Error";
@@ -50,12 +50,18 @@ public class JugadoresporequipoDAO {
         } 
         catch (SQLException sqlexception) {
             throw new MiExcepcion("Error insertando jugadores", sqlexception);
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error insertando jugadores", sqlexception);
+            }
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
 
-    public String actualizar(int equipo, int jugador, Connection conexion) {
+    public String actualizar(int equipo, long jugador, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Jugadoresporequipo SET "
@@ -65,9 +71,9 @@ public class JugadoresporequipoDAO {
            //sacamos los datos del dto de la tabla
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, equipo);
-            statement.setInt(2, jugador);
+            statement.setLong(2, jugador);
             statement.setInt(3, equipo);
-            statement.setInt(4, jugador);
+            statement.setLong(4, jugador);
             //el resulset trae el numero de rows afectadas
             rtdo = statement.executeUpdate();
             if (rtdo != 0) {
@@ -78,37 +84,49 @@ public class JugadoresporequipoDAO {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-            System.out.println("Ocurrio Un Error" + sqlexception.getMessage());
+            throw new MiExcepcion("Error", sqlexception);
 
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error actualizando jugadores", sqlexception);
+            }
         }
 
         return mensaje;
 
     }
 
-    public String eliminar(int jugador, int equipo, Connection conexion) {
+    public String eliminar(long jugador, int equipo, Connection conexion) throws MiExcepcion {
         try {
             statement = conexion.prepareStatement("Delete from Jugadoresporequipo "
                     + "where CodigoEquipo=? and codigoJugador=?;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, equipo);
-            statement.setInt(2, jugador);
+            statement.setLong(2, jugador);
             rtdo = statement.executeUpdate();
 
             if (rtdo != 0) {
-                System.out.println("Se eliminaron Corretamente " + rtdo + " registros");
+                mensaje = "Se eliminaron Corretamente " + rtdo + " registros";
             } else {
                 mensaje = "Ocurrio Un Error";
             }
         } catch (SQLException sqlexception) {
-            System.out.println("Ocurrio un error" + sqlexception.getMessage());
+            throw new MiExcepcion("Error", sqlexception);
 
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error eliminando jugadores", sqlexception);
+            }
         }
 
         return mensaje;
     }
 
-    public LinkedList<JugadoresporequipoDTO> listarTodo(Connection conexion) {
+    public List<JugadoresporequipoDTO> listarTodo(Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
 
@@ -132,17 +150,21 @@ public class JugadoresporequipoDAO {
 
             }
         } catch (SQLException sqle) {
-            mensaje = "Ha ocurrido un error "+ sqle.getMessage();
+            throw new MiExcepcion("Error", sqle);
 
-        } finally {
-
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error listando jugadores", sqlexception);
+            }
         }
         //devolvemos el arreglo
         return jugadoreseq;
 
     }
 
-    public LinkedList<JugadoresporequipoDTO> listarUno(int equipo, int jugador, Connection conexion) {
+    public List<JugadoresporequipoDTO> listarUno(int equipo, long jugador, Connection conexion) throws MiExcepcion {
          LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
         try {
             statement = conexion.prepareStatement("SELECT codigoEquipo,codigoJugador "
@@ -150,7 +172,7 @@ public class JugadoresporequipoDAO {
                     + "where codigoEquipo=? and codigoJugador=?");
                  
             statement.setInt(1, equipo);
-            statement.setInt(2, jugador);
+            statement.setLong(2, jugador);
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
@@ -161,12 +183,18 @@ public class JugadoresporequipoDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error", ex);
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error listando jugadores", sqlexception);
+            }
         }
         //devolvemos el usuario que se encontro
         return jugadoreseq;
     }
- public LinkedList<JugadoresporequipoDTO> listarJugadoresEq(int equipo, Connection conexion) {
+    public List<JugadoresporequipoDTO> listarJugadoresEq(int equipo, Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<JugadoresporequipoDTO> jugadoreseq = new LinkedList();
 
@@ -194,10 +222,14 @@ public class JugadoresporequipoDAO {
 
             }
         } catch (SQLException sqle) {
-            mensaje = "Ha ocurrido un error "+ sqle.getMessage();
+            throw new MiExcepcion("Error", sqle);
 
-        } finally {
-
+        }finally{
+            try {
+                statement.close();
+            } catch (SQLException sqlexception) {
+                throw new MiExcepcion("Error listando jugadores", sqlexception);
+            }
         }
         //devolvemos el arreglo
         return jugadoreseq;

@@ -43,7 +43,7 @@ public class UsuariosDAO {
      * @throws  MiException
      *          Excepcion peersonalizada
      */
-    public synchronized String insertar(UsuariosDTO usu, Connection conexion){
+    public synchronized String insertar(UsuariosDTO usu, Connection conexion) throws MiExcepcion{
         try {
             //sentencia sql
             String sql = "INSERT INTO Usuarios(idUsuario,primerNombre, "
@@ -67,27 +67,27 @@ public class UsuariosDAO {
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                System.out.println("se inserto el usaurio correctamente");
+                mensaje = "se inserto el usaurio correctamente";
                 //si no se afecto la tabla
             } 
         } 
         catch (SQLException sqlexception) {
-            mensaje = "Ocurrio Un Error  "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error insertando usuario", sqlexception);
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
-            mensaje = "Ha ocorrido in error encriptando su contraseña";
+            throw new MiExcepcion("Ha ocorrido in error encriptando su contraseña", e);
         }
         finally{
             try {
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+                throw new MiExcepcion("Ha ocorrido in error cerrando el statement", ex);
             }
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
     
-    public String actualizar(UsuariosDTO usu, Connection conexion) {
+    public String actualizar(UsuariosDTO usu, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Usuarios SET primerNombre=?, "
@@ -112,12 +112,12 @@ public class UsuariosDAO {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ocurrio Un Error " + sqlexception.getMessage();
+            throw new MiExcepcion("Error actualizando usuario", sqlexception);
         }
         return mensaje;
     }
 
-    public String eliminar(Long id, Connection conexion) {
+    public String eliminar(Long id, Connection conexion) throws MiExcepcion {
         try {
             statement = conexion.prepareStatement("Delete from usuarios where idUsuario=?;");
             //obtenemos el id del item a eliminar del dto
@@ -130,7 +130,7 @@ public class UsuariosDAO {
                 mensaje = "Ocurrio Un Error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ocurrio un error" + sqlexception.getMessage();
+            throw new MiExcepcion("Error eliminando usuario", sqlexception);
         }
         return mensaje;
     }
@@ -169,7 +169,6 @@ public class UsuariosDAO {
             } catch (SQLException ex) {
                 throw new MiExcepcion("Error cerrando prepare",ex);
             }
-;
         }
         //devolvemos el arreglo
         return listarUsuarios;
@@ -183,7 +182,7 @@ public class UsuariosDAO {
      *          Excepcion personalizada
      * @return objeto UsuarioDTO con los datos existentes o null si no se encontro con ese id
      */
-    public UsuariosDTO listarUno(Long id, Connection conexion)throws MiExcepcion {
+    public synchronized UsuariosDTO listarUno(Long id, Connection conexion)throws MiExcepcion {
         UsuariosDTO usuario = new UsuariosDTO();
         try {
             //preparamos la consulta 
@@ -206,7 +205,13 @@ public class UsuariosDAO {
             }
             }
         } catch (SQLException ex) {
-            throw new MiExcepcion ("Error inesperado", ex);
+            throw new MiExcepcion ("Error inesperado al obtener usuario", ex);
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
         }
         //devolvemos el usuario que se encontro
         return usuario;
@@ -219,7 +224,7 @@ public class UsuariosDAO {
      * @param  password
      *         contraseña del usuario
      */
-        public long validarUsuario(String email, String password, Connection conexion) throws MiExcepcion {
+        public synchronized long validarUsuario(String email, String password, Connection conexion) throws MiExcepcion {
         long cc = 0;
         try {
             statement = conexion.prepareStatement("SELECT idUsuario "
@@ -227,7 +232,6 @@ public class UsuariosDAO {
             byte[] passwordbd = encriptar(password);
             statement.setString(1, email);
             statement.setBytes(2, passwordbd);
-
             rs = statement.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -243,7 +247,7 @@ public class UsuariosDAO {
             try {
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+                throw new MiExcepcion("Ha ocurrido un error", ex);
             }
         }
         return cc;
@@ -257,7 +261,7 @@ public class UsuariosDAO {
      * @throws MiExcepcion
      *          excepcion personalizada
      */
-    public boolean ValidarRol(UsuariosDTO usu, Connection conexion)throws MiExcepcion{
+    public synchronized boolean ValidarRol(UsuariosDTO usu, Connection conexion)throws MiExcepcion{
     boolean logeado=false;
     try{
       statement = conexion.prepareStatement("select * from usuarios as u  inner join rol_usuario as r"
@@ -278,7 +282,13 @@ public class UsuariosDAO {
     }
     }catch(SQLException sqle){
         throw new MiExcepcion("Ha ocurrido un error ", sqle);
-    }
+    }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
+        }
     return logeado; 
     }
     
@@ -295,7 +305,13 @@ public class UsuariosDAO {
             }
     }catch(SQLException sqle){
         throw new MiExcepcion("Error recuperando contraseña", sqle);
-    }
+    }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
+        }
         return password;
     }
     
@@ -314,6 +330,12 @@ public class UsuariosDAO {
             throw new MiExcepcion("Error cambiando contraseña", ex);
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
             throw new MiExcepcion("Error cambiando contraseña", e);
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
         }
         return mensaje;
     }
@@ -332,6 +354,12 @@ public class UsuariosDAO {
             }
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 
+        }finally{
+            try{
+                statement.close();
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
         }
         return salida;
     }

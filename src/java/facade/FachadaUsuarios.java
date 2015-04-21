@@ -31,15 +31,15 @@ public class FachadaUsuarios {
         conexion = Conexion.getConnection();
     }
     
-    public synchronized String insertarUsuario(UsuariosDTO udto){
+    public synchronized String insertarUsuario(UsuariosDTO udto) throws MiExcepcion{
         return udao.insertar(udto, conexion);
     }
     
-    public String actualizarUsuario(UsuariosDTO udto){
+    public String actualizarUsuario(UsuariosDTO udto) throws MiExcepcion{
         return udao.actualizar(udto, conexion);
     }
     
-    public String eliminarUsuario(long id){
+    public String eliminarUsuario(long id) throws MiExcepcion{
         return udao.eliminar(id, conexion);
     }
     

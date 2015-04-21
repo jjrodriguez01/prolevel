@@ -6,7 +6,6 @@
 package persistencia;
 import java.sql.CallableStatement;
  import modelo.TarjetasDTO;
-import utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +14,9 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
+import utilidades.MiExcepcion;
 public class TarjetasDAO {
 
-     Connection conexion = null;
     //instanciamos preparestatment
     PreparedStatement statement=null;
     //variable que devuelve el metodo con el mensaje
@@ -28,11 +27,8 @@ public class TarjetasDAO {
     ResultSet rs=null;
     CallableStatement call = null;
 
-    public TarjetasDAO() {
-        conexion = Conexion.getInstance();
-    }
 
-    public String insertar(TarjetasDTO tar) {
+    public String insertar(TarjetasDTO tar, Connection conexion) throws MiExcepcion {
 
         try {
             call=conexion.prepareCall("{call sp_aumentartarjetas(?,?,?,?,?)};");
@@ -53,12 +49,12 @@ public class TarjetasDAO {
         }
         } 
         catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error ", sqlexception);
         }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
-    public String insertarPrimer (TarjetasDTO tar){
+    public String insertarPrimer (TarjetasDTO tar, Connection conexion) throws MiExcepcion{
         try {
             statement = conexion.prepareStatement("INSERT INTO tarjetas "
                     + " values(?,?,?,?);");
@@ -78,12 +74,12 @@ public class TarjetasDAO {
         }
         } 
         catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error al insertar tarjetas", sqlexception);
         }
         return mensaje;
     }
 
-    public String actualizar(TarjetasDTO tar) {
+    public String actualizar(TarjetasDTO tar, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
             String sql = "UPDATE Tarjetas SET "
@@ -107,7 +103,7 @@ public class TarjetasDAO {
                 mensaje = "Ocurrió Un Error";
             }
         } catch (SQLException sqlexception) {
-             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+             throw new MiExcepcion("Error ", sqlexception);
 
         }
 
@@ -115,12 +111,12 @@ public class TarjetasDAO {
 
     }
 
-    public String eliminar(int Jugador, int Torneo) {
+    public String eliminar(long Jugador, int Torneo, Connection conexion) throws MiExcepcion {
         try {
             statement = conexion.prepareStatement("Delete from tarjetas "
                     + "where idJugador=? and idTorneo=?;");
             
-            statement.setInt(1,Jugador);
+            statement.setLong(1,Jugador);
             statement.setInt(2, Torneo);
             rtdo = statement.executeUpdate();
 
@@ -130,14 +126,14 @@ public class TarjetasDAO {
                 mensaje = "Ocurrio Un Error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            throw new MiExcepcion("Error ", sqlexception);
 
         }
 
         return mensaje;
     }
 
-    public LinkedList<TarjetasDTO> listarTodo(int jugador, int torneo) {
+    public List<TarjetasDTO> listarTodo(int jugador, int torneo, Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         LinkedList<TarjetasDTO> listar = new LinkedList();
 
@@ -160,7 +156,7 @@ public class TarjetasDAO {
 
             }
         } catch (SQLException sqlexception) {
-             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+             throw new MiExcepcion("Error ", sqlexception);
 
         } finally {
 
@@ -169,7 +165,7 @@ public class TarjetasDAO {
         return listar;
     }
 
-    public LinkedList<TarjetasDTO> listarUno(int torneo, int jugador) {
+    public List<TarjetasDTO> listarUno(int torneo, int jugador, Connection conexion) throws MiExcepcion {
         LinkedList<TarjetasDTO> listar = new LinkedList<TarjetasDTO>();
         try {
             //preparamos la consulta 
@@ -191,7 +187,7 @@ public class TarjetasDAO {
             }
 
         } catch (SQLException ex) {
-            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
+            throw new MiExcepcion("Error ", ex);
         }
         //devolvemos el usuario que se encontro
         return listar;

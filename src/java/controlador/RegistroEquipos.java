@@ -42,19 +42,19 @@ public class RegistroEquipos extends HttpServlet {
             if (codigo!=0) {
                 String  nuevoequipo = facadetorneos.inscribirEquipos(codigo, idTorneo);//insertamos en la tabla equipos del torneo
                 if (nuevoequipo.equals("Se inserto el equipo al torneo")) {
-                    JugadoresporequipoDAO jpequipo = new JugadoresporequipoDAO();
-    int juno = Integer.parseInt(request.getParameter("juno"));
-    int jdos = Integer.parseInt(request.getParameter("jdos"));
-    int jtres = Integer.parseInt(request.getParameter("jtres"));
-    int jcuatro = Integer.parseInt(request.getParameter("jcuatro"));
-    int jcinco = Integer.parseInt(request.getParameter("jcinco"));
-    int jseis = Integer.parseInt(request.getParameter("jseis"));
-    int jsiete = Integer.parseInt(request.getParameter("jsiete"));
-    int jocho = Integer.parseInt(request.getParameter("jocho"));
+    //ahora inscribo los jugadores
+    long juno = Long.parseLong(request.getParameter("juno"));
+    long jdos = Long.parseLong(request.getParameter("jdos"));
+    long jtres = Long.parseLong(request.getParameter("jtres"));
+    long jcuatro = Long.parseLong(request.getParameter("jcuatro"));
+    long jcinco = Long.parseLong(request.getParameter("jcinco"));
+    long jseis = Long.parseLong(request.getParameter("jseis"));
+    long jsiete = Long.parseLong(request.getParameter("jsiete"));
+    long jocho = Long.parseLong(request.getParameter("jocho"));
     //creo un array con los documentos
-    int[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
+    long[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
         for (int i = 0; i < docs.length; i++) {
-            jpequipo.insertar(codigo, docs[i]);
+            facadetorneos.inscribirJugadorAEquipo(codigo, docs[i]);
         }
         response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
                 }//si el codigo de equipo es cero es porq no esta registrado
@@ -67,19 +67,19 @@ public class RegistroEquipos extends HttpServlet {
                     //ahora lo insertamos al torneo
                     String equipoatorneo = facadetorneos.inscribirEquipos(nuevoequipo, idTorneo);
                     if (equipoatorneo.equals("Se inserto el equipo al torneo")) {
-                        JugadoresporequipoDAO jpequipo = new JugadoresporequipoDAO();
-    int juno = Integer.parseInt(request.getParameter("juno"));
-    int jdos = Integer.parseInt(request.getParameter("jdos"));
-    int jtres = Integer.parseInt(request.getParameter("jtres"));
-    int jcuatro = Integer.parseInt(request.getParameter("jcuatro"));
-    int jcinco = Integer.parseInt(request.getParameter("jcinco"));
-    int jseis = Integer.parseInt(request.getParameter("jseis"));
-    int jsiete = Integer.parseInt(request.getParameter("jsiete"));
-    int jocho = Integer.parseInt(request.getParameter("jocho"));
+    //ahora a inscribir los jugadores
+    long juno = Long.parseLong(request.getParameter("juno"));
+    long jdos = Long.parseLong(request.getParameter("jdos"));
+    long jtres = Long.parseLong(request.getParameter("jtres"));
+    long jcuatro = Long.parseLong(request.getParameter("jcuatro"));
+    long jcinco = Long.parseLong(request.getParameter("jcinco"));
+    long jseis = Long.parseLong(request.getParameter("jseis"));
+    long jsiete = Long.parseLong(request.getParameter("jsiete"));
+    long jocho = Long.parseLong(request.getParameter("jocho"));
     //creo un array con los documentos
-    int[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
+    long[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
         for (int i = 0; i < docs.length; i++) {
-            jpequipo.insertar(codigo, docs[i]);//insertamos en la tabla jugadorespor equipo 
+            facadetorneos.inscribirJugadorAEquipo(codigo, docs[i]);//insertamos en la tabla jugadorespor equipo 
         }
         
         response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
