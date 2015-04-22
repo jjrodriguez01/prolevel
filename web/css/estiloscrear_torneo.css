@@ -46,7 +46,7 @@ div#encabezado{
 p.info{
 	font-family:champagne, 'times new roman', verdana, arial, castellar;
 	font-size:31px;
-	
+	display: inline;
 }
 p.info:hover{
 	color:#F00;

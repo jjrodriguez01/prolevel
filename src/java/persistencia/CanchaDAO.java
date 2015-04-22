@@ -48,14 +48,6 @@ public class CanchaDAO {
         } 
         catch (SQLException sqlexception) {
          mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-                }
-        }
         }
         return mensaje;
     }
@@ -79,15 +71,7 @@ public class CanchaDAO {
         } catch (SQLException sqlexception) {
          mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
         }
-        finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-                }
-        }
-        }
+        
         return mensaje;
 
     }
@@ -107,14 +91,6 @@ public class CanchaDAO {
         } catch (SQLException sqlexception) {
             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
 
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-                }
-        }
         }
 
         return mensaje;
@@ -144,14 +120,6 @@ public class CanchaDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error al listar las canchas", sqlexception);
 
-        } finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las canchas", sqlexception);
-                }
-        }
         }
         //devolvemos el arreglo
         return listarCancha;
@@ -174,13 +142,6 @@ public class CanchaDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error al listar la cancha", ex);
-        }finally{
-                try {
-                    statement.close();
-                    conexion.close();
-                } catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las canchas", sqlexception);
-                }
         }
         //devolvemos el usuario que se encontro
         return can;

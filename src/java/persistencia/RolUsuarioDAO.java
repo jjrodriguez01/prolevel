@@ -154,13 +154,14 @@ public class RolUsuarioDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error obteniendo rol", ex);
-        }finally{
-            try{
-                statement.close();
-            }catch (SQLException ex) {
-            throw new MiExcepcion("Error obteniendo rol", ex);
         }
-        }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch (SQLException ex) {
+//            throw new MiExcepcion("Error obteniendo rol", ex);
+//        }
+//        }
         //devolvemos el usuario que se encontro
         return rol;
     }

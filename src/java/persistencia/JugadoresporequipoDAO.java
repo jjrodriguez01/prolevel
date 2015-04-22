@@ -50,13 +50,14 @@ public class JugadoresporequipoDAO {
         } 
         catch (SQLException sqlexception) {
             throw new MiExcepcion("Error insertando jugadores", sqlexception);
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error insertando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error insertando jugadores", sqlexception);
+//            }
+//        }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
@@ -86,13 +87,14 @@ public class JugadoresporequipoDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error", sqlexception);
 
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error actualizando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error actualizando jugadores", sqlexception);
+//            }
+//        }
 
         return mensaje;
 
@@ -115,13 +117,14 @@ public class JugadoresporequipoDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error", sqlexception);
 
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error eliminando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error eliminando jugadores", sqlexception);
+//            }
+//        }
 
         return mensaje;
     }
@@ -152,13 +155,14 @@ public class JugadoresporequipoDAO {
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error", sqle);
 
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error listando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error listando jugadores", sqlexception);
+//            }
+//        }
         //devolvemos el arreglo
         return jugadoreseq;
 
@@ -184,13 +188,14 @@ public class JugadoresporequipoDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error", ex);
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error listando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error listando jugadores", sqlexception);
+//            }
+//        }
         //devolvemos el usuario que se encontro
         return jugadoreseq;
     }
@@ -224,13 +229,14 @@ public class JugadoresporequipoDAO {
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error", sqle);
 
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException sqlexception) {
-                throw new MiExcepcion("Error listando jugadores", sqlexception);
-            }
         }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error listando jugadores", sqlexception);
+//            }
+//        }
         //devolvemos el arreglo
         return jugadoreseq;
 

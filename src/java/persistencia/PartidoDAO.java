@@ -57,13 +57,14 @@ public class PartidoDAO {
         } 
         catch (SQLException sqlexception) {
             throw new MiExcepcion("Error insertando partidos", sqlexception);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error insertando partidos", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
@@ -93,13 +94,14 @@ public class PartidoDAO {
             }
         } catch (SQLException sqlexception) {
          throw new MiExcepcion("Error modificando partidos", sqlexception);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error insertando partidos", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
         return mensaje;
     }
 
@@ -117,13 +119,14 @@ public class PartidoDAO {
             }
         } catch (SQLException sqlexception) {
              throw new MiExcepcion("Error eliminando partidos", sqlexception);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error insertando partidos", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
 
         return mensaje;
     }
@@ -181,13 +184,14 @@ public class PartidoDAO {
             }
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error ", sqlexception);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error ", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error ", sqlexception);
+//            }
+//        }
         //devolvemos el arreglo
         return listar;
     }
@@ -244,13 +248,14 @@ public class PartidoDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error ", sqlexception);
 
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error sql ", ex);
-            }
-        }
+        } 
+//        finally {
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error sql ", ex);
+//            }
+//        }
         //devolvemos el arreglo
         return listar;
     }
@@ -312,13 +317,14 @@ public class PartidoDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error ", sqlexception);
 
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error ", ex);
-            }
-        }
+        } 
+//        finally {
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error ", ex);
+//            }
+//        }
         //devolvemos el arreglo
         return listar;
 

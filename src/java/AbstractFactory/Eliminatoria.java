@@ -57,8 +57,13 @@ public class Eliminatoria extends Torneo {
     public TorneoDTO listarUno(int id) throws MiExcepcion {
         return eli.listarUno(id,conexion);
     }
-    
-    public void primeraRondaDiesciseis(List<EquiposdeltorneoDTO> arr) throws MiExcepcion{
+    /**
+     * Crea los emparejamientos de una eliminatoria de 16 equipos
+     * 
+     * @param arr Equipos inscritos al torneo
+     * @throws MiExcepcion 
+     */
+    public synchronized void primeraRondaDiesciseis(List<EquiposdeltorneoDTO> arr) throws MiExcepcion{
         ArrayList<EquiposdeltorneoDTO> arrayeq = (ArrayList)arr;
         Map<Integer,EquiposdeltorneoDTO> equipos = new TreeMap<Integer,EquiposdeltorneoDTO>();
         int clave = 0;

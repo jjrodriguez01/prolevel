@@ -38,9 +38,9 @@ public class EliminatoriaDAO {
         call.setInt(5, eliminatoria.getCapacidadEquipos());
         call.setInt(6, eliminatoria.getTipo());
         call.setBoolean(7, eliminatoria.isIdaVuelta());
-       
-       
+
         call.registerOutParameter(8, Types.INTEGER);
+        call.execute();
         int salida = call.getInt(8);
             if (salida == 1) {
                 mensaje = "Nueva eliminatoria creada.";
@@ -50,13 +50,16 @@ public class EliminatoriaDAO {
         }
         catch(SQLException sqle){
             mensaje = "Error :" + sqle.getMessage();
-        }finally{
-                try {
-                    statement.close();
-                }catch (SQLException sqlexception) {
-                    mensaje = "No se pudo crear la eliminatoria.";
-                }
         }
+//        finally{
+//                try {
+//                    if (call != null) {
+//                    call.close();    
+//                    }   
+//                }catch (SQLException sqlexception) {
+//                    mensaje = "No se pudo crear la eliminatoria.";
+//                }
+//        }
         return mensaje;
     } 
     
@@ -76,13 +79,16 @@ public class EliminatoriaDAO {
         } catch (SQLException sqlexception) {
             mensaje = "No se pudo borrar la eliminatoria.";
 
-        }finally{
-                try {
-                    statement.close();
-                }catch (SQLException sqlexception) {
-                    mensaje = "No se pudo crear la eliminatoria.";
-                }
-        } 
+        }
+//        finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                }catch (SQLException sqlexception) {
+//                    mensaje = "No se pudo crear la eliminatoria.";
+//                }
+//        } 
         return mensaje;
     }
     
@@ -105,13 +111,16 @@ public class EliminatoriaDAO {
             }
         }catch(SQLException sqle){
             mensaje = "Error: "+ sqle.getMessage();
-        }finally{
-                try {
-                    statement.close();
-                }catch (SQLException sqlexception) {
-                    mensaje = "No se pudo modificar la eliminatoria.";
-                }
-        }       
+        }
+//        finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                }catch (SQLException sqlexception) {
+//                    mensaje = "No se pudo modificar la eliminatoria.";
+//                }
+//        }       
         return mensaje;
     }
      public TorneoDTO listarUno(int idTorneo, Connection conexion) throws MiExcepcion {
@@ -135,13 +144,16 @@ public class EliminatoriaDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error al listar la eliminatoria",ex);
-        }finally{
-                try {
-                    statement.close();
-                }catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las copas", sqlexception);
-                }
         }
+//        finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                }catch (SQLException sqlexception) {
+//                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+//                }
+//        }
         //devolvemos el usuario que se encontro
         return eliminatoria;
     }
@@ -171,13 +183,16 @@ public class EliminatoriaDAO {
             
         }catch(SQLException sqle){
             throw new MiExcepcion("Error al listar las eliminatorias",sqle);
-        }finally{
-                try {
-                    statement.close();
-                }catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las copas", sqlexception);
-                }
         }
+//        finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                }catch (SQLException sqlexception) {
+//                    throw new MiExcepcion("Error al listar las eliminatorias", sqlexception);
+//                }
+//        }
         return listarEliminatorias;
     }
 

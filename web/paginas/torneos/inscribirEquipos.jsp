@@ -204,9 +204,20 @@ if (request.getParameter("registro")!=null) {
             </c:forEach>
         </div>
         <c:if test="${inscritos.capacidad == detallestorneo.capacidadEquipos}">
+            <c:if test="${detallestorneo.tipo ==3}">
+            <form>
+                <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
+                <input type="hidden" name="nombre" value="${detallestorneo.nombre}" />
+                <input type="hidden" name="fechaInicio" value="${detallestorneo.fechaInicio}" />
+                <input type="hidden" name="fechaFin" value="${detallestorneo.fechaFin}" />
+                <input type="hidden" name="genero" value="${detallestorneo.genero}" />
+                <input type="hidden" name="capacidadEquipos" value="${detallestorneo.capacidadEquipos}" />
+                <input type="hidden" name="tipo" value="${detallestorneo.tipo}" />
             <button name="iniciar" value="${detallestorneo.idTorneo}" class="btn btn-lg btn-danger">
                 Iniciar Torneo
             </button>
+            </form>
+            </c:if>
         </c:if>
     </section>
 </main>

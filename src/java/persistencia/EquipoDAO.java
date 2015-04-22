@@ -46,15 +46,18 @@ public class EquipoDAO {
         } 
         catch (SQLException sqlexception) {
             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Error :" + sqlexception.getMessage();
-                }
         }
-        }
+//        finally{
+//            if (null != conexion) {
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    mensaje = "Error :" + sqlexception.getMessage();
+//                }
+//        }
+//        }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
@@ -79,15 +82,18 @@ public class EquipoDAO {
             }
         } catch (SQLException sqlexception) {
             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Error :" + sqlexception.getMessage();
-                }
         }
-        }
+//        finally{
+//            if (null != conexion) {
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    mensaje = "Error :" + sqlexception.getMessage();
+//                }
+//        }
+//        }
 
         return mensaje;
 
@@ -108,15 +114,18 @@ public class EquipoDAO {
         } catch (SQLException sqlexception) {
             mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
 
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    mensaje = "Error :" + sqlexception.getMessage();
-                }
         }
-        }
+//        finally{
+//            if (null != conexion) {
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    mensaje = "Error :" + sqlexception.getMessage();
+//                }
+//        }
+//        }
 
         return mensaje;
     }
@@ -145,9 +154,12 @@ public class EquipoDAO {
         } catch (SQLException sqlexception) {
            throw new MiExcepcion("Error ", sqlexception);
 
-        } finally {
-
-        }
+        } 
+//        finally {
+//            if (statement != null) {
+//                        statement.close();    
+//                    }
+//        }
         //devolvemos el arreglo
         return equipos;
     }
@@ -178,15 +190,18 @@ public class EquipoDAO {
         } catch (SQLException sqlexception) {
            throw new MiExcepcion("Error ", sqlexception);
 
-        }finally{
-            if (null != conexion) {
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las copas", sqlexception);
-                }
         }
-        }
+//        finally{
+//            if (null != conexion) {
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+//                }
+//        }
+//        }
         //devolvemos el arreglo
         return equipos;
         }
@@ -208,13 +223,16 @@ public class EquipoDAO {
 
         } catch (SQLException ex) {
             throw new MiExcepcion("Error ", ex);
-        }finally{
-                try {
-                    statement.close();
-                } catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las copas", sqlexception);
-                }
         }
+//        finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+//                }
+//        }
         return equ;
     }
     
@@ -229,14 +247,16 @@ public class EquipoDAO {
              }
          } catch (SQLException sqle) {
              throw new MiExcepcion("Error ", sqle);
-         }finally{
-                try {
-                    statement.close();
-                    conexion.close();
-                } catch (SQLException sqlexception) {
-                    throw new MiExcepcion("Error al listar las copas", sqlexception);
-                }
-        }
+         }
+//         finally{
+//                try {
+//                    if (statement != null) {
+//                        statement.close();    
+//                    }
+//                } catch (SQLException sqlexception) {
+//                    throw new MiExcepcion("Error al listar las copas", sqlexception);
+//                }
+//        }
         return codigo;
     }
 

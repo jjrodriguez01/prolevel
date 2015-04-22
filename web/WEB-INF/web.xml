@@ -93,7 +93,7 @@
         <url-pattern>/Recuperar</url-pattern>
     </servlet-mapping>
     <error-page>
-        <error-code>500</error-code>
+        <exception-type>Throwable</exception-type>
         <location>/errorPages/error.jsp</location>
     </error-page>
     <error-page>

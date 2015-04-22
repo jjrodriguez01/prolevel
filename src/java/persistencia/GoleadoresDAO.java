@@ -139,15 +139,23 @@ public class GoleadoresDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error listando goles", sqlexception);
 
-        } finally {
-
-        }
+        } 
+//        finally {
+//            try{
+//            if (statement != null) {
+//                        statement.close();    
+//                    }
+//            }catch (SQLException sqlexception) {
+//            throw new MiExcepcion("Error listando goles", sqlexception);
+//
+//        }
+//        }
         //devolvemos el arreglo
         return listarGoleadores;
 
     }
 
-    public String listarUno(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
+    public GoleadoresDTO listarUno(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
         try {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT numeroGoles,idJugador, idTorneo, idEquipo"
@@ -169,7 +177,17 @@ public class GoleadoresDAO {
         } catch (SQLException ex) {
             throw new MiExcepcion("Error listando goles", ex);
         }
+//        finally {
+//            try{
+//            if (statement != null) {
+//                        statement.close();    
+//                    }
+//            }catch (SQLException sqlexception) {
+//            throw new MiExcepcion("Error listando goles", sqlexception);
+//
+//        }
+//        }
         //devolvemos el usuario que se encontro
-        return "" + gol;
+        return gol;
     }
 }

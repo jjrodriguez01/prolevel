@@ -46,13 +46,16 @@ public class EquiposDelTorneoDAO {
             
         } catch (SQLException ex) {
             mensaje = "Ha ocurrido un error "+ex.getMessage();
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                mensaje = "Ha ocurrido un error "+ex.getMessage();
-            }
         }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                mensaje = "Ha ocurrido un error "+ex.getMessage();
+//            }
+//        }
         return mensaje;
     }
     
@@ -71,13 +74,16 @@ public class EquiposDelTorneoDAO {
             }
         } catch (SQLException ex) {
             throw new MiExcepcion("Error", ex);
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error cerrando prepared ",ex);
-            }
         }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error cerrando prepared ",ex);
+//            }
+//        }
         return equipos;
     }
     
@@ -99,13 +105,16 @@ public class EquiposDelTorneoDAO {
             }
         } catch (SQLException ex) {
             throw new MiExcepcion("Error sql",ex);
-        }finally{
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error cerrando prepared ",ex);
-            }
         }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error cerrando prepared ",ex);
+//            }
+//        }
         return correos;
     }
 }

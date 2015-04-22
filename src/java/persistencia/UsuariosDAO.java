@@ -76,13 +76,13 @@ public class UsuariosDAO {
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
             throw new MiExcepcion("Ha ocorrido in error encriptando su contraseña", e);
         }
-        finally{
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Ha ocorrido in error cerrando el statement", ex);
-            }
-        }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Ha ocorrido in error cerrando el statement", ex);
+//            }
+//        }
         //devolvemos el mensaje al usuario
         return mensaje;
     }
@@ -163,13 +163,14 @@ public class UsuariosDAO {
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error sql", sqlexception);
 
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Error cerrando prepare",ex);
-            }
-        }
+        } 
+//        finally {
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error cerrando prepare",ex);
+//            }
+//        }
         //devolvemos el arreglo
         return listarUsuarios;
     }
@@ -206,13 +207,14 @@ public class UsuariosDAO {
             }
         } catch (SQLException ex) {
             throw new MiExcepcion ("Error inesperado al obtener usuario", ex);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
         //devolvemos el usuario que se encontro
         return usuario;
     }
@@ -243,13 +245,13 @@ public class UsuariosDAO {
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
            throw new MiExcepcion("Ha ocorrido in error encriptando su contraseña. Por favor intentelo de nuevo.",e);
         }
-        finally {
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                throw new MiExcepcion("Ha ocurrido un error", ex);
-            }
-        }
+//        finally {
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Ha ocurrido un error", ex);
+//            }
+//        }
         return cc;
     }
     /**
@@ -282,13 +284,14 @@ public class UsuariosDAO {
     }
     }catch(SQLException sqle){
         throw new MiExcepcion("Ha ocurrido un error ", sqle);
-    }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
-        }
+    }
+//    finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
     return logeado; 
     }
     
@@ -305,13 +308,14 @@ public class UsuariosDAO {
             }
     }catch(SQLException sqle){
         throw new MiExcepcion("Error recuperando contraseña", sqle);
-    }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
-        }
+    }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
         return password;
     }
     
@@ -330,13 +334,14 @@ public class UsuariosDAO {
             throw new MiExcepcion("Error cambiando contraseña", ex);
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
             throw new MiExcepcion("Error cambiando contraseña", e);
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
         return mensaje;
     }
     
@@ -354,13 +359,14 @@ public class UsuariosDAO {
             }
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 
-        }finally{
-            try{
-                statement.close();
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
         }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
         return salida;
     }
 }

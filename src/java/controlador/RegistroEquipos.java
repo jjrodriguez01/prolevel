@@ -8,6 +8,8 @@ package controlador;
 import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +32,13 @@ public class RegistroEquipos extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        int idTorneo = Integer.parseInt(request.getParameter("idTorneo"));//id del torneo
-        String nombre = request.getParameter("nombre");//nombre equipo
         if (request.getParameter("crearEquipo")!=null) {
+            int idTorneo = Integer.parseInt(request.getParameter("idTorneo"));//id del torneo
+            String nombre = request.getParameter("nombre");//nombre equipo
             FachadaTorneos facadetorneos = new FachadaTorneos();                       
-            try{
+  
             int codigo = facadetorneos.existeEquipo(nombre);
             //si el codigo no es cero significa que este equipo ya esta registrado solo lo insertamos al torneo 
             if (codigo!=0) {
@@ -90,9 +92,6 @@ public class RegistroEquipos extends HttpServlet {
                     response.sendError(500, registroequipo);
                 }
             }
-            }catch(MiExcepcion mie){//si hay errores obteniendo el codigo del equipo
-                response.sendError(500, mie.getMessage());
-            }
             
         }
         try (PrintWriter out = response.getWriter()) {
@@ -121,7 +120,11 @@ public class RegistroEquipos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(RegistroEquipos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -135,7 +138,11 @@ public class RegistroEquipos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(RegistroEquipos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

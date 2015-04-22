@@ -1,6 +1,8 @@
 
 package controlador;
 
+import AbstractFactory.Eliminatoria;
+import AbstractFactory.FabricaTorneo;
 import AbstractFactory.Torneo;
 import FactoryMethod.TorneoFactory;
 import controlador.correo.Correo;
@@ -8,10 +10,12 @@ import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.EquiposdeltorneoDTO;
 import modelo.PartidoDTO;
 import modelo.TorneoDTO;
 import utilidades.MiExcepcion;
@@ -50,6 +54,29 @@ public class GestionEliminatoria extends HttpServlet {
             Torneo cup = fabrica.crearTorneo(elidto);
             String crearelim = cup.crear(elidto);
                response.sendRedirect("paginas/torneos/crear_torneo.jsp?eliminatoria="+crearelim+"#ftorneos");
+        }else if(request.getParameter("iniciar")!=null){//si se van a crearlos partidos de la eliminatoria
+            try{
+            FachadaTorneos facadeTorneos = new FachadaTorneos();
+            TorneoDTO eliminatoria = new TorneoDTO();
+            //creo un dto completo de esta eliminatoria
+            eliminatoria.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+            eliminatoria.setNombre(request.getParameter("nombreTorneo"));
+            eliminatoria.setFechaFin(request.getParameter("fechaFin"));
+            eliminatoria.setFechaInicio(request.getParameter("fechaInicio"));
+            eliminatoria.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidadEquipos")));
+            eliminatoria.setTipo(Integer.parseInt(request.getParameter("tipo")));
+            FabricaTorneo fabrica = new FabricaTorneo();
+            Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
+            List<EquiposdeltorneoDTO> edt = new ArrayList();//arrayList con los equipos de este torneo
+            //ese metodo me devuelve un List con todos los equiposn de este torneo
+            edt = facadeTorneos.listarEquiposInscritos(eliminatoria.getIdTorneo());
+            //ahora llamo al metodo de eliminatoria q crea los emparejamientos y le paso 
+            //este List con los torneos
+            eli.primeraRondaDiesciseis(edt);
+            response.sendRedirect("calendario.jsp?idTorneo="+eliminatoria.getIdTorneo());
+            }catch(MiExcepcion mie){
+                response.sendError(500, mie.getMessage());
+            }
         }
         //
         //inicio a actualizar fechas de una eli de 16

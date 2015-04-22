@@ -104,38 +104,37 @@ $(document).ready(function() {
             <div class="col-lg-12">
             <section class="container" id="informacion">
                 <h6>Estos son los torneos que puede crear:</h6>
-		<p class="info" onClick="copa()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una copa?</p>
-                <p id="qcopa" class="descripcion"></p>
-                <p class="info" onClick="liga()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una liga?</p>
-		<p id="qliga" class="descripcion"></p>
-                <p class="info" onClick="eliminatoria()"><img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una eliminatoria?</p>
-		<p id="qeli" class="descripcion"></p>
-                    <button id="btn" onClick="cerrar()">Cerrar</button>
-<script>
-	function copa(){
-		document.getElementById("qcopa").innerHTML= "Una copa es un estilo de torneo donde los participantes se dividen en grupos de 4 u 8, usted podra elegir si en esa fase de grupos los equipos juegan partidos de ida y vuelta o un unico partido. despues de la ronda de grupos, pasan los dos primeros de cada uno, se enfrentan en octavos de final donde usted podra elegir si lo hacen a partido unico o ida y vuelta, podra elegir partidos a ida y vuelta tambien en los cuartos de final, semifinal y final. tendra la opcion de habilitar un partido por el tercer puesto de la copa con los 2 equipos que perdieron en semifinal";
-		document.getElementById("btn").style.visibility="visible";
-		document.getElementById("qcopa").style.display="block";
-		document.getElementById("btn").style.display="inline";
-		}
-	function liga(){
-		document.getElementById("qliga").innerHTML= "En una liga se enfrentan todos contra todos, podrá elegir si los enfrentamnientos son a partido único o a ida y vuelta. el equipo que tenga mas puntos al finalizar todos los partidos, será el campeón, si hay dos equipos con el mismo puntaje, el campeon será el equipo que tenga una mayor diferencia entre goles a favor y en contra según el resultado de los partidos jugados entre ellos. Si el empate persiste, el que tenga la mayor diferencia de goles a favor teniendo en cuenta todos los obtenidos y recibidos en el transcurso de la competición sera el campeon. Si aún asi los equipos implicados siguen empatados se definira por el equipos  que haya marcado más goles";
-		document.getElementById("btn").style.visibility="visible";
-		document.getElementById("qcopa").style.display="block";
-		document.getElementById("btn").style.display="inline";
-		}		
-	function eliminatoria(){
-		document.getElementById("qeli").innerHTML= "En una eliminatoria los equipos juegan todos contra todos a partido unico con muerte súbita, es decir equipo que pierda sera eliminado";
-		document.getElementById("btn").style.visibility="visible";
-		document.getElementById("qcopa").style.display="block";
-		document.getElementById("btn").style.display="inline";}	
-	function cerrar() {
-		document.getElementById("qcopa").style.display="none";
-                document.getElementById("qliga").style.display="none";
-                document.getElementById("qeli").style.display="none";
-		document.getElementById("btn").style.display="none";
-		}
-
+<div class="row">
+                <p class="info"
+data-toggle="popover" 
+title="Copa" data-content="Los equipos se dividen en grupos de 4,
+pasan los 2 primeros de cada grupo a cuadrangulares de eliminacion directa" >
+<img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una copa?
+                </p>
+</div>
+<div class="row">
+                <p class="info" 
+data-toggle="popover" 
+title="Liga" data-content="Los equipos se enfrentan todos contra todos, quien al final de todos los 
+partidos tenga mayor cantidad de puntos gana, si hay empate entre dos o mas equipos en puntos 
+se decidira al campeon por cantidad de goles anotados">
+<img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una liga?
+                </p>
+</div>
+<div class="row">
+                <p class="info" data-toggle="popover" 
+title="Eliminatoria" data-content="Torneo formato knock-out, los equipos se enfrentan en partido simple quien pierda sera eliminado">
+<img src="../../imagenes/flecha.png" width="24" height="24" />¿Que es una eliminatoria?
+                </p>
+</div>
+<script>                           
+$('[data-toggle="popover"]').popover(
+                {
+                    trigger: 'hover',
+                    html: true,
+                    delay: 300,
+                }
+            );
 </script>
             </section>
             </div>
@@ -253,7 +252,7 @@ $(document).ready(function() {
             </div>
             <hr/>
             <div class="row">
-<form id="eliminatoria">
+                <form id="eliminatoria" action="../../GestionEliminatoria">
     <div class="form-group">
         <label for="nombreTorneo">Nombre del torneo</label>
         <input id="nombreTorneo" name="nombreTorneo" type="text" maxlength="25" required>
@@ -262,7 +261,7 @@ $(document).ready(function() {
         <label for="capacidad">Capacidad de equipos</label>
         <select id="capacidad" name="capacidad">
             <option></option>
-            <option>12</option>
+            <option>16</option>
             <option>20</option>
         </select>
     </div>
@@ -291,7 +290,7 @@ $(document).ready(function() {
         <input type="text" class="datepicker" name="fin" required>
     </div>
         
-    <button class="btn btn-primary" type="submit" name="eliminato^ria">CREAR</button>
+    <button class="btn btn-primary" type="submit" name="eliminatoria">CREAR</button>
     <input type="hidden" name="enviareli" />
 </form>
         </div>
