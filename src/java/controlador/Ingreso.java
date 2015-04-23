@@ -8,6 +8,10 @@ package controlador;
 import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +36,8 @@ public class Ingreso extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
             if (request.getParameter("ingresar") != null) {
-                try{
                 String email = request.getParameter("email").trim();
                 String contraseña = request.getParameter("pass").trim();
                 FachadaUsuarios facadeUsu = new FachadaUsuarios();
@@ -53,14 +56,14 @@ public class Ingreso extends HttpServlet {
                 }else {
                 response.sendRedirect("index.jsp?auth=noauth");
                 }
-                }catch(MiExcepcion mie){
-//                    response.sendError(500, mie.getMessage());
-                    response.sendRedirect("index.jsp?error="+mie.getMessage());
-                }
             }else if(request.getParameter("logout")!=null){
-                    request.getSession().invalidate();
+                    HttpSession miSesion = request.getSession(false);
+                    miSesion.removeAttribute("usr");
+                    miSesion.removeAttribute("rol");
+                    miSesion.invalidate();
                     response.sendRedirect("index.jsp?sesion=cerrada");
-            }else{
+            }
+            else{
                 response.sendRedirect("index.jsp?action=noaction");
             }
     }
@@ -77,7 +80,11 @@ public class Ingreso extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -91,7 +98,11 @@ public class Ingreso extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

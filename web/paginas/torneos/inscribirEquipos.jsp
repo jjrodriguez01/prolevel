@@ -205,7 +205,7 @@ if (request.getParameter("registro")!=null) {
         </div>
         <c:if test="${inscritos.capacidad == detallestorneo.capacidadEquipos}">
             <c:if test="${detallestorneo.tipo ==3}">
-            <form>
+                <form method="get" action="../../GestionEliminatoria" autocomplete="off">
                 <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
                 <input type="hidden" name="nombre" value="${detallestorneo.nombre}" />
                 <input type="hidden" name="fechaInicio" value="${detallestorneo.fechaInicio}" />

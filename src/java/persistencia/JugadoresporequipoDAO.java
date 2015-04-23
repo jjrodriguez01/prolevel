@@ -100,17 +100,15 @@ public class JugadoresporequipoDAO {
 
     }
 
-    public String eliminar(long jugador, int equipo, Connection conexion) throws MiExcepcion {
+    public String eliminar(int equipo, Connection conexion) throws MiExcepcion {
         try {
-            statement = conexion.prepareStatement("Delete from Jugadoresporequipo "
-                    + "where CodigoEquipo=? and codigoJugador=?;");
+            statement = conexion.prepareStatement("delete from jugadoresporequipo where codigoEquipo = ?;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, equipo);
-            statement.setLong(2, jugador);
             rtdo = statement.executeUpdate();
 
             if (rtdo != 0) {
-                mensaje = "Se eliminaron Corretamente " + rtdo + " registros";
+                mensaje = "Se eliminaron los jugadores";
             } else {
                 mensaje = "Ocurrio Un Error";
             }

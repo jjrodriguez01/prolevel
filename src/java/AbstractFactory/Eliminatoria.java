@@ -73,6 +73,7 @@ public class Eliminatoria extends Torneo {
         }
         int ronda = 1;
         int idTorneo = equipos.get(1).getTorneoIdTorneo();
+        int estado = 0;//estado del partido 0=por jugar
         FachadaTorneos partido = new FachadaTorneos();
         //instancio la cantidad de partidos que necesito
         //para un torneo de 16 equipos seran 8 en primera ronda
@@ -91,48 +92,64 @@ public class Eliminatoria extends Torneo {
         puno.setEquipo1(equipos.get(1).getEquipoCodigo());
         puno.setEquipo2(equipos.get(2).getEquipoCodigo());
         puno.setIdTorneo(idTorneo);
+        puno.setNumero(1);
+        puno.setEstado(estado);
         partido.insertarPartido(puno);
         
         pdos.setRonda(ronda);
         pdos.setEquipo1(equipos.get(3).getEquipoCodigo());
         pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
         pdos.setIdTorneo(idTorneo);
+        puno.setNumero(2);
+        puno.setEstado(estado);
         partido.insertarPartido(pdos);
         
         ptres.setRonda(ronda);
         ptres.setEquipo1(equipos.get(5).getEquipoCodigo());
         ptres.setEquipo2(equipos.get(6).getEquipoCodigo());
         ptres.setIdTorneo(idTorneo);
+        puno.setNumero(3);
+        puno.setEstado(estado);
         partido.insertarPartido(ptres);
         
         pcuatro.setRonda(ronda);
         pcuatro.setEquipo1(equipos.get(7).getEquipoCodigo());
         pcuatro.setEquipo2(equipos.get(8).getEquipoCodigo());
         pcuatro.setIdTorneo(idTorneo);
+        puno.setNumero(4);
+        puno.setEstado(estado);
         partido.insertarPartido(pcuatro);
         
         pcinco.setRonda(ronda);
         pcinco.setEquipo1(equipos.get(9).getEquipoCodigo());
         pcinco.setEquipo2(equipos.get(10).getEquipoCodigo());
         pcinco.setIdTorneo(idTorneo);
+        puno.setNumero(5);
+        puno.setEstado(estado);
         partido.insertarPartido(pcinco);
         
         pseis.setRonda(ronda);
         pseis.setEquipo1(equipos.get(11).getEquipoCodigo());
         pseis.setEquipo2(equipos.get(12).getEquipoCodigo());
         pseis.setIdTorneo(idTorneo);
+        puno.setNumero(6);
+        puno.setEstado(estado);
         partido.insertarPartido(pseis);
         
         psiete.setRonda(ronda);
         psiete.setEquipo1(equipos.get(13).getEquipoCodigo());
         psiete.setEquipo2(equipos.get(14).getEquipoCodigo());
         psiete.setIdTorneo(idTorneo);
+        puno.setNumero(7);
+        puno.setEstado(estado);
         partido.insertarPartido(psiete);
         
         pocho.setRonda(ronda);
         pocho.setEquipo1(equipos.get(15).getEquipoCodigo());
         pocho.setEquipo2(equipos.get(16).getEquipoCodigo());
         pocho.setIdTorneo(idTorneo);
+        puno.setNumero(8);
+        puno.setEstado(estado);
         partido.insertarPartido(pocho);
     }
 }

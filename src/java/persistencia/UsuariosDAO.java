@@ -319,7 +319,7 @@ public class UsuariosDAO {
         return password;
     }
     
-    public String cambiarPass(long id, String newpass, Connection conexion) throws MiExcepcion{
+    public synchronized String cambiarPass(long id, String newpass, Connection conexion) throws MiExcepcion{
         try {
             statement =conexion.prepareStatement("UPDATE usuarios SET contraseña = ? "
                     + "WHERE idUsuario = ?;");

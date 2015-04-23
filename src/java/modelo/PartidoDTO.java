@@ -23,6 +23,8 @@ public class PartidoDTO {
     private EquipoDTO equipodos;
     private TorneoDTO torneo;
     private CanchaDTO canchas;
+    private int numero;
+    private int estado;
 
     public int getRonda() {
         return ronda;
@@ -128,7 +130,24 @@ public class PartidoDTO {
         this.canchas = canchas;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
     
+    
+   
 }
     
 

@@ -33,8 +33,8 @@ public class PartidoDAO {
 
         try {
             //sentencia sql
-            String sql = "INSERT INTO partidos(ronda,equipo1,equipo2,fecha,hora,idTorneo,cancha)"
-                    + "VALUES(?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO partidos(ronda,equipo1,equipo2,fecha,hora,idTorneo,cancha,numero,estado)"
+                    + "VALUES(?,?,?,?,?,?,?,?,?);";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
@@ -45,6 +45,8 @@ public class PartidoDAO {
             statement.setString(5, cal.getHora());
             statement.setInt(6, cal.getIdTorneo());
             statement.setInt(7, cal.getCancha());
+            statement.setInt(8, cal.getNumero());
+            statement.setInt(9, cal.getEstado());
             //ejecuta el insert
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
@@ -72,17 +74,18 @@ public class PartidoDAO {
     public String actualizar(PartidoDTO cal,Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
-            String sql = "UPDATE partidos SET fecha = ?, hora = ? "
+            String sql = "UPDATE partidos SET fecha = ?, hora = ?, cancha = ? "
                     + "WHERE ronda=? and equipo1=? and equipo2=? and idTorneo=?;";
             //pasamos el query a la conexion
            //sacamos los datos del dto de la tabla
             statement = conexion.prepareStatement(sql);
             statement.setString(1, cal.getFecha());
             statement.setString(2,cal.getHora());
-            statement.setInt(3, cal.getRonda());
-            statement.setInt(4, cal.getEquipo1());
-            statement.setInt(5, cal.getEquipo2());
-            statement.setInt(6, cal.getIdTorneo());
+            statement.setInt(3, cal.getCancha());
+            statement.setInt(4, cal.getRonda());
+            statement.setInt(5, cal.getEquipo1());
+            statement.setInt(6, cal.getEquipo2());
+            statement.setInt(7, cal.getIdTorneo());
             
             //el resulset trae el numero de rows afectadas
             rtdo = statement.executeUpdate();

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class GestionEliminatoria extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
         if ( request.getParameter("eliminatoria")!=null && request.getParameter("enviareli")!=null) {
             int tipotorneo = 3;//en bd tres es una eliminatoria
@@ -55,7 +57,7 @@ public class GestionEliminatoria extends HttpServlet {
             String crearelim = cup.crear(elidto);
                response.sendRedirect("paginas/torneos/crear_torneo.jsp?eliminatoria="+crearelim+"#ftorneos");
         }else if(request.getParameter("iniciar")!=null){//si se van a crearlos partidos de la eliminatoria
-            try{
+
             FachadaTorneos facadeTorneos = new FachadaTorneos();
             TorneoDTO eliminatoria = new TorneoDTO();
             //creo un dto completo de esta eliminatoria
@@ -74,9 +76,6 @@ public class GestionEliminatoria extends HttpServlet {
             //este List con los torneos
             eli.primeraRondaDiesciseis(edt);
             response.sendRedirect("calendario.jsp?idTorneo="+eliminatoria.getIdTorneo());
-            }catch(MiExcepcion mie){
-                response.sendError(500, mie.getMessage());
-            }
         }
         //
         //inicio a actualizar fechas de una eli de 16
@@ -86,7 +85,6 @@ public class GestionEliminatoria extends HttpServlet {
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            try{
             //pregunto si hay datos de partido 1
             if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
             //comienzo con el primer partido
@@ -117,7 +115,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo2+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora();
+                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
             }
@@ -151,7 +151,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo4+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora();
+                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p2.getCancha();
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
             }
@@ -185,7 +187,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo6+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p3.getFecha()+" a las "+p3.getHora();
+                    +"Sera el "+p3.getFecha()+" a las "+p3.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p3.getCancha();
             Correo.sendMail(asunto, cuerpop3, emailsp3.toString());
             //fin del tercero   
             }
@@ -219,7 +223,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo8+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p4.getFecha()+" a las "+p4.getHora();
+                    +"Sera el "+p4.getFecha()+" a las "+p4.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p4.getCancha();
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
             }
@@ -253,7 +259,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo10+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p5.getFecha()+" a las "+p5.getHora();
+                    +"Sera el "+p5.getFecha()+" a las "+p5.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p5.getCancha();
             Correo.sendMail(asunto, cuerpop5, emailsp5.toString());
             //fin del quinto
                 }
@@ -287,7 +295,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo12+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p6.getFecha()+" a las "+p6.getHora();
+                    +"Sera el "+p6.getFecha()+" a las "+p6.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p6.getCancha();
             Correo.sendMail(asunto, cuerpop6, emailsp6.toString());
             //fin del sexto
                 }
@@ -321,7 +331,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo14+"<strong>"
                     +"<br/>"
-                    +"Sera el "+p7.getFecha()+" a las "+p7.getHora();
+                    +"Sera el "+p7.getFecha()+" a las "+p7.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p7.getCancha();
             Correo.sendMail(asunto, cuerpop7, emailsp7.toString());
             //fin del septimo
                 }
@@ -355,23 +367,22 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo16+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p8.getFecha()+" a las "+p8.getHora();
+                    +"Sera el "+p8.getFecha()+" a las "+p8.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p8.getCancha();
             Correo.sendMail(asunto, cuerpop8, emailsp8.toString());
             //fin del octavo 
                 }
           
             response.sendRedirect("paginas/torneos/calendario.jsp?idTorneo="+idTorneo+"&octavos=Se han asignado las fechas");
             
-            }catch(MiExcepcion mi){
-                response.sendError(500, mi.toString());
-            }
             //comienzo con los cuartos de final
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fcuartos")!=null){
             int ronda = 2;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            try{
+
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -400,7 +411,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + nequipo2
                     +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora();
+                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
             
@@ -432,7 +445,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + nequipo4
                     +"<br/>"
-                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora();
+                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p2.getCancha();
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
             
@@ -464,7 +479,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + nequipo6
                     +"<br/>"
-                    +"Sera el "+p3.getFecha()+" a las "+p3.getHora();
+                    +"Sera el "+p3.getFecha()+" a las "+p3.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p3.getCancha();
             Correo.sendMail(asunto, cuerpop3, emailsp3.toString());
             //fin del tercero
             
@@ -496,19 +513,19 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + nequipo8
                     +"<br/>"
-                    +"Sera el "+p4.getFecha()+" a las "+p4.getHora();
+                    +"Sera el "+p4.getFecha()+" a las "+p4.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p4.getCancha();
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
-            }catch(MiExcepcion mi){
-                response.sendError(500, mi.toString());
-            }
+
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fsemi")!=null){
             int ronda = 3;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            try{
+
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -533,11 +550,13 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo1 = request.getParameter("0nequipo1");
             String nequipo2 = request.getParameter("0nequipo2");
-            String cuerpop1 = "El partido <strong>"+nequipo1+"</strong>"
+            String cuerpop1 = "El partido de la semifinal entre <strong>"+nequipo1+"</strong>"
                     +" <span>vs</span> <br/> "
                     + nequipo2
                     +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora();
+                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
             
@@ -565,24 +584,22 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo3 = request.getParameter("1nequipo1");
             String nequipo4 = request.getParameter("1nequipo2");
-            String cuerpop2 = "El partido <strong>"+nequipo3+"</strong>"
+            String cuerpop2 = "El partido por la semifinal entre <strong>"+nequipo3+"</strong>"
                     +" <span>vs</span> <br/> "
                     + nequipo4
                     +"<br/>"
-                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora();
+                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p2.getCancha();
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
             
-            }catch(MiExcepcion mi){
-                response.sendError(500, mi.toString());
-            }
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("ffinal")!=null){
             int ronda = 4;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            try{
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -611,14 +628,12 @@ public class GestionEliminatoria extends HttpServlet {
                     +" <span>vs</span> <br/> "
                     + nequipo2
                     +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora();
+                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
+                    +"<br/>"
+                    +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
             
-            
-            }catch(MiExcepcion mi){
-                response.sendError(500, mi.toString());
-            }
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }
         //
@@ -641,7 +656,11 @@ public class GestionEliminatoria extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(GestionEliminatoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -655,7 +674,11 @@ public class GestionEliminatoria extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            Logger.getLogger(GestionEliminatoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

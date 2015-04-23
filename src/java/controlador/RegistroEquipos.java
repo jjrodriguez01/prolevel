@@ -44,7 +44,9 @@ public class RegistroEquipos extends HttpServlet {
             if (codigo!=0) {
                 String  nuevoequipo = facadetorneos.inscribirEquipos(codigo, idTorneo);//insertamos en la tabla equipos del torneo
                 if (nuevoequipo.equals("Se inserto el equipo al torneo")) {
-    //ahora inscribo los jugadores
+    //ahora borro los jugadores de ese equipo anteriormente
+                    facadetorneos.eliminarJugadoresEquipo(codigo);
+    //ahora inscribo los nuevos jugadores
     long juno = Long.parseLong(request.getParameter("juno"));
     long jdos = Long.parseLong(request.getParameter("jdos"));
     long jtres = Long.parseLong(request.getParameter("jtres"));
@@ -83,7 +85,6 @@ public class RegistroEquipos extends HttpServlet {
         for (int i = 0; i < docs.length; i++) {
             facadetorneos.inscribirJugadorAEquipo(codigo, docs[i]);//insertamos en la tabla jugadorespor equipo 
         }
-        
         response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
                     }else{
                         response.sendError(500, equipoatorneo);

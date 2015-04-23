@@ -130,16 +130,26 @@
         </div>
         <div class="container-fluid">
             <div class="arbol_eli16">
-                <div>
+                <div id="p1">
+                    <%--query del 1 partdido--%>
+<sql:query var="p1" dataSource="jdbc/pro-level">
+select 
+    equipo1, equipo2, marcador1, marcador2
+from
+    partidos
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 1;
+</sql:query>
                     <table id="eq1" class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <td class="equipo">${p1.equipo1}</td>
+                                <td class="marcador">${p1.marcador1}</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <td class="equipo">${p1.equipo2}</td>
+                                <td class="marcador">${p1.marcador2}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -4,30 +4,39 @@
  * and open the template in the editor.
  */
 package utilidades;
+import facade.FachadaUsuarios;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import modelo.*;
-import persistencia.*;
 /**
  *
  * @author jeisson
  */
 public class main {
-    public static void main (String args[]){
-//        UsuariosDAO usu = new UsuariosDAO();
-//        String pas="j3216514086";
-//        long id = 1016036010;
-//        System.out.println(usu.cambiarPass(id, pas));
-        
-        Map<Integer,String> equipos = new TreeMap<Integer,String>();
-        equipos.put(1, "Arsenal");
-        equipos.put(2, "Real");
-        equipos.put(3, "Barca");
-        equipos.put(4, "Chelsea");
-        System.out.println(equipos.get(1));
+    public static void main (String args[]) throws MiExcepcion{
+
+            FachadaUsuarios fusu = new FachadaUsuarios();
+            String pas="12345";
+            long id = 1;
+             System.out.println(fusu.cambiarPass(id, pas));  
+            
+//        Map<Integer,String> equipos = new TreeMap<Integer,String>();
+//        equipos.put(1, "Arsenal");
+//        equipos.put(2, "Real");
+//        equipos.put(3, "Barca");
+//        equipos.put(4, "Chelsea");
+//        System.out.println(equipos.get(1));
 //        Iterator it = equipos.keySet().iterator();
 //        while(it.hasNext()){
 //            Integer key = (Integer)it.next();
@@ -49,7 +58,7 @@ public class main {
 //        arr.add(e1);arr.add(e2);arr.add(e3);arr.add(e4);
         
 //        enfrentar(arr);
-}
+    }
     public static void enfrentar(List<EquipoDTO> arr){
         ArrayList<EquipoDTO> arrayeq = (ArrayList)arr;
         Map<Integer,EquipoDTO> equipos = new TreeMap<Integer,EquipoDTO>();
