@@ -115,8 +115,8 @@ $(document).ready(function() {
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
+            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
             <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
         </ul>
@@ -127,7 +127,7 @@ $(document).ready(function() {
             <ol class="breadcrumb">
                 <li><a href="../inicio.jsp">Inicio</a></li>
                 <li><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Torneos</a></li>
-                <li class="active">Calendario</li>
+                <li class="active">Resultados</li>
             </ol>
         </div>
     </div>
@@ -169,12 +169,11 @@ $('[data-toggle="popover"]').popover(
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
                         torneo.nombre as Torneo, 
-                        partidos.cancha,
+                        partidos.marcador1,
+                        partidos.marcador2,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2,
-                        partidos.fecha,
-                        partidos.hora
+                        partidos.equipo2 as ceq2
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -185,41 +184,22 @@ $('[data-toggle="popover"]').popover(
                         ON partidos.idTorneo = torneo.idTorneo 
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
-                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 1
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 1
+                         
                     </sql:query>
                     <div class="panel panel-primary">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" autocomplete="off">
                         <table class="table table-hover table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Equipo</th>
-                            <th>vs</th>
-                            <th>Equipo</th>
-                            <th>Cancha</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                        </tr>
-                        </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
                             <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><span>-</span></td>
-                                <td>${row.eq2}</td>
-                                <td>
-                                    <select name="cp${vs.index}">
-                                        <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> placeholder="${row.fecha}"</c:if>/></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> placeholder="${row.hora}"</c:if> /></td>
+                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><span>vs</span></td>
+                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -229,7 +209,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
                     <input type="hidden" name="foctavos" value="octavos" />
                     </form>
                 </div>
@@ -247,10 +227,11 @@ $('[data-toggle="popover"]').popover(
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
                         torneo.nombre as Torneo, 
-                        partidos.cancha,
+                        partidos.marcador1,
+                        partidos.marcador2,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -261,40 +242,20 @@ $('[data-toggle="popover"]').popover(
                         ON partidos.idTorneo = torneo.idTorneo 
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
-                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 2
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 2
                     </sql:query>
     
                         <form>
                         <table class="table table-hover table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Equipo</th>
-                            <th>vs</th>
-                            <th>Equipo</th>
-                            <th>Cancha</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                        </tr>
-                        </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
                             <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><span>-</span></td>
-                                <td>${row.eq2}</td>
-                                <td>
-                                    <select name="cp${vs.index}">
-                                        <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><span>vs</span></td>
+                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -304,7 +265,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
                     <input type="hidden" name="fcuartos" value="cuartos" />
                     </form>
                 </div>
@@ -315,15 +276,16 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-primary">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
-                    <sql:query var="cuartos" dataSource="jdbc/pro-level">
+                    <sql:query var="semi" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
                         torneo.nombre as Torneo, 
-                        partidos.cancha,
+                        partidos.marcador1,
+                        partidos.marcador2,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -334,40 +296,20 @@ $('[data-toggle="popover"]').popover(
                         ON partidos.idTorneo = torneo.idTorneo 
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
-                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 3
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 3
                     </sql:query>
     
                     <form>
                         <table class="table table-hover table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Equipo</th>
-                            <th>vs</th>
-                            <th>Equipo</th>
-                            <th>Cancha</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                        </tr>
-                        </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${semi.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><span>-</span></td>
-                                <td>${row.eq2}</td>
-                                <td>
-                                    <select name="cp${vs.index}">
-                                        <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><span>vs</span></td>
+                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -377,7 +319,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
                     <input type="hidden" name="fsemi" value="semi" />
                     </form>
                 </div>
@@ -389,15 +331,16 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-primary">
                     <div class="panel-heading">Final</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="cuartos" dataSource="jdbc/pro-level">
+                    <sql:query var="final" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
                         torneo.nombre as Torneo, 
-                        partidos.cancha,
+                        partidos.marcador1,
+                        partidos.marcador2,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -408,40 +351,20 @@ $('[data-toggle="popover"]').popover(
                         ON partidos.idTorneo = torneo.idTorneo 
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
-                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 4
                     </sql:query>
     
                     <form>
                         <table class="table table-hover table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Equipo</th>
-                            <th>vs</th>
-                            <th>Equipo</th>
-                            <th>Cancha</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                        </tr>
-                        </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${final.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><span>-</span></td>
-                                <td>${row.eq2}</td>
-                                <td>
-                                    <select name="cp${vs.index}">
-                                        <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><span>vs</span></td>
+                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -451,7 +374,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
                     <input type="hidden" name="ffinal" value="final" />
                     </form>
                 </div>

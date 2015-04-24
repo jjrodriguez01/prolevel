@@ -33,20 +33,57 @@ public class PartidoDAO {
 
         try {
             //sentencia sql
-            String sql = "INSERT INTO partidos(ronda,equipo1,equipo2,fecha,hora,idTorneo,cancha,numero,estado)"
-                    + "VALUES(?,?,?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO partidos(ronda,equipo1,equipo2,idTorneo,numero,estado) "
+                    + "VALUES(?,?,?,?,?,?);";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, cal.getRonda());
             statement.setInt(2, cal.getEquipo1());
             statement.setInt(3, cal.getEquipo2());
-            statement.setString(4, cal.getFecha());
-            statement.setString(5, cal.getHora());
-            statement.setInt(6, cal.getIdTorneo());
-            statement.setInt(7, cal.getCancha());
-            statement.setInt(8, cal.getNumero());
-            statement.setInt(9, cal.getEstado());
+            statement.setInt(4, cal.getIdTorneo());
+            statement.setInt(5, cal.getNumero());
+            statement.setInt(6, cal.getEstado());
+            //ejecuta el insert
+            rtdo = statement.executeUpdate();
+            //si se afectaron campos 
+            if (rtdo != 0) {
+                mensaje = "Se insertaron los partidos";
+                //si no se afecto la tabla
+            } else {
+                mensaje = "Error";
+            }
+        } 
+        catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error insertando partidos", sqlexception);
+        }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
+        //devolvemos el mensaje al usuario
+        return mensaje;
+    }
+    
+    public synchronized String insertarMarcador(PartidoDTO cal,Connection conexion) throws MiExcepcion {
+
+        try {
+            //sentencia sql
+            String sql = "update partidos SET marcador1 =?, marcador2=? " +
+"                    WHERE ronda =? and equipo1=? and equipo2=? and numero =? and idTorneo=?;";
+            //pasamos la sentencia la conexion mediante el prepare staement
+            statement = conexion.prepareStatement(sql);
+            //obtenemos los datos del dto de la tabla
+            statement.setInt(1, cal.getMarcador1());
+            statement.setInt(2, cal.getMarcador2());
+            statement.setInt(3, cal.getRonda());
+            statement.setInt(4, cal.getEquipo1());
+            statement.setInt(5, cal.getEquipo2());
+            statement.setInt(6, cal.getNumero());
+            statement.setInt(7, cal.getIdTorneo());
             //ejecuta el insert
             rtdo = statement.executeUpdate();
             //si se afectaron campos 

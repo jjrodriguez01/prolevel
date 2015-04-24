@@ -5,7 +5,6 @@
  */
 package facade;
 
-import controlador.Conexion;
 import java.sql.Connection;
 import java.util.List;
 import modelo.CanchaDTO;
@@ -26,6 +25,7 @@ import persistencia.PartidoDAO;
 import persistencia.TablaPosicionesDAO;
 import persistencia.TarjetasDAO;
 import persistencia.TorneoDAO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -44,7 +44,7 @@ public class FachadaTorneos {
     PartidoDAO partidodao;
     TablaPosicionesDAO tpdao;
     Connection conexion;
-    public FachadaTorneos() {
+    public FachadaTorneos() throws MiExcepcion {
         tdao = new TorneoDAO();
         cdao = new CanchaDAO();
         tardao = new TarjetasDAO();
@@ -54,7 +54,7 @@ public class FachadaTorneos {
         goleadoresdao = new GoleadoresDAO();
         partidodao = new PartidoDAO();
         tpdao = new TablaPosicionesDAO();
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
 //    empiezo con torneoDAO

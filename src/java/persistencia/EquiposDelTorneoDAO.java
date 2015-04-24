@@ -62,8 +62,8 @@ public class EquiposDelTorneoDAO {
     public List<EquiposdeltorneoDTO> listarTodo(int idTorneo, Connection conexion) throws MiExcepcion{
         ArrayList<EquiposdeltorneoDTO> equipos = new ArrayList();
         try {
-            statement = conexion.prepareStatement("SELECT equipocodigo, torneoidtorneo"
-                    + "FROM equiposdeltorneo WHERE torneoidtorneo = ?;");
+            statement = conexion.prepareStatement("SELECT equipocodigo, torneoidtorneo "
+                    + "FROM equiposdeltorneo WHERE torneoidtorneo =?;");
             statement.setInt(1, idTorneo);
             rs = statement.executeQuery();
             while(rs.next()){

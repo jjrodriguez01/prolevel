@@ -129,30 +129,304 @@
             <h1>Resultados</h1>
         </div>
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h1>Octavos</h1>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h1>Cuartos</h1>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h1>Semi final</h1>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h1>Final</h1>
+                </div>
+            </div>
             <div class="arbol_eli16">
                 <div id="p1">
                     <%--query del 1 partdido--%>
 <sql:query var="p1" dataSource="jdbc/pro-level">
 select 
-    equipo1, equipo2, marcador1, marcador2
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
 from
     partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
 where
     idTorneo = ? <sql:param value="${param.idTorneo}"/> 
 and numero = 1;
 </sql:query>
                     <table id="eq1" class="table table-bordered">
                         <tbody>
+                            <c:forEach var="row" items="${p1.rows}" >
                             <tr>
-                                <td class="equipo">${p1.equipo1}</td>
-                                <td class="marcador">${p1.marcador1}</td>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
                             </tr>
                             <tr>
-                                <td class="equipo">${p1.equipo2}</td>
-                                <td class="marcador">${p1.marcador2}</td>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
                             </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
+                </div>
+
+<%--query del 2 partdido--%>
+<sql:query var="p2" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 2;
+</sql:query>
+<div id="p2">
+                    <table id="eq2" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p2.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+<%--query del 3 partdido--%>
+<sql:query var="p3" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 3;
+</sql:query>
+<div id="p3">
+                    <table id="eq3" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p3.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+
+<%--query del 4 partdido--%>
+<sql:query var="p4" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 4;
+</sql:query>
+<div id="p4">
+                    <table id="eq3" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p4.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+<%--query del 5 partdido--%>
+<sql:query var="p5" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 5;
+</sql:query>
+<div id="p5">
+                    <table id="eq3" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p5.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+
+<%--query del 6 partdido--%>
+<sql:query var="p6" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 6;
+</sql:query>
+<div id="p6">
+                    <table id="eq3" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p6.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+<%--query del 7 partdido--%>
+<sql:query var="p7" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 7;
+</sql:query>
+<div id="p7">
+                    <table id="eq7" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p7.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+
+<%--query del 8 partdido--%>
+<sql:query var="p8" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+    idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 8;
+</sql:query>
+<div id="p8">
+                    <table id="eq8" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p8.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
+
+<div id="cuartos1">
+                    <table id="eq8" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${p8.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+</div>
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@ public class CanchaDAO {
     public String insertar(CanchaDTO can, Connection conexion) {
 
         try {
-            statement = conexion.prepareStatement("INSERT INTO Cancha(numeroCancha,descripcion)VALUES(?,?)");
+            statement = conexion.prepareStatement("INSERT INTO Cancha(numeroCancha,descripcion)VALUES(?,?);");
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, can.getNumeroCancha());
             statement.setString(2, can.getDescripcion());
@@ -102,7 +102,7 @@ public class CanchaDAO {
 
         try {
             String query = "SELECT  Cancha as numeroCancha, descripcion "
-                    + " FROM Cancha ";
+                    + " FROM Cancha; ";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info
@@ -130,8 +130,8 @@ public class CanchaDAO {
         CanchaDTO can = new CanchaDTO();
         try {
             //preparamos la consulta 
-            statement = conexion.prepareStatement("SELECT numeroCancha,descripcion"
-                    + "WHERE numeroCancha = ? ;");
+            statement = conexion.prepareStatement("SELECT numeroCancha,descripcion "
+                    + "WHERE numeroCancha =? ;");
             statement.setInt(1, numeroCancha);
             rs = statement.executeQuery();
             //mientras halla registros

@@ -136,7 +136,7 @@ public class EquipoDAO {
 
         try {
             String query = "SELECT  codigo, nombre as Equipo"
-                    + " FROM equipo ";
+                    + " FROM equipo;";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info
@@ -210,7 +210,7 @@ public class EquipoDAO {
         EquipoDTO equ = new EquipoDTO();
         try {
             //preparamos la consulta 
-            statement = conexion.prepareStatement("SELECT codigo,"
+            statement = conexion.prepareStatement("SELECT codigo, "
                     + "nombre FROM equipo "
                     + "WHERE codigo = ? ;");
             statement.setInt(1, codigo);

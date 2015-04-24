@@ -136,8 +136,8 @@ public class JugadoresporequipoDAO {
             statement = conexion.prepareStatement("select "
                     + "concat(u.primerNombre, ' ',u.primerApellido)as jugador,e.nombre as equipo"
                     + " from usuarios as u inner join jugadoresporequipo as j  on \n" +
-                       "u.idUsuario = j.codigoJugador inner join equipo as e "
-                    + "on j.codigoEquipo=e.codigo ;");
+                       " u.idUsuario = j.codigoJugador inner join equipo as e "
+                    + " on j.codigoEquipo=e.codigo ;");
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info
             while (rs.next()) {
@@ -204,8 +204,8 @@ public class JugadoresporequipoDAO {
         try {
 
             statement = conexion.prepareStatement("select "
-                + "concat(u.primerNombre, ' ',u.primerApellido)as jugador,"
-                    + "u.idUsuario, e.nombre as equipo, e.codigo"
+                + "concat(u.primerNombre, ' ',u.primerApellido)as jugador, "
+                    + "u.idUsuario, e.nombre as equipo, e.codigo "
                 + " from usuarios as u inner join jugadoresporequipo as j  on " 
                 + "u.idUsuario = j.codigoJugador inner join equipo as e "
                 + "on j.codigoEquipo=e.codigo where e.codigo=?;");

@@ -5,13 +5,13 @@
  */
 package facade;
 
-import controlador.Conexion;
 import java.sql.Connection;
 import java.util.List;
 import modelo.UsuariosDTO;
 import persistencia.RolUsuarioDAO;
 import persistencia.RolpermisoDAO;
 import persistencia.UsuariosDAO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -24,11 +24,11 @@ public class FachadaUsuarios {
     RolUsuarioDAO roldao;
     RolpermisoDAO permisodao;
     Connection conexion;
-    public FachadaUsuarios() {
+    public FachadaUsuarios() throws MiExcepcion {
         udao = new UsuariosDAO();
         roldao = new RolUsuarioDAO();
         permisodao = new RolpermisoDAO();
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
     public synchronized String insertarUsuario(UsuariosDTO udto) throws MiExcepcion{

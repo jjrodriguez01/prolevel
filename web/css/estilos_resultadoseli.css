@@ -9,8 +9,64 @@ and open the template in the editor.
 */
 div.arbol_eli16{
     position: relative;
+    min-width: 1200px;
 }
-table#eq1{
+#p1{
     position: absolute;
-    width: 10%;
+    width: 180px;
+    height: 95px;
+}
+#p2{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 105px;
+}
+#p3{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 210px;
+}
+#p4{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 315px;
+}
+#p5{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 420px;
+}
+#p6{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 525px;
+}
+#p7{
+    position: absolute;
+    width: 180;
+    height: 95px;
+    top: 630px;
+}
+#p8{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 735px;
+}
+table{
+    width: 180px;
+    height: 95px;
+}
+
+#cuartos1{
+    position: absolute;
+    width: 180px;
+    height: 95px;
+    top: 100px;
+    left: 175px;
 }

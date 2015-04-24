@@ -58,7 +58,7 @@ public class CopaDAO {
     public String eliminar (int id, Connection conexion){
         TorneoDTO copa = new TorneoDTO();
         try {
-            statement = conexion.prepareStatement("Delete from torneo where idTorneo = ?;");
+            statement = conexion.prepareStatement("Delete from torneo where idTorneo =?;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, id);
             rtdo = statement.executeUpdate();
@@ -87,8 +87,8 @@ public class CopaDAO {
     public String actualizar (TorneoDTO copa, Connection conexion){
         try {
             statement = conexion.prepareStatement("UPDATE torneo set nombre = ?, "
-                    + "fechaInicio= ?,fechaFin= ?, genero= ?, "
-                    + "capacidadEquipos = ? WHERE idTorneo = ?");
+                    + "fechaInicio= ?,fechaFin= ?, genero=?, "
+                    + "capacidadEquipos = ? WHERE idTorneo =?");
             statement.setString(1, copa.getNombre());
             statement.setString(2, copa.getFechaInicio());
             statement.setString(3, copa.getFechaFin());

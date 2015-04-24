@@ -75,7 +75,7 @@ public class GestionEliminatoria extends HttpServlet {
             //ahora llamo al metodo de eliminatoria q crea los emparejamientos y le paso 
             //este List con los torneos
             eli.primeraRondaDiesciseis(edt);
-            response.sendRedirect("calendario.jsp?idTorneo="+eliminatoria.getIdTorneo());
+            response.sendRedirect("paginas/torneos/calendario.jsp?idTorneo="+eliminatoria.getIdTorneo());
         }
         //
         //inicio a actualizar fechas de una eli de 16
@@ -382,7 +382,8 @@ public class GestionEliminatoria extends HttpServlet {
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-
+            if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
+                
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -416,7 +417,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
-            
+            }
+            if (request.getParameter("1equipo1")!=null && request.getParameter("1equipo2")!=null) {
+               
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             p2.setRonda(ronda);
@@ -450,7 +453,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p2.getCancha();
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
-            
+            }
+            if (request.getParameter("2equipo1")!=null && request.getParameter("2equipo2")!=null) {
+        
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
             p3.setRonda(ronda);
@@ -484,7 +489,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p3.getCancha();
             Correo.sendMail(asunto, cuerpop3, emailsp3.toString());
             //fin del tercero
-            
+            }
+            if (request.getParameter("3equipo1")!=null && request.getParameter("3equipo2")!=null) {
+                
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
             p4.setRonda(ronda);
@@ -501,7 +508,7 @@ public class GestionEliminatoria extends HttpServlet {
             correosp4eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo1")));
             correosp4eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("3equipo2"))));
             for (int i = 0; i < correosp4eq.size(); i++) {
-                emailsp3.append(correosp4eq.get(i));
+                emailsp4.append(correosp4eq.get(i));
                 if (i != correosp4eq.size() -1 && correosp4eq.size() > 0) {
                     emailsp4.append(" ,");
                 }
@@ -518,14 +525,15 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p4.getCancha();
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
-
+            }
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fsemi")!=null){
             int ronda = 3;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-
+            if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
+                
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -559,7 +567,9 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p1.getCancha();
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
-            
+            }
+            if (request.getParameter("1equipo1")!=null && request.getParameter("1equipo2")!=null) {
+                
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             p2.setRonda(ronda);
@@ -593,7 +603,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"En la cancha No "+p2.getCancha();
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
-            
+            }
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("ffinal")!=null){
             int ronda = 4;

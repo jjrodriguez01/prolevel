@@ -83,7 +83,7 @@ public class TablaPosicionesDAO {
         
         try {
             statement = conexion.prepareStatement("UPDATE tablaPosiciones set golesAnotados= ?, "
-                    + "golesRecibidos= ?,= ?, partidosEmpatados= ?,"
+                    + "golesRecibidos= ?,= ?, partidosEmpatados= ?, "
                     + " partidosGanados = ? ,partidosJugados = ?, partidosPerdidos = ?, posicion=?, puntos = ? "
                     + "WHERE idTorneo = ? and idEquipo=?");
             statement.setInt(1, tab.getGolesAnotados());
