@@ -86,7 +86,7 @@ nav{
                 </div>
                 <div class="row">
                 <div id="formu" class="col-xs-12 col-sm-12 col-md-12 col-lg-6 center-block">
-<form role="form">
+                    <form role="form" action="Recuperar">
   <div class="form-group">
       <label for="email">Email<span class="requerido"> *</span></label>
       <input type="email" name="email" id="email" class="form-control" id="ejemplo_email_1"

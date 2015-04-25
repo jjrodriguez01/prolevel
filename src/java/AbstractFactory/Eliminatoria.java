@@ -102,8 +102,8 @@ public class Eliminatoria extends Torneo {
         pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
         pdos.setIdTorneo(idTorneo);
         int n2 = 2;//segundo partido
-        puno.setNumero(n2);
-        puno.setEstado(estado);
+        pdos.setNumero(n2);
+        pdos.setEstado(estado);
         partido.insertarPartido(pdos);
         
         ptres.setRonda(ronda);
@@ -111,8 +111,8 @@ public class Eliminatoria extends Torneo {
         ptres.setEquipo2(equipos.get(6).getEquipoCodigo());
         ptres.setIdTorneo(idTorneo);
         int n3 = 3;
-        puno.setNumero(n3);
-        puno.setEstado(estado);
+        ptres.setNumero(n3);
+        ptres.setEstado(estado);
         partido.insertarPartido(ptres);
         
         pcuatro.setRonda(ronda);
@@ -120,8 +120,8 @@ public class Eliminatoria extends Torneo {
         pcuatro.setEquipo2(equipos.get(8).getEquipoCodigo());
         pcuatro.setIdTorneo(idTorneo);
         int n4 = 4;
-        puno.setNumero(n4);
-        puno.setEstado(estado);
+        pcuatro.setNumero(n4);
+        pcuatro.setEstado(estado);
         partido.insertarPartido(pcuatro);
         
         pcinco.setRonda(ronda);
@@ -129,8 +129,8 @@ public class Eliminatoria extends Torneo {
         pcinco.setEquipo2(equipos.get(10).getEquipoCodigo());
         pcinco.setIdTorneo(idTorneo);
         int n5 = 5;
-        puno.setNumero(n5);
-        puno.setEstado(estado);
+        pcinco.setNumero(n5);
+        pcinco.setEstado(estado);
         partido.insertarPartido(pcinco);
         
         pseis.setRonda(ronda);
@@ -138,8 +138,8 @@ public class Eliminatoria extends Torneo {
         pseis.setEquipo2(equipos.get(12).getEquipoCodigo());
         pseis.setIdTorneo(idTorneo);
         int n6 = 6;
-        puno.setNumero(n6);
-        puno.setEstado(estado);
+        pseis.setNumero(n6);
+        pseis.setEstado(estado);
         partido.insertarPartido(pseis);
         
         psiete.setRonda(ronda);
@@ -147,8 +147,8 @@ public class Eliminatoria extends Torneo {
         psiete.setEquipo2(equipos.get(14).getEquipoCodigo());
         psiete.setIdTorneo(idTorneo);
         int n7 = 7;
-        puno.setNumero(n7);
-        puno.setEstado(estado);
+        psiete.setNumero(n7);
+        psiete.setEstado(estado);
         partido.insertarPartido(psiete);
         
         pocho.setRonda(ronda);
@@ -156,8 +156,8 @@ public class Eliminatoria extends Torneo {
         pocho.setEquipo2(equipos.get(16).getEquipoCodigo());
         pocho.setIdTorneo(idTorneo);
         int n8 = 8;
-        puno.setNumero(n8);
-        puno.setEstado(estado);
+        psiete.setNumero(n8);
+        psiete.setEstado(estado);
         partido.insertarPartido(pocho);
     }
     
@@ -197,8 +197,8 @@ public class Eliminatoria extends Torneo {
         pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
         pdos.setIdTorneo(idTorneo);
         int n2 = 2;//segundo partido
-        puno.setNumero(n2);
-        puno.setEstado(estado);
+        pdos.setNumero(n2);
+        pdos.setEstado(estado);
         partido.insertarPartido(pdos);
         
         ptres.setRonda(ronda);
@@ -206,8 +206,8 @@ public class Eliminatoria extends Torneo {
         ptres.setEquipo2(equipos.get(6).getEquipoCodigo());
         ptres.setIdTorneo(idTorneo);
         int n3 = 3;
-        puno.setNumero(n3);
-        puno.setEstado(estado);
+        ptres.setNumero(n3);
+        ptres.setEstado(estado);
         partido.insertarPartido(ptres);
         
         pcuatro.setRonda(ronda);
@@ -215,8 +215,8 @@ public class Eliminatoria extends Torneo {
         pcuatro.setEquipo2(equipos.get(8).getEquipoCodigo());
         pcuatro.setIdTorneo(idTorneo);
         int n4 = 4;
-        puno.setNumero(n4);
-        puno.setEstado(estado);
+        pcuatro.setNumero(n4);
+        pcuatro.setEstado(estado);
         partido.insertarPartido(pcuatro);
         
         

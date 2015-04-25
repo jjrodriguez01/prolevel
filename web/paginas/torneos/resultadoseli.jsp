@@ -131,7 +131,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
-                    <h1>Octavos</h1>
+                    <h1>Octavos</h1><a href="marcadores.jsp?idTorneo=${param.idTorneo}">Asigna marcadores</a>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <h1>Cuartos</h1>
