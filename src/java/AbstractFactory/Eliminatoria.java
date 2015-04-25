@@ -160,4 +160,65 @@ public class Eliminatoria extends Torneo {
         puno.setEstado(estado);
         partido.insertarPartido(pocho);
     }
+    
+    
+    public void segundaRondaDiesciseis(List<EquiposdeltorneoDTO> arr) throws MiExcepcion{
+        ArrayList<EquiposdeltorneoDTO> arrayeq = (ArrayList)arr;
+        Map<Integer,EquiposdeltorneoDTO> equipos = new TreeMap<Integer,EquiposdeltorneoDTO>();
+        int clave = 0;
+        for(EquiposdeltorneoDTO eq : arrayeq){
+            clave++;
+            equipos.put(clave, eq);
+        }
+        int ronda = 1;
+        int idTorneo = equipos.get(1).getTorneoIdTorneo();
+        int estado = 0;//estado del partido 0=por jugar
+        FachadaTorneos partido = new FachadaTorneos();
+        //instancio la cantidad de partidos que necesito
+        //para un torneo de 16 equipos seran 4 en segunda ronda
+        PartidoDTO puno = new PartidoDTO();
+        PartidoDTO pdos = new PartidoDTO();
+        PartidoDTO ptres = new PartidoDTO();
+        PartidoDTO pcuatro = new PartidoDTO();
+        
+        //comienzo a insertar los partidos
+        
+        puno.setRonda(ronda);
+        puno.setEquipo1(equipos.get(1).getEquipoCodigo());
+        puno.setEquipo2(equipos.get(3).getEquipoCodigo());
+        puno.setIdTorneo(idTorneo);
+        int n1 = 1;//primer partido
+        puno.setNumero(n1);
+        puno.setEstado(estado);
+        partido.insertarPartido(puno);
+        
+        pdos.setRonda(ronda);
+        pdos.setEquipo1(equipos.get(2).getEquipoCodigo());
+        pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
+        pdos.setIdTorneo(idTorneo);
+        int n2 = 2;//segundo partido
+        puno.setNumero(n2);
+        puno.setEstado(estado);
+        partido.insertarPartido(pdos);
+        
+        ptres.setRonda(ronda);
+        ptres.setEquipo1(equipos.get(7).getEquipoCodigo());
+        ptres.setEquipo2(equipos.get(6).getEquipoCodigo());
+        ptres.setIdTorneo(idTorneo);
+        int n3 = 3;
+        puno.setNumero(n3);
+        puno.setEstado(estado);
+        partido.insertarPartido(ptres);
+        
+        pcuatro.setRonda(ronda);
+        pcuatro.setEquipo1(equipos.get(5).getEquipoCodigo());
+        pcuatro.setEquipo2(equipos.get(8).getEquipoCodigo());
+        pcuatro.setIdTorneo(idTorneo);
+        int n4 = 4;
+        puno.setNumero(n4);
+        puno.setEstado(estado);
+        partido.insertarPartido(pcuatro);
+        
+        
+    }
 }

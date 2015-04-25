@@ -99,6 +99,7 @@
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
         <link href="../../css/estilosMisTorneos.css" rel="stylesheet" type="text/css">
         <link href="../../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/jquery.validate.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
@@ -228,18 +229,21 @@
                         <!-- column data -->
                         <tbody>
                             <%!  int pos = 0;  %>
-                            <c:forEach var="row" items="${tablaposiciones.rowsByIndex}">
+                            <c:forEach var="row" items="${tablaposiciones.rowsByIndex}" varStatus="vs">
                                 <tr>
                                     <% 
                                        pos += 1;
                                     %>
-                                    <td><%=pos%></td>
+                                    <td>${vs.index+1}</td>
                                     <c:forEach var="column" items="${row}">
                                         <td><c:out value="${column}"/></td>
                                     </c:forEach>
                                 </tr>
                             </c:forEach>
                         </tbody>
+                        <tfoot>
+                        <a href="../../Reportes?tabla=posiciones&idTorneo=${param.idTorneo}"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -260,16 +264,19 @@
                         <!-- column data -->
                         <tbody>
                         <%!  int pgol = 0;  %>
-                            <c:forEach var="row" items="${tablagoleadores.rowsByIndex}">
+                        <c:forEach var="row" items="${tablagoleadores.rowsByIndex}" varStatus="vs">
                                 <% pgol += 1; %>
                                 <tr>
-                                    <td><%=pgol%></td>
+                                    <td>${vs.index+1}</td>
                                     <c:forEach var="column" items="${row}">
                                         <td><c:out value="${column}"/></td>
                                     </c:forEach>
                                 </tr>
                             </c:forEach>
                         </tbody>
+                        <tfoot>
+                        <a href="../../Reportes?tabla=goleadores&idTorneo=${param.idTorneo}"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
+                        </tfoot>
                     </table>
                 </div>
                 <div id="tablatarjetas" class="col-md-6 col-sm-4">

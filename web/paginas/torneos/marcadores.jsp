@@ -172,6 +172,7 @@ $('[data-toggle="popover"]').popover(
                         partidos.marcador1,
                         partidos.marcador2,
                         partidos.ronda,
+                        partidos.numero,
                         partidos.equipo1 as ceq1, 
                         partidos.equipo2 as ceq2
                         FROM 
@@ -202,6 +203,7 @@ $('[data-toggle="popover"]').popover(
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
@@ -209,7 +211,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
+                    <button class="btn btn-primary" name="asignarMarcador">Añadir Marcador</button>
                     <input type="hidden" name="foctavos" value="octavos" />
                     </form>
                 </div>
@@ -230,6 +232,7 @@ $('[data-toggle="popover"]').popover(
                         partidos.marcador1,
                         partidos.marcador2,
                         partidos.ronda,
+                        partidos.numero,
                         partidos.equipo1 as ceq1, 
                         partidos.equipo2 as ceq2
                         FROM 
@@ -258,6 +261,7 @@ $('[data-toggle="popover"]').popover(
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
@@ -284,6 +288,7 @@ $('[data-toggle="popover"]').popover(
                         partidos.marcador1,
                         partidos.marcador2,
                         partidos.ronda,
+                        partidos.numero,
                         partidos.equipo1 as ceq1, 
                         partidos.equipo2 as ceq2
                         FROM 
@@ -312,6 +317,7 @@ $('[data-toggle="popover"]').popover(
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
@@ -339,6 +345,7 @@ $('[data-toggle="popover"]').popover(
                         partidos.marcador1,
                         partidos.marcador2,
                         partidos.ronda,
+                        partidos.numero,
                         partidos.equipo1 as ceq1, 
                         partidos.equipo2 as ceq2
                         FROM 
@@ -367,6 +374,7 @@ $('[data-toggle="popover"]').popover(
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>

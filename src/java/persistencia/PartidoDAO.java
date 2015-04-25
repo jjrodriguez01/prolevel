@@ -68,6 +68,15 @@ public class PartidoDAO {
         return mensaje;
     }
     
+    /** 
+     * 
+     * Inserta los goles en la tabla partidos
+     * @param cal PartidoDTO con equipo1, equipo2, marcador1, marcador2, ronda, numeropartido y idTorneo
+     * @param conexion
+     * @return msj de confirmacion
+     * @throws MiExcepcion 
+     */
+    
     public synchronized String insertarMarcador(PartidoDTO cal,Connection conexion) throws MiExcepcion {
 
         try {
@@ -88,14 +97,14 @@ public class PartidoDAO {
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                mensaje = "Se insertaron los partidos";
+                mensaje = "Se insertaron los marcadores";
                 //si no se afecto la tabla
             } else {
                 mensaje = "Error";
             }
         } 
         catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error insertando partidos", sqlexception);
+            throw new MiExcepcion("Error insertando marcadores", sqlexception);
         }
 //        finally{
 //            try{
@@ -369,6 +378,35 @@ public class PartidoDAO {
         return listar;
 
     }
+    
+    public synchronized String insertarCuartos(int idTorneo, int codigoequipo, Connection conexion) throws MiExcepcion{
+        try {
+            statement = conexion.prepareStatement("INSERT INTO cuartos (idTorneo, codigoEquipo)"
+                    + " VALUES (?,?);");
+            statement.setInt(1, idTorneo);
+            statement.setInt(2, codigoequipo);
+            rtdo = statement.executeUpdate();
+            if (rtdo>0) {
+                mensaje ="Se inserto el equipo a cuartos";
+            }else{
+                mensaje = "No se inserto el equipo";
+            }
+            
+        } catch (SQLException ex) {
+            throw new MiExcepcion("No se inserto el equipo a cuartos", ex);
+        }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                mensaje = "Ha ocurrido un error "+ex.getMessage();
+//            }
+//        }
+        return mensaje;
+    }
+    
 
 }
   

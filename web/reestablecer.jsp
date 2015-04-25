@@ -95,7 +95,7 @@ nav{
     <div class="form-group">
     <div class="g-recaptcha" data-sitekey="6Lc-KAMTAAAAACflZ_XeCXakQGNwb3FO0clkK8Ph"></div>
     </div>
-  <button type="submit" class="btn btn-default">Enviar</button>
+    <button type="submit" name="recuperar" class="btn btn-default">Enviar</button>
 </form>
                 </div>
                 </div>

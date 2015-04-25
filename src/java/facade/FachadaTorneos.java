@@ -128,6 +128,15 @@ public class FachadaTorneos {
     public List<EquiposdeltorneoDTO> listarEquiposInscritos(int idTorneo) throws MiExcepcion{
         return edtdao.listarTodo(idTorneo, conexion);
     }
+    /**
+     * Devuelve un List con los equipos en cuartos
+     * @param idTorneo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public List<EquiposdeltorneoDTO> listarEquiposEnCuartos(int idTorneo) throws MiExcepcion{
+        return edtdao.listarTodoCuartos(idTorneo, conexion);
+    }
     
     public List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return edtdao.correosJugadoresEquipo(idTorneo, codigoEquipo, conexion);
@@ -163,6 +172,27 @@ public class FachadaTorneos {
     
     public String insertarPartido(PartidoDTO partido) throws MiExcepcion{
         return partidodao.insertar(partido, conexion);
+    }
+    /**
+     * Inserta un equipo a cuertos en un torneo
+     * @param idTorneo
+     * @param codigoEquipo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public String insertarACuartos(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return partidodao.insertarCuartos(idTorneo, codigoEquipo, conexion);
+    }
+    /** 
+     * 
+     * Inserta los goles en la tabla partidos pasandole un  PartidoDTO con equipo1, equipo2, marcador1, marcador2, ronda, numeropartido y idTorneo
+     * @param cal PartidoDTO con equipo1, equipo2, marcador1, marcador2, ronda, numeropartido y idTorneo
+     * @param conexion
+     * @return msj de confirmacion
+     * @throws MiExcepcion 
+     */
+    public String insertarMarcador(PartidoDTO partido) throws MiExcepcion{
+        return partidodao.insertarMarcador(partido, conexion);
     }
     
     public String actualizarPartido(PartidoDTO partido) throws MiExcepcion{

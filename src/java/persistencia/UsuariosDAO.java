@@ -296,18 +296,20 @@ public class UsuariosDAO {
     }
     
     public String recuperar (String email, Connection conexion) throws MiExcepcion{
-        String password = ""; 
-        UsuariosDTO udto = new UsuariosDTO();
+        byte[] password; 
+        String reestablecida = "";
         try{
             statement = conexion.prepareStatement("SELECT contraseña FROM usuarios "
-                    + "WHERE email = ?;");
+                    + "WHERE email =?;");
         statement.setString(1,email);
         rs = statement.executeQuery();
             while (rs.next()) {
-                password = rs.getString("contraseña");
+                password = rs.getBytes("contraseña");
+                reestablecida = desencriptar(password);
             }
-    }catch(SQLException sqle){
-        throw new MiExcepcion("Error recuperando contraseña", sqle);
+           
+    }catch(SQLException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException  ex){
+        throw new MiExcepcion("Error recuperando contraseña", ex);
     }
 //        finally{
 //            try{
@@ -316,7 +318,8 @@ public class UsuariosDAO {
 //                throw new MiExcepcion("Error sql", sqlexception);
 //            }
 //        }
-        return password;
+        
+        return reestablecida;
     }
     
     public synchronized String cambiarPass(long id, String newpass, Connection conexion) throws MiExcepcion{
