@@ -35,7 +35,7 @@ public class Recuperar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        if (request.getParameter("recuperar")!=null) {
+        if (request.getParameter("recuperar")!=null  && request.getParameter("g-recaptcha-response")!= null) {
             
             String email = request.getParameter("email").trim();
             String asunto = "Recordatorio contraseña Pro-level";
@@ -52,19 +52,11 @@ public class Recuperar extends HttpServlet {
             }
             
             
+        }else if(request.getParameter("g-recaptcha-response")== null){
+            response.sendRedirect("recuperar.jsp?capcha=invalido");
         }
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Recuperar</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Recuperar at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        else{
+            response.sendRedirect("recuperar.jsp?capcha=invalido");
         }
     }
 

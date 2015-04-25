@@ -152,7 +152,7 @@ $('[data-toggle="popover"]').popover(
             </div>
             <hr/>
             <div class="row">
-<form id="copa" method="get" action="GestionCopa" role="form"> 
+<form id="copa" method="get" action="../../GestionCopa" role="form"> 
     <div class="form-group">
         <label for="nombreTorneo">Nombre del torneo</label>
       	<input id="nombreTorneo" name="nombreTorneo" type="text" maxlength="25" required>
@@ -317,7 +317,7 @@ $('[data-toggle="popover"]').popover(
             </div>
             <hr/>
             <div class="row">
-<form id="liga" method="get" action="GestionLiga">
+<form id="liga" method="get" action="../../GestionLiga">
     <div class="form-group">
         <label for="nombretorneo">Nombre del torneo</label>
         <input id="nombreTorneo" name="nombreTorneo" type="text" maxlength="25">

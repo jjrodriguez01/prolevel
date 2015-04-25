@@ -670,8 +670,8 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
             p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
             // m1 == marcador 1
-            p1.setMarcador1(Integer.parseInt(request.getParameter("0m1")));
-            p1.setMarcador2(Integer.parseInt(request.getParameter("0m2")));
+            p1.setMarcador1(Integer.parseInt(request.getParameter("0muno")));
+            p1.setMarcador2(Integer.parseInt(request.getParameter("0mdos")));
             p1.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p1);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -712,8 +712,8 @@ public class GestionEliminatoria extends HttpServlet {
             p2.setEquipo1(Integer.parseInt(request.getParameter("1equipo1")));
             p2.setEquipo2(Integer.parseInt(request.getParameter("1equipo2")));
             // m1 == marcador 1
-            p2.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p2.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p2.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p2.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p2.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p2);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -754,8 +754,8 @@ public class GestionEliminatoria extends HttpServlet {
             p3.setEquipo1(Integer.parseInt(request.getParameter("2equipo1")));
             p3.setEquipo2(Integer.parseInt(request.getParameter("2equipo2")));
             // m1 == marcador 1
-            p3.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p3.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p3.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p3.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p3.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p3);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -796,8 +796,8 @@ public class GestionEliminatoria extends HttpServlet {
             p4.setEquipo1(Integer.parseInt(request.getParameter("3equipo1")));
             p4.setEquipo2(Integer.parseInt(request.getParameter("3equipo2")));
             // m1 == marcador 1
-            p4.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p4.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p4.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p4.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p4.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p4);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -837,8 +837,8 @@ public class GestionEliminatoria extends HttpServlet {
             p5.setEquipo1(Integer.parseInt(request.getParameter("4equipo1")));
             p5.setEquipo2(Integer.parseInt(request.getParameter("4equipo2")));
             // m1 == marcador 1
-            p5.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p5.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p5.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p5.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p5.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p5);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -878,8 +878,8 @@ public class GestionEliminatoria extends HttpServlet {
             p6.setEquipo1(Integer.parseInt(request.getParameter("5equipo1")));
             p6.setEquipo2(Integer.parseInt(request.getParameter("5equipo2")));
             // m1 == marcador 1
-            p6.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p6.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p6.setMarcador1(Integer.parseInt(request.getParameter("1mdos")));
+            p6.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p6.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p6);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -919,8 +919,8 @@ public class GestionEliminatoria extends HttpServlet {
             p7.setEquipo1(Integer.parseInt(request.getParameter("6equipo1")));
             p7.setEquipo2(Integer.parseInt(request.getParameter("6equipo2")));
             // m1 == marcador 1
-            p7.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p7.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p7.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p7.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p7.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p7);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -960,8 +960,8 @@ public class GestionEliminatoria extends HttpServlet {
             p8.setEquipo1(Integer.parseInt(request.getParameter("7equipo1")));
             p8.setEquipo2(Integer.parseInt(request.getParameter("7equipo2")));
             // m1 == marcador 1
-            p8.setMarcador1(Integer.parseInt(request.getParameter("1m1")));
-            p8.setMarcador2(Integer.parseInt(request.getParameter("1m2")));
+            p8.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p8.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p8.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p8);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :

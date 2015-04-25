@@ -95,8 +95,20 @@ nav{
     <div class="form-group">
     <div class="g-recaptcha" data-sitekey="6Lc-KAMTAAAAACflZ_XeCXakQGNwb3FO0clkK8Ph"></div>
     </div>
-    <button type="submit" name="recuperar" class="btn btn-default">Enviar</button>
+                        <button type="submit" name="recuperar" value="enviar" class="btn btn-default">Enviar</button>
 </form>
+                    <%  
+                    if (request.getParameter("captcha")!=null && request.getParameter("captcha").equals("invalido") ) {
+                    %>
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Complete el captcha
+</div>
+                    <%
+                        }
+    
+                    %>
                 </div>
                 </div>
             </div>
