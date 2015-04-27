@@ -78,6 +78,30 @@ public class GestionEliminatoria extends HttpServlet {
             response.sendRedirect("paginas/torneos/calendario.jsp?idTorneo="+eliminatoria.getIdTorneo());
         }
         //
+        //si se van a crear los cuartos
+        //
+        else if (request.getParameter("iniciarcuartos")!=null && request.getParameter("iniciarcuartos").equals("cuartos")){
+            FachadaTorneos facadeTorneos = new FachadaTorneos();
+            TorneoDTO eliminatoria = new TorneoDTO();
+            //creo un dto completo de esta eliminatoria
+            eliminatoria.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+            eliminatoria.setNombre(request.getParameter("nombreTorneo"));
+            eliminatoria.setFechaFin(request.getParameter("fechaFin"));
+            eliminatoria.setFechaInicio(request.getParameter("fechaInicio"));
+            eliminatoria.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidadEquipos")));
+            eliminatoria.setTipo(Integer.parseInt(request.getParameter("tipo")));
+            FabricaTorneo fabrica = new FabricaTorneo();
+            Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
+            // CREO EL LIST CON LOS EQUIPOS EN CUARTOS
+            
+            ArrayList<EquiposdeltorneoDTO> ecuartos = new ArrayList();
+            ecuartos = (ArrayList) facadeTorneos.listarEquiposEnCuartos(eliminatoria.getIdTorneo());
+            // llamo el metodo hacer cuartos 
+            eli.segundaRondaDiesciseis(ecuartos);
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+eliminatoria.getIdTorneo());
+        }
+        
+        //
         //inicio a insertar fechas de una eli de 16
         //
         else if(request.getParameter("asignarfechas")!=null && request.getParameter("foctavos")!=null){
@@ -651,9 +675,12 @@ public class GestionEliminatoria extends HttpServlet {
         //
         
         
-        
+        //
+        //
         //
         //AHORA VAMOS CON INGRESAR LOS MARCADORES DE LOS PARTIDOS
+        //
+        //
         //
         
         else if(request.getParameter("asignarMarcador")!=null && request.getParameter("foctavos")!=null){
@@ -663,7 +690,7 @@ public class GestionEliminatoria extends HttpServlet {
             String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             //pregunto si hay datos de partido 1
-            if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
+            if (request.getParameter("0muno")!=null && request.getParameter("0mdos")!=null) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();   
             p1.setRonda(ronda);
@@ -675,7 +702,7 @@ public class GestionEliminatoria extends HttpServlet {
             p1.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p1);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
-            int ganador = p1.getMarcador1()>p1.getMarcador2()? p1.getEquipo1() : p1.getEquipo2();
+            int ganador = p1.getMarcador1() > p1.getMarcador2()? p1.getEquipo1() : p1.getEquipo2();
             facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
@@ -705,7 +732,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del primer partido
             }
             //pregunto asi hay 2 p
-            if(request.getParameter("1equipo1")!=null && request.getParameter("1equipo2")!=null ){
+            if(request.getParameter("1muno")!=null && request.getParameter("1mdos")!=null ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             p2.setRonda(ronda);
@@ -717,7 +744,7 @@ public class GestionEliminatoria extends HttpServlet {
             p2.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p2);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
-            int ganador = p2.getMarcador1()>p2.getMarcador2()? p2.getEquipo1() : p2.getEquipo2();
+            int ganador = p2.getMarcador1()> p2.getMarcador2()? p2.getEquipo1() : p2.getEquipo2();
             facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp2 = new StringBuilder("");//emails 
             ArrayList<String> correosp2eq = new ArrayList();
@@ -747,15 +774,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del segundo
             }
             //pregunto si hay parametros del tercer partido
-            if(request.getParameter("2equipo1")!=null && request.getParameter("2equipo2")!=null){
+            if(request.getParameter("2muno")!=null && request.getParameter("2mdos")!=null){
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
             p3.setRonda(ronda);
             p3.setEquipo1(Integer.parseInt(request.getParameter("2equipo1")));
             p3.setEquipo2(Integer.parseInt(request.getParameter("2equipo2")));
             // m1 == marcador 1
-            p3.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
-            p3.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p3.setMarcador1(Integer.parseInt(request.getParameter("2muno")));
+            p3.setMarcador2(Integer.parseInt(request.getParameter("2mdos")));
             p3.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p3);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -789,15 +816,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del tercero   
             }
             //si hay parametros del cuarto partido
-            if (request.getParameter("3equipo1")!=null && request.getParameter("3equipo2")!=null) {
+            if (request.getParameter("3muno")!=null && request.getParameter("3mdos")!=null) {
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
             p4.setRonda(ronda);
             p4.setEquipo1(Integer.parseInt(request.getParameter("3equipo1")));
             p4.setEquipo2(Integer.parseInt(request.getParameter("3equipo2")));
             // m1 == marcador 1
-            p4.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
-            p4.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p4.setMarcador1(Integer.parseInt(request.getParameter("3muno")));
+            p4.setMarcador2(Integer.parseInt(request.getParameter("3mdos")));
             p4.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p4);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -830,15 +857,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del cuarto
             }
             //si hay parametros de quinto partido
-            if (request.getParameter("4equipo1")!=null && request.getParameter("4equipo2")!=null) {
+            if (request.getParameter("4muno")!=null && request.getParameter("4mdos")!=null) {
             //comienzo con el quinto
             PartidoDTO p5 = new PartidoDTO();   
             p5.setRonda(ronda);
             p5.setEquipo1(Integer.parseInt(request.getParameter("4equipo1")));
             p5.setEquipo2(Integer.parseInt(request.getParameter("4equipo2")));
             // m1 == marcador 1
-            p5.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
-            p5.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p5.setMarcador1(Integer.parseInt(request.getParameter("4muno")));
+            p5.setMarcador2(Integer.parseInt(request.getParameter("4mdos")));
             p5.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p5);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -871,15 +898,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del quinto
                 }
             //si hay sexto partido
-            if (request.getParameter("5equipo1")!= null && request.getParameter("5equipo2")!=null) {
+            if (request.getParameter("5muno")!= null && request.getParameter("5mdos")!=null) {
                 //comienzo con el sexto
             PartidoDTO p6 = new PartidoDTO();   
             p6.setRonda(ronda);
             p6.setEquipo1(Integer.parseInt(request.getParameter("5equipo1")));
             p6.setEquipo2(Integer.parseInt(request.getParameter("5equipo2")));
             // m1 == marcador 1
-            p6.setMarcador1(Integer.parseInt(request.getParameter("1mdos")));
-            p6.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p6.setMarcador1(Integer.parseInt(request.getParameter("5mdos")));
+            p6.setMarcador2(Integer.parseInt(request.getParameter("5mdos")));
             p6.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p6);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -912,15 +939,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del sexto
                 }
             //si hay septimo partido
-            if (request.getParameter("6equipo1")!=null && request.getParameter("6equipo2")!=null) {
+            if (request.getParameter("6muno")!=null && request.getParameter("6mdos")!=null) {
             //comienzo con el septimo
             PartidoDTO p7 = new PartidoDTO();   
             p7.setRonda(ronda);
             p7.setEquipo1(Integer.parseInt(request.getParameter("6equipo1")));
             p7.setEquipo2(Integer.parseInt(request.getParameter("6equipo2")));
             // m1 == marcador 1
-            p7.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
-            p7.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p7.setMarcador1(Integer.parseInt(request.getParameter("6muno")));
+            p7.setMarcador2(Integer.parseInt(request.getParameter("6mdos")));
             p7.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p7);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -953,15 +980,15 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del septimo
                 }
             //pregunto si hay parametros de octavo partido
-            if (request.getParameter("7equipo1")!=null && request.getParameter("7equipo2")!=null) {
+            if (request.getParameter("7muno")!=null && request.getParameter("7mdos")!=null) {
             //comienzo con el octavo
             PartidoDTO p8 = new PartidoDTO();   
             p8.setRonda(ronda);
             p8.setEquipo1(Integer.parseInt(request.getParameter("7equipo1")));
             p8.setEquipo2(Integer.parseInt(request.getParameter("7equipo2")));
             // m1 == marcador 1
-            p8.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
-            p8.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
+            p8.setMarcador1(Integer.parseInt(request.getParameter("7muno")));
+            p8.setMarcador2(Integer.parseInt(request.getParameter("7mdos")));
             p8.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p8);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
@@ -993,21 +1020,12 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br/>";
             //fin del octavo 
                 }
-            // CREO EL LIST CON LOS EQUIPOS EN CUARTOS
+            //reenvio
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?octavos=asignados");
             
-            ArrayList<EquiposdeltorneoDTO> ecuartos = new ArrayList();
-            ecuartos = (ArrayList) facadeTorneo.listarEquiposEnCuartos(idTorneo);
-            //creo la eliminatoria y llamo el metodo hacer cuartos 
-            
-            TorneoDTO eliminatoria = new TorneoDTO();
-            //creo un dto completo de esta eliminatoria
-            eliminatoria.setIdTorneo(idTorneo);
-            eliminatoria.setTipo(tipoTorneo);
-            FabricaTorneo fabrica = new FabricaTorneo();
-            Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
-            eli.segundaRondaDiesciseis(ecuartos);
-            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo);
-            
+            ///
+            ///
+            /// ASIGNACION FECHAS DE CUARTOS
             
             //comienzo con los cuartos de final
         }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fcuartos")!=null){

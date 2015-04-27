@@ -31,7 +31,7 @@
 <sql:query var="disponibilidad" dataSource="jdbc/pro-level">
 select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidtorneo=? <sql:param value="${param.idTorneo}"/>
 </sql:query>
-<%--  pasamos el resultado a una variable --%>
+<%--  pasamos el resultado del query disponibilidad a una variable --%>
 <c:set var="inscritos" value="${disponibilidad.rows[0]}" scope="page" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -203,6 +203,12 @@ if (request.getParameter("registro")!=null) {
             </div>
             </c:forEach>
         </div>
+<%--con este query se si ya inicio el campeonato y la suma de estados si es 8 se q ya se jugaron todos--%>  
+<sql:query var="haypartidos" dataSource="jdbc/pro-level">
+    select count(partidos.ronda) as rondas, sum(partidos.estado) as pjugados from partidos where idTorneo = ? <sql:param value="${param.idTorneo}"/>
+</sql:query>
+<%-- pasamos la consulta a una variable con <c:set/> ojo pasa como array --%>
+<c:set var="rondas" value="${haypartidos.rows[0]}" scope="page" />
         <c:if test="${inscritos.capacidad == detallestorneo.capacidadEquipos}">
             <c:if test="${detallestorneo.tipo ==3}">
                 <form method="get" action="../../GestionEliminatoria" autocomplete="off">
@@ -213,11 +219,29 @@ if (request.getParameter("registro")!=null) {
                 <input type="hidden" name="genero" value="${detallestorneo.genero}" />
                 <input type="hidden" name="capacidadEquipos" value="${detallestorneo.capacidadEquipos}" />
                 <input type="hidden" name="tipo" value="${detallestorneo.tipo}" />
-            <button name="iniciar" value="${detallestorneo.idTorneo}" class="btn btn-lg btn-danger">
+                <button name="iniciar" value="${detallestorneo.idTorneo}" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas > 0}"> disabled="disabled" </c:if>>
                 Iniciar Torneo
             </button>
             </form>
             </c:if>
+            <div class="row">
+                <form method="get" action="../../GestionEliminatoria" autocomplete="off">
+                <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
+                <input type="hidden" name="nombre" value="${detallestorneo.nombre}" />
+                <input type="hidden" name="fechaInicio" value="${detallestorneo.fechaInicio}" />
+                <input type="hidden" name="fechaFin" value="${detallestorneo.fechaFin}" />
+                <input type="hidden" name="genero" value="${detallestorneo.genero}" />
+                <input type="hidden" name="capacidadEquipos" value="${detallestorneo.capacidadEquipos}" />
+                <input type="hidden" name="tipo" value="${detallestorneo.tipo}" />
+                
+                <c:if test="${rondas.pjugados == 8}">
+                <button name="iniciarcuartos" value="cuartos" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas > 0}"> disabled="disabled" </c:if>>
+                    Iniciar Cuartos De Final
+                </button>
+            </c:if>
+            </form>
+            </div>
+            
         </c:if>
     </section>
 </main>

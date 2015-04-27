@@ -255,21 +255,36 @@ li img {
                     </ul>
             </div>
      
-    <div id="formulario" class="col-lg-6 col-md-6 col-sd-4 col-xs-12">
-      <form method="POST" action="Ingreso" id="login" class="form-inline">
-    <div class="form-group">
-      <label for="email">Usuario:</label>
+    <div id="formulario" class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+<%-- dentro de form-group dividir el espacio de los col- en 12 --%>    
+    <form method="POST" action="Ingreso" id="login" class="form-horizontal">
+  <div class="form-group">
+    <label for="email" class="col-sm-4 control-label">Usuario:</label>
+    <div class="col-sm-6">
       <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo">
     </div>
-    <div class="form-group">
-      <label for="pass">Contraseña:</label>
+  </div>
+  <div class="form-group">
+    <label for="pass" class="col-sm-4 control-label">Contraseñs:</label>
+    <div class="col-sm-6">
       <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese su contraseña">
     </div>
-    <div class="checkbox">
-      <label><input type="checkbox"> Recordarme</label>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-6">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Recordarme
+        </label>
+      </div>
     </div>
-          <button type="submit" class="btn btn-default" name="ingresar">Ingresar</button>
-      </form>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-6">
+      <button type="submit" class="btn btn-default" name="ingresar">Ingresar</button>
+    </div>
+  </div>
+</form>    
     <%  //si hay mensaje de autenticacion
         if (request.getParameter("auth")!=null&&request.getParameter("auth").equals("noauth")) {
     %>

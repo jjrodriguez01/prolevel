@@ -6,15 +6,12 @@
 <%@page import="utilidades.MiExcepcion"%>
 <%@page import="modelo.PartidoDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="persistencia.PartidoDAO"%>
-<%@page import="persistencia.UsuariosDAO"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
             if (request.getSession()!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
-                    UsuariosDAO udao = new UsuariosDAO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
@@ -139,7 +136,7 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h1 id="hfechasoctavos" data-toggle="popover" 
+                    <h1 id="hmarcadoresoctavos" data-toggle="popover" 
 title="Hecho" data-content="Se han establecido las fechas"
  data-placement="top">Modifica Fechas Y Horas</h1>
 <%--confirmacion de fechas octavos--%>
@@ -148,7 +145,7 @@ if (request.getParameter("octavos")!=null) {
 %>
 <script>
     $(document).ready(function(){
-        $("#hfechasoctavos").trigger("click");
+        $("#hmarcadoresoctavos").trigger("click");
     });
 </script>
 <script>
@@ -190,16 +187,16 @@ $('[data-toggle="popover"]').popover(
                     </sql:query>
                     <div class="panel panel-primary">
                     <div class="panel-heading">Octavos De Final</div>
-                    <form action="../../GestionEliminatoria" autocomplete="off">
+                    <form name="marcadores" action="../../GestionEliminatoria" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
                             <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="validarEmpate${vs.index}()"/></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="validarEmpate${vs.index}()" /></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -207,6 +204,15 @@ $('[data-toggle="popover"]').popover(
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
+<script>
+    function validarEmpate${vs.index}(){
+var marcador1 = $("#${vs.index}muno").val();
+var marcador2 = $("#${vs.index}mdos").val();
+    if (marcador1 == marcador2) {
+        alert("Este torneo es tipo knock-out no pueden haber empates");
+}
+}
+</script>
                         </c:forEach>
                         </tbody>
                     </table>

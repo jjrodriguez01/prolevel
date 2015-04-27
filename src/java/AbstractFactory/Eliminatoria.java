@@ -156,8 +156,8 @@ public class Eliminatoria extends Torneo {
         pocho.setEquipo2(equipos.get(16).getEquipoCodigo());
         pocho.setIdTorneo(idTorneo);
         int n8 = 8;
-        psiete.setNumero(n8);
-        psiete.setEstado(estado);
+        pocho.setNumero(n8);
+        pocho.setEstado(estado);
         partido.insertarPartido(pocho);
     }
     

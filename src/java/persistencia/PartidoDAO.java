@@ -81,7 +81,7 @@ public class PartidoDAO {
 
         try {
             //sentencia sql
-            String sql = "update partidos SET marcador1 =?, marcador2=? " +
+            String sql = "update partidos SET marcador1 =?, marcador2=?, estado = 1 " +
 "                    WHERE ronda =? and equipo1=? and equipo2=? and numero =? and idTorneo=?;";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
@@ -142,7 +142,7 @@ public class PartidoDAO {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-         throw new MiExcepcion("Error modificando partidos", sqlexception);
+         throw new MiExcepcion("Error modificando partidos "+sqlexception.getMessage(), sqlexception);
         }
 //        finally{
 //            try{
@@ -393,7 +393,7 @@ public class PartidoDAO {
             }
             
         } catch (SQLException ex) {
-            throw new MiExcepcion("No se inserto el equipo a cuartos", ex);
+            throw new MiExcepcion("No se inserto el equipo a cuartos error: "+ex.getMessage(), ex);
         }
 //        finally{
 //            try {
