@@ -687,13 +687,17 @@ public class GestionEliminatoria extends HttpServlet {
             int ronda = 1;
             int tipoTorneo = 3;//necesito el tipo de eliminatoria para poder crearla y llamar al metodo hacercuartos
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
+            int estado = 1;//todos los partidos pasan a estado 1 q es jugado
             String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             //pregunto si hay datos de partido 1
             if (request.getParameter("0muno")!=null && request.getParameter("0mdos")!=null) {
             //comienzo con el primer partido
-            PartidoDTO p1 = new PartidoDTO();   
+            PartidoDTO p1 = new PartidoDTO();
+            int numeroPartido = 1;
             p1.setRonda(ronda);
+            p1.setEstado(estado);
+            p1.setNumero(numeroPartido);
             p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
             p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
             // m1 == marcador 1
@@ -735,7 +739,10 @@ public class GestionEliminatoria extends HttpServlet {
             if(request.getParameter("1muno")!=null && request.getParameter("1mdos")!=null ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
+            int numeroPartido = 2;
             p2.setRonda(ronda);
+            p2.setEstado(estado);
+            p2.setNumero(numeroPartido);
             p2.setEquipo1(Integer.parseInt(request.getParameter("1equipo1")));
             p2.setEquipo2(Integer.parseInt(request.getParameter("1equipo2")));
             // m1 == marcador 1
@@ -777,7 +784,10 @@ public class GestionEliminatoria extends HttpServlet {
             if(request.getParameter("2muno")!=null && request.getParameter("2mdos")!=null){
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
+            int numeroPartido = 3;
             p3.setRonda(ronda);
+            p3.setEstado(estado);
+            p3.setNumero(numeroPartido);
             p3.setEquipo1(Integer.parseInt(request.getParameter("2equipo1")));
             p3.setEquipo2(Integer.parseInt(request.getParameter("2equipo2")));
             // m1 == marcador 1
@@ -819,7 +829,10 @@ public class GestionEliminatoria extends HttpServlet {
             if (request.getParameter("3muno")!=null && request.getParameter("3mdos")!=null) {
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
+            int numeroPartido = 4;
             p4.setRonda(ronda);
+            p4.setEstado(estado);
+            p4.setNumero(numeroPartido);
             p4.setEquipo1(Integer.parseInt(request.getParameter("3equipo1")));
             p4.setEquipo2(Integer.parseInt(request.getParameter("3equipo2")));
             // m1 == marcador 1
@@ -860,7 +873,10 @@ public class GestionEliminatoria extends HttpServlet {
             if (request.getParameter("4muno")!=null && request.getParameter("4mdos")!=null) {
             //comienzo con el quinto
             PartidoDTO p5 = new PartidoDTO();   
+            int numeroPartido = 5;
             p5.setRonda(ronda);
+            p5.setEstado(estado);
+            p5.setNumero(numeroPartido);
             p5.setEquipo1(Integer.parseInt(request.getParameter("4equipo1")));
             p5.setEquipo2(Integer.parseInt(request.getParameter("4equipo2")));
             // m1 == marcador 1
@@ -901,7 +917,10 @@ public class GestionEliminatoria extends HttpServlet {
             if (request.getParameter("5muno")!= null && request.getParameter("5mdos")!=null) {
                 //comienzo con el sexto
             PartidoDTO p6 = new PartidoDTO();   
+            int numeroPartido = 6;
             p6.setRonda(ronda);
+            p6.setEstado(estado);
+            p6.setNumero(numeroPartido);
             p6.setEquipo1(Integer.parseInt(request.getParameter("5equipo1")));
             p6.setEquipo2(Integer.parseInt(request.getParameter("5equipo2")));
             // m1 == marcador 1
@@ -942,7 +961,10 @@ public class GestionEliminatoria extends HttpServlet {
             if (request.getParameter("6muno")!=null && request.getParameter("6mdos")!=null) {
             //comienzo con el septimo
             PartidoDTO p7 = new PartidoDTO();   
+            int numeroPartido = 7;
             p7.setRonda(ronda);
+            p7.setEstado(estado);
+            p7.setNumero(numeroPartido);
             p7.setEquipo1(Integer.parseInt(request.getParameter("6equipo1")));
             p7.setEquipo2(Integer.parseInt(request.getParameter("6equipo2")));
             // m1 == marcador 1
@@ -983,7 +1005,10 @@ public class GestionEliminatoria extends HttpServlet {
             if (request.getParameter("7muno")!=null && request.getParameter("7mdos")!=null) {
             //comienzo con el octavo
             PartidoDTO p8 = new PartidoDTO();   
+            int numeroPartido = 8;
             p8.setRonda(ronda);
+            p8.setEstado(estado);
+            p8.setNumero(numeroPartido);
             p8.setEquipo1(Integer.parseInt(request.getParameter("7equipo1")));
             p8.setEquipo2(Integer.parseInt(request.getParameter("7equipo2")));
             // m1 == marcador 1
@@ -1022,29 +1047,39 @@ public class GestionEliminatoria extends HttpServlet {
                 }
             //reenvio
             response.sendRedirect("paginas/torneos/resultadoseli.jsp?octavos=asignados");
-            
+        }//fin asignar marcador octavos    
+        
+        
             ///
             ///
             /// ASIGNACION FECHAS DE CUARTOS
             
-            //comienzo con los cuartos de final
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fcuartos")!=null){
-            int ronda = 2;
+            //comienzo con los cuartos de final a asignar marcador
+        else if(request.getParameter("asignarMarcador")!=null && request.getParameter("fcuartos")!=null){
+            int ronda = 1;
+            int tipoTorneo = 3;//necesito el tipo de eliminatoria para poder crearla y llamar al metodo hacercuartos
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
-            String asunto = "Notificacion horarios de partidos";
+            int estado = 1;//todos los partidos pasan a estado 1 q es jugado
+            String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
-                
+            //pregunto si hay datos de partido 1
+            if (request.getParameter("0muno")!=null && request.getParameter("0mdos")!=null) {
             //comienzo con el primer partido
-            PartidoDTO p1 = new PartidoDTO();   
+            PartidoDTO p1 = new PartidoDTO();
+            int numeroPartido = 1;
             p1.setRonda(ronda);
+            p1.setEstado(estado);
+            p1.setNumero(numeroPartido);
             p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
             p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
-            p1.setFecha(request.getParameter("fecha0"));
-            p1.setHora(request.getParameter("hora0"));
-            p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
+            // m1 == marcador 1
+            p1.setMarcador1(Integer.parseInt(request.getParameter("0muno")));
+            p1.setMarcador2(Integer.parseInt(request.getParameter("0mdos")));
             p1.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p1);
+            facadeTorneo.insertarMarcador(p1);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p1.getMarcador1() > p1.getMarcador2()? p1.getEquipo1() : p1.getEquipo2();
+            facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp1 = new StringBuilder("");
             ArrayList<String> correosp1eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
@@ -1059,28 +1094,37 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo1 = request.getParameter("0nequipo1");
             String nequipo2 = request.getParameter("0nequipo2");
-            String cuerpop1 = "El partido <strong>"+nequipo1+"</strong>"
+            String cuerpop1 = "El resultado del partido <strong>"+nequipo1+"</strong>"
                     +" <span>vs</span> <br/> "
-                    + nequipo2
+                    + "<strong>"+nequipo2+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p1.getCancha();
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo1 + "<strong>"+" "+p1.getMarcador1() + "</strong>"
+                    +"<br</>"
+                    + nequipo2 + "<strong>"+" "+p1.getMarcador2() + "</strong>"
+                    +"<br/>";
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
             //fin del primer partido
             }
-            if (request.getParameter("1equipo1")!=null && request.getParameter("1equipo2")!=null) {
-               
+            //pregunto asi hay 2 p
+            if(request.getParameter("1muno")!=null && request.getParameter("1mdos")!=null ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
+            int numeroPartido = 2;
             p2.setRonda(ronda);
+            p2.setEstado(estado);
+            p2.setNumero(numeroPartido);
             p2.setEquipo1(Integer.parseInt(request.getParameter("1equipo1")));
             p2.setEquipo2(Integer.parseInt(request.getParameter("1equipo2")));
-            p2.setFecha(request.getParameter("fecha1"));
-            p2.setHora(request.getParameter("hora1"));
-            p2.setCancha(Integer.parseInt(request.getParameter("cp1")));
+            // m1 == marcador 1
+            p2.setMarcador1(Integer.parseInt(request.getParameter("1muno")));
+            p2.setMarcador2(Integer.parseInt(request.getParameter("1mdos")));
             p2.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p2);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.insertarMarcador(p2);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p2.getMarcador1()> p2.getMarcador2()? p2.getEquipo1() : p2.getEquipo2();
+            facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp2 = new StringBuilder("");//emails 
             ArrayList<String> correosp2eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
@@ -1095,28 +1139,37 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo3 = request.getParameter("1nequipo1");
             String nequipo4 = request.getParameter("1nequipo2");
-            String cuerpop2 = "El partido <strong>"+nequipo3+"</strong>"
+            String cuerpop2 = "El resultado del partido <strong>"+nequipo3+"</strong>"
                     +" <span>vs</span> <br/> "
-                    + nequipo4
+                    + "<strong>"+nequipo4+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p2.getCancha();
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo3 + "<strong>"+" "+p2.getMarcador1() + "</strong>"
+                    +"<br</>"
+                    + nequipo4 + "<strong>"+" "+p2.getMarcador2() + "</strong>"
+                    +"<br/>";
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
             //fin del segundo
             }
-            if (request.getParameter("2equipo1")!=null && request.getParameter("2equipo2")!=null) {
-        
+            //pregunto si hay parametros del tercer partido
+            if(request.getParameter("2muno")!=null && request.getParameter("2mdos")!=null){
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
+            int numeroPartido = 3;
             p3.setRonda(ronda);
+            p3.setEstado(estado);
+            p3.setNumero(numeroPartido);
             p3.setEquipo1(Integer.parseInt(request.getParameter("2equipo1")));
             p3.setEquipo2(Integer.parseInt(request.getParameter("2equipo2")));
-            p3.setFecha(request.getParameter("fecha2"));
-            p3.setHora(request.getParameter("hora2"));
-            p3.setCancha(Integer.parseInt(request.getParameter("cp2")));
+            // m1 == marcador 1
+            p3.setMarcador1(Integer.parseInt(request.getParameter("2muno")));
+            p3.setMarcador2(Integer.parseInt(request.getParameter("2mdos")));
             p3.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p3);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.insertarMarcador(p3);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p3.getMarcador1()>p3.getMarcador2()? p3.getEquipo1() : p3.getEquipo2();
+            facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp3 = new StringBuilder("");//emails 
             ArrayList<String> correosp3eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
@@ -1131,28 +1184,37 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo5 = request.getParameter("2nequipo1");
             String nequipo6 = request.getParameter("2nequipo2");
-            String cuerpop3 = "El partido <strong>"+nequipo5+"</strong>"
+            String cuerpop3 = "El resultado del partido <strong>"+nequipo5+"</strong>"
                     +" <span>vs</span> <br/> "
-                    + nequipo6
+                    + "<strong>"+nequipo6+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p3.getFecha()+" a las "+p3.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p3.getCancha();
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo5 + "<strong>"+" "+p3.getMarcador1() + "</strong>"
+                    +"<br</>"
+                    + nequipo6 + "<strong>"+" "+p3.getMarcador2() + "</strong>"
+                    +"<br/>";
             Correo.sendMail(asunto, cuerpop3, emailsp3.toString());
-            //fin del tercero
+            //fin del tercero   
             }
-            if (request.getParameter("3equipo1")!=null && request.getParameter("3equipo2")!=null) {
-                
+            //si hay parametros del cuarto partido
+            if (request.getParameter("3muno")!=null && request.getParameter("3mdos")!=null) {
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
+            int numeroPartido = 4;
             p4.setRonda(ronda);
+            p4.setEstado(estado);
+            p4.setNumero(numeroPartido);
             p4.setEquipo1(Integer.parseInt(request.getParameter("3equipo1")));
             p4.setEquipo2(Integer.parseInt(request.getParameter("3equipo2")));
-            p4.setFecha(request.getParameter("fecha3"));
-            p4.setHora(request.getParameter("hora3"));
-            p4.setCancha(Integer.parseInt(request.getParameter("cp3")));
+            // m1 == marcador 1
+            p4.setMarcador1(Integer.parseInt(request.getParameter("3muno")));
+            p4.setMarcador2(Integer.parseInt(request.getParameter("3mdos")));
             p4.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p4);//pilas aca se envia el dto con el partido no repetir
+            facadeTorneo.insertarMarcador(p4);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p4.getMarcador1()>p4.getMarcador2()? p4.getEquipo1() : p4.getEquipo2();
+            facadeTorneo.insertarACuartos(idTorneo, ganador);
             StringBuilder emailsp4 = new StringBuilder("");//emails 
             ArrayList<String> correosp4eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
@@ -1167,134 +1229,18 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo7 = request.getParameter("3nequipo1");
             String nequipo8 = request.getParameter("3nequipo2");
-            String cuerpop4 = "El partido <strong>"+nequipo7+"</strong>"
+            String cuerpop4 = "El resultado del partido <strong>"+nequipo7+"</strong>"
                     +" <span>vs</span> <br/> "
-                    + nequipo8
+                    + "<strong>"+nequipo8+"</strong>"
                     +"<br/>"
-                    +"Sera el "+p4.getFecha()+" a las "+p4.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p4.getCancha();
-            Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo7 + "<strong>"+" "+p4.getMarcador1() + "</strong>"
+                    +"<br</>"
+                    + nequipo8 + "<strong>"+" "+p4.getMarcador2() + "</strong>"
+                    +"<br/>";
             //fin del cuarto
             }
-            response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fsemi")!=null){
-            int ronda = 3;
-            int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
-            String asunto = "Notificacion horarios de partidos";
-            FachadaTorneos facadeTorneo = new FachadaTorneos();
-            if (request.getParameter("0equipo1")!=null && request.getParameter("0equipo2")!=null) {
-                
-            //comienzo con el primer partido
-            PartidoDTO p1 = new PartidoDTO();   
-            p1.setRonda(ronda);
-            p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
-            p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
-            p1.setFecha(request.getParameter("fecha0"));
-            p1.setHora(request.getParameter("hora0"));
-            p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
-            p1.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p1);
-            StringBuilder emailsp1 = new StringBuilder("");
-            ArrayList<String> correosp1eq = new ArrayList();
-            //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
-            for (int i = 0; i < correosp1eq.size(); i++) {
-                emailsp1.append(correosp1eq.get(i));
-                if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
-                    emailsp1.append(" ,");
-                }
-            }
-            //envio los correos
-            String nequipo1 = request.getParameter("0nequipo1");
-            String nequipo2 = request.getParameter("0nequipo2");
-            String cuerpop1 = "El partido de la semifinal entre <strong>"+nequipo1+"</strong>"
-                    +" <span>vs</span> <br/> "
-                    + nequipo2
-                    +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p1.getCancha();
-            Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
-            //fin del primer partido
-            }
-            if (request.getParameter("1equipo1")!=null && request.getParameter("1equipo2")!=null) {
-                
-            //comienzo con el segundo
-            PartidoDTO p2 = new PartidoDTO();   
-            p2.setRonda(ronda);
-            p2.setEquipo1(Integer.parseInt(request.getParameter("1equipo1")));
-            p2.setEquipo2(Integer.parseInt(request.getParameter("1equipo2")));
-            p2.setFecha(request.getParameter("fecha1"));
-            p2.setHora(request.getParameter("hora1"));
-            p2.setCancha(Integer.parseInt(request.getParameter("cp1")));
-            p2.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p2);//pilas aca se envia el dto con el partido no repetir
-            StringBuilder emailsp2 = new StringBuilder("");//emails 
-            ArrayList<String> correosp2eq = new ArrayList();
-            //array list con los correos de los jugadores de estos dos equipos
-            correosp2eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
-            correosp2eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
-            for (int i = 0; i < correosp2eq.size(); i++) {
-                emailsp2.append(correosp2eq.get(i));
-                if (i != correosp2eq.size() -1 && correosp2eq.size() > 0) {
-                    emailsp2.append(" ,");
-                }
-            }
-            //envio los correos
-            String nequipo3 = request.getParameter("1nequipo1");
-            String nequipo4 = request.getParameter("1nequipo2");
-            String cuerpop2 = "El partido por la semifinal entre <strong>"+nequipo3+"</strong>"
-                    +" <span>vs</span> <br/> "
-                    + nequipo4
-                    +"<br/>"
-                    +"Sera el "+p2.getFecha()+" a las "+p2.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p2.getCancha();
-            Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
-            //fin del segundo
-            }
-            response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("ffinal")!=null){
-            int ronda = 4;
-            int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
-            String asunto = "Notificacion horarios de partidos";
-            FachadaTorneos facadeTorneo = new FachadaTorneos();
-            //comienzo con el primer partido
-            PartidoDTO p1 = new PartidoDTO();   
-            p1.setRonda(ronda);
-            p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
-            p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
-            p1.setFecha(request.getParameter("fecha0"));
-            p1.setHora(request.getParameter("hora0"));
-            p1.setCancha(Integer.parseInt(request.getParameter("cp0")));
-            p1.setIdTorneo(idTorneo);
-            facadeTorneo.actualizarPartido(p1);
-            StringBuilder emailsp1 = new StringBuilder("");
-            ArrayList<String> correosp1eq = new ArrayList();
-            //array list con los correos de los jugadores de estos dos equipos
-            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
-            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
-            for (int i = 0; i < correosp1eq.size(); i++) {
-                emailsp1.append(correosp1eq.get(i));
-                if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
-                    emailsp1.append(" ,");
-                }
-            }
-            //envio los correos
-            String nequipo1 = request.getParameter("0nequipo1");
-            String nequipo2 = request.getParameter("0nequipo2");
-            String cuerpop1 = "El partido de la final <strong>"+nequipo1+"</strong>"
-                    +" <span>vs</span> <br/> "
-                    + nequipo2
-                    +"<br/>"
-                    +"Sera el "+p1.getFecha()+" a las "+p1.getHora()
-                    +"<br/>"
-                    +"En la cancha No "+p1.getCancha();
-            Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
-            //fin del primer partido
-            
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
         }
         //
