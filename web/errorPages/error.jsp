@@ -10,9 +10,9 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link rel="<%request.getContextPath();%>/css//bootstrap/bootstrap.min.css">
+<script src="<%request.getContextPath();%>/js/jquery1.9.1.js"></script>
+<script src="<%request.getContextPath();%>/css/bootstrap/js/bootstrap.min.js"></script>
 <meta charset="utf-8">
 <title>Pro-level</title>
 <style>
@@ -219,7 +219,7 @@ footer p{
 <header>
     <nav class="navbar">
     <ul id="nav" class="nav">
-      		<li><a href="inicio.jsp"><img src="../imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
+      		<li><a href="inicio.jsp"><img src="<%request.getContextPath();%>/imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
       		<li><a href="#"><span><img src="../imagenes/copa.png" width="24" height="24" alt="copa" /> TORNEOS</span></a><
         <div class="subs">
           <div class="col">
@@ -265,7 +265,7 @@ footer p{
 <main>
     <div class="row">
         <div class="col-md-6 centrar">
-            <img src="../imagenes/buscando.png" alt="pagina no encontrada" class="img-responsive img-thumbnail" >
+            <img src="<%request.getContextPath();%>/imagenes/buscando.png" alt="pagina no encontrada" class="img-responsive img-thumbnail" >
         </div>
     </div>
     <div class="row">
@@ -275,7 +275,7 @@ footer p{
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        <h2>Lo sentimos, ha ocurrido un error <%=exception.getMessage()%></h2>
+                        <h2>Lo sentimos, ha ocurrido un error <%=exception.getMessage()%> <a><%request.getContextPath();%></a></h2>
                     </div>
                 </div>
             </div>

@@ -38,12 +38,12 @@
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
-        <link href="../../js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link href="../../css/bootstrap/datepicker/css/datepicker.css" rel="stylesheet" type="text/css">
         <link href="../../js/clock/jquery.timepicker.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/jquery.validate.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../js/datepicker/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../../css/bootstrap/datepicker/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../js/clock/jquery.timepicker.js"></script>
         <style>
             .menu-opciones{
@@ -53,11 +53,10 @@
         </style>
 <script>
 $(document).ready(function() {
-    $(function() {
-   $( ".datepicker" ).datepicker( "option", "minDate", 0 );
-   $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+   $( ".datepicker" ).datepicker({
+       format: 'yyyy/mm/dd'
+   });
    $(".clockpick").timepicker({ 'timeFormat': 'H:i' });
-  });
 });
 </script>
     </head>
@@ -138,7 +137,8 @@ $(document).ready(function() {
                 <div class="page-header">
                     <h1 id="hfechasoctavos" data-toggle="popover" 
 title="Hecho" data-content="Se han establecido las fechas"
- data-placement="top">Modifica Fechas Y Horas</h1>
+data-placement="top">Modifica Fechas Y Horas <small>octavos</small></h1>
+                </div>
 <%--confirmacion de fechas octavos--%>
 <%
 if (request.getParameter("octavos")!=null) {
@@ -146,6 +146,27 @@ if (request.getParameter("octavos")!=null) {
 <script>
     $(document).ready(function(){
         $("#hfechasoctavos").trigger("click");
+    });
+</script>
+<script>
+$('[data-toggle="popover"]').popover(
+                {
+                    trigger: 'click',
+                    html: true,
+                    delay: 500,
+                }
+            );
+</script>
+<%
+    }
+%>
+<%--confirmacion de fechas cuartos--%>
+<%
+if (request.getParameter("cuartos")!=null) {
+%>
+<script>
+    $(document).ready(function(){
+        $("#hfechascuartos").trigger("click");
     });
 </script>
 <script>
@@ -186,7 +207,7 @@ $('[data-toggle="popover"]').popover(
                     </sql:query>
                     <div class="panel panel-primary">
                     <div class="panel-heading">Octavos De Final</div>
-                    <form action="" name="calendar" id="calendar" autocomplete="off">
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -215,7 +236,7 @@ $('[data-toggle="popover"]').popover(
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}">placeholder="${row.fecha}" value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
                                 <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -226,8 +247,9 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="asignarfechas" type="button" onclick="validarIguales()">Añadir Fechas</button>
-                    <input type="hidden" name="foctavos" value="octavos" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
                     </form>
 <script>
     function validarIguales(){
@@ -297,12 +319,16 @@ var partido8 = cancha7+fecha7+hora7;
     }
 </script>
                 </div>
-                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="ccuartos">
+                <div class="page-header">
+                    <h1 id="hfechascuartos" data-toggle="popover" 
+title="Hecho" data-content="Se han establecido las fechas"
+data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
+                </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
@@ -357,7 +383,7 @@ var partido8 = cancha7+fecha7+hora7;
                                         <option>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" name="fecha${vs.index}"  /></td>
+                                <td><input type="date" class="datepicker" name="fecha${vs.index}"  /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -368,9 +394,10 @@ var partido8 = cancha7+fecha7+hora7;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="asignarfechas" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
-                    <input type="hidden" name="fcuartos" value="cuartos" />
-                    </form>
+<button class="btn btn-primary" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="cuartos" />                   
+<input type="hidden" name="fcuartos" value="cuartos" />
+</form>
 <script>
     function igualesCuartos(){
     //paso el input a una variable y si es null le asigno algo 
@@ -588,23 +615,7 @@ var partido2 = cancha1+fecha1+hora1;
     </section>
 </c:if><%--si es de 16 equipos--%>
 </c:if><%--si es eliminatoria--%>
- <script>
-$(document).ready(function() {
-    $( ".datepicker" ).datepicker({
-	inline: true
-});
 
-// Hover states on the static widgets
-$( "#dialog-link, #icons li" ).hover(
-	function() {
-		$( this ).addClass( "ui-state-hover" );
-	},
-	function() {
-		$( this ).removeClass( "ui-state-hover" );
-	}
-);
-});
-</script>
 </main>
     </body>
 </html>

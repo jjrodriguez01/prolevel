@@ -400,8 +400,13 @@ public class GestionEliminatoria extends HttpServlet {
           
             response.sendRedirect("paginas/torneos/calendario.jsp?idTorneo="+idTorneo+"&octavos=Se han asignado las fechas");
             
-            //comienzo con los cuartos de final
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fcuartos")!=null){
+        }
+        
+        //
+        //comienzo con los cuartos de final
+        //
+        
+        else if(request.getParameter("asignarfechas")!=null && request.getParameter("fcuartos")!=null){
             int ronda = 2;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
@@ -550,8 +555,16 @@ public class GestionEliminatoria extends HttpServlet {
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
             }
-            response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("fsemi")!=null){
+            response.sendRedirect("resultados.jsp?idTorneo="+idTorneo+"&cuartos=Se han establecido las fechas#ccuartos");
+        }
+        
+        //
+        // fechas de semifinales
+        //
+        //
+        
+        
+        else if(request.getParameter("asignarfechas")!=null && request.getParameter("fsemi")!=null){
             int ronda = 3;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";

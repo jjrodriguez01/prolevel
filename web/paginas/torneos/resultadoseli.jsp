@@ -211,7 +211,8 @@ and numero = 2;
                         </tbody>
                     </table>
 </div>
-
+<div id="uniong1uno"></div>
+<div id="uniong1dos"></div>
 <%--query del 3 partdido--%>
 <sql:query var="p3" dataSource="jdbc/pro-level">
 select 
@@ -280,7 +281,8 @@ and numero = 4;
                         </tbody>
                     </table>
 </div>
-
+<div id="uniong2uno"></div>
+<div id="uniong2dos"></div>
 <%--query del 5 partdido--%>
 <sql:query var="p5" dataSource="jdbc/pro-level">
 select 
@@ -314,8 +316,8 @@ and numero = 5;
                         </tbody>
                     </table>
 </div>
-
-
+<div id="uniong3uno"></div>
+<div id="uniong3dos"></div>
 <%--query del 6 partdido--%>
 <sql:query var="p6" dataSource="jdbc/pro-level">
 select 
@@ -418,6 +420,8 @@ and numero = 8;
                         </tbody>
                     </table>
 </div>
+<div id="uniong4uno"></div>
+<div id="uniong4dos"></div>
 <%--query del 1 partdido de cuartos--%>
 <sql:query var="p1cuartos" dataSource="jdbc/pro-level">
 select 
