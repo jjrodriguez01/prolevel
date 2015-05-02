@@ -183,6 +183,17 @@ public class FachadaTorneos {
     public String insertarACuartos(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return partidodao.insertarCuartos(idTorneo, codigoEquipo, conexion);
     }
+    
+    /**
+     * Inserta un equipo a semifinales en un torneo
+     * @param idTorneo
+     * @param codigoEquipo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public String insertarASemi(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return partidodao.insertarSemi(idTorneo, codigoEquipo, conexion);
+    }
     /** 
      * 
      * Inserta los goles en la tabla partidos pasandole un  PartidoDTO con equipo1, equipo2, marcador1, marcador2, ronda, numeropartido y idTorneo

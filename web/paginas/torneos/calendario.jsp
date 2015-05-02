@@ -54,7 +54,7 @@
 <script>
 $(document).ready(function() {
    $( ".datepicker" ).datepicker({
-       format: 'yyyy/mm/dd'
+       format: 'yyyy-mm-dd'
    });
    $(".clockpick").timepicker({ 'timeFormat': 'H:i' });
 });
@@ -237,7 +237,7 @@ $('[data-toggle="popover"]').popover(
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
-                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> value="${row.hora}"</c:if> /></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -340,7 +340,9 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                         partidos.cancha,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -354,7 +356,7 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 2
                     </sql:query>
     
-                        <form id="calendarcuartos" name="calendarcuartos">
+                        <form action="../../GestionEliminatoria" id="calendarcuartos" name="calendarcuartos">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -376,15 +378,15 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                                 <td>
                                     <select name="cp${vs.index}">
                                         <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" class="datepicker" name="fecha${vs.index}"  /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="date" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -394,7 +396,7 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
+<button class="btn btn-primary" name="validarCampos" type="submit" onclick="igualesCuartos()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="cuartos" />                   
 <input type="hidden" name="fcuartos" value="cuartos" />
 </form>
@@ -420,22 +422,19 @@ var cancha3 = (document.calendarcuartos.cp3.value !== null) ? document.calendarc
 var fecha3 = (document.calendarcuartos.fecha3.value !== null) ? document.calendarcuartos.fecha3.value: 'fecha3';
 var hora3 = (document.calendarcuartos.hora3.value !== null) ? document.calendarcuartos.hora3.value : 'hora3';
 var partido4 = cancha3+fecha3+hora3;
-
     
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4) {
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4){
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4){
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
-    }else if(partido4 === partido1 || partido4 === partido2 || partido4 === partido3 || partido4 === partido5 || partido4 === partido6 || partido4 === partido7 || partido4 === partido8){
+    }else if(partido4 === partido1 || partido4 === partido2 || partido4 === partido3){
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else{//si nada fue igual envio
         $("#calendarcuartos").submit();
     }
-
-        
     }
 </script>
                 </div>

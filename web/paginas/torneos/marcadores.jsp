@@ -257,11 +257,12 @@ var marcador2 = $("#${vs.index}mdos").val();
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 2
                     </sql:query>
     
-                        <form>
+                        <form action="../../GestionEliminatoria">
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
+<%--munoc = marcador 1 en cuartos --%>                      
+<c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
                                 <td><input type="number" id="${vs.index}munoc" name="${vs.index}munoc" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="noEmpateCuartos${vs.index}()"/></td>
