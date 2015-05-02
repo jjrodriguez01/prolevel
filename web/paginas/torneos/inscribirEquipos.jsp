@@ -233,9 +233,9 @@ if (request.getParameter("registro")!=null) {
                 <input type="hidden" name="genero" value="${detallestorneo.genero}" />
                 <input type="hidden" name="capacidadEquipos" value="${detallestorneo.capacidadEquipos}" />
                 <input type="hidden" name="tipo" value="${detallestorneo.tipo}" />
-                
+                <%--si ya se jugaron 8 habilito el boton, si ya hay 12 rondas lo seshabilito--%>
                 <c:if test="${rondas.pjugados == 8}">
-                <button name="iniciarcuartos" value="cuartos" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas > 0}"> disabled="disabled" </c:if>>
+                <button name="iniciarcuartos" value="cuartos" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas == 12}"> disabled="disabled" </c:if>>
                     Iniciar Cuartos De Final
                 </button>
             </c:if>

@@ -77,43 +77,34 @@ public class PartidoDAO {
      * @throws MiExcepcion 
      */
     
-    public synchronized String insertarMarcador(PartidoDTO cal,Connection conexion) throws MiExcepcion {
+    public synchronized String insertarMarcador(PartidoDTO p, Connection conexion) throws MiExcepcion {
 
         try {
-            //sentencia sql
-            String sql = "update partidos SET marcador1 =?, marcador2=?, estado = 1 " +
-"                    WHERE ronda =? and equipo1=? and equipo2=? and numero =? and idTorneo=?;";
-            //pasamos la sentencia la conexion mediante el prepare staement
-            statement = conexion.prepareStatement(sql);
+        statement = conexion.prepareStatement("update partidos SET marcador1 = ?, marcador2= ?, estado = ?"
+        + " WHERE ronda = ? and equipo1= ? and equipo2= ? and numero = ? and idTorneo= ?");
             //obtenemos los datos del dto de la tabla
-            statement.setInt(1, cal.getMarcador1());
-            statement.setInt(2, cal.getMarcador2());
-            statement.setInt(3, cal.getRonda());
-            statement.setInt(4, cal.getEquipo1());
-            statement.setInt(5, cal.getEquipo2());
-            statement.setInt(6, cal.getNumero());
-            statement.setInt(7, cal.getIdTorneo());
-            //ejecuta el insert
+            statement.setInt(1, p.getMarcador1());
+            statement.setInt(2, p.getMarcador2());
+            statement.setInt(3, p.getEstado());
+            statement.setInt(4, p.getRonda());
+            statement.setInt(5, p.getEquipo1());
+            statement.setInt(6, p.getEquipo2());
+            statement.setInt(7, p.getNumero());
+            statement.setInt(8, p.getIdTorneo());
+            //ejecuta el update
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
-            if (rtdo != 0) {
+            if (rtdo > 0) {
                 mensaje = "Se insertaron los marcadores";
                 //si no se afecto la tabla
             } else {
-                mensaje = "Error";
+                mensaje = "Error no se insertaron los marcadores";
             }
         } 
         catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error insertando marcadores", sqlexception);
+            throw new MiExcepcion("Error insertando marcadores : "+sqlexception.getMessage(), sqlexception);
         }
-//        finally{
-//            try{
-//                statement.close();
-//            }catch(SQLException sqlexception){
-//                throw new MiExcepcion("Error insertando partidos", sqlexception);
-//            }
-//        }
-        //devolvemos el mensaje al usuario
+
         return mensaje;
     }
 

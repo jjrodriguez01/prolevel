@@ -210,6 +210,9 @@ var marcador1 = $("#${vs.index}muno").val();
 var marcador2 = $("#${vs.index}mdos").val();
     if (marcador1 == marcador2) {
         alert("Este torneo es tipo knock-out no pueden haber empates");
+        document.getElementById("asignarMarcador").setAttribute("disabled","true");
+}else{
+    document.getElementById("asignarMarcador").removeAttribute("disabled");
 }
 }
 </script>
@@ -217,7 +220,7 @@ var marcador2 = $("#${vs.index}mdos").val();
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarMarcador">Añadir Marcador</button>
+<button class="btn btn-primary" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
                     <input type="hidden" name="foctavos" value="octavos" />
                     </form>
                 </div>
@@ -261,9 +264,9 @@ var marcador2 = $("#${vs.index}mdos").val();
                             <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><input type="number" id="${vs.index}munoc" name="${vs.index}munoc" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="noEmpateCuartos${vs.index}()"/></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td><input type="number" id="${vs.index}mdosc" name="${vs.index}mdosc" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="noEmpateCuartos${vs.index}()" /></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -271,11 +274,23 @@ var marcador2 = $("#${vs.index}mdos").val();
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
+<script>
+    function noEmpateCuartos${vs.index}(){
+var marcador1 = $("#${vs.index}munoc").val();
+var marcador2 = $("#${vs.index}mdosc").val();
+    if (marcador1 == marcador2) {
+        alert("Este torneo es tipo knock-out no pueden haber empates");
+        document.getElementById("asignarMarcadorCuartos").setAttribute("disabled","true");
+}else{
+    document.getElementById("asignarMarcadorCuartos").removeAttribute("disabled");
+}
+}
+</script>
                         </c:forEach>
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
+<button class="btn btn-primary" id="asignarMarcadorCuartos" name="asignarMarcadorCuartos">Añadir Marcador</button>
                     <input type="hidden" name="fcuartos" value="cuartos" />
                     </form>
                 </div>

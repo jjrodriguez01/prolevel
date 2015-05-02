@@ -215,8 +215,8 @@ $('[data-toggle="popover"]').popover(
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}">placeholder="${row.fecha}" value="${row.fecha}"</c:if>/></td>
-                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> value="${row.hora}"</c:if> /><c:if test="${row.fecha !=null}"><c:out value="${row.fecha}"/></c:if></td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}">placeholder="${row.fecha}" value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.fecha !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -226,7 +226,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="asignarfechas" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-primary" id="fechasOctavos" name="asignarfechas" type="button" onclick="validarIguales()">Añadir Fechas</button>
                     <input type="hidden" name="foctavos" value="octavos" />
                     </form>
 <script>
@@ -357,7 +357,7 @@ var partido8 = cancha7+fecha7+hora7;
                                         <option>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
+                                <td><input type="date" name="fecha${vs.index}"  /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -470,7 +470,7 @@ var partido4 = cancha3+fecha3+hora3;
                                         <option>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
+                                <td><input type="date" name="fecha${vs.index}"  /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -568,7 +568,7 @@ var partido2 = cancha1+fecha1+hora1;
                                         <option>5</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="fecha${vs.index}" class="datepicker" /></td>
+                                <td><input type="date" name="fecha${vs.index}" /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
