@@ -137,6 +137,15 @@ public class FachadaTorneos {
     public List<EquiposdeltorneoDTO> listarEquiposEnCuartos(int idTorneo) throws MiExcepcion{
         return edtdao.listarTodoCuartos(idTorneo, conexion);
     }
+     /**
+     * Devuelve un List con los equipos en semis
+     * @param idTorneo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public List<EquiposdeltorneoDTO> listarEquiposEnSemi(int idTorneo) throws MiExcepcion{
+        return edtdao.listarTodoSemi(idTorneo, conexion);
+    }
     
     public List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return edtdao.correosJugadoresEquipo(idTorneo, codigoEquipo, conexion);

@@ -114,6 +114,33 @@ public class EquiposDelTorneoDAO {
 //        }
         return equipos;
     }
+    public List<EquiposdeltorneoDTO> listarTodoSemi(int idTorneo, Connection conexion) throws MiExcepcion{
+        ArrayList<EquiposdeltorneoDTO> equipos = new ArrayList();
+        try {
+            statement = conexion.prepareStatement("SELECT idTorneo, codigoEquipo "
+                    + "FROM semifinales WHERE idTorneo =?;");
+            statement.setInt(1, idTorneo);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                EquiposdeltorneoDTO eq = new EquiposdeltorneoDTO();
+                eq.setTorneoIdTorneo(rs.getInt("idTorneo"));
+                eq.setEquipoCodigo(rs.getInt("codigoEquipo"));
+                equipos.add(eq);
+            }
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error", ex);
+        }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error cerrando prepared ",ex);
+//            }
+//        }
+        return equipos;
+    }
     
     public synchronized List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo, Connection conexion)throws MiExcepcion{
         List<String> correos = new ArrayList();

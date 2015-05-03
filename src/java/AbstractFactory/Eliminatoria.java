@@ -221,4 +221,43 @@ public class Eliminatoria extends Torneo {
         
         
     }
+    
+    public void terceraRondaDiesciseis(List<EquiposdeltorneoDTO> arr) throws MiExcepcion{
+        ArrayList<EquiposdeltorneoDTO> arrayeq = (ArrayList)arr;
+        Map<Integer,EquiposdeltorneoDTO> equipos = new TreeMap<Integer,EquiposdeltorneoDTO>();
+        int clave = 0;
+        for(EquiposdeltorneoDTO eq : arrayeq){
+            clave++;
+            equipos.put(clave, eq);
+        }
+        int ronda = 2;
+        int idTorneo = equipos.get(1).getTorneoIdTorneo();
+        int estado = 0;//estado del partido 0=por jugar
+        FachadaTorneos partido = new FachadaTorneos();
+        //instancio la cantidad de partidos que necesito
+        //para un torneo de 16 equipos seran 4 en segunda ronda
+        PartidoDTO puno = new PartidoDTO();
+        PartidoDTO pdos = new PartidoDTO();
+        
+        //comienzo a insertar los partidos
+        
+        puno.setRonda(ronda);
+        puno.setEquipo1(equipos.get(1).getEquipoCodigo());
+        puno.setEquipo2(equipos.get(2).getEquipoCodigo());
+        puno.setIdTorneo(idTorneo);
+        int n1 = 1;//primer partido
+        puno.setNumero(n1);
+        puno.setEstado(estado);
+        partido.insertarPartido(puno);
+        
+        pdos.setRonda(ronda);
+        pdos.setEquipo1(equipos.get(3).getEquipoCodigo());
+        pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
+        pdos.setIdTorneo(idTorneo);
+        int n2 = 2;//segundo partido
+        pdos.setNumero(n2);
+        pdos.setEstado(estado);
+        partido.insertarPartido(pdos);
+        
+    }
 }

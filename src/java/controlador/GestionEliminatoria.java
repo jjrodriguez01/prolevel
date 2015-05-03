@@ -102,6 +102,29 @@ public class GestionEliminatoria extends HttpServlet {
         }
         
         //
+        //si se van a iniciar las semifinales
+        //
+        else if (request.getParameter("iniciarsemi")!=null && request.getParameter("iniciarsemi").equals("semi")){
+            FachadaTorneos facadeTorneos = new FachadaTorneos();
+            TorneoDTO eliminatoria = new TorneoDTO();
+            //creo un dto completo de esta eliminatoria
+            eliminatoria.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+            eliminatoria.setNombre(request.getParameter("nombreTorneo"));
+            eliminatoria.setFechaFin(request.getParameter("fechaFin"));
+            eliminatoria.setFechaInicio(request.getParameter("fechaInicio"));
+            eliminatoria.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidadEquipos")));
+            eliminatoria.setTipo(Integer.parseInt(request.getParameter("tipo")));
+            FabricaTorneo fabrica = new FabricaTorneo();
+            Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
+            // CREO EL LIST CON LOS EQUIPOS EN CUARTOS
+            
+            ArrayList<EquiposdeltorneoDTO> ecuartos = new ArrayList();
+            ecuartos = (ArrayList) facadeTorneos.listarEquiposEnCuartos(eliminatoria.getIdTorneo());
+            // llamo el metodo hacer cuartos 
+            eli.segundaRondaDiesciseis(ecuartos);
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+eliminatoria.getIdTorneo());
+        }
+        //
         //inicio a insertar fechas de una eli de 16
         //
         else if(request.getParameter("asignarfechas")!=null && request.getParameter("foctavos")!=null){
@@ -1179,6 +1202,7 @@ public class GestionEliminatoria extends HttpServlet {
             p3.setMarcador1(Integer.parseInt(request.getParameter("2munoc")));
             p3.setMarcador2(Integer.parseInt(request.getParameter("2mdosc")));
             p3.setIdTorneo(idTorneo);
+          
             facadeTorneo.insertarMarcador(p3);
             //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
             int ganador = p3.getMarcador1()> p3.getMarcador2()? p3.getEquipo1() : p3.getEquipo2();
