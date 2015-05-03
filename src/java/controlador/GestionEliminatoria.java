@@ -1092,7 +1092,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del octavo 
                 }
             //reenvio
-            response.sendRedirect("paginas/torneos/resultadoseli.jsp?octavos=asignados");
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo+"octavos=asignados");
         }//fin asignar marcador octavos    
         
         
