@@ -665,7 +665,12 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del segundo
             }
             response.sendRedirect("resultados.jsp?idTorneo="+idTorneo);
-        }else if(request.getParameter("asignarfechas")!=null && request.getParameter("ffinal")!=null){
+        }
+        //
+        //FECHAS DE LA FINAL
+        //
+        
+        else if(request.getParameter("asignarfechas")!=null && request.getParameter("ffinal")!=null){
             int ronda = 4;
             int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
             String asunto = "Notificacion horarios de partidos";
@@ -903,6 +908,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo8 + "<strong>"+" "+p4.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
             }
             //si hay parametros de quinto partido
@@ -947,6 +953,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo10 + "<strong>"+" "+p5.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop5, emailsp5.toString());
             //fin del quinto
                 }
             //si hay sexto partido
@@ -960,7 +967,7 @@ public class GestionEliminatoria extends HttpServlet {
             p6.setEquipo1(Integer.parseInt(request.getParameter("5equipo1")));
             p6.setEquipo2(Integer.parseInt(request.getParameter("5equipo2")));
             // m1 == marcador 1
-            p6.setMarcador1(Integer.parseInt(request.getParameter("5mdos")));
+            p6.setMarcador1(Integer.parseInt(request.getParameter("5muno")));
             p6.setMarcador2(Integer.parseInt(request.getParameter("5mdos")));
             p6.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p6);
@@ -991,6 +998,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo12 + "<strong>"+" "+p6.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop6, emailsp6.toString());
             //fin del sexto
                 }
             //si hay septimo partido
@@ -1035,6 +1043,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo14 + "<strong>"+" "+p7.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop7, emailsp7.toString());
             //fin del septimo
                 }
             //pregunto si hay parametros de octavo partido
@@ -1079,6 +1088,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo16 + "<strong>"+" "+p8.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop8, emailsp8.toString());
             //fin del octavo 
                 }
             //reenvio
@@ -1098,7 +1108,8 @@ public class GestionEliminatoria extends HttpServlet {
             int estado = 1;//todos los partidos pasan a estado 1 q es jugado
             String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
-            //pregunto si hay datos de partido 1
+            
+             //pregunto si hay datos de partido 1
             if (request.getParameter("0munoc")!=null && request.getParameter("0mdosc")!=null) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
@@ -1221,7 +1232,7 @@ public class GestionEliminatoria extends HttpServlet {
             //envio los correos
             String nequipo3 = request.getParameter("2nequipo1");
             String nequipo4 = request.getParameter("2nequipo2");
-            String cuerpop2 = "El resultado del partido <strong>"+nequipo3+"</strong>"
+            String cuerpop3 = "El resultado del partido <strong>"+nequipo3+"</strong>"
                     +" <span>vs</span> <br/> "
                     + "<strong>"+nequipo4+"</strong>"
                     +"<br/>"
@@ -1231,7 +1242,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo4 + "<strong>"+" "+p3.getMarcador2() + "</strong>"
                     +"<br/>";
-            Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
+            Correo.sendMail(asunto, cuerpop3, emailsp2.toString());
             //fin del tercero 
             }
             //si hay parametros del cuarto partido
@@ -1276,6 +1287,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"<br</>"
                     + nequipo8 + "<strong>"+" "+p4.getMarcador2() + "</strong>"
                     +"<br/>";
+            Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
             }
             response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo);
