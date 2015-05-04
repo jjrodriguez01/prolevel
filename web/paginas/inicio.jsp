@@ -23,91 +23,32 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../css/onepage-scroll.css" rel="stylesheet" type="text/css">
 <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
-<link href="../css/estilosinicio.css" rel="stylesheet" type="text/css">
+<link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="../js/jquery.flip.js"></script>
-<script type="text/javascript" src="../js/listaTorneo.js"></script>
+<script type="text/javascript" src="../js/jquery.onepage-scroll.js"></script>
 <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-        $(document).ready(function(){
-            //nos desplazamos entre todos los divs
-            $('a.ancla').click(function(e){
-            e.preventDefault();
-            enlace  = $(this).attr('href');
-            $('html, body').animate({
-                scrollTop: $(enlace).offset().top
-            }, 1000);
-            });
-            //vamos al principio o al final de la página
-            $('a.arriba').click(function(e){
-            e.preventDefault();
-            volver  = $(this).attr('href');
-            $('html, body').animate({
-                scrollTop: $(volver).offset().top
-            }, 2000);
-            });
-            //pasando la cantidad de pixeles que queremos a scrollTop
-            $('.prueba').click(function(){
-                $('html, body').animate({scrollTop:100}, 2000); return false;
-            });
-        });
-</script>
-<script>
-			$(document).ready(function() {
-                $("#abajo").hover(function(){
-					$("#abajo").attr("src","imagenes/abajo2.png");
-				},function(){
-					$("#abajo").attr("src","imagenes/abajo.png");
-				});
-				$("#masabajo").hover(function(){
-					$("#masabajo").attr("src","imagenes/abajo2.png");
-				},function(){
-					$("#masabajo").attr("src","imagenes/abajo.png");
-				});
-				$("#aunmasabajo").hover(function(){
-					$("#aunmasabajo").attr("src","imagenes/arriba2.png");
-				},function(){
-					$("#aunmasabajo").attr("src","imagenes/arriba.png");
-				});
-            });
-</script>
-<script>
-			$(function(){				
-				$("#flipPad a:not(.revert)").bind("click",function(){
-					var $this = $(this);
-					$("#flipbox").flip({
-						direction: $this.attr("rel"),
-						color: $this.attr("rev"),
-						content: $this.attr("title"),
-						onBefore: function(){$(".revert").show()}
-					})
-					return false;
-				});
-				
-				$(".revert").bind("click",function(){
-					$("#flipbox").revertFlip();
-					return false;
-				});
-				
-				var changeMailTo = function(){
-					var mArr = ["@","smashup","luca",".it"];
-					$("#email").attr("href","mailto:"+mArr[2]+mArr[0]+mArr[1]+mArr[3]);
-				}
-				
-				$(".downloadBtn").click(function(){
-					pageTracker._trackPageview('download_flip');
-				});	
-				
-				setTimeout(changeMailTo,500);
-				
-			});
-</script>
+<script type="text/javascript" src="../js/Chart.min.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/datatablesbootstrap.js"></script>
 <meta charset="utf-8">
 <title>Pro-level::Inicio</title>
+<script>
+    $(document).ready(function(){
+        $(".main").onepage_scroll();
+        $("#torneos_creados").dataTable({
+                    language:{
+                        url: "../js/dataTables/js/dataespañol.json"
+                    } 
+                });
+    });
+</script>
 </head>
 <body>
+<div class="main container">
+<section>
 <header>
     <nav class="navbar">
     <ul id="nav" class="nav">
@@ -153,73 +94,108 @@
     </ul>
 </nav>
 </header>
-<!-- InstanceBeginEditable name="body" -->
-<main>
-<div id="uno">
-<section class="primer">
-    <hgroup>
-        <h1>BIENVENIDO A PRO-LEVEL.</h1>
-        <h5>El software para la administracion de sus campeonatos de futbol y gestion de las reservas de sus canchas</h5>
-    </hgroup>
+    <div class="row">
+        <div class="well">
+            <div class="page-header">
+                <hgroup>
+                    <h1>BIENVENIDO A PRO-LEVEL.</h1>
+                    <h5>El software para la administracion de sus campeonatos de futbol y gestion de las reservas de sus canchas</h5>
+                </hgroup>
+            </div>
+        </div>
+    </div>
+    <sql:query var="itorneos" dataSource="jdbc/pro-level">
+        select torneo.nombre Torneo, torneo.fechaInicio,
+        torneo.fechafin from torneo
+    </sql:query>
+    <div class="panel panel-default">
+        <div class="panel-body">
+          Estos son los torneos que has creado
+        </div>
+    </div>
+        <table id="torneos_creados" class="table table-striped table-condensed table-hover table-responsive">
+        <!-- column headers -->
+        <tr>
+            <th>Nombre Del Torneo</th>
+            <th>Fecha De Inicio</th>
+            <th>Fecha Finalizacion</th>
+        </tr>
+        <!-- column data -->
+        <c:forEach var="row" items="${itorneos.rowsByIndex}">
+            <tr>
+                <c:forEach var="column" items="${row}">
+                    <td><c:out value="${column}"/></td>
+                </c:forEach>
+            </tr>
+        </c:forEach>
+    </table>
+
 </section>
-    <a href="#dos" class="ancla">
-        <img src="imagenes/abajo.png" id="abajo" width="100" height="100" onMouseOver="imagen()"
-            onMouseOut="imgout()"/></a>
-</div>
-    <div id="dos">
-        <div id="flipbox">Pro-level</div>
-            <div id="flipPad">
-                <a href="#" class="left" rel="rl" rev="#39AB3E" title="Pro-level es el unico software especializado en la creacion de campeonatos 					de futbol">¿Por que pro-level?</a>
-                <a href="#" class="top" rel="bt" rev="#B0EB17" title="Maneje desde el mismo aplicativo sus campeonatos de futbol y las reservas de 						sus canchas">¿Para que pro-level?</a>
-                <a href="#" class="bottom" rel="tb" rev="#82BD2E" title="Con Pro-level sus clientes se informaran de sus campeonatos y servicios en la misma pagina en la que reservan las canchas">¿Me ayuda Pro-level?</a>
-                <a href="#" class="right" rel="lr" rev="#C8D97E" title="Este es una aplicativo que puede usar facilmente y de manera intuitiva">¿como lo uso?</a>
-            </div>
-                <a href="#tres" class="ancla">
-                <img src="imagenes/abajo.png" id="masabajo" width="100" height="100" onMouseOver="imagen2()"
-   			onMouseOut="imgout2()"/></a>
-    </div>
-<div id="tres">
-    <div id="three-column" class="container">
-        <div id="tbox1">
-            <div class="box-style box-style01">
-                    <div class="content">
-                            <div class="image"><img src="imagenes/iniciotorneo.jpg" width="324" height="200" alt="torneos" /></div>
-                            <h2>TORNEOS</h2>
-                            <p>Cree torneos como copas, ligas y eliminatorias totalmente personalizables </p>
-                    </div>
+    <section>
+        <div>
+            <div class="alert alert-info" role="alert">
+                <strong>Grafico De Goles</strong>
             </div>
         </div>
-            <div id="tbox2">
-                    <div class="box-style box-style02">
-                            <div class="content">
-                                    <div class="image"><img src="imagenes/inicioreserva.jpg" width="324" height="200" alt="reservas" /></div>
-                                    <h2>RESERVAS</h2>
-                                    <p>Realice las reservas de las canchas en su establecimiento e informe a sus clientes de las canchas que no estaran disponibles
-                en determinada fecha y hora</p>
-                            </div>
-                    </div>
-</div>
-<div id="tbox3">
-    <div class="box-style box-style03">
-        <div class="content">
-                <div class="image"><img src="imagenes/inicioadmin.png" width="324" height="200" alt="administracion"/></div>
-                <h2>ADMINISTRACION</h2>
-                <p>Obtenga el control de Pro-level mediante la administracion de su perfil, puede modificar sus datos personales </p>
-        </div>
-    </div>
-</div>
-</div>
-    	<a href="#uno" class="ancla">
-            <img src="imagenes/arriba.png" id="aunmasabajo" width="100" height="100" onMouseOver="imagen3()"
+        <article>
+            <div style="width: 50%">
+                <canvas id="canvas" height="450" width="600"></canvas>
+                <span class="label label-primary">
+                    Este gráfico muestra el total de goles anotados en los torneos
+                </span>
+            </div>
+        </article>        
+    </section>
+    <section>
+    	<a href="#1" class="ancla">
+            <img src="../imagenes/arriba.png" id="aunmasabajo" width="100" height="100" onMouseOver="imagen3()"
    			onMouseOut="imgout2()"/></a>
-		</div>
-</main>
+    </section>
 <footer>
 <div id="pie">
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#">
         <img src="../imagenes/english.png" width="40" height="30" /></a></p>  
 </div>
 </footer>
+</div>
+<sql:query var="goles" dataSource="jdbc/pro-level">
+select torneo.nombre, sum(tablagoleadores.numeroGoles) as goles
+from torneo inner join tablagoleadores
+on torneo.idTorneo = tablagoleadores.idTorneo
+</sql:query>
+    <script>
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+	var barChartData = {
+		labels : [//aqui va un label con nombres de torneos en la grafica
+                    <c:forEach var="row" items="${goles.rows}">
+            "${row.nombre}",
+                    </c:forEach>
+                
+            ],
+		datasets : [
+			{//aqui van los datos de la grafica, los numeros
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [
+                    <c:forEach var="row" items="${goles.rows}">
+                        "${row.goles}",
+                    </c:forEach>
+                                ]
+			}
+		]
+
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+	}
+
+	</script>
 </body>
 </html>
 <% }//si el rol fue uno se muestra la anterior pagina

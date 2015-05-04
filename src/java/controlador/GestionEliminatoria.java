@@ -118,10 +118,10 @@ public class GestionEliminatoria extends HttpServlet {
             Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
             // CREO EL LIST CON LOS EQUIPOS EN CUARTOS
             
-            ArrayList<EquiposdeltorneoDTO> ecuartos = new ArrayList();
-            ecuartos = (ArrayList) facadeTorneos.listarEquiposEnCuartos(eliminatoria.getIdTorneo());
+            ArrayList<EquiposdeltorneoDTO> esemi = new ArrayList();
+            esemi = (ArrayList) facadeTorneos.listarEquiposEnSemi(eliminatoria.getIdTorneo());
             // llamo el metodo hacer cuartos 
-            eli.segundaRondaDiesciseis(ecuartos);
+            eli.terceraRondaDiesciseis(esemi);
             response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+eliminatoria.getIdTorneo());
         }
         //
