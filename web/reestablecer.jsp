@@ -25,6 +25,11 @@ nav{
 }
         </style>
         <title>Reestabler contraseña</title>
+        <script>
+            $(document).ready(function(){
+                $("#norecuperar").fadeOut(25500);
+            });
+        </script>
     </head>
     <body>
         <header class="container">
@@ -105,6 +110,16 @@ nav{
   <span class="sr-only">Error:</span>
   Complete el captcha
 </div>
+                    <%
+                        }else if(request.getParameter("recuperar")!=null && request.getParameter("recuperar").equals("no")){
+                    %>
+<div id="norecuperar" class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Ha ocurrido algo y no hemos podido reestablecer tu contraseña,
+   inténtalo de nuevo o ponte en contacto con el administrador.
+</div>                        
                     <%
                         }
     

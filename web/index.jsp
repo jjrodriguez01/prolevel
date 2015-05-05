@@ -178,8 +178,12 @@ li img {
                         $("#menunav li a").removeClass();
                     });
                 });
+                $("#acontactanos").on("click", function(){
+                    $("#contactanos").modal("show");
+                });
             });
         </script>
+
 </head>
 <body>
 <header>
@@ -216,7 +220,7 @@ li img {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nosotros <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">¿Quienes Somos?</a></li>
-            <li><a href="#">Contáctanos</a></li>
+            <li><a id="acontactanos" href="#">Contáctanos</a></li>
           </ul>
         </li>
       </ul>
@@ -303,8 +307,51 @@ li img {
      <%
             }
     %>
+    <%  //si hay mensaje de recuperacion de contraseña
+        if (request.getParameter("recuperacion")!=null&&request.getParameter("auth").equals("ok")) {
+    %>
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <span class="sr-only">Hecho:</span>
+        Hemos enviado un mensaje a tu correo electrónico.
+    </div>
+    <%  //si hay mensaje de error
+            }
+     %>
   </div>
     </div>
+  
+  <div class="modal fade" id="contactanos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Contáctanos</h3>
+        <h6>Diligencia el formulario y envíanos tu opinion.</h6>
+      </div>
+      <div class="modal-body">
+          <form method="POST" action="Contactanos">
+          <div class="form-group">
+            <label for="emailusu" class="control-label">Tu correo:</label>
+            <input type="email" maxlength="50" class="form-control" id="emailusu" name="emailusu">
+          </div>
+          <div class="form-group">
+            <label for="mensaje" class="control-label">Tu mensaje para nosotros:</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" maxlength="200"></textarea>
+          </div>
+              <button type="submit" class="btn btn-primary" name="btncontactanos">Enviar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+  
+  
 </main>
 <footer>
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 

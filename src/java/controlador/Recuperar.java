@@ -35,7 +35,7 @@ public class Recuperar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        if (request.getParameter("recuperar")!=null  && request.getParameter("g-recaptcha-response")!= null) {
+        if (request.getParameter("email")!=null  && request.getParameter("g-recaptcha-response")!= null) {
             
             String email = request.getParameter("email").trim();
             String asunto = "Recordatorio contraseña Pro-level";
@@ -47,16 +47,16 @@ public class Recuperar extends HttpServlet {
                     + "<p>Le recordamos que puede cambiarla en cualquier momento accediendo a la seccion</p>"
                     + "<p>Perfil -> Administrar</p>"
                     + "<a>Cordialmente Pro-level</a>";
-            if (Correo.sendMail(asunto, cuerpo, recuperada)) {
-                response.sendRedirect("index.jsp");
-            }
-            
-            
+            if (Correo.sendMail(asunto, cuerpo, email)) {
+                response.sendRedirect("reestablecer.jsp?recuperacion=ok");
+            }else{
+                response.sendRedirect("reestablecer.jsp?recuperar=no"+email);
+            }    
         }else if(request.getParameter("g-recaptcha-response")== null){
-            response.sendRedirect("recuperar.jsp?capcha=invalido");
+            response.sendRedirect("reestablecer.jsp?capcha=invalido");
         }
         else{
-            response.sendRedirect("recuperar.jsp?capcha=invalido");
+            response.sendRedirect("reestablecer.jsp?capcha=invalido");
         }
     }
 

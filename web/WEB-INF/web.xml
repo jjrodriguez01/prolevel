@@ -56,6 +56,10 @@
         <servlet-name>Reportes</servlet-name>
         <servlet-class>controlador.Reportes</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Contactanos</servlet-name>
+        <servlet-class>controlador.Contactanos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>Reportes</servlet-name>
         <url-pattern>/Reportes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Contactanos</servlet-name>
+        <url-pattern>/Contactanos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
