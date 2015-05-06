@@ -8,7 +8,7 @@ package modelo;
 
 public class GoleadoresDTO {
 private int numeroGoles;
-private int  idJugador;
+private long  idJugador;
 private int idTorneo;
 private int idEquipo;
 
@@ -20,11 +20,11 @@ private int idEquipo;
         this.numeroGoles = numeroGoles;
     }
 
-    public int getIdJugador() {
+    public long getIdJugador() {
         return idJugador;
     }
 
-    public void setIdJugador(int idJugador) {
+    public void setIdJugador(long idJugador) {
         this.idJugador = idJugador;
     }
 

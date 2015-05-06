@@ -11,16 +11,7 @@ div.arbol_eli16{
     position: relative;
     min-width: 1200px;
 }
-table{
-    width: 180px;
-    height: 95px;
-}
-table tr.equipo{
-    width: 100px;
-}
-table tr.marcador{
-    width: 80px;
-}
+
 
 #p1{
     position: absolute;
@@ -172,4 +163,71 @@ table tr.marcador{
     height: 95px;
     top: 770px;
     left: 345px;
+}
+
+div#semi1{
+    position: absolute;
+    width: 180px;
+    max-width: 181px;
+    height: 95px;
+    top: 170px;
+    left: 695px;
+}
+#uniong5dos{
+    position: absolute;
+    left: 548px;
+    top: 215px;
+    width: 149px;
+    height: 1px;
+    border-top: 2px solid black;
+}
+
+#uniong6uno{
+    position: absolute;
+    height: 248px;
+    width: 20px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    top: 98px;
+    left: 525px;
+}
+div#semi2{
+    position: absolute;
+    width: 180px;
+    max-width: 181px;
+    height: 95px;
+    top: 620px;
+    left: 645px;
+}
+
+#uniong6uno{
+    position: absolute;
+    height: 70px;
+    width: 20px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    top: 560px;
+    left: 179px;
+}
+#uniong6dos{
+    position: absolute;
+    left: 197px;
+    top: 590px;
+    width: 149px;
+    height: 1px;
+    border-top: 2px solid black;
+}
+
+
+table{
+    width: 180px;
+    height: 95px;
+}
+table tr.equipo{
+    width: 100px;
+}
+table tr.marcador{
+    width: 80px;
 }

@@ -74,6 +74,13 @@ select.ui-datepicker-year, select.ui-datepicker-month{
     color: black;
 }
 </style>
+<script>
+    $(document).ready(function(){
+        $("#acontactanos").on("click", function(){
+                    $("#contactanos").modal("show");
+                });
+    });
+</script>
 </head>
 <body>
 <header>
@@ -110,7 +117,7 @@ select.ui-datepicker-year, select.ui-datepicker-month{
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nosotros <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">¿Quienes Somos?</a></li>
-            <li><a href="#">Contáctanos</a></li>
+            <li><a id="acontactanos" href="#">Contáctanos</a></li>
           </ul>
         </li>
     </ul>
@@ -228,6 +235,37 @@ select.ui-datepicker-year, select.ui-datepicker-month{
     </div>
   </div>
 </div>
+    
+ <%--modal de contactanos--%>
+ <div class="modal fade" id="contactanos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title">Contáctanos</h3>
+        <h6>Diligencia el formulario y envíanos tu opinion.</h6>
+      </div>
+      <div class="modal-body">
+          <form method="POST" action="Contactanos">
+          <div class="form-group">
+            <label for="emailusu" class="control-label">Tu correo:</label>
+            <input type="email" maxlength="50" class="form-control" id="emailusu" name="emailusu">
+          </div>
+          <div class="form-group">
+            <label for="mensaje" class="control-label">Tu mensaje para nosotros:</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" maxlength="200"></textarea>
+          </div>
+              <button type="submit" class="btn btn-primary" name="btncontactanos">Enviar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+    
 </main>
 <script>
    $().ready(function(){

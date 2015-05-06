@@ -278,6 +278,14 @@
                         <a href="../../Reportes?tabla=goleadores&idTorneo=${param.idTorneo}"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
                         </tfoot>
                     </table>
+                    <button class="btn btn-success" id="btntar" data-toggle="modal" data-target="#goles"><i class="fa fa-futbol-o"></i> Asignar Goles</button>
+                    <% 
+                if (request.getParameter("goles")!=null) {
+                    %>
+                    <span class='confirmt'><%request.getParameter("goles");%></span>
+                    <% 
+                    }
+                    %>
                 </div>
                 <div id="tablatarjetas" class="col-md-6 col-sm-4">
                     <h3 class="tablatit">Tabla De Tarjetas</h3>
@@ -302,7 +310,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <button class="bottom" id="btntar" data-toggle="modal" data-target="#tarjetas">Asignar Tarjetas</button>
+                    <button class="btn btn-success" id="btntar" data-toggle="modal" data-target="#tarjetas"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Asignar Tarjetas</button>
                     <% 
                 if (request.getParameter("tarjetas")!=null) {
                     %>
@@ -342,7 +350,7 @@
                         %>
                     </select>            
                     <label>Seleccione el jugador a aplicar tarjetas</label>
-                    <select name="jugadores" class="" id="jugadores">
+                    <select name="jugadores" class="jugadores" id="jugadorest">
                         <option>Seleccione un equipo</option>
                     </select>
                     <span id="rojas"><img src="../../imagenes/Tarjeta_roja.png" width="21" height="30" alt="Tarjeta_roja"/>
@@ -354,6 +362,53 @@
                     <input type="hidden" name="idTorneo" value="${param.idTorneo}"/>
                     <input type="submit" name="asigtarjetas" value="Asignar" class="btn"/>
                     <input type="hidden" name="tarjetas" />
+                </form>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+                    
+                    <%-- ventana modal de los goles--%>
+<div id="goles" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3>Asignar Goles</h3>
+                        </div>
+                        <div class="modal-body">
+                <form method="get" action="../../Goles">
+                    <label>Seleccione Un Equipo</label>
+                    <select name="equipo" class="" onchange="getJugadorG(this.value);">
+                        <option>Seleccione equipo</option>
+                        <%
+ 
+                            try{
+                            LinkedList<EquipoDTO> Equiposg = new LinkedList <EquipoDTO>();
+                            Equiposg = (LinkedList) facadeTorneos.listarEquiposEnTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+                            
+                            for (EquipoDTO edto : Equiposg) {
+                        %>
+                        <option value="<%=edto.getCodigo()%>"> <%=edto.getNombre()%></option>
+                        <%
+                          }
+                            
+                        }catch(MiExcepcion mie){ 
+                            response.sendError(500, mie.getMessage());//si hubo error reenvio el error
+                        }
+                        %>
+                    </select>            
+                    <label>Seleccione el jugador a asignar goles</label>
+                    <select name="jugadores" class="jugadores" id="jugadoresg">
+                        <option>Seleccione un equipo</option>
+                    </select>
+                    <span id="rojas"><img src="../../imagenes/balon.png" width="21" height="30" alt="Tarjeta_roja"/>
+                    </span>
+                    <input type="number" name="nrogoles" maxlength="2" required/>
+                    
+                    <input type="hidden" name="idTorneo" value="${param.idTorneo}"/>
+                    <input type="submit" name="asignargoles" value="Asignar" class="btn"/>
+                    <input type="hidden" name="goles" value="goles" />
                 </form>
                         </div>
                     </div>

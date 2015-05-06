@@ -33,14 +33,14 @@ public class GoleadoresDAO {
     CallableStatement call= null;
 
     public synchronized String insertar(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
-
         try {
             
             call = conexion.prepareCall("{call sp_aumentarmarcador (?,?,?,?,?)};");
-            call.setInt(1, gol.getNumeroGoles());
-            call.setInt(2, gol.getIdTorneo());
-            call.setInt(3, gol.getIdJugador());
-            call.setInt(4, gol.getIdEquipo());
+                
+            call.setLong(1, gol.getIdJugador());
+            call.setInt(2, gol.getNumeroGoles());
+            call.setInt(3, gol.getIdEquipo());
+            call.setInt(4, gol.getIdTorneo());
             
             call.registerOutParameter(5, Types.INTEGER);
             call.execute();
@@ -50,6 +50,33 @@ public class GoleadoresDAO {
             }else {
                 mensaje = "No se pudo asignar marcador.";
             }
+        } 
+        catch (SQLException sqlexception) {
+         throw new MiExcepcion("Error insertando goles", sqlexception);
+        }
+        //devolvemos el mensaje al usuario
+        return mensaje;
+    }
+    
+    public synchronized String insertarPrimer(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
+        try {
+            
+           statement = conexion.prepareStatement("INSERT INTO tablagoleadores "
+                    + " values(?,?,?,?);");
+           
+            statement.setInt(1, gol.getNumeroGoles());
+            statement.setInt(2, gol.getIdEquipo());
+            statement.setLong(3, gol.getIdJugador());
+            statement.setInt(4, gol.getIdTorneo());
+            
+            rtdo = statement.executeUpdate();
+            
+            if (rtdo > 0) {
+                mensaje = "Marcador Asignado.";
+            }else {
+                mensaje = "No se pudo asignar marcador.";
+            
+        }
         } 
         catch (SQLException sqlexception) {
          throw new MiExcepcion("Error insertando goles", sqlexception);
@@ -68,7 +95,7 @@ public class GoleadoresDAO {
             statement.setInt(1, gol.getNumeroGoles());
             statement.setInt(2, gol.getIdTorneo());
             statement.setInt(3, gol.getIdEquipo());
-            statement.setInt(4, gol.getIdJugador());
+            statement.setLong(4, gol.getIdJugador());
            
             
             //el resulset trae el numero de rows afectadas
@@ -94,7 +121,7 @@ public class GoleadoresDAO {
             statement = conexion.prepareStatement("Delete from tablaGoleadores where idTorneo=? and idJugador and idEquipo;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, gol.getNumeroGoles());
-            statement.setInt(2, gol.getIdJugador());
+            statement.setLong(2, gol.getIdJugador());
             statement.setInt(3, gol.getIdEquipo());
             statement.setInt(4, gol.getIdTorneo());
             rtdo = statement.executeUpdate();
@@ -129,7 +156,7 @@ public class GoleadoresDAO {
                 gol.setNumeroGoles(rs.getInt("numeroGoles"));
                 gol.setIdEquipo(rs.getInt("idEquipo"));
                 gol.setIdTorneo(rs.getInt("idTorneo"));
-                gol.setIdJugador(rs.getInt("idJugador"));
+                gol.setIdJugador(rs.getLong("idJugador"));
                 
                
                 //agregamos el objeto dto al arreglo
@@ -155,27 +182,29 @@ public class GoleadoresDAO {
 
     }
 
-    public GoleadoresDTO listarUno(GoleadoresDTO gol, Connection conexion) throws MiExcepcion {
+    public List<GoleadoresDTO> listarUno(int idTorneo, long idJugador, int idEquipo, Connection conexion) throws MiExcepcion {
+        ArrayList<GoleadoresDTO> goles = new ArrayList();
         try {
             //preparamos la consulta 
-            statement = conexion.prepareStatement("SELECT numeroGoles,idJugador, idTorneo, idEquipo"
-                    + "WHERE idTorneo = ? and idJugador=? and idQuipo=? ;");
-            statement.setInt(1,gol.getNumeroGoles());
-            statement.setInt(2,gol.getIdJugador());
-            statement.setInt(3,gol.getIdEquipo());
-            statement.setInt(4,gol.getIdTorneo());
+            statement = conexion.prepareStatement("SELECT numeroGoles,idJugador, idTorneo, idEquipo "
+                    + "FROM tablagoleadores "
+                    + "WHERE idTorneo = ? and idJugador=? and idEquipo=? ;");
+            statement.setInt(1,idTorneo);
+            statement.setLong(2,idJugador);
+            statement.setInt(3,idEquipo);
             rs = statement.executeQuery();
             //mientras halla registros
             while (rs.next()) {
+            GoleadoresDTO gol = new GoleadoresDTO();
                gol.setNumeroGoles(rs.getInt("numeroGoles"));
                gol.setIdEquipo(rs.getInt("idEquipo"));
                gol.setIdJugador(rs.getInt("idJugador"));
                gol.setIdTorneo(rs.getInt("idTorneo"));
-               
+            goles.add(gol);
             }
 
         } catch (SQLException ex) {
-            throw new MiExcepcion("Error listando goles", ex);
+            throw new MiExcepcion("Error listando goles"+ex.getMessage(), ex);
         }
 //        finally {
 //            try{
@@ -188,6 +217,6 @@ public class GoleadoresDAO {
 //        }
 //        }
         //devolvemos el usuario que se encontro
-        return gol;
+        return goles;
     }
 }

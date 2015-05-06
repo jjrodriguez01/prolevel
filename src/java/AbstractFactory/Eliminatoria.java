@@ -230,7 +230,7 @@ public class Eliminatoria extends Torneo {
             clave++;
             equipos.put(clave, eq);
         }
-        int ronda = 2;
+        int ronda = 3;
         int idTorneo = equipos.get(1).getTorneoIdTorneo();
         int estado = 0;//estado del partido 0=por jugar
         FachadaTorneos partido = new FachadaTorneos();

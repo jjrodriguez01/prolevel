@@ -5,6 +5,7 @@
  */
 package facade;
 
+import controlador.Conexion;
 import java.sql.Connection;
 import java.util.List;
 import modelo.CanchaDTO;
@@ -25,7 +26,6 @@ import persistencia.PartidoDAO;
 import persistencia.TablaPosicionesDAO;
 import persistencia.TarjetasDAO;
 import persistencia.TorneoDAO;
-import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -54,7 +54,7 @@ public class FachadaTorneos {
         goleadoresdao = new GoleadoresDAO();
         partidodao = new PartidoDAO();
         tpdao = new TablaPosicionesDAO();
-        conexion = Conexion.getInstance();
+        conexion = Conexion.getConnection();
     }
     
 //    empiezo con torneoDAO
@@ -256,10 +256,19 @@ public class FachadaTorneos {
     public List<TarjetasDTO> listarTarjetasJugador(int torneo, int jugador) throws MiExcepcion{
         return tardao.listarUno(torneo, jugador, conexion);
     }
+    
 //    AHORA GOLEADORES DAO
     
     public String insertarGoles(GoleadoresDTO gol) throws MiExcepcion{
         return goleadoresdao.insertar(gol, conexion);
+    }
+    
+    public List<GoleadoresDTO> existeGoleador(int idTorneo, long idJugador, int idEquipo) throws MiExcepcion{
+        return goleadoresdao.listarUno(idTorneo, idJugador, idEquipo, conexion);
+    }
+    
+    public String insertarPrimerGol(GoleadoresDTO gol) throws MiExcepcion{
+        return goleadoresdao.insertarPrimer(gol, conexion);
     }
     
 //    AHORA POSICIONES
