@@ -125,6 +125,29 @@ public class GestionEliminatoria extends HttpServlet {
             response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+eliminatoria.getIdTorneo());
         }
         //
+        //si se van a iniciar las semifinales
+        //
+        else if (request.getParameter("iniciarfinal")!=null && request.getParameter("iniciarfinal").equals("fin")){
+            FachadaTorneos facadeTorneos = new FachadaTorneos();
+            TorneoDTO eliminatoria = new TorneoDTO();
+            //creo un dto completo de esta eliminatoria
+            eliminatoria.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+            eliminatoria.setNombre(request.getParameter("nombreTorneo"));
+            eliminatoria.setFechaFin(request.getParameter("fechaFin"));
+            eliminatoria.setFechaInicio(request.getParameter("fechaInicio"));
+            eliminatoria.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidadEquipos")));
+            eliminatoria.setTipo(Integer.parseInt(request.getParameter("tipo")));
+            FabricaTorneo fabrica = new FabricaTorneo();
+            Eliminatoria eli = fabrica.creaEliminatoria(eliminatoria);//creo la eliminatoria
+            // CREO EL LIST CON LOS EQUIPOS EN CUARTOS
+            
+            ArrayList<EquiposdeltorneoDTO> esemi = new ArrayList();
+            esemi = (ArrayList) facadeTorneos.listarEquiposEnFinal(eliminatoria.getIdTorneo());
+            // llamo el metodo hacer cuartos 
+            eli.cuartaRondaDiesciseis(esemi);
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+eliminatoria.getIdTorneo());
+        }
+        //
         //inicio a insertar fechas de una eli de 16
         //
         else if(request.getParameter("asignarfechas")!=null && request.getParameter("foctavos")!=null){
@@ -770,7 +793,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo1 + "<strong>"+" "+p1.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo2 + "<strong>"+" "+p1.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
@@ -815,7 +838,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo3 + "<strong>"+" "+p2.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo4 + "<strong>"+" "+p2.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
@@ -860,7 +883,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo5 + "<strong>"+" "+p3.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo6 + "<strong>"+" "+p3.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop3, emailsp3.toString());
@@ -905,7 +928,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo7 + "<strong>"+" "+p4.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo8 + "<strong>"+" "+p4.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
@@ -950,7 +973,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo9 + "<strong>"+" "+p5.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo10 + "<strong>"+" "+p5.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop5, emailsp5.toString());
@@ -995,7 +1018,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo11 + "<strong>"+" "+p6.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo12 + "<strong>"+" "+p6.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop6, emailsp6.toString());
@@ -1040,7 +1063,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo13 + "<strong>"+" "+p7.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo14 + "<strong>"+" "+p7.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop7, emailsp7.toString());
@@ -1085,7 +1108,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo15 + "<strong>"+" "+p8.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo16 + "<strong>"+" "+p8.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop8, emailsp8.toString());
@@ -1148,7 +1171,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo1 + "<strong>"+" "+p1.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo2 + "<strong>"+" "+p1.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
@@ -1193,7 +1216,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo3 + "<strong>"+" "+p2.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo4 + "<strong>"+" "+p2.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
@@ -1239,7 +1262,7 @@ public class GestionEliminatoria extends HttpServlet {
                     +"Fue <br/>"
                     +"<hr>"
                     + nequipo3 + "<strong>"+" "+p3.getMarcador1() + "</strong>"
-                    +"<br</>"
+                    +"<br/>"
                     + nequipo4 + "<strong>"+" "+p3.getMarcador2() + "</strong>"
                     +"<br/>";
             Correo.sendMail(asunto, cuerpop3, emailsp2.toString());
@@ -1290,6 +1313,112 @@ public class GestionEliminatoria extends HttpServlet {
             Correo.sendMail(asunto, cuerpop4, emailsp4.toString());
             //fin del cuarto
             }
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo);
+        }
+        
+        //
+        //Asignar marcadores de semifinal
+        //
+        //
+        else if(request.getParameter("asignarMarcadorSemi")!=null && request.getParameter("fsemi")!=null){
+            int ronda = 2;
+            int tipoTorneo = 3;//necesito el tipo de eliminatoria para poder crearla y llamar al metodo hacercuartos
+            int idTorneo= Integer.parseInt(request.getParameter("idTorneo"));
+            int estado = 1;//todos los partidos pasan a estado 1 q es jugado
+            String asunto = "Notificacion resultado de partidos";
+            FachadaTorneos facadeTorneo = new FachadaTorneos();
+            
+             //pregunto si hay datos de partido 1
+            if (request.getParameter("0munos")!=null && request.getParameter("0mdoss")!=null) {
+            //comienzo con el primer partido
+            PartidoDTO p1 = new PartidoDTO();
+            int numeroPartido = 1;
+            p1.setRonda(ronda);
+            p1.setEstado(estado);
+            p1.setNumero(numeroPartido);
+            p1.setEquipo1(Integer.parseInt(request.getParameter("0equipo1")));
+            p1.setEquipo2(Integer.parseInt(request.getParameter("0equipo2")));
+            // m1 == marcador 1
+            p1.setMarcador1(Integer.parseInt(request.getParameter("0munos")));
+            p1.setMarcador2(Integer.parseInt(request.getParameter("0mdoss")));
+            p1.setIdTorneo(idTorneo);
+            facadeTorneo.insertarMarcador(p1);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p1.getMarcador1() > p1.getMarcador2()? p1.getEquipo1() : p1.getEquipo2();
+            facadeTorneo.insertarAFinal(idTorneo, ganador);
+            StringBuilder emailsp1 = new StringBuilder("");
+            ArrayList<String> correosp1eq = new ArrayList();
+            //array list con los correos de los jugadores de estos dos equipos
+            correosp1eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo1")));
+            correosp1eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("0equipo2"))));
+            for (int i = 0; i < correosp1eq.size(); i++) {
+                emailsp1.append(correosp1eq.get(i));
+                if (i != correosp1eq.size() -1 && correosp1eq.size() > 0) {
+                    emailsp1.append(" ,");
+                }
+            }
+            //envio los correos
+            String nequipo1 = request.getParameter("0nequipo1");
+            String nequipo2 = request.getParameter("0nequipo2");
+            String cuerpop1 = "El resultado del partido <strong>"+nequipo1+"</strong>"
+                    +" <span>vs</span> <br/> "
+                    + "<strong>"+nequipo2+"</strong>"
+                    +"<br/>"
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo1 + "<strong>"+" "+p1.getMarcador1() + "</strong>"
+                    +"<br/>"
+                    + nequipo2 + "<strong>"+" "+p1.getMarcador2() + "</strong>"
+                    +"<br/>";
+            Correo.sendMail(asunto, cuerpop1, emailsp1.toString());
+            //fin del primer partido
+            }
+            //pregunto asi hay 2 p
+            if(request.getParameter("1munos")!=null && request.getParameter("1mdoss")!=null ){
+            //comienzo con el segundo
+            PartidoDTO p2 = new PartidoDTO();   
+            int numeroPartido = 2;
+            p2.setRonda(ronda);
+            p2.setEstado(estado);
+            p2.setNumero(numeroPartido);
+            p2.setEquipo1(Integer.parseInt(request.getParameter("1equipo1")));
+            p2.setEquipo2(Integer.parseInt(request.getParameter("1equipo2")));
+            // m1 == marcador 1
+            p2.setMarcador1(Integer.parseInt(request.getParameter("1munos")));
+            p2.setMarcador2(Integer.parseInt(request.getParameter("1mdoss")));
+            p2.setIdTorneo(idTorneo);
+            facadeTorneo.insertarMarcador(p2);
+            //escojo al ganador ? si condicion = valor = al q esta despues de ? sino el q esta despues de :
+            int ganador = p2.getMarcador1()> p2.getMarcador2()? p2.getEquipo1() : p2.getEquipo2();
+            facadeTorneo.insertarAFinal(idTorneo, ganador);
+            StringBuilder emailsp2 = new StringBuilder("");//emails 
+            ArrayList<String> correosp2eq = new ArrayList();
+            //array list con los correos de los jugadores de estos dos equipos
+            correosp2eq = (ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo1")));
+            correosp2eq.addAll((ArrayList) facadeTorneo.correosJugadoresEquipo(idTorneo,Integer.parseInt(request.getParameter("1equipo2"))));
+            for (int i = 0; i < correosp2eq.size(); i++) {
+                emailsp2.append(correosp2eq.get(i));
+                if (i != correosp2eq.size() -1 && correosp2eq.size() > 0) {
+                    emailsp2.append(" ,");
+                }
+            }
+            //envio los correos
+            String nequipo3 = request.getParameter("1nequipo1");
+            String nequipo4 = request.getParameter("1nequipo2");
+            String cuerpop2 = "El resultado del partido <strong>"+nequipo3+"</strong>"
+                    +" <span>vs</span> <br/> "
+                    + "<strong>"+nequipo4+"</strong>"
+                    +"<br/>"
+                    +"Fue <br/>"
+                    +"<hr>"
+                    + nequipo3 + "<strong>"+" "+p2.getMarcador1() + "</strong>"
+                    +"<br/>"
+                    + nequipo4 + "<strong>"+" "+p2.getMarcador2() + "</strong>"
+                    +"<br/>";
+            Correo.sendMail(asunto, cuerpop2, emailsp2.toString());
+            //fin del segundo
+            }
+            
             response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo);
         }
         //

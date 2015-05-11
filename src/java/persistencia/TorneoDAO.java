@@ -128,4 +128,22 @@ public class TorneoDAO {
         }
         return listarCopas;
     }
+    
+    public boolean hayTercerPuestoEli(int idTorneo, Connection conexion) throws MiExcepcion{
+        boolean tercer = false;
+        try{
+            statement = conexion.prepareStatement("SELECT tercerPuesto FROM eliminatoria "
+                    + "WHERE idEliminatoria = ?;");
+            statement.setInt(1, idTorneo);
+            rs = statement.executeQuery();
+            
+            while(rs.next()){
+                tercer = rs.getBoolean("tercerPuesto");
+            }
+            
+        }catch(SQLException sqle){
+            throw new MiExcepcion("Error "+sqle.getMessage(),sqle);
+        }
+        return tercer;
+    }
 }

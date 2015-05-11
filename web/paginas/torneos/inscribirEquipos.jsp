@@ -240,8 +240,13 @@ if (request.getParameter("registro")!=null) {
                 </button>
                 </c:if>
                 <c:if test="${rondas.pjugados == 12}">
-                <button name="iniciarsemi" value="semi" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas == 20}"> disabled="disabled" </c:if>>
+                <button name="iniciarsemi" value="semi" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas == 14}"> disabled="disabled" </c:if>>
                     Iniciar Semi final
+                </button>
+                </c:if>
+                <c:if test="${rondas.pjugados == 14}">
+                <button name="iniciarfinal" value="fin" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas == 20}"> disabled="disabled" </c:if>>
+                    Iniciar Final
                 </button>
                 </c:if>
             </form>

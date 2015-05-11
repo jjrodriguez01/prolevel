@@ -425,6 +425,34 @@ public class PartidoDAO {
 //        }
         return mensaje;
     }
+    
+    public synchronized String insertarFinal(int idTorneo, int codigoequipo, Connection conexion) throws MiExcepcion{
+        try {
+            statement = conexion.prepareStatement("INSERT INTO finales (idTorneo, codigoEquipo)"
+                    + " VALUES (?,?);");
+            statement.setInt(1, idTorneo);
+            statement.setInt(2, codigoequipo);
+            rtdo = statement.executeUpdate();
+            if (rtdo > 0) {
+                mensaje ="Se inserto el equipo a finales";
+            }else{
+                mensaje = "No se inserto el equipo";
+            }
+            
+        } catch (SQLException ex) {
+            throw new MiExcepcion("No se inserto el equipo a cuartos error: "+ex.getMessage(), ex);
+        }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                mensaje = "Ha ocurrido un error "+ex.getMessage();
+//            }
+//        }
+        return mensaje;
+    }
 
 }
   

@@ -194,9 +194,9 @@ $('[data-toggle="popover"]').popover(
                             <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="validarEmpate${vs.index}()"/></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="validarEmpate${vs.index}()"/></c:if><span>${row.marcador1}</span></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="validarEmpate${vs.index}()" /></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="validarEmpate${vs.index}()" /></c:if><span>${row.marcador2}</span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -265,9 +265,9 @@ var marcador2 = $("#${vs.index}mdos").val();
 <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" id="${vs.index}munoc" name="${vs.index}munoc" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="noEmpateCuartos${vs.index}()"/></td>
+                                <td><c:if test="${row.marcador1 ==null}"> <input type="number" id="${vs.index}munoc" name="${vs.index}munoc" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="noEmpateCuartos${vs.index}()"/></c:if><span>${row.marcador1}</span></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" id="${vs.index}mdosc" name="${vs.index}mdosc" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="noEmpateCuartos${vs.index}()" /></td>
+                                <td><c:if test="${row.marcador2 ==null}"> <input type="number" id="${vs.index}mdosc" name="${vs.index}mdosc" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="noEmpateCuartos${vs.index}()" /></c:if><span><c:out value="${row.marcador2}"/></span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -326,16 +326,16 @@ var marcador2 = $("#${vs.index}mdosc").val();
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 3
                     </sql:query>
     
-                    <form>
+                        <form action="../../GestionEliminatoria">
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
                             <c:forEach var="row" items="${semi.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}munos" name="${vs.index}munos" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="noEmpateSemi${vs.index}()"/></c:if><span><c:out value="${row.marcador1}" /></span></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td><c:if test="${row.marcador2 ==null}"><input type="number" id="${vs.index}mdoss" name="${vs.index}mdoss" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="noEmpateSemi${vs.index}()" /></c:if><span><c:out value="${row.marcador2}" /></span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -343,11 +343,23 @@ var marcador2 = $("#${vs.index}mdosc").val();
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
                                 <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
                             </tr>
+<script>
+    function noEmpateSemi${vs.index}(){
+var marcador1 = $("#${vs.index}munos").val() != null?$("#${vs.index}munos").val() : 1;
+var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val() : 2;
+    if (marcador1 == marcador2) {
+        alert("Este torneo es tipo knock-out no pueden haber empates");
+        document.getElementById("asignarMarcadorSemi").setAttribute("disabled","true");
+}else{
+    document.getElementById("asignarMarcadorSemi").removeAttribute("disabled");
+}
+}
+</script>
                         </c:forEach>
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
+<button class="btn btn-primary" id="asignarMarcadorSemi" name="asignarfechas">Añadir Marcador</button>
                     <input type="hidden" name="fsemi" value="semi" />
                     </form>
                 </div>

@@ -16,6 +16,7 @@ import modelo.JugadoresporequipoDTO;
 import modelo.PartidoDTO;
 import modelo.TablaPosicionesDTO;
 import modelo.TarjetasDTO;
+import modelo.TercerosDTO;
 import modelo.TorneoDTO;
 import persistencia.CanchaDAO;
 import persistencia.EquipoDAO;
@@ -25,6 +26,7 @@ import persistencia.JugadoresporequipoDAO;
 import persistencia.PartidoDAO;
 import persistencia.TablaPosicionesDAO;
 import persistencia.TarjetasDAO;
+import persistencia.TercerosDAO;
 import persistencia.TorneoDAO;
 import utilidades.MiExcepcion;
 
@@ -43,6 +45,7 @@ public class FachadaTorneos {
     GoleadoresDAO goleadoresdao;
     PartidoDAO partidodao;
     TablaPosicionesDAO tpdao;
+    TercerosDAO tercer;
     Connection conexion;
     public FachadaTorneos() throws MiExcepcion {
         tdao = new TorneoDAO();
@@ -54,6 +57,7 @@ public class FachadaTorneos {
         goleadoresdao = new GoleadoresDAO();
         partidodao = new PartidoDAO();
         tpdao = new TablaPosicionesDAO();
+        tercer = new TercerosDAO();
         conexion = Conexion.getConnection();
     }
     
@@ -73,6 +77,10 @@ public class FachadaTorneos {
     
     public List<TorneoDTO> listarTorneos() throws MiExcepcion{
         return tdao.ListarTodo(conexion);
+    }
+    
+    public boolean HayTercerPuestoEli(int idTorneo) throws MiExcepcion{
+        return tdao.hayTercerPuestoEli(idTorneo, conexion);
     }
     
 //    SIGO CON CANCHASDAO
@@ -146,6 +154,15 @@ public class FachadaTorneos {
     public List<EquiposdeltorneoDTO> listarEquiposEnSemi(int idTorneo) throws MiExcepcion{
         return edtdao.listarTodoSemi(idTorneo, conexion);
     }
+    /**
+     * Devuelve un List con los equipos en la final
+     * @param idTorneo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public List<EquiposdeltorneoDTO> listarEquiposEnFinal(int idTorneo) throws MiExcepcion{
+        return edtdao.listarTodoFin(idTorneo, conexion);
+    }
     
     public List<String> correosJugadoresEquipo(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return edtdao.correosJugadoresEquipo(idTorneo, codigoEquipo, conexion);
@@ -202,6 +219,17 @@ public class FachadaTorneos {
      */
     public String insertarASemi(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return partidodao.insertarSemi(idTorneo, codigoEquipo, conexion);
+    }
+    
+    /**
+     * Inserta un equipo a finales en un torneo
+     * @param idTorneo
+     * @param codigoEquipo
+     * @return
+     * @throws MiExcepcion 
+     */
+    public String insertarAFinal(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return partidodao.insertarFinal(idTorneo, codigoEquipo, conexion);
     }
     /** 
      * 
@@ -276,5 +304,16 @@ public class FachadaTorneos {
     public String insertarPosicion(TablaPosicionesDTO tp) throws MiExcepcion{
         return tpdao.insertar(tp, conexion);
     }    
+    
+    
+    //AHORA TERCEROSDAO
+    
+    public String insertarATerceros(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return tercer.insertarTercero(idTorneo, codigoEquipo, conexion);
+    }
+    
+    public List<TercerosDTO> listarPorTercerPuesto(int idTorneo) throws MiExcepcion{
+        return tercer.listarTodoTerceros(idTorneo, conexion);
+    }
     
 }

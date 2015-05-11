@@ -396,14 +396,15 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="validarCampos" type="submit" onclick="igualesCuartos()">Añadir Fechas</button>
+<button class="btn btn-primary" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="cuartos" />                   
 <input type="hidden" name="fcuartos" value="cuartos" />
 </form>
 <script>
     function igualesCuartos(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartoscuartos.cp0.value : 'cancha0';   
+    
+var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartos.cp0.value : 'cancha0';   
 var fecha0 = (document.calendarcuartos.fecha0.value !== null) ? document.calendarcuartos.fecha0.value: 'fecha0';
 var hora0 = (document.calendarcuartos.hora0.value !== null) ? document.calendarcuartos.hora0.value : 'hora0';
 var partido1 = cancha0+fecha0+hora0;
@@ -418,7 +419,7 @@ var fecha2 = (document.calendarcuartos.fecha2.value !== null) ? document.calenda
 var hora2 = (document.calendarcuartos.hora2.value !== null) ? document.calendarcuartos.hora2.value : 'hora2';
 var partido3 = cancha2+fecha2+hora2;
 
-var cancha3 = (document.calendarcuartos.cp3.value !== null) ? document.calendarcuartoscuartos.cp3.value : 'cancha3';
+var cancha3 = (document.calendarcuartos.cp3.value !== null) ? document.calendarcuartos.cp3.value : 'cancha3';
 var fecha3 = (document.calendarcuartos.fecha3.value !== null) ? document.calendarcuartos.fecha3.value: 'fecha3';
 var hora3 = (document.calendarcuartos.hora3.value !== null) ? document.calendarcuartos.hora3.value : 'hora3';
 var partido4 = cancha3+fecha3+hora3;
@@ -435,6 +436,7 @@ var partido4 = cancha3+fecha3+hora3;
     }else{//si nada fue igual envio
         $("#calendarcuartos").submit();
     }
+        
     }
 </script>
                 </div>
@@ -513,7 +515,7 @@ var partido4 = cancha3+fecha3+hora3;
 <script>
     function igualesSemi(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartoscuartos.cp0.value : 'cancha0';   
+var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartos.cp0.value : 'cancha0';   
 var fecha0 = (document.calendarcuartos.fecha0.value !== null) ? document.calendarcuartos.fecha0.value: 'fecha0';
 var hora0 = (document.calendarcuartos.hora0.value !== null) ? document.calendarcuartos.hora0.value : 'hora0';
 var partido1 = cancha0+fecha0+hora0;

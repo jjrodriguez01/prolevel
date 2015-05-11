@@ -164,25 +164,15 @@ div.arbol_eli16{
     top: 770px;
     left: 345px;
 }
-
 div#semi1{
     position: absolute;
     width: 180px;
     max-width: 181px;
     height: 95px;
-    top: 170px;
-    left: 695px;
+    top: 176px;
+    left: 697px;
 }
-#uniong5dos{
-    position: absolute;
-    left: 548px;
-    top: 215px;
-    width: 149px;
-    height: 1px;
-    border-top: 2px solid black;
-}
-
-#uniong6uno{
+#uniong5uno{
     position: absolute;
     height: 248px;
     width: 20px;
@@ -192,29 +182,38 @@ div#semi1{
     top: 98px;
     left: 525px;
 }
+#uniong5dos{
+    position: absolute;
+    left: 547px;
+    top: 215px;
+    width: 149px;
+    height: 1px;
+    border-top: 2px solid black;
+}
+
 div#semi2{
     position: absolute;
     width: 180px;
     max-width: 181px;
     height: 95px;
-    top: 620px;
-    left: 645px;
+    top: 650px;
+    left: 696px;
 }
 
 #uniong6uno{
     position: absolute;
-    height: 70px;
+    height: 243px;
     width: 20px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     border-right: 2px solid black;
-    top: 560px;
-    left: 179px;
+    top: 584px;
+    left: 525px;
 }
 #uniong6dos{
     position: absolute;
-    left: 197px;
-    top: 590px;
+    left: 545px;
+    top: 695px;
     width: 149px;
     height: 1px;
     border-top: 2px solid black;
@@ -223,11 +222,17 @@ div#semi2{
 
 table{
     width: 180px;
+    min-width: 178px;
+    max-width: 181px;
     height: 95px;
 }
-table tr.equipo{
-    width: 100px;
+table td.equipo{
+    width: 150px;
+    min-width: 149px;
+    max-width: 151px;
+    overflow: scroll;
 }
-table tr.marcador{
-    width: 80px;
+table td.marcador{
+    width: 30px;
+    min-width: 29px;
 }

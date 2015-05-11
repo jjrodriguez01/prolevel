@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import modelo.EquiposdeltorneoDTO;
 import modelo.PartidoDTO;
+import modelo.TercerosDTO;
 import modelo.TorneoDTO;
 import persistencia.EliminatoriaDAO;
 import utilidades.MiExcepcion;
@@ -258,6 +259,72 @@ public class Eliminatoria extends Torneo {
         pdos.setNumero(n2);
         pdos.setEstado(estado);
         partido.insertarPartido(pdos);
+        
+    }
+    
+    public void cuartaRondaDiesciseis(List<EquiposdeltorneoDTO> arr) throws MiExcepcion{
+        ArrayList<EquiposdeltorneoDTO> arrayeq = (ArrayList)arr;
+        Map<Integer,EquiposdeltorneoDTO> equipos = new TreeMap<Integer,EquiposdeltorneoDTO>();
+        int clave = 0;
+        for(EquiposdeltorneoDTO eq : arrayeq){
+            clave++;
+            equipos.put(clave, eq);
+        }
+        int ronda = 4;
+        int idTorneo = equipos.get(1).getTorneoIdTorneo();
+        int estado = 0;//estado del partido 0=por jugar
+        FachadaTorneos partido = new FachadaTorneos();
+        //instancio la cantidad de partidos que necesito
+        //para un torneo de 16 equipos seran 4 en segunda ronda
+        PartidoDTO puno = new PartidoDTO();
+        
+        //comienzo a insertar los partidos
+        
+        puno.setRonda(ronda);
+        puno.setEquipo1(equipos.get(1).getEquipoCodigo());
+        puno.setEquipo2(equipos.get(2).getEquipoCodigo());
+        puno.setIdTorneo(idTorneo);
+        int n1 = 1;//primer partido
+        puno.setNumero(n1);
+        puno.setEstado(estado);
+        partido.insertarPartido(puno);
+        //miro si hay necesidad de tercer puesto
+        boolean hayTercerPuesto = partido.HayTercerPuestoEli(idTorneo);
+        //si es true hago el tercer puesto
+        if (hayTercerPuesto) {
+            ArrayList<TercerosDTO> t = new ArrayList();
+            t = (ArrayList<TercerosDTO>) partido.listarPorTercerPuesto(idTorneo);
+            porTercerPuesto(t);
+        }
+        
+    }
+    
+    public void porTercerPuesto(List<TercerosDTO> arr) throws MiExcepcion{
+        ArrayList<TercerosDTO> arrayeq = (ArrayList)arr;
+        Map<Integer,TercerosDTO> equipos = new TreeMap<Integer,TercerosDTO>();
+        int clave = 0;
+        for(TercerosDTO eq : arrayeq){
+            clave++;
+            equipos.put(clave, eq);
+        }
+        int ronda = 0;
+        int idTorneo = equipos.get(1).getIdTorneo();
+        int estado = 0;//estado del partido 0=por jugar
+        FachadaTorneos partido = new FachadaTorneos();
+        //instancio la cantidad de partidos que necesito
+        //para un torneo de 16 equipos seran 4 en segunda ronda
+        PartidoDTO puno = new PartidoDTO();
+        
+        //comienzo a insertar los partidos
+        
+        puno.setRonda(ronda);
+        puno.setEquipo1(equipos.get(1).getCodigoEquipo());
+        puno.setEquipo2(equipos.get(2).getCodigoEquipo());
+        puno.setIdTorneo(idTorneo);
+        int n1 = 1;//primer partido
+        puno.setNumero(n1);
+        puno.setEstado(estado);
+        partido.insertarPartido(puno);
         
     }
 }
