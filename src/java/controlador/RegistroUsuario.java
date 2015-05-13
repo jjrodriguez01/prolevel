@@ -46,6 +46,7 @@ public class RegistroUsuario extends HttpServlet {
           udto.setSegundoApellido(request.getParameter("sape"));
           udto.setFecha(request.getParameter("nac"));
           udto.setTelefono(request.getParameter("tel"));
+          udto.setEmail(request.getParameter("email"));
           udto.setContraseña(request.getParameter("pass"));
           
           String ins = facadeUsu.insertarUsuario(udto);

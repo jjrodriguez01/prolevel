@@ -104,10 +104,9 @@
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
-            <li role="presentation"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation" class="active"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
             <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
-            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>Resultados</a></li>
         </ul>
     </div>
     </div>
@@ -634,9 +633,85 @@ and numero = 2;
 </div>
 <div id="uniong6uno"></div>
 <div id="uniong6dos"></div>
+
+
+<%--query del partdido de la final--%>
+<sql:query var="pfin" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+ronda = 4
+and idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 1;
+</sql:query>
+<div id="final">
+    <div class="panel panel-danger">
+        <div class="panel-heading">Final</div>
+                    <table id="eqf" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${pfin.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+    </div>
+</div>
+<div id="uniong7uno"></div>
+<div id="uniong7dos"></div>
+
+<%--query del partdido de la final--%>
+<sql:query var="ptercer" dataSource="jdbc/pro-level">
+select 
+   (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
+marcador1, marcador2
+from
+    partidos
+ INNER JOIN equiposdeltorneo 
+ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+INNER JOIN equipo
+ON equiposdeltorneo.equipoCodigo = equipo.codigo
+where
+ronda = 5
+and idTorneo = ? <sql:param value="${param.idTorneo}"/> 
+and numero = 1;
+</sql:query>
+<div id="terceros">
+    <div class="panel panel-default">
+        <div class="panel-heading">Tercer Puesto</div>
+                    <table id="eqf" class="table table-bordered">
+                        <tbody>
+                            <c:forEach var="row" items="${ptercer.rows}" >
+                            <tr>
+                                <td class="equipo">${row.eq1}</td>
+                                <td class="marcador">${row.marcador1}</td>
+                            </tr>
+                            <tr>
+                                <td class="equipo">${row.eq2}</td>
+                                <td class="marcador">${row.marcador2}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+    </div>
+</div>
                 </div>
             </div>
-        </div>
     </section>
 </c:if><%--si es de 16 equipos--%>
 </c:if><%--si es eliminatoria--%>

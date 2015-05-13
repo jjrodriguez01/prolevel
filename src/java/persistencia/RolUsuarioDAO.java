@@ -55,14 +55,15 @@ public class RolUsuarioDAO {
         return mensaje;
     }
 
-    public String actualizar(RolUsuarioDTO usu,Connection conexion) {
+    public String actualizar(int rol, long idUsuario,Connection conexion) {
         try {
             //preparamos la sentencia sql
-            String sql = "UPDATE RolUsuario SET RolesidRol=?,UsuarioIdUsuario=? WHERE RolesidRol=?;";
+            String sql = "UPDATE Rol_Usuario SET RolesidRol=? WHERE UsuarioIdUsuario=?;";
             //pasamos el query a la conexion
            //sacamos los datos del dto de la tabla
             statement = conexion.prepareStatement(sql);
-            statement.setInt(2, usu.getUsuarioIdUsuario());
+            statement.setInt(1, rol);
+            statement.setLong(2, idUsuario);
             
             //el resulset trae el numero de rows afectadas
             rtdo = statement.executeUpdate();
@@ -158,6 +159,9 @@ public class RolUsuarioDAO {
 //        finally{
 //            try{
 //                statement.close();
+//                if (conexion != null) {
+//                    conexion.close();
+//                }
 //            }catch (SQLException ex) {
 //            throw new MiExcepcion("Error obteniendo rol", ex);
 //        }

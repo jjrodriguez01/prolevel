@@ -200,7 +200,17 @@ on torneo.idTorneo = tablagoleadores.idTorneo
 </html>
 <% }//si el rol fue uno se muestra la anterior pagina
     else if (rol == 2) {
-                            
+        %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=rol%>jhggf</title>
+    </head>
+    <body>
+        <h1>ñlugygiguygufg</h1>
+    </body>
+</html>
+<%                
     }//si el rol fue 2
     }//si no hay sesion
             else{

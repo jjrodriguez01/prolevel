@@ -51,7 +51,7 @@ public class Ingreso extends HttpServlet {
                     HttpSession miSesion = request.getSession(true);
                     miSesion.setAttribute("usr", datosUsuario);
                     miSesion.setAttribute("rol", numerorol);
-                    response.sendRedirect("paginas/inicio.jsp"); 
+                    response.sendRedirect("paginas/inicio.jsp?rol="+numerorol); 
                     }              
                 }else {
                 response.sendRedirect("index.jsp?auth=noauth");

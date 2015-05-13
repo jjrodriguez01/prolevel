@@ -110,7 +110,7 @@ $(document).ready(function() {
     <div class="row">
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
             <li role="presentation"><a href="resultadoseli.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
@@ -399,6 +399,7 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
 <button class="btn btn-primary" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="cuartos" />                   
 <input type="hidden" name="fcuartos" value="cuartos" />
+<% if(request.getParameter("cuartos")!=null){%> <P style="color:green"><%=request.getParameter("cuartos")%></P> <% }  %>
 </form>
 <script>
     function igualesCuartos(){
@@ -443,11 +444,11 @@ var partido4 = cancha3+fecha3+hora3;
                 </div>
         </div>
     <div class="row">
-            <div class="col-lg-12">
+        <div class="col-lg-12" id="csemi">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
-                    <sql:query var="cuartos" dataSource="jdbc/pro-level">
+                    <sql:query var="semi" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -455,7 +456,9 @@ var partido4 = cancha3+fecha3+hora3;
                         partidos.cancha,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -469,7 +472,7 @@ var partido4 = cancha3+fecha3+hora3;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 3
                     </sql:query>
     
-                        <form id="calendarsemi" name="calendarsemi">
+                        <form action="../../GestionEliminatoria" id="calendarsemi" name="calendarsemi">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -483,7 +486,7 @@ var partido4 = cancha3+fecha3+hora3;
                         </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${semi.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
                                 <td><span>-</span></td>
@@ -491,15 +494,15 @@ var partido4 = cancha3+fecha3+hora3;
                                 <td>
                                     <select name="cp${vs.index}">
                                         <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" name="fecha${vs.index}"  /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="date" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -509,29 +512,28 @@ var partido4 = cancha3+fecha3+hora3;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="asignarfechas" type="button" onclick="igualesSemi">Añadir Fechas</button>
-                    <input type="hidden" name="fsemi" value="semi" />
+<button class="btn btn-primary" type="button" onclick="igualesSemi()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="asemi" />                    
+<input type="hidden" name="fsemi" value="semi" />
+<% if(request.getParameter("semi")!=null){%> <P style="color:green"><%=request.getParameter("semi")%></P> <% }  %>
                     </form>
 <script>
     function igualesSemi(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartos.cp0.value : 'cancha0';   
-var fecha0 = (document.calendarcuartos.fecha0.value !== null) ? document.calendarcuartos.fecha0.value: 'fecha0';
-var hora0 = (document.calendarcuartos.hora0.value !== null) ? document.calendarcuartos.hora0.value : 'hora0';
+var cancha0 = (document.calendarsemi.cp0.value !== null) ? document.calendarsemi.cp0.value : 'cancha0';   
+var fecha0 = (document.calendarsemi.fecha0.value !== null) ? document.calendarsemi.fecha0.value: 'fecha0';
+var hora0 = (document.calendarsemi.hora0.value !== null) ? document.calendarsemi.hora0.value : 'hora0';
 var partido1 = cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendarcuartos.cp1.value !== null) ? document.calendarcuartos.cp1.value : 'cancha1';
-var fecha1 = (document.calendarcuartos.fecha1.value !== null) ? document.calendarcuartos.fecha1.value: 'fecha1';
-var hora1 = (document.calendarcuartos.hora1.value !== null) ? document.calendarcuartos.hora1.value : 'hora1';
+var cancha1 = (document.calendarsemi.cp1.value !== null) ? document.calendarsemi.cp1.value : 'cancha1';
+var fecha1 = (document.calendarsemi.fecha1.value !== null) ? document.calendarsemi.fecha1.value: 'fecha1';
+var hora1 = (document.calendarsemi.hora1.value !== null) ? document.calendarsemi.hora1.value : 'hora1';
 var partido2 = cancha1+fecha1+hora1;
     
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+        if (partido1 === partido2) {
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
-        }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else{//si nada fue igual envio
-        $("#calendar").submit();
+        }else{//si nada fue igual envio
+        $("#calendarsemi").submit();
     }
         
     }
@@ -539,13 +541,19 @@ var partido2 = cancha1+fecha1+hora1;
                 </div>
                 </div>
         </div>
-                    
+<%--query para saber si la eli tiene tercer puesto --%>
+<sql:query var="ptercer" dataSource="jdbc/prolevel">
+    SELECT tercerPuesto FROM eliminatoria 
+    WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
+</sql:query>
+<c:set var="haytercer" value="${ptercer.rows[0]}" scope="page" />
+<c:if test="${haytercer == 1}">
     <div class="row">
-            <div class="col-lg-12">
+        <div class="col-lg-12" id="ctercerp">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Final</div>
+                    <div class="panel-heading">Tercer Puesto</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="cuartos" dataSource="jdbc/pro-level">
+                    <sql:query var="fin" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -553,7 +561,9 @@ var partido2 = cancha1+fecha1+hora1;
                         partidos.cancha,
                         partidos.ronda,
                         partidos.equipo1 as ceq1, 
-                        partidos.equipo2 as ceq2 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
                         FROM 
                         partidos 
                         INNER JOIN equiposdeltorneo 
@@ -581,7 +591,7 @@ var partido2 = cancha1+fecha1+hora1;
                         </thead>
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${cuartos.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${fin.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
                                 <td><span>-</span></td>
@@ -589,15 +599,93 @@ var partido2 = cancha1+fecha1+hora1;
                                 <td>
                                     <select name="cp${vs.index}">
                                         <option></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" name="fecha${vs.index}" /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" /></td>
+                                <td><input type="date" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <input type="hidden" name="ftercer" value="terceros" />
+<% if(request.getParameter("tercer")!=null){%> <P style="color:green"><%=request.getParameter("tercer")%></P> <% }  %>
+                    </form>
+                </div>
+                </div>
+        </div>                
+</c:if>
+                    
+    <div class="row">
+        <div class="col-lg-12" id="cfinal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Final</div>
+                    <%--query para los cuartos--%>
+                    <sql:query var="fin" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
+                    </sql:query>
+    
+                    <form>
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${fin.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="date" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
                                 <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
@@ -609,6 +697,7 @@ var partido2 = cancha1+fecha1+hora1;
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
                     <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
                     <input type="hidden" name="ffinal" value="final" />
+<% if(request.getParameter("final")!=null){%> <P style="color:green"><%=request.getParameter("final")%></P> <% }  %>
                     </form>
                 </div>
                 </div>

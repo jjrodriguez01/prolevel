@@ -8,6 +8,7 @@ package facade;
 import controlador.Conexion;
 import java.sql.Connection;
 import java.util.List;
+import modelo.CampeonesDTO;
 import modelo.CanchaDTO;
 import modelo.EquipoDTO;
 import modelo.EquiposdeltorneoDTO;
@@ -18,6 +19,7 @@ import modelo.TablaPosicionesDTO;
 import modelo.TarjetasDTO;
 import modelo.TercerosDTO;
 import modelo.TorneoDTO;
+import persistencia.CampeonesDAO;
 import persistencia.CanchaDAO;
 import persistencia.EquipoDAO;
 import persistencia.EquiposDelTorneoDAO;
@@ -46,6 +48,7 @@ public class FachadaTorneos {
     PartidoDAO partidodao;
     TablaPosicionesDAO tpdao;
     TercerosDAO tercer;
+    CampeonesDAO win;
     Connection conexion;
     public FachadaTorneos() throws MiExcepcion {
         tdao = new TorneoDAO();
@@ -58,6 +61,7 @@ public class FachadaTorneos {
         partidodao = new PartidoDAO();
         tpdao = new TablaPosicionesDAO();
         tercer = new TercerosDAO();
+        win = new CampeonesDAO();
         conexion = Conexion.getConnection();
     }
     
@@ -126,7 +130,9 @@ public class FachadaTorneos {
     public int existeEquipo(String nombre) throws MiExcepcion{
         return equipodao.existeEquipo(nombre, conexion);
     }
-    
+    public EquipoDTO getEquipo(int codigo) throws MiExcepcion{
+        return equipodao.listarUno(codigo, conexion);
+    }
 //    SIGO CON EQUIPOSDELTORNEODAO
             
     public String inscribirEquipos(int codigoequipo, int idTorneo){
@@ -314,6 +320,16 @@ public class FachadaTorneos {
     
     public List<TercerosDTO> listarPorTercerPuesto(int idTorneo) throws MiExcepcion{
         return tercer.listarTodoTerceros(idTorneo, conexion);
+    }
+    
+    //CAMPEONES DAO
+    
+    public String insertarCampeon(CampeonesDTO winner) throws MiExcepcion{
+        return win.insertar(winner, conexion);
+    }
+    
+    public String eliminatHistorialCampeones() throws MiExcepcion{
+        return win.eliminar(conexion);
     }
     
 }

@@ -58,8 +58,8 @@ public class UsuariosDAO {
             statement.setString(4, usu.getPrimerApellido());
             statement.setString(5, usu.getSegundoApellido());
             statement.setString(6, usu.getFecha());
-            statement.setString(7, usu.getEmail());
-            statement.setString(8, usu.getTelefono());
+            statement.setString(7, usu.getTelefono());
+            statement.setString(8, usu.getEmail());
             byte[] passcript = encriptar(usu.getContraseña());
             statement.setBytes(9, passcript);
 
@@ -189,7 +189,9 @@ public class UsuariosDAO {
             //preparamos la consulta 
             statement = conexion.prepareStatement("SELECT idUsuario,"
                     + "primerNombre, segundoNombre,primerApellido,segundoApellido,"
-                    + "fechaNac,telefono,email,contraseña FROM Usuarios;");
+                    + "fechaNac,telefono,email,contraseña FROM Usuarios "
+                    + "Where idUsuario = ?;");
+            statement.setLong(1, id);
             rs = statement.executeQuery();
             //mientras halla registros
             if (rs!=null) {
@@ -211,6 +213,9 @@ public class UsuariosDAO {
 //        finally{
 //            try{
 //                statement.close();
+//                if (conexion != null) {
+//                    conexion.close();
+//                }
 //            }catch(SQLException sqlexception){
 //                throw new MiExcepcion("Error sql", sqlexception);
 //            }
@@ -248,6 +253,9 @@ public class UsuariosDAO {
 //        finally {
 //            try {
 //                statement.close();
+//                if (conexion != null) {
+//                    conexion.close();
+//                }
 //            } catch (SQLException ex) {
 //                throw new MiExcepcion("Ha ocurrido un error", ex);
 //            }
@@ -351,14 +359,18 @@ public class UsuariosDAO {
     public StringBuilder validarDocumento(long cc, Connection conexion)throws MiExcepcion{
         StringBuilder salida = new StringBuilder("");
         try {
-            statement = conexion.prepareStatement("SELECT idUsuario FROM usuarios"
+            statement = conexion.prepareStatement("SELECT usuarios.idUsuario, equipo.codigo FROM usuarios "
+                    + "inner join jugadoresporequipo on "
+                    + "usuarios.idUsuario = jugadoresporequipo.codigoJugador "
+                    + "inner join equipo on "
+                    + "equipo.codigo = jugadoresporequipo.codigoEquipo "
                     + " WHERE idusuario = ?;");
             statement.setLong(1, cc);
             rs = statement.executeQuery();
             if (rs.next()) {
                 salida.append("El usuario ").append(cc).append(" ya se encuentra en el sistema");
             }else{
-                salida.append("El usuario no se encuentra registrado en el sistema");
+                salida.append("El usuario no se encuentra registrado en el sistema o pertenece ya a un equipo");
             }
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 

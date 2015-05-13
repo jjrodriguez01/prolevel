@@ -113,9 +113,10 @@ $(document).ready(function() {
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
-            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
             <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
+            <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>Resultados</a></li>
         </ul>
     </div>
     </div>
@@ -299,7 +300,7 @@ var marcador2 = $("#${vs.index}mdosc").val();
         </div>
     <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-primary">
+                <div class="panel panel-primary" id="psemi">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
                     <sql:query var="semi" dataSource="jdbc/pro-level">
@@ -359,13 +360,77 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="asignarMarcadorSemi" name="asignarfechas">Añadir Marcador</button>
+<button class="btn btn-primary" id="asignarMarcadorSemi" name="asignarMarcadorSemi">Añadir Marcador</button>
                     <input type="hidden" name="fsemi" value="semi" />
+                    <% if(request.getParameter("marcadorsemi")!=null){%><p style="color:green"><%=request.getParameter("marcadorsemi")%></p><%} %>
                     </form>
                 </div>
                 </div>
         </div>
-                    
+<%--query para saber si la eli tiene tercer puesto --%>
+<sql:query var="ptercer" dataSource="jdbc/pro-level">
+    SELECT tercerPuesto FROM eliminatoria 
+    WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
+</sql:query>
+<c:set var="haytercer" value="${ptercer.rows[0]}" scope="page" />   
+<div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Tercer Puesto</div>
+                    <%--query para los cuartos--%>
+                    <sql:query var="tercer" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.marcador1,
+                        partidos.marcador2,
+                        partidos.ronda,
+                        partidos.numero,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 5
+                    </sql:query>
+    
+                        <form action="../../GestionEliminatoria">
+                        <table class="table table-hover table-responsive">
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${tercer.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><span>vs</span></td>
+                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td>${row.eq2}</td>                     
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+                    <button class="btn btn-primary" name="asignarMarcadorTercer">Añadir Marcador</button>
+                    <input type="hidden" name="ftercer" value="tercer" />
+                    </form>
+                </div>
+                </div>
+        </div>
+
+
     <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-primary">
@@ -416,7 +481,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Marcador</button>
+                    <button class="btn btn-primary" name="asignarMarcadorFin">Añadir Marcador</button>
                     <input type="hidden" name="ffinal" value="final" />
                     </form>
                 </div>

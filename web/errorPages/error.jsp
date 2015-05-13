@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="/prolevel/css/bootstrap/bootstrap.min.css">
+<link href="/prolevel/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="/prolevel/js/jquery1.9.1.js"></script>
 <script src="/prolevel/css/bootstrap/js/bootstrap.min.js"></script>
 <meta charset="utf-8">
