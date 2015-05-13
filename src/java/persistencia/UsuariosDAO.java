@@ -356,32 +356,40 @@ public class UsuariosDAO {
         return mensaje;
     }
     
-    public StringBuilder validarDocumento(long cc, Connection conexion)throws MiExcepcion{
+    public StringBuilder validarDocumento(long cc,int idTorneo, Connection conexion)throws MiExcepcion{
         StringBuilder salida = new StringBuilder("");
         try {
-            statement = conexion.prepareStatement("SELECT usuarios.idUsuario, equipo.codigo FROM usuarios "
+            statement = conexion.prepareStatement("SELECT usuarios.idUsuario, equiposdeltorneo.equipoCodigo "
+                    + "FROM usuarios " 
                     + "inner join jugadoresporequipo on "
-                    + "usuarios.idUsuario = jugadoresporequipo.codigoJugador "
-                    + "inner join equipo on "
-                    + "equipo.codigo = jugadoresporequipo.codigoEquipo "
-                    + " WHERE idusuario = ?;");
+                    +"usuarios.idUsuario = jugadoresporequipo.codigoJugador " 
+                    +"inner join equipo on " 
+                    +"equipo.codigo = jugadoresporequipo.codigoEquipo "
+                    +"inner join equiposdeltorneo on "
+                    +"equipo.codigo = equiposdeltorneo.equipoCodigo " 
+                    +"WHERE idusuario = ? and equiposdeltorneo.torneoIdTorneo = ?;");
             statement.setLong(1, cc);
+            statement.setInt(2, idTorneo);
             rs = statement.executeQuery();
             if (rs.next()) {
-                salida.append("El usuario ").append(cc).append(" ya se encuentra en el sistema");
+                salida.append("Este jugador no esta registrado o ya se encuentra inscrito a un equipo en este torneo");
             }else{
-                salida.append("El usuario no se encuentra registrado en el sistema o pertenece ya a un equipo");
+                salida.append("El usuario ").append(cc).append(" ya se encuentra en el sistema");
             }
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 
         }
-//        finally{
-//            try{
-//                statement.close();
-//            }catch(SQLException sqlexception){
-//                throw new MiExcepcion("Error sql", sqlexception);
-//            }
-//        }
+        finally{
+            try{
+                statement.close();
+                rs.close();
+                if (conexion != null) {
+                    conexion.close();
+                }
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
+        }
         return salida;
     }
 }

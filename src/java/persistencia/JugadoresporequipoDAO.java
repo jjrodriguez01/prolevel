@@ -49,7 +49,7 @@ public class JugadoresporequipoDAO {
             }
         } 
         catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error insertando jugadores", sqlexception);
+            throw new MiExcepcion("Error insertando jugadores "+sqlexception.getMessage(), sqlexception);
         }
 //        finally{
 //            try {

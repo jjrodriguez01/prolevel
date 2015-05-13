@@ -124,7 +124,7 @@ public class RegistroEquipos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(RegistroEquipos.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendError(500, ex.getMessage());
         }
     }
 
@@ -142,7 +142,7 @@ public class RegistroEquipos extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(RegistroEquipos.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendError(500, ex.getMessage());
         }
     }
 

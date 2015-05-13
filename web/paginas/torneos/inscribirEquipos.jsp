@@ -172,21 +172,21 @@ if (request.getParameter("registro")!=null) {
       <label class="control-label col-sm-2" for="jugador">Jugador</label>
     <div class="col-sm-10">
         <input type="number" class="form-control" id="juno" name="juno" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jdos" name="jdos" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jtres" name="jtres" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jcuatro" name="jcuatro" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jcinco" name="jcinco" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jseis" name="jseis" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jsiete" name="jsiete" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <input type="number" class="form-control" id="jocho" name="jocho" 
-        placeholder="Ingrese documento" onchange="validarDocumento(this)" maxlength="11" required>
+        placeholder="Ingrese documento" onchange="validarDocumento(this,${param.idTorneo})" maxlength="11" required>
         <div id="resultadouno" style="color: red"></div>
         <div id="resultadodos" style="color: green"></div>
     </div>

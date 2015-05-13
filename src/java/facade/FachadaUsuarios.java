@@ -67,8 +67,8 @@ public class FachadaUsuarios {
         return udao.cambiarPass(id, newpass, conexion);
     }
     
-    public StringBuilder validarDocumento(long cc) throws MiExcepcion{
-        return udao.validarDocumento(cc, conexion);
+    public StringBuilder validarDocumento(long cc, int idTorneo) throws MiExcepcion{
+        return udao.validarDocumento(cc, idTorneo,conexion);
     }
     
 //    AHORA LO Q ESTA EN ROLUSUARIOSDAO

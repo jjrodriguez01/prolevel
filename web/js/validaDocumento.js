@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 var req;
-    function validarDocumento(campo){
+    function validarDocumento(campo,idTorneo){
         if (campo.value==="") return false;
         var cc = campo.value;
-        var url = "../../ValidacionDocumento?jugador=" + cc;
+        var url = "../../ValidacionDocumento?jugador=" + cc +"&idTorneo="+idTorneo;
         if (window.XMLHttpRequest) {
             req = new XMLHttpRequest();
     }else if(window.ActiveXObject){
@@ -21,7 +21,7 @@ var req;
         if (req.readyState === 4) {
         if (req.status === 200) {
     
-        if (req.responseText.toString() === "El usuario no se encuentra registrado en el sistema") {
+        if (req.responseText.toString() === "Este jugador no esta registrado o ya se encuentra inscrito a un equipo en este torneo") {
             document.getElementById("resultadodos").innerHTML="";
             document.getElementById("resultadouno").innerHTML=req.responseText;
             document.getElementById("crearEquipo").setAttribute("disabled","true");

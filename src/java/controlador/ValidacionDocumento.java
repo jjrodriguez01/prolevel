@@ -35,11 +35,12 @@ public class ValidacionDocumento extends HttpServlet {
             throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-            if (request.getParameter("jugador")!=null) {
+            if (request.getParameter("jugador")!=null && request.getParameter("idTorneo")!= null) {
             StringBuilder respuesta = new StringBuilder("");
             FachadaUsuarios facadeUsu = new FachadaUsuarios();
             long cc = Long.parseLong(request.getParameter("jugador").trim());
-            respuesta.append(facadeUsu.validarDocumento(cc));
+            int idTorneo = Integer.parseInt(request.getParameter("idTorneo"));
+            respuesta.append(facadeUsu.validarDocumento(cc,idTorneo));
             this.writeResponse(response, respuesta.toString());
         }else{
                try {
