@@ -14,6 +14,7 @@ import java.util.List;
 import modelo.UsuariosDTO;
 import static controlador.seguridad.Encriptacion.encriptar;
 import static controlador.seguridad.Encriptacion.desencriptar;
+import facade.FachadaUsuarios;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -34,7 +35,6 @@ public class UsuariosDAO {
     //result set 
     private ResultSet rs;
     //llave
-    
     /**
      * Inserta un usuario en la bd
      *
@@ -207,21 +207,23 @@ public class UsuariosDAO {
                 usuario.setContraseña(rs.getString("contraseña")); 
             }
             }
+            //devolvemos el usuario que se encontro
+        return usuario;
         } catch (SQLException ex) {
             throw new MiExcepcion ("Error inesperado al obtener usuario", ex);
         }
-//        finally{
-//            try{
-//                statement.close();
+        finally{
+            try{
+                statement.close();
+                rs.close();
 //                if (conexion != null) {
 //                    conexion.close();
 //                }
-//            }catch(SQLException sqlexception){
-//                throw new MiExcepcion("Error sql", sqlexception);
-//            }
-//        }
-        //devolvemos el usuario que se encontro
-        return usuario;
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
+        }
+        
     }
     /**
      * Valida si el usuario existe en la base de datos
@@ -245,22 +247,24 @@ public class UsuariosDAO {
                 cc = rs.getLong("idUsuario");
                 }     
             }
+        return cc;
         } catch (SQLException sqle) {
            throw new MiExcepcion("Ha ocurrido un error", sqle);
         }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e){
            throw new MiExcepcion("Ha ocorrido in error encriptando su contraseña. Por favor intentelo de nuevo.",e);
         }
-//        finally {
-//            try {
-//                statement.close();
+        finally {
+            try {
+                statement.close();
+                rs.close();
 //                if (conexion != null) {
 //                    conexion.close();
 //                }
-//            } catch (SQLException ex) {
-//                throw new MiExcepcion("Ha ocurrido un error", ex);
-//            }
-//        }
-        return cc;
+            } catch (SQLException ex) {
+                throw new MiExcepcion("Ha ocurrido un error", ex);
+            }
+        }
+        
     }
     /**
      * Valida que el rol sea de administrador.
@@ -358,6 +362,8 @@ public class UsuariosDAO {
     
     public StringBuilder validarDocumento(long cc,int idTorneo, Connection conexion)throws MiExcepcion{
         StringBuilder salida = new StringBuilder("");
+        FachadaUsuarios facade = new FachadaUsuarios();
+        boolean existe = facade.existeUsuario(cc);
         try {
             statement = conexion.prepareStatement("SELECT usuarios.idUsuario, equiposdeltorneo.equipoCodigo "
                     + "FROM usuarios " 
@@ -371,10 +377,11 @@ public class UsuariosDAO {
             statement.setLong(1, cc);
             statement.setInt(2, idTorneo);
             rs = statement.executeQuery();
-            if (rs.next()) {
+            if (rs.next() || existe == false) {
                 salida.append("Este jugador no esta registrado o ya se encuentra inscrito a un equipo en este torneo");
             }else{
-                salida.append("El usuario ").append(cc).append(" ya se encuentra en el sistema");
+                
+                salida.append("El usuario ").append(cc).append(" está habilitado para la inscripción.");
             }
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 
@@ -391,6 +398,32 @@ public class UsuariosDAO {
             }
         }
         return salida;
+    }
+    
+    public synchronized boolean siEstaRegistrado(long idUsuario,Connection conexion)throws MiExcepcion{
+    boolean existe=false;
+    
+    try{
+      statement = conexion.prepareStatement("select idUsuario from usuarios "
+              + "where idUsuario = ?;");
+      statement.setLong(1, idUsuario);
+            rs = statement.executeQuery();
+            while(rs.next()){
+            return existe=true;
+            }
+    }catch(SQLException sqle){
+        throw new MiExcepcion("Ha ocurrido un error "+sqle.getMessage(), sqle);
+    }
+    finally{
+            try{
+                if(conexion !=null){
+                    conexion.close();
+                }
+            }catch(SQLException sqlexception){
+                throw new MiExcepcion("Error sql", sqlexception);
+            }
+        }
+    return existe; 
     }
 }
 

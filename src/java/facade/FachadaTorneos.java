@@ -187,7 +187,9 @@ public class FachadaTorneos {
     public String eliminarJugadoresEquipo(int equipo) throws MiExcepcion{
         return jequipodao.eliminar(equipo, conexion);
     }
-    
+    public String eliminarJugador(long idUsuario,int codigoEquipo) throws MiExcepcion{
+        return jequipodao.eliminarJugador(idUsuario,codigoEquipo, conexion);
+    }
     public List<JugadoresporequipoDTO> listarInscritos() throws MiExcepcion{
         return jequipodao.listarTodo(conexion);
     }

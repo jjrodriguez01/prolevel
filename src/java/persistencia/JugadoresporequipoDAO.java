@@ -42,10 +42,10 @@ public class JugadoresporequipoDAO {
             rtdo = statement.executeUpdate();
             //si se afectaron campos 
             if (rtdo != 0) {
-                mensaje = "Se insertaron los jugadores";
+                mensaje = "Se inserto el jugador";
                 //si no se afecto la tabla
             } else {
-                mensaje = "Error";
+                mensaje = "Error no se insertó el jugador";
             }
         } 
         catch (SQLException sqlexception) {
@@ -114,6 +114,35 @@ public class JugadoresporequipoDAO {
             }
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error", sqlexception);
+
+        }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error eliminando jugadores", sqlexception);
+//            }
+//        }
+
+        return mensaje;
+    }
+    
+    public String eliminarJugador(long idUsuario,int codigoEquipo, Connection conexion) throws MiExcepcion {
+        try {
+            statement = conexion.prepareStatement("delete from jugadoresporequipo "
+                    + "where codigoEquipo = ? and codigoJugador = ?;");
+            //obtenemos el id del item a eliminar del dto
+            statement.setInt(1, codigoEquipo);
+            statement.setLong(2, idUsuario);
+            rtdo = statement.executeUpdate();
+
+            if (rtdo != 0) {
+                mensaje = "Se elimino el jugador";
+            } else {
+                mensaje = "Ocurrio Un Error";
+            }
+        } catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error eliminando jugador "+sqlexception.getMessage(), sqlexception);
 
         }
 //        finally{

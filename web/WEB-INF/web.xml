@@ -64,6 +64,10 @@
         <servlet-name>Goles</servlet-name>
         <servlet-class>controlador.Goles</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Jugadores</servlet-name>
+        <servlet-class>controlador.Jugadores</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -139,6 +143,10 @@
     <servlet-mapping>
         <servlet-name>Goles</servlet-name>
         <url-pattern>/Goles</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Jugadores</servlet-name>
+        <url-pattern>/Jugadores</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

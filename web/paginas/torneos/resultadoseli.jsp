@@ -41,6 +41,7 @@
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
         <link href="../../css/estilos_resultadoseli.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../../css/estilos_resultadoseli_print.css" media="print" />
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../js/jugadoresEquipos.js"></script>
@@ -102,7 +103,7 @@
     <div class="row">
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
             <li role="presentation" class="active"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
@@ -127,6 +128,7 @@
     <section>
         <div class="page-header">
             <h1>Resultados</h1>
+            <button class="btn btn-toolbar" type="button" name="imprime" onclick="window.print();"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
         </div>
         <div class="container-fluid">
             <div class="row">

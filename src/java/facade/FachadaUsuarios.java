@@ -82,4 +82,13 @@ public class FachadaUsuarios {
     public int getRol(UsuariosDTO udto) throws MiExcepcion{
         return roldao.getRol(udto, conexion);
     } 
+    
+    /**
+     * Retorna el numero de rol del objeto UsuariosDTO
+     * @param UsuariosDTO usuario a obtener umero de rol
+     * @return int con el numero de rol del objeto UsuariosDTO especificado
+     */
+    public boolean existeUsuario(long idUsuario) throws MiExcepcion{
+        return udao.siEstaRegistrado(idUsuario, conexion);
+    } 
 }

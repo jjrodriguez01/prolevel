@@ -542,7 +542,7 @@ var partido2 = cancha1+fecha1+hora1;
                 </div>
         </div>
 <%--query para saber si la eli tiene tercer puesto --%>
-<sql:query var="ptercer" dataSource="jdbc/prolevel">
+<sql:query var="ptercer" dataSource="jdbc/pro-level">
     SELECT tercerPuesto FROM eliminatoria 
     WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>

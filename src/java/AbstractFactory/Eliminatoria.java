@@ -28,7 +28,7 @@ public class Eliminatoria extends Torneo {
     EliminatoriaDAO eli;
     Connection conexion;
 
-    public Eliminatoria() {
+    public Eliminatoria() throws MiExcepcion {
         eli = new EliminatoriaDAO();
         conexion = Conexion.getConnection();
     }

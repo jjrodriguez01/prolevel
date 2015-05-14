@@ -5,30 +5,22 @@
  */
 package controlador;
 
-import facade.FachadaUsuarios;
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import modelo.UsuariosDTO;
-import persistencia.UsuariosDAO;
 import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
-public class Conexion extends HttpServlet {
+public class Jugadores extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,35 +32,25 @@ public class Conexion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Conexion</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Conexion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        if(request.getParameter("elijugador")!=null  && request.getParameter("celi")!=null){
+            FachadaTorneos facade = new FachadaTorneos();
+            long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+            int codigoEquipo = Integer.parseInt(request.getParameter("codigoEquipo"));
+            int idTorneo  = Integer.parseInt(request.getParameter("idTorneo"));
+            String nombreEquipo = request.getParameter("nombre");
+            String usuarioeli = facade.eliminarJugador(idUsuario,codigoEquipo);
+            response.sendRedirect("paginas/torneos/editarjugadores.jsp?codigoEquipo="+codigoEquipo+"&nombre="+nombreEquipo+"&idTorneo="+idTorneo+"&usuarioeli="+usuarioeli);
+        }else if(request.getParameter("injugador")!=null){
+            FachadaTorneos facade = new FachadaTorneos();
+            long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+            int codigoEquipo = Integer.parseInt(request.getParameter("codigoEquipo"));
+            int idTorneo  = Integer.parseInt(request.getParameter("idTorneo"));
+            String nombreEquipo = request.getParameter("nombreEquipo");
+            String newjugador = facade.inscribirJugadorAEquipo(codigoEquipo, idUsuario);
+            response.sendRedirect("paginas/torneos/editarjugadores.jsp?codigoEquipo="+codigoEquipo+"&nombre="+nombreEquipo+"&idTorneo="+idTorneo+"&newjugador="+newjugador);
         }
-    }
-    
-    public static Connection getConnection() throws MiExcepcion {
-        Connection conexion = null;
-        String salida = "";
-        Context ctx;
-        try {
-            ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("jdbc/pro-level");
-            conexion = ds.getConnection(); 
-
-        } catch (NamingException | SQLException ex) {
-            throw new MiExcepcion("Error al conectar a base de datos "+ex.getMessage(),ex);
-        }
-        return conexion;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,7 +65,11 @@ public class Conexion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.getMessage());
+        }
     }
 
     /**
@@ -97,7 +83,11 @@ public class Conexion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.getMessage());
+        }
     }
 
     /**

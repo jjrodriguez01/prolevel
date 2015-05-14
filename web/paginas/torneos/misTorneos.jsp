@@ -151,7 +151,7 @@
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -187,7 +187,7 @@
     <div class="row">
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
             <li role="presentation"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation" class="active"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
@@ -199,7 +199,7 @@
         <div class="col-md-4 col-sm-2 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="../inicio.jsp">Inicio</a></li>
-                <li><a href="#">Torneos</a></li>
+                <li><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Torneos</a></li>
                 <li class="active">Tablas</li>
             </ol>
         </div>

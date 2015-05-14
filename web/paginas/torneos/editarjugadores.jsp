@@ -57,6 +57,11 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                 padding-top: 10px;
             }
         </style>
+        <script>
+            $(document).ready(function(){
+                
+            });
+        </script>
     </head>
     <body>
         <header>
@@ -132,6 +137,27 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                 <div class="page-header">
                     <h1>Jugadores del equipo ${param.nombre}</h1>
                 </div>
+                    <%--si se elimino un jugador--%>
+                <% if (request.getParameter("usuarioeli")!=null) {
+%>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong><span class="glyphicon glyphicon-ok"></span><%=request.getParameter("usuarioeli")%></strong>
+</div>
+<%
+                    }
+%>
+<%--si se elimino un jugador--%>
+                <% if (request.getParameter("newjugador")!=null) {
+%>
+<div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong><span class="glyphicon glyphicon-ok"></span><%=request.getParameter("newjugador")%></strong>
+</div>
+<%
+                    }
+%>
+
                 <sql:query var="jugadores" dataSource="jdbc/pro-level">
                     select concat(usuarios.primernombre,' ',usuarios.primerapellido) jugador, usuarios.idUsuario from usuarios
 inner join jugadoresporequipo on
@@ -151,16 +177,91 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                             <c:forEach var="row" items="${jugadores.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.jugador}</td>
-                                <td><a href="editarjugadores.jsp?codigoEquipo=${row.codigo}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                <td><a href="editarjugadores.jsp?codigoEquipo=${param.codigoEquipo}&nombre=${param.nombre}&idTorneo=${param.idTorneo}&idUsuario=${row.idUsuario}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                             </tr>
                             </c:forEach>
                         </tbody>
                         <tfoot>
-                            <tr></tr>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#plusjugadores" data-backdrop="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Añadir Jugador</button>
                         </tfoot>
                     </table>
             </div>
         </div>
+<div class="modal fade" id="plusjugadores">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Inscribir Jugador A Este Equipo</h4>
+      </div>
+      <div class="modal-body">
+          <form class="form-horizontal" role="form" action="../../Jugadores">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="id">Identificacion:</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="id" name="idUsuario" placeholder="identificacion" onchange="validarDocumento(this,${param.idTorneo})" required>
+        <input type="hidden" value="${param.codigoEquipo}" name="codigoEquipo"/>
+        <input type="hidden" value="${param.nombre}" name="nombreEquipo" />
+        <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <div id="resultadouno" style="color: red"></div>
+        <div id="resultadodos" style="color: green"></div>
+        <button type="submit" class="btn btn-primary" id="crearEquipo" name="injugador">Inscribir</button>
+    </div>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<% if (request.getParameter("idUsuario")!=null && !request.getParameter("idUsuario").equals("")) {
+%>
+<input type="hidden" data-toggle="modal" data-target="#celiminar" id="midusuario"/>
+<script>
+    $(document).ready(function(){
+        $("#midusuario").trigger("click");
+    });
+</script>
+<%
+    }
+%>
+<div class="modal fade" id="celiminar">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar Jugador</h4>
+        </div>
+        <div class="modal-body">
+            <form action="../../Jugadores">
+                <div class="form-group">
+            <span class="label label-danger">Confira que desea expulsar del torneo al jugador</span>
+                </div>
+                <div class="form-group">
+                    <label>Identificación</label>
+                </div>
+                <div class="form-group">
+            <input type="text" value="${param.idUsuario}" name="idUsuario" readonly="readonly" />
+                </div>
+            <input type="hidden" value="${param.codigoEquipo}" name="codigoEquipo" />
+            <input type="hidden" value="${param.nombre}" name="nombreEquipo" />
+            <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+            <button class="btn btn-primary" name="elijugador">Expulsar</button>
+            <input type="hidden" name="celi" />
+            </form>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+    </div>
+  </div>
+</div>
 </main>
     </body>
 </html>
