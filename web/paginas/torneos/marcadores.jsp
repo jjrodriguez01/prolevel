@@ -409,9 +409,9 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                             <c:forEach var="row" items="${tercer.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></c:if> <span><c:out value="${row.marcador1}" /></span></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td><c:if test="${row.marcador2 ==null}"><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></c:if> <span><c:out value="${row.marcador2}" /></span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -460,16 +460,16 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 4
                     </sql:query>
     
-                    <form>
+                        <form action="../../GestionEliminatoria">
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
                             <c:forEach var="row" items="${final.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></td>
+                                <td><c:if test="${row.marcador1 ==null}"> <input type="number" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if>/></c:if><span><c:out value="${row.marcador1}" /></span></td>
                                 <td><span>vs</span></td>
-                                <td><input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></td>
+                                <td><c:if test="${row.marcador2 ==null}"> <input type="number" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></c:if><span><c:out value="${row.marcador2}" /></span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />

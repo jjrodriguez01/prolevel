@@ -33,7 +33,8 @@
 <!doctype html>
 <html>
 <head>
-    <link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="../imagenes/favicon.ico">
+<link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
 <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../css/perfiladmin.css" rel="stylesheet" type="text/css">
 <link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">

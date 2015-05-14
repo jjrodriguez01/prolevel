@@ -293,7 +293,7 @@ var cancha7 = (document.calendar.cp7.value !== null) ? document.calendar.cp7.val
 var fecha7 = (document.calendar.fecha7.value !== null) ? document.calendar.fecha7.value: 'fecha7';
 var hora7 = (document.calendar.hora7.value !== null) ? document.calendar.hora7.value : 'hora7';
 var partido8 = cancha7+fecha7+hora7;
-    
+
         if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
     alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
@@ -314,9 +314,7 @@ var partido8 = cancha7+fecha7+hora7;
     }else{//si nada fue igual envio
         $("#calendar").submit();
     }
-
-        
-    }
+}
 </script>
                 </div>
             </div>
@@ -385,7 +383,7 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -501,7 +499,7 @@ var partido4 = cancha3+fecha3+hora3;
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -547,7 +545,7 @@ var partido2 = cancha1+fecha1+hora1;
     WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
 <c:set var="haytercer" value="${ptercer.rows[0]}" scope="page" />
-<c:if test="${haytercer == 1}">
+<c:if test="${haytercer.tercerPuesto == true}">
     <div class="row">
         <div class="col-lg-12" id="ctercerp">
                 <div class="panel panel-primary">
@@ -574,10 +572,10 @@ var partido2 = cancha1+fecha1+hora1;
                         ON partidos.idTorneo = torneo.idTorneo 
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
-                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 5
                     </sql:query>
     
-                    <form>
+                        <form action="../../GestionEliminatoria">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -606,7 +604,7 @@ var partido2 = cancha1+fecha1+hora1;
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
@@ -655,7 +653,7 @@ var partido2 = cancha1+fecha1+hora1;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
                     </sql:query>
     
-                    <form>
+                        <form action="../../GestionEliminatoria">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -684,7 +682,7 @@ var partido2 = cancha1+fecha1+hora1;
                                         <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
                                     </select>
                                 </td>
-                                <td><input type="date" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
+                                <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
                                 <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
                                 <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />

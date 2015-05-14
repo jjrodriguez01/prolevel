@@ -41,8 +41,8 @@ public class Tarjetas extends HttpServlet {
                 TarjetasDTO tar = new TarjetasDTO();
                 tar.setIdJugador(Integer.parseInt(request.getParameter("jugadores")));
                 tar.setIdtorneo(Integer.parseInt(request.getParameter("idTorneo")));
-                tar.setTarjetaAzul(request.getParameter("azules")!=null? Integer.parseInt(request.getParameter("azules")) : 0);
-                tar.setTarjetaRoja(request.getParameter("rojas")!=null? Integer.parseInt(request.getParameter("rojas")): 0);
+                tar.setTarjetaAzul(!request.getParameter("azules").equals("")? Integer.parseInt(request.getParameter("azules")) : 0);
+                tar.setTarjetaRoja(!request.getParameter("rojas").equals("")? Integer.parseInt(request.getParameter("rojas")): 0);
                 FachadaTorneos facadeTorneo = new FachadaTorneos();
                 LinkedList<TarjetasDTO> listar = new LinkedList();
                 listar = (LinkedList) facadeTorneo.listarTarjetasJugador(tar.getIdtorneo(), tar.getIdJugador());

@@ -34,7 +34,7 @@ public class CampeonesDAO {
             statement = conexion.prepareStatement("INSERT INTO campeones  "
                     + "VALUES (null,?,?);");
             statement.setString(1, win.getNombreTorneo());
-            statement.setString(2, win.getNombreTorneo());
+            statement.setString(2, win.getNombreEquipo());
             rtdo = statement.executeUpdate();
             if (rtdo > 0) {
                 mensaje = "Se insertó el campeon";
