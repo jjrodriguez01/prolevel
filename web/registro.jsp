@@ -198,7 +198,7 @@ select.ui-datepicker-year, select.ui-datepicker-month{
                 </div>
                 </div>
                 <div class="col-lg-10 center-block btn">
-                    <label><input type="checkbox" required>Acepto los terminos y condiciones</label>
+                    <label><input type="checkbox" name="terminos" required>Acepto los terminos y condiciones</label>
                         <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#terminos">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </button>
@@ -319,6 +319,9 @@ select.ui-datepicker-year, select.ui-datepicker-month{
                                     maxlength: 45,
                                     equalTo: pass
 					},
+                                terminos:{
+                                    required: true
+                                },
 		       },
 		        messages:{
                                 cc:{
@@ -368,7 +371,10 @@ select.ui-datepicker-year, select.ui-datepicker-month{
                                         },
                                 tel:{
                                     digits:"Sólo numeros",
-			 },			  
+			 },
+                                 terminos:{
+                                    required:"Lea los términos y condiciones",
+			 },
 		    }
 	      });
 	   });

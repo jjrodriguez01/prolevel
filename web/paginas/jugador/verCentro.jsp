@@ -149,7 +149,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                             <c:forEach var="row" items="${equipos.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.nombre}</td>
-                                <td><a href="editarjugadores.jsp?codigoEquipo=${row.codigo}&nombre=${row.nombre}&idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                                <td><a href="verJugadores.jsp?codigoEquipo=${row.codigo}&nombre=${row.nombre}&idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                             </tr>
                             </c:forEach>
                         </tbody>

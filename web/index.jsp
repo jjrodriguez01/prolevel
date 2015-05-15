@@ -319,6 +319,20 @@ li img {
     <%  //si hay mensaje de error
             }
      %>
+     
+     
+     <%  //si hay mensaje de registro
+        if (request.getParameter("registro")!=null) {
+    %>
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <span class="sr-only">Registro éxitoso: </span>
+        Ahora puede ingresar.
+    </div>
+    <%  //si hay mensaje de error
+            }
+     %>
   </div>
     </div>
   

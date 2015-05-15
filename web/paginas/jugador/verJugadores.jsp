@@ -151,14 +151,12 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                         <thead>
                             <tr>
                                 <th>Jugador</th>
-                                <th>Expulsar Del Torneo</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="row" items="${jugadores.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.jugador}</td>
-                                <td><a href="editarjugadores.jsp?codigoEquipo=${param.codigoEquipo}&nombre=${param.nombre}&idTorneo=${param.idTorneo}&idUsuario=${row.idUsuario}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                             </tr>
                             </c:forEach>
                         </tbody>
