@@ -704,6 +704,541 @@ var partido2 = cancha1+fecha1+hora1;
 </c:if><%--si es de 16 equipos--%>
 </c:if><%--si es eliminatoria--%>
 
+<c:if test="${detallestorneo.tipo==2}">
+    <div class="row">
+        <div class="col-lg-12">
+<%--query de la primera ronda liga de seis--%> 
+                    <sql:query var="primera" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 1
+                    </sql:query>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Octavos De Final</div>
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${primera.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
+                    </form>
+<script>
+    function validarIguales(){
+    //paso el input a una variable y si es null le asigno algo 
+var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
+var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
+var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var partido1 = cancha0+fecha0+hora0;
+
+var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
+var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
+var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var partido2 = cancha1+fecha1+hora1;
+
+var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
+var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
+var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var partido3 = cancha2+fecha2+hora2;
+
+        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        }
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    }else{//si nada fue igual envio
+        $("#calendar").submit();
+    }
+}
+</script>
+                </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <%--query de la segunda ronda --%> 
+                    <sql:query var="segunda" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 2
+                    </sql:query>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Octavos De Final</div>
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${segunda.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
+                    </form>
+<script>
+    function validarIguales(){
+    //paso el input a una variable y si es null le asigno algo 
+var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
+var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
+var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var partido1 = cancha0+fecha0+hora0;
+
+var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
+var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
+var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var partido2 = cancha1+fecha1+hora1;
+
+var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
+var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
+var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var partido3 = cancha2+fecha2+hora2;
+
+        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        }
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    }else{//si nada fue igual envio
+        $("#calendar").submit();
+    }
+}
+</script>
+                </div>
+    </div>
+    </div>
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <%--query de la tercera ronda --%> 
+                    <sql:query var="tercera" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 3
+                    </sql:query>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Octavos De Final</div>
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${tercera.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
+                    </form>
+<script>
+    function validarIguales(){
+    //paso el input a una variable y si es null le asigno algo 
+var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
+var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
+var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var partido1 = cancha0+fecha0+hora0;
+
+var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
+var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
+var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var partido2 = cancha1+fecha1+hora1;
+
+var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
+var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
+var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var partido3 = cancha2+fecha2+hora2;
+
+        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        }
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    }else{//si nada fue igual envio
+        $("#calendar").submit();
+    }
+}
+</script>
+                </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <%--query de la cuarta ronda --%> 
+                    <sql:query var="cuarta" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
+                    </sql:query>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Octavos De Final</div>
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${cuarta.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
+                    </form>
+<script>
+    function validarIguales(){
+    //paso el input a una variable y si es null le asigno algo 
+var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
+var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
+var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var partido1 = cancha0+fecha0+hora0;
+
+var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
+var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
+var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var partido2 = cancha1+fecha1+hora1;
+
+var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
+var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
+var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var partido3 = cancha2+fecha2+hora2;
+
+        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        }
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    }else{//si nada fue igual envio
+        $("#calendar").submit();
+    }
+}
+</script>
+                </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <%--query de la quinta ronda --%> 
+                    <sql:query var="quinta" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.cancha,
+                        partidos.ronda,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2,
+                        partidos.fecha,
+                        partidos.hora
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 5
+                    </sql:query>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">Octavos De Final</div>
+                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Equipo</th>
+                            <th>vs</th>
+                            <th>Equipo</th>
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${quinta.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><span>-</span></td>
+                                <td>${row.eq2}</td>
+                                <td>
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
+                                        <option></option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
+                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
+                                <td><input type="text" name="hora${vs.index}" id="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<input type="hidden" name="asignarfechas" value="fechas" />                    
+<input type="hidden" name="foctavos" value="octavos" />
+                    </form>
+<script>
+    function validarIguales(){
+    //paso el input a una variable y si es null le asigno algo 
+var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
+var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
+var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var partido1 = cancha0+fecha0+hora0;
+
+var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
+var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
+var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var partido2 = cancha1+fecha1+hora1;
+
+var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
+var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
+var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var partido3 = cancha2+fecha2+hora2;
+
+        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        }
+    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    }else{//si nada fue igual envio
+        $("#calendar").submit();
+    }
+}
+</script>
+                </div>
+    </div>
+</div>
+</c:if>
 </main>
     </body>
 </html>

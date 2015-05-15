@@ -301,7 +301,7 @@ on torneo.idTorneo = tablagoleadores.idTorneo
                     	<div class="col">
                                     <ul>
                                         <c:forEach var="row" items="${torneo.rows}">
-                                            <li><a href="torneos/misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
+                                            <li><a href="jugador/vermisTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                         </c:forEach>
                                     </ul>
                         </div>

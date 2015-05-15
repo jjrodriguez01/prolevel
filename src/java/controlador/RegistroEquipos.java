@@ -83,7 +83,7 @@ public class RegistroEquipos extends HttpServlet {
     //creo un array con los documentos
     long[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
         for (int i = 0; i < docs.length; i++) {
-            facadetorneos.inscribirJugadorAEquipo(codigo, docs[i]);//insertamos en la tabla jugadorespor equipo 
+            facadetorneos.inscribirJugadorAEquipo(nuevoequipo, docs[i]);//insertamos en la tabla jugadorespor equipo 
         }
         response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
                     }else{

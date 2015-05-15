@@ -326,7 +326,7 @@ $('[data-toggle="popover"]').popover(
         <label for="capacidad">Capacidad de equipos</label>
             <select id="capacidad" name="capacidad">
                 <option></option>
-                <option>12</option>
+                <option>6</option>
                 <option>20</option>
             </select>
     </div>

@@ -5,7 +5,7 @@
  */
 package AbstractFactory;
 
-import controlador.Conexion;
+
 import facade.FachadaTorneos;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import modelo.PartidoDTO;
 import modelo.TercerosDTO;
 import modelo.TorneoDTO;
 import persistencia.EliminatoriaDAO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -30,7 +31,7 @@ public class Eliminatoria extends Torneo {
 
     public Eliminatoria() throws MiExcepcion {
         eli = new EliminatoriaDAO();
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
     

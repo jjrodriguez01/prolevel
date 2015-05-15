@@ -242,7 +242,7 @@ public class EquipoDAO {
              statement = conexion.prepareStatement("SELECT codigo FROM equipo Where nombre= ?;");
              statement.setString(1, nombre);
              rs = statement.executeQuery();
-             if (rs.next()) {
+             while (rs.next()) {
                  codigo = rs.getInt("codigo");
              }
          } catch (SQLException sqle) {

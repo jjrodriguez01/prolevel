@@ -5,7 +5,7 @@
  */
 package facade;
 
-import controlador.Conexion;
+
 import java.sql.Connection;
 import java.util.List;
 import modelo.CampeonesDTO;
@@ -30,6 +30,7 @@ import persistencia.TablaPosicionesDAO;
 import persistencia.TarjetasDAO;
 import persistencia.TercerosDAO;
 import persistencia.TorneoDAO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -62,7 +63,7 @@ public class FachadaTorneos {
         tpdao = new TablaPosicionesDAO();
         tercer = new TercerosDAO();
         win = new CampeonesDAO();
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
 //    empiezo con torneoDAO

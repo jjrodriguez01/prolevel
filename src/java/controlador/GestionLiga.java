@@ -1,16 +1,22 @@
 
 package controlador;
 
+import AbstractFactory.FabricaTorneo;
+import AbstractFactory.Liga;
 import AbstractFactory.Torneo;
 import FactoryMethod.TorneoFactory;
+import facade.FachadaTorneos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.EquiposdeltorneoDTO;
 import modelo.TorneoDTO;
 import utilidades.MiExcepcion;
 
@@ -47,6 +53,29 @@ public class GestionLiga extends HttpServlet {
             Torneo liga = fabrica.crearTorneo(ligdto);//la fabrica toma el tipo de torneo y como es dos me crea una liga
             String crearliga = liga.crear(ligdto);         
             response.sendRedirect("paginas/torneos/crear_torneo.jsp?liga="+crearliga+"#ftorneos");
+        }
+        //
+        //si van a iniciar la liga
+        //
+        else if(request.getParameter("iniciar")!=null && request.getParameter("liga")!=null){
+             TorneoDTO ligdto = new TorneoDTO();
+             FachadaTorneos facadeTorneos = new FachadaTorneos();
+            int tipotorneo = 2;//en bd dos es una liga
+            ligdto.setIdTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+            ligdto.setCapacidadEquipos(Integer.parseInt(request.getParameter("capacidadEquipos")));
+            ligdto.setFechaFin(request.getParameter("fechaFin"));
+            ligdto.setFechaInicio(request.getParameter("fechaInicio"));
+            ligdto.setGenero(request.getParameter("genero"));
+            ligdto.setTipo(tipotorneo);
+            ligdto.setIdaVuelta(true);
+            ligdto.setNombre(request.getParameter("nombre"));
+            FabricaTorneo fabrica = new FabricaTorneo();
+            Liga liga = fabrica.creaLiga(ligdto);
+            List<EquiposdeltorneoDTO> edt = new ArrayList();//arrayList con los equipos de este torneo
+            //ese metodo me devuelve un List con todos los equiposn de este torneo
+            edt = facadeTorneos.listarEquiposInscritos(ligdto.getIdTorneo());
+            liga.ligaSeis(edt);
+            response.sendRedirect("paginas/torneos/calendario.jsp?idTorneo="+ligdto.getIdTorneo());
         }
           else {
             response.sendRedirect("paginas/torneos/crear_torneo.jsp");

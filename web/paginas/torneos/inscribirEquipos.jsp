@@ -210,6 +210,12 @@ if (request.getParameter("registro")!=null) {
 <%-- pasamos la consulta a una variable con <c:set/> ojo pasa como array --%>
 <c:set var="rondas" value="${haypartidos.rows[0]}" scope="page" />
         <c:if test="${inscritos.capacidad == detallestorneo.capacidadEquipos}">
+            
+            
+            
+            
+            
+            <%--si es una eliminatoria--%>
             <c:if test="${detallestorneo.tipo ==3}">
                 <form method="get" action="../../GestionEliminatoria" autocomplete="off">
                 <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
@@ -223,7 +229,7 @@ if (request.getParameter("registro")!=null) {
                 Iniciar Torneo
             </button>
             </form>
-            </c:if>
+            
             <div class="row">
                 <form method="get" action="../../GestionEliminatoria" autocomplete="off">
                 <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
@@ -251,6 +257,35 @@ if (request.getParameter("registro")!=null) {
                 </c:if>
             </form>
             </div>
+            </c:if>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <%--si esto es una liga--%>
+            <c:if test="${detallestorneo.tipo == 2}">
+                <div class="row">
+            <form method="get" action="../../GestionLiga" autocomplete="off">
+                <input type="hidden" name="idTorneo" value="${detallestorneo.idTorneo}" />
+                <input type="hidden" name="nombre" value="${detallestorneo.nombre}" />
+                <input type="hidden" name="fechaInicio" value="${detallestorneo.fechaInicio}" />
+                <input type="hidden" name="fechaFin" value="${detallestorneo.fechaFin}" />
+                <input type="hidden" name="genero" value="${detallestorneo.genero}" />
+                <input type="hidden" name="capacidadEquipos" value="${detallestorneo.capacidadEquipos}" />
+                <input type="hidden" name="tipo" value="${detallestorneo.tipo}" />
+                <button name="iniciar" value="${detallestorneo.idTorneo}" class="btn btn-lg btn-danger"<c:if test="${rondas.rondas > 0}"> disabled="disabled" </c:if>>
+                    Iniciar Torneo
+                </button>
+                    <input type="hidden" name="liga"/>
+            </form>
+                </div>
+            </c:if>
             
         </c:if>
     </section>

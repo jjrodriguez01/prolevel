@@ -1,6 +1,6 @@
 package persistencia;
 
-import controlador.Conexion;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.TorneoDTO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -30,7 +31,7 @@ public class TorneoDAO {
     ResultSet rs;
 
     public TorneoDAO() throws MiExcepcion {
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
     

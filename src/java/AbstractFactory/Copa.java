@@ -5,11 +5,12 @@
  */
 package AbstractFactory;
 
-import controlador.Conexion;
+
 import java.sql.Connection;
 import java.util.List;
 import modelo.TorneoDTO;
 import persistencia.CopaDAO;
+import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -22,7 +23,7 @@ public class Copa extends Torneo {
 
     public Copa() throws MiExcepcion {
         cup = new CopaDAO();
-        conexion = Conexion.getConnection();
+        conexion = Conexion.getInstance();
     }
     
     @Override
