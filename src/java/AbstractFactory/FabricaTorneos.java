@@ -7,6 +7,7 @@ package AbstractFactory;
 
 import java.util.List;
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -14,7 +15,7 @@ import modelo.TorneoDTO;
  */
 public interface FabricaTorneos {
     
-    Copa CreaCopa(TorneoDTO torneo);
-    Liga creaLiga(TorneoDTO torneo);
-    Eliminatoria creaEliminatoria(TorneoDTO torneo);
+    Copa CreaCopa(TorneoDTO torneo)throws MiExcepcion;
+    Liga creaLiga(TorneoDTO torneo)throws MiExcepcion;
+    Eliminatoria creaEliminatoria(TorneoDTO torneo)throws MiExcepcion;
 }

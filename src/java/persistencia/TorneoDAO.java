@@ -29,7 +29,7 @@ public class TorneoDAO {
 
     ResultSet rs;
 
-    public TorneoDAO() {
+    public TorneoDAO() throws MiExcepcion {
         conexion = Conexion.getConnection();
     }
     

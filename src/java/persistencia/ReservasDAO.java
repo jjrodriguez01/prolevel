@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import modelo.ReservasDTO;
+import utilidades.MiExcepcion;
 
 public class ReservasDAO {
     
@@ -27,7 +28,7 @@ public class ReservasDAO {
 
     ResultSet rs;
 
-    public ReservasDAO() {
+    public ReservasDAO() throws MiExcepcion {
         conexion = Conexion.getConnection();
     }
 

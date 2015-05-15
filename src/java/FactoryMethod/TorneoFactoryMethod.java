@@ -7,11 +7,12 @@ package FactoryMethod;
 
 import AbstractFactory.Torneo;
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
 public interface TorneoFactoryMethod {
-    public Torneo crearTorneo(TorneoDTO torneo);
+    public Torneo crearTorneo(TorneoDTO torneo)throws MiExcepcion;
 }

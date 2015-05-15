@@ -8,6 +8,7 @@ package FactoryMethod;
 import AbstractFactory.FabricaTorneo;
 import AbstractFactory.Torneo;
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -26,7 +27,7 @@ public class TorneoFactory implements TorneoFactoryMethod{
      * @return  Torneo
      */
     @Override
-    public Torneo crearTorneo(TorneoDTO torneo) {
+    public Torneo crearTorneo(TorneoDTO torneo)throws MiExcepcion {
         if (torneo.getTipo()==1) {
             return fabrica.CreaCopa(torneo);
         }else if(torneo.getTipo()==2){

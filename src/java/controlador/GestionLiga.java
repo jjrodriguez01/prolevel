@@ -5,11 +5,14 @@ import AbstractFactory.Torneo;
 import FactoryMethod.TorneoFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -27,7 +30,7 @@ public class GestionLiga extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
         if ( request.getParameter("liga")!=null && request.getParameter("enviarliga")!=null) {
            TorneoDTO ligdto = new TorneoDTO();
@@ -37,6 +40,7 @@ public class GestionLiga extends HttpServlet {
             ligdto.setFechaFin(request.getParameter("fin"));
             ligdto.setFechaInicio(request.getParameter("inicio"));
             ligdto.setGenero(request.getParameter("tipo"));
+            ligdto.setTipo(tipotorneo);
             ligdto.setIdaVuelta(true);
             ligdto.setNombre(request.getParameter("nombreTorneo"));
             TorneoFactory fabrica = new TorneoFactory();
@@ -45,7 +49,7 @@ public class GestionLiga extends HttpServlet {
             response.sendRedirect("paginas/torneos/crear_torneo.jsp?liga="+crearliga+"#ftorneos");
         }
           else {
-            response.sendRedirect("liga.html");
+            response.sendRedirect("paginas/torneos/crear_torneo.jsp");
         }
     }
 
@@ -61,7 +65,11 @@ public class GestionLiga extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.getMessage());
+        }
     }
 
     /**
@@ -75,7 +83,11 @@ public class GestionLiga extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.getMessage());
+        }
     }
 
     /**

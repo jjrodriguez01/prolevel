@@ -20,7 +20,7 @@ public class Copa extends Torneo {
     CopaDAO cup;
     Connection conexion;
 
-    public Copa() {
+    public Copa() throws MiExcepcion {
         cup = new CopaDAO();
         conexion = Conexion.getConnection();
     }

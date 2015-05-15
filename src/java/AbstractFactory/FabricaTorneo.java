@@ -6,6 +6,7 @@
 package AbstractFactory;
 
 import modelo.TorneoDTO;
+import utilidades.MiExcepcion;
 
 /**
  *
@@ -14,17 +15,17 @@ import modelo.TorneoDTO;
 public class FabricaTorneo implements FabricaTorneos{
 
     @Override
-    public Copa CreaCopa(TorneoDTO torneo) {
+    public Copa CreaCopa(TorneoDTO torneo) throws MiExcepcion {
          return new Copa();
     }
 
     @Override
-    public Liga creaLiga(TorneoDTO torneo) {
+    public Liga creaLiga(TorneoDTO torneo) throws MiExcepcion {
         return new Liga();
     }
 
     @Override
-    public Eliminatoria creaEliminatoria(TorneoDTO torneo) {
+    public Eliminatoria creaEliminatoria(TorneoDTO torneo) throws MiExcepcion {
        return new Eliminatoria();
     }
     
