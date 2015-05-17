@@ -38,6 +38,7 @@
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
+        <link href="../../css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/bootstrap/datepicker/css/datepicker.css" rel="stylesheet" type="text/css">
         <link href="../../js/clock/jquery.timepicker.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
@@ -204,7 +205,7 @@ $('[data-toggle="popover"]').popover(
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 1
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -246,7 +247,7 @@ $('[data-toggle="popover"]').popover(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>
@@ -326,7 +327,7 @@ var partido8 = cancha7+fecha7+hora7;
 title="Hecho" data-content="Se han establecido las fechas"
 data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                 </div>
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
                     <sql:query var="cuartos" dataSource="jdbc/pro-level">
@@ -393,7 +394,7 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
+<button class="btn btn-success" name="validarCampos" type="button" onclick="igualesCuartos()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="cuartos" />                   
 <input type="hidden" name="fcuartos" value="cuartos" />
 <% if(request.getParameter("cuartos")!=null){%> <P style="color:green"><%=request.getParameter("cuartos")%></P> <% }  %>
@@ -442,7 +443,7 @@ var partido4 = cancha3+fecha3+hora3;
         </div>
     <div class="row">
         <div class="col-lg-12" id="csemi">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
                     <sql:query var="semi" dataSource="jdbc/pro-level">
@@ -509,7 +510,7 @@ var partido4 = cancha3+fecha3+hora3;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" type="button" onclick="igualesSemi()">Añadir Fechas</button>
+<button class="btn btn-success" type="button" onclick="igualesSemi()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="asemi" />                    
 <input type="hidden" name="fsemi" value="semi" />
 <% if(request.getParameter("semi")!=null){%> <P style="color:green"><%=request.getParameter("semi")%></P> <% }  %>
@@ -547,7 +548,7 @@ var partido2 = cancha1+fecha1+hora1;
 <c:if test="${haytercer.tercerPuesto == true}">
     <div class="row">
         <div class="col-lg-12" id="ctercerp">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Tercer Puesto</div>
                     <%--query para los cuartos--%>
                     <sql:query var="fin" dataSource="jdbc/pro-level">
@@ -614,7 +615,7 @@ var partido2 = cancha1+fecha1+hora1;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-success" name="asignarfechas">Añadir Fechas</button>
                     <input type="hidden" name="ftercer" value="terceros" />
 <% if(request.getParameter("tercer")!=null){%> <P style="color:green"><%=request.getParameter("tercer")%></P> <% }  %>
                     </form>
@@ -625,7 +626,7 @@ var partido2 = cancha1+fecha1+hora1;
                     
     <div class="row">
         <div class="col-lg-12" id="cfinal">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Final</div>
                     <%--query para los cuartos--%>
                     <sql:query var="fin" dataSource="jdbc/pro-level">
@@ -692,7 +693,7 @@ var partido2 = cancha1+fecha1+hora1;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarfechas">Añadir Fechas</button>
+                    <button class="btn btn-success" name="asignarfechas">Añadir Fechas</button>
                     <input type="hidden" name="ffinal" value="final" />
 <% if(request.getParameter("final")!=null){%> <P style="color:green"><%=request.getParameter("final")%></P> <% }  %>
                     </form>
@@ -702,6 +703,9 @@ var partido2 = cancha1+fecha1+hora1;
     </section>
 </c:if><%--si es de 16 equipos--%>
 </c:if><%--si es eliminatoria--%>
+
+
+
 
 <c:if test="${detallestorneo.tipo==2}">
     <div class="row">
@@ -730,7 +734,7 @@ var partido2 = cancha1+fecha1+hora1;
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 1
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -772,7 +776,7 @@ var partido2 = cancha1+fecha1+hora1;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>
@@ -836,7 +840,7 @@ var partido3 = cancha2+fecha2+hora2;
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 2
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -878,7 +882,7 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>
@@ -944,7 +948,7 @@ var partido3 = cancha2+fecha2+hora2;
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 3
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -986,7 +990,7 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>
@@ -1051,7 +1055,7 @@ var partido3 = cancha2+fecha2+hora2;
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -1093,7 +1097,7 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>
@@ -1158,7 +1162,7 @@ var partido3 = cancha2+fecha2+hora2;
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 5
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -1200,7 +1204,7 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
 <input type="hidden" name="foctavos" value="octavos" />
                     </form>

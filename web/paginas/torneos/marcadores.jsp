@@ -38,6 +38,7 @@
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
+        <link href="../../css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
         <link href="../../js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
         <link href="../../js/clock/jquery.timepicker.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
@@ -49,6 +50,13 @@
             .menu-opciones{
                  clear: both;
                 padding-top: 10px;
+            }
+            table td:hover{
+                background-color: #01bd24;
+                color: white;
+            }
+            input{
+                color: black;
             }
         </style>
 <script>
@@ -186,7 +194,7 @@ $('[data-toggle="popover"]').popover(
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 1
                          
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Octavos De Final</div>
                     <form name="marcadores" action="../../GestionEliminatoria" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -195,8 +203,8 @@ $('[data-toggle="popover"]').popover(
                             <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
-                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="validarEmpate${vs.index}()"/></c:if><span>${row.marcador1}</span></td>
-                                <td><span>vs</span></td>
+                                <td style="text-align: right"><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> onchange="validarEmpate${vs.index}()"/></c:if><span>${row.marcador1}</span></td>
+                                <td style="text-align: center"><span>vs</span></td>
                                 <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> onchange="validarEmpate${vs.index}()" /></c:if><span>${row.marcador2}</span></td>
                                 <td>${row.eq2}</td>                     
                                 <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
@@ -221,7 +229,7 @@ var marcador2 = $("#${vs.index}mdos").val();
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
+<button class="btn btn-success" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
                     <input type="hidden" name="foctavos" value="octavos" />
                     </form>
                 </div>
@@ -231,7 +239,7 @@ var marcador2 = $("#${vs.index}mdos").val();
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
                     <sql:query var="cuartos" dataSource="jdbc/pro-level">
@@ -292,7 +300,7 @@ var marcador2 = $("#${vs.index}mdosc").val();
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="asignarMarcadorCuartos" name="asignarMarcadorCuartos">Añadir Marcador</button>
+<button class="btn btn-success" id="asignarMarcadorCuartos" name="asignarMarcadorCuartos">Añadir Marcador</button>
                     <input type="hidden" name="fcuartos" value="cuartos" />
                     </form>
                 </div>
@@ -300,7 +308,7 @@ var marcador2 = $("#${vs.index}mdosc").val();
         </div>
     <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-primary" id="psemi">
+                <div class="panel panel-success" id="psemi">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
                     <sql:query var="semi" dataSource="jdbc/pro-level">
@@ -360,7 +368,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="asignarMarcadorSemi" name="asignarMarcadorSemi">Añadir Marcador</button>
+<button class="btn btn-success" id="asignarMarcadorSemi" name="asignarMarcadorSemi">Añadir Marcador</button>
                     <input type="hidden" name="fsemi" value="semi" />
                     <% if(request.getParameter("marcadorsemi")!=null){%><p style="color:green"><%=request.getParameter("marcadorsemi")%></p><%} %>
                     </form>
@@ -375,7 +383,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
 <c:set var="haytercer" value="${ptercer.rows[0]}" scope="page" />   
 <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Tercer Puesto</div>
                     <%--query para los cuartos--%>
                     <sql:query var="tercer" dataSource="jdbc/pro-level">
@@ -423,7 +431,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarMarcadorTercer">Añadir Marcador</button>
+                    <button class="btn btn-success" name="asignarMarcadorTercer">Añadir Marcador</button>
                     <input type="hidden" name="ftercer" value="tercer" />
                     </form>
                 </div>
@@ -433,7 +441,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
 
     <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">Final</div>
                     <%--query para los cuartos--%>
                     <sql:query var="final" dataSource="jdbc/pro-level">
@@ -481,7 +489,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-                    <button class="btn btn-primary" name="asignarMarcadorFin">Añadir Marcador</button>
+                    <button class="btn btn-success" name="asignarMarcadorFin">Añadir Marcador</button>
                     <input type="hidden" name="ffinal" value="final" />
                     </form>
                 </div>
@@ -529,7 +537,7 @@ title="Hecho" data-content="Se han establecido las fechas"
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 1
                          
                     </sql:query>
-                    <div class="panel panel-primary">
+                    <div class="panel panel-success">
                     <div class="panel-heading">Primera Ronda</div>
                     <form name="marcadores" action="../../GestionLiga" autocomplete="off">
                         <table class="table table-hover table-responsive">
@@ -552,7 +560,7 @@ title="Hecho" data-content="Se han establecido las fechas"
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-primary" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
+<button class="btn btn-success" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
                     <input type="hidden" name="primera" value="octavos" />
                     </form>
                 </div>

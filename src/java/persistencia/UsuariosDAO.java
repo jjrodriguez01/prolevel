@@ -386,17 +386,17 @@ public class UsuariosDAO {
         } catch (SQLException sqle) {
             throw new MiExcepcion("Error ", sqle); 
         }
-        finally{
-            try{
-                statement.close();
-                rs.close();
-                if (conexion != null) {
-                    conexion.close();
-                }
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
-        }
+//        finally{
+//            try{
+//                statement.close();
+//                rs.close();
+//                if (conexion != null) {
+//                    conexion.close();
+//                }
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
         return salida;
     }
     
@@ -414,15 +414,15 @@ public class UsuariosDAO {
     }catch(SQLException sqle){
         throw new MiExcepcion("Ha ocurrido un error "+sqle.getMessage(), sqle);
     }
-    finally{
-            try{
-                if(conexion !=null){
-                    conexion.close();
-                }
-            }catch(SQLException sqlexception){
-                throw new MiExcepcion("Error sql", sqlexception);
-            }
-        }
+//    finally{
+//            try{
+//                if(conexion !=null){
+//                    conexion.close();
+//                }
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error sql", sqlexception);
+//            }
+//        }
     return existe; 
     }
 }

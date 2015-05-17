@@ -805,7 +805,7 @@ public class GestionEliminatoria extends HttpServlet {
             String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             //pregunto si hay datos de partido 1
-            if (!request.getParameter("0muno").equals("") && !request.getParameter("0mdos").equals("")) {
+            if (request.getParameter("0muno")!=null && !request.getParameter("0muno").equals("") && request.getParameter("0mdos")!=null && !request.getParameter("0mdos").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             int numeroPartido = 1;
@@ -850,7 +850,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del primer partido
             }
             //pregunto asi hay 2 p
-            if(!request.getParameter("1muno").equals("") && !request.getParameter("1mdos").equals("") ){
+            if(request.getParameter("1muno")!=null && !request.getParameter("1muno").equals("") && request.getParameter("1mdos")!=null && !request.getParameter("1mdos").equals("") ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             int numeroPartido = 2;
@@ -895,7 +895,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del segundo
             }
             //pregunto si hay parametros del tercer partido
-            if(!request.getParameter("2muno").equals("") && !request.getParameter("2mdos").equals("")){
+            if(request.getParameter("2muno")!=null && !request.getParameter("2muno").equals("") && request.getParameter("2mdos")!=null && !request.getParameter("2mdos").equals("")){
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
             int numeroPartido = 3;
@@ -940,7 +940,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del tercero   
             }
             //si hay parametros del cuarto partido
-            if (!request.getParameter("3muno").equals("") && !request.getParameter("3mdos").equals("")) {
+            if (request.getParameter("3muno")!=null && !request.getParameter("3muno").equals("") && request.getParameter("3mdos")!=null && !request.getParameter("3mdos").equals("")) {
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
             int numeroPartido = 4;
@@ -985,7 +985,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del cuarto
             }
             //si hay parametros de quinto partido
-            if (!request.getParameter("4muno").equals("") && !request.getParameter("4mdos").equals("")) {
+            if (request.getParameter("4muno")!=null && !request.getParameter("4muno").equals("") && request.getParameter("4mdos")!=null && !request.getParameter("4mdos").equals("")) {
             //comienzo con el quinto
             PartidoDTO p5 = new PartidoDTO();   
             int numeroPartido = 5;
@@ -1030,7 +1030,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del quinto
                 }
             //si hay sexto partido
-            if (!request.getParameter("5muno").equals("") && !request.getParameter("5mdos").equals("")) {
+            if (request.getParameter("5muno")!=null && !request.getParameter("5muno").equals("") && request.getParameter("5mdos")!=null && !request.getParameter("5mdos").equals("")) {
                 //comienzo con el sexto
             PartidoDTO p6 = new PartidoDTO();   
             int numeroPartido = 6;
@@ -1075,7 +1075,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del sexto
                 }
             //si hay septimo partido
-            if (!request.getParameter("6muno").equals("") && !request.getParameter("6mdos").equals("")) {
+            if (request.getParameter("6muno")!=null && !request.getParameter("6muno").equals("") && request.getParameter("6mdos")!=null && !request.getParameter("6mdos").equals("")) {
             //comienzo con el septimo
             PartidoDTO p7 = new PartidoDTO();   
             int numeroPartido = 7;
@@ -1120,7 +1120,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del septimo
                 }
             //pregunto si hay parametros de octavo partido
-            if (!request.getParameter("7muno").equals("") && !request.getParameter("7mdos").equals("")) {
+            if (request.getParameter("7muno")!=null && !request.getParameter("7muno").equals("") && request.getParameter("7mdos")!=null && !request.getParameter("7mdos").equals("")) {
             //comienzo con el octavo
             PartidoDTO p8 = new PartidoDTO();   
             int numeroPartido = 8;
@@ -1165,7 +1165,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del octavo 
                 }
             //reenvio
-            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo+"octavos=asignados");
+            response.sendRedirect("paginas/torneos/resultadoseli.jsp?idTorneo="+idTorneo+"&octavos=asignados");
         }//fin asignar marcador octavos    
         
         
