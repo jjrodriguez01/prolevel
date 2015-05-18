@@ -35,7 +35,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
 <c:set var="inscritos" value="${disponibilidad.rows[0]}" scope="page" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inscripciones a ${detallestorneo.nombre}</title>

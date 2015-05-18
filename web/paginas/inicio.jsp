@@ -20,7 +20,7 @@
                             
 %>
 <!doctype html>
-<html>
+<html lang="es">
 <head>
 <link rel="shortcut icon" href="../imagenes/favicon.ico">
 <link href="../css/onepage-scroll.css" rel="stylesheet" type="text/css">

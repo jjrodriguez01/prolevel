@@ -33,7 +33,7 @@
 <c:set var="detallestorneo" value="${infotorneo.rows[0]}" scope="page" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Resultados ${detallestorneo.nombre}</title>

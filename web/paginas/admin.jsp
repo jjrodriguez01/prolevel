@@ -31,7 +31,7 @@
                     
         %> 
 <!doctype html>
-<html>
+<html lang="es">
 <head>
 <link rel="shortcut icon" href="../imagenes/favicon.ico">
 <link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">

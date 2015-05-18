@@ -94,6 +94,14 @@ public class Liga extends Torneo{
         puno.setEstado(estado);
         partido.insertarPartido(puno);
         
+        //inserto al equipo 1 en tabla posiciones
+        partido.posEquipo1(puno);
+        //ahora inserto al equipo 2 en tabla posiciones
+        partido.posEquipo2(puno);
+        
+        
+        
+        
         pdos.setRonda(ronda);
         pdos.setEquipo1(equipos.get(3).getEquipoCodigo());
         pdos.setEquipo2(equipos.get(4).getEquipoCodigo());
@@ -102,6 +110,14 @@ public class Liga extends Torneo{
         pdos.setNumero(n2);
         pdos.setEstado(estado);
         partido.insertarPartido(pdos);
+        
+        //inserto al equipo 1 en tabla posiciones
+        partido.posEquipo1(pdos);
+        //ahora inserto al equipo 2 en tabla posiciones
+        partido.posEquipo2(pdos);
+        
+        
+        
         
         ptres.setRonda(ronda);
         ptres.setEquipo1(equipos.get(5).getEquipoCodigo());
@@ -112,6 +128,11 @@ public class Liga extends Torneo{
         ptres.setEstado(estado);
         partido.insertarPartido(ptres);
         
+        //inserto al equipo 1 en tabla posiciones
+        partido.posEquipo1(ptres);
+        //ahora inserto al equipo 2 en tabla posiciones
+        partido.posEquipo2(ptres);
+        //solo se insertan una vez en la tabla posiciones en las demas rondas no hay q hacerlo
         
         
         

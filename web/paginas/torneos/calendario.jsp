@@ -31,7 +31,7 @@
 <%--  Query para saber cuantos equipos hay inscritos --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Fechas de ${detallestorneo.nombre}</title>
@@ -75,7 +75,7 @@ $(document).ready(function() {
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos?${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -112,6 +112,7 @@ $(document).ready(function() {
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
             <li role="presentation"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="marcadores.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
             <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
             <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>

@@ -91,7 +91,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>${detallestorneo.nombre}</title>
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">

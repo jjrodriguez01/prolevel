@@ -1183,7 +1183,7 @@ public class GestionEliminatoria extends HttpServlet {
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             
              //pregunto si hay datos de partido 1
-            if (!request.getParameter("0munoc").equals("") && request.getParameter("0mdosc").equals("")) {
+            if (request.getParameter("0munoc")!=null && !request.getParameter("0munoc").equals("") && request.getParameter("0mdosc")!=null && !request.getParameter("0mdosc").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             int numeroPartido = 1;
@@ -1228,7 +1228,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del primer partido
             }
             //pregunto asi hay 2 p
-            if(!request.getParameter("1munoc").equals("") && request.getParameter("1mdosc").equals("") ){
+            if(request.getParameter("1munoc") != null && !request.getParameter("1munoc").equals("") && request.getParameter("1mdosc")!=null && !request.getParameter("1mdosc").equals("") ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             int numeroPartido = 2;
@@ -1273,7 +1273,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del segundo
             }
             //pregunto si hay parametros del tercer partido
-            if(!request.getParameter("2munoc").equals("") && request.getParameter("2mdosc").equals("")){
+            if(request.getParameter("2munoc")!=null && !request.getParameter("2munoc").equals("") && request.getParameter("2mdosc")!=null && !request.getParameter("2mdosc").equals("")){
              //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();   
             int numeroPartido = 3;
@@ -1319,7 +1319,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del tercero 
             }
             //si hay parametros del cuarto partido
-            if (!request.getParameter("3munoc").equals("") && request.getParameter("3mdosc").equals("")) {
+            if (request.getParameter("3munoc")!=null && !request.getParameter("3munoc").equals("") && request.getParameter("3mdosc")!=null && !request.getParameter("3mdosc").equals("")) {
             //comienzo con el cuarto
             PartidoDTO p4 = new PartidoDTO();   
             int numeroPartido = 4;
@@ -1379,7 +1379,7 @@ public class GestionEliminatoria extends HttpServlet {
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             
              //pregunto si hay datos de partido 1
-            if (!request.getParameter("0munos").equals("") && !request.getParameter("0mdoss").equals("")) {
+            if (request.getParameter("0munos")!=null && !request.getParameter("0munos").equals("") && request.getParameter("0mdoss")!=null && !request.getParameter("0mdoss").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             int numeroPartido = 1;
@@ -1429,7 +1429,7 @@ public class GestionEliminatoria extends HttpServlet {
             //fin del primer partido
             }
             //pregunto asi hay 2 p
-            if(!request.getParameter("1munos").equals("") && !request.getParameter("1mdoss").equals("")){
+            if(request.getParameter("1munos")!=null && !request.getParameter("1munos").equals("") && request.getParameter("1mdoss")!=null && !request.getParameter("1mdoss").equals("")){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             int numeroPartido = 2;
@@ -1491,7 +1491,7 @@ public class GestionEliminatoria extends HttpServlet {
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             
              //pregunto si hay datos de partido 1
-            if (!request.getParameter("0muno").equals("") && !request.getParameter("0mdos").equals("")) {
+            if (request.getParameter("0muno")!=null && !request.getParameter("0muno").equals("") && request.getParameter("0mdos")!=null && !request.getParameter("0mdos").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             int numeroPartido = 1;
@@ -1547,7 +1547,7 @@ public class GestionEliminatoria extends HttpServlet {
             FachadaTorneos facadeTorneo = new FachadaTorneos();
  
              //pregunto si hay datos de partido 1
-            if (!request.getParameter("0muno").equals("") && !request.getParameter("0mdos").equals("")) {
+            if (request.getParameter("0muno")!=null && !request.getParameter("0muno").equals("") && request.getParameter("0mdos")!=null && !request.getParameter("0mdos").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             int numeroPartido = 1;

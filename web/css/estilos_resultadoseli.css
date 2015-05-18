@@ -263,7 +263,7 @@ table td.equipo{
     width: 150px;
     min-width: 149px;
     max-width: 151px;
-    overflow: scroll;
+    overflow: hidden;
 }
 table td.marcador{
     width: 30px;

@@ -309,13 +309,34 @@ public class FachadaTorneos {
     }
     
 //    AHORA POSICIONES
-            
-    public String insertarPosicion(TablaPosicionesDTO tp) throws MiExcepcion{
-        return tpdao.insertar(tp, conexion);
+    /**
+     * Actualiza la tabla de posiciones inserta los puntos y demas
+     * @param p PartidoDTO con los equipos y marcadores
+     * @return String de confirmacion o error
+     * @throws MiExcepcion 
+     */
+    public String insertarPosicion(PartidoDTO p) throws MiExcepcion{
+        return tpdao.insertar(p, conexion);
     }    
+    /**
+    * Inserta al equipo 1 en la tabla de posiciones y los numeros pertinentes para la  pos, pj,pp etc
+    *@param p PartidoDTO con el id del equipo y torneo
+    * @return msj de confirmacion
+    * @throws MiExcepcion 
+    */
+    public String posEquipo1(PartidoDTO p) throws MiExcepcion{
+        return tpdao.posEquipo1(p, conexion);
+    } 
     
-    
-    
+    /**
+    * Inserta al equipo 2 en la tabla de posiciones y los numeros pertinentes para la  pos, pj,pp etc
+    *@param p PartidoDTO con el id del equipo y torneo
+    * @return msj de confirmacion
+    * @throws MiExcepcion 
+    */
+    public String posEquipo2(PartidoDTO p) throws MiExcepcion{
+        return tpdao.posEquipo2(p, conexion);
+    } 
     
     //AHORA TERCEROSDAO
     

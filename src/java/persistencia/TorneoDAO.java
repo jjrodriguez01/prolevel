@@ -44,9 +44,9 @@ public class TorneoDAO {
             statement.setInt(1, idTorneo);
             rtdo = statement.executeUpdate();
             if (rtdo != 0) {
-                mensaje = "Se eliminó el torneo";
+                mensaje = "Torneo eliminado";
             } else {
-                mensaje = "Ocurrió Un Error";
+                mensaje = "Error eliminando torneo";
             }
         } catch (SQLException sqlexception) {
             System.out.println("Ocurrió un error" + sqlexception.getMessage());

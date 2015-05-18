@@ -21,7 +21,7 @@
 %>    
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>Crear Torneos</title>
         <link href="../../js/datepicker/jquery-ui.min.css" rel="stylesheet" type="text/css">

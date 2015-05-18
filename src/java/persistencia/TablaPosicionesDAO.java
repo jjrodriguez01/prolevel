@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.PartidoDTO;
 import utilidades.MiExcepcion;
 
 public class TablaPosicionesDAO {
@@ -30,24 +31,19 @@ public class TablaPosicionesDAO {
     ResultSet rs;
 
 
-    public String insertar(TablaPosicionesDTO tab,Connection conexion) throws MiExcepcion {
+    public synchronized String insertar(PartidoDTO p,Connection conexion) throws MiExcepcion {
         try {
-            call = conexion.prepareCall("{call sp_actalizarpos(?,?,?,?,?,?,?,?,?,?,?) }");
-            call.setInt(1, tab.getIdtorneo());
-            call.setInt(2, tab.getIdequipo());
-            call.setInt(3, tab.getGolesAnotados());
-            call.setInt(4, tab.getGolesRecibidos());
-            call.setInt(5, tab.getPartidosEmpatados());
-            call.setInt(6, tab.getPartidosGanados());
-            call.setInt(7, tab.getPartidosJugados());
-            call.setInt(8, tab.getPartidosPerdidos());
-            call.setInt(9, tab.getPosicion());
-            call.setInt(10, tab.getPuntos());
+            call = conexion.prepareCall("{call sp_actalizarpos(?,?,?,?,?,?) }");
+            call.setInt(1, p.getMarcador1());
+            call.setInt(2, p.getMarcador2());
+            call.setInt(3, p.getEquipo1());
+            call.setInt(4, p.getEquipo2());
+            call.setInt(5, p.getIdTorneo());
 
-            call.registerOutParameter(11, Types.INTEGER);
+            call.registerOutParameter(6, Types.INTEGER);
             call.execute();
             
-            int salida = call.getInt(11);
+            int salida = call.getInt(6);
             if (salida == 1) {
                 mensaje = "Se han actualizado las posiciones.";
             } else {
@@ -56,6 +52,74 @@ public class TablaPosicionesDAO {
         } catch (SQLException sqle) {
            throw new MiExcepcion("Error al insertar posiciones ", sqle);
         }
+        return mensaje;
+    }
+    
+    public synchronized String posEquipo1(PartidoDTO p,Connection conexion) throws MiExcepcion {
+
+        try {
+
+            statement = conexion.prepareStatement("INSERT INTO tablaposiciones "
+                    + " (idTorneo, idEquipo, posicion, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesAnotados, golesRecibidos) "
+                    + " VALUES(?,?,0,0,0,0,0,0,0,0);");
+            //obtenemos los datos del dto de la tabla
+            statement.setInt(1, p.getIdTorneo());
+            statement.setInt(2, p.getEquipo1());
+            //ejecuta el insert
+            rtdo = statement.executeUpdate();
+            //si se afectaron campos 
+            if (rtdo != 0) {
+                mensaje = "Se inserto correctamente";
+                //si no se afecto la tabla
+            } else {
+                mensaje = "Error";
+            }
+        } 
+        catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error insertando partidos", sqlexception);
+        }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
+        //devolvemos el mensaje al usuario
+        return mensaje;
+    }
+    
+    public synchronized String posEquipo2(PartidoDTO p,Connection conexion) throws MiExcepcion {
+
+        try {
+
+            statement = conexion.prepareStatement("INSERT INTO tablaposiciones "
+                    + " (idTorneo, idEquipo, posicion, puntos, partidosJugados, partidosGanados, partidosEmpatados, partidosPerdidos, golesAnotados, golesRecibidos) "
+                    + " VALUES(?,?,0,0,0,0,0,0,0,0);");
+            //obtenemos los datos del dto de la tabla
+            statement.setInt(1, p.getIdTorneo());
+            statement.setInt(2, p.getEquipo2());
+            //ejecuta el insert
+            rtdo = statement.executeUpdate();
+            //si se afectaron campos 
+            if (rtdo != 0) {
+                mensaje = "Se inserto correctamente";
+                //si no se afecto la tabla
+            } else {
+                mensaje = "Error";
+            }
+        } 
+        catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error insertando partidos", sqlexception);
+        }
+//        finally{
+//            try{
+//                statement.close();
+//            }catch(SQLException sqlexception){
+//                throw new MiExcepcion("Error insertando partidos", sqlexception);
+//            }
+//        }
+        //devolvemos el mensaje al usuario
         return mensaje;
     }
 

@@ -98,7 +98,7 @@ public class GestionLiga extends HttpServlet {
             String asunto = "Notificacion resultado de partidos";
             FachadaTorneos facadeTorneo = new FachadaTorneos();
             //pregunto si hay datos de partido 1
-            if (!request.getParameter("0muno").equals("") && !request.getParameter("0mdos").equals("")) {
+            if (request.getParameter("0muno")!=null && !request.getParameter("0muno").equals("") && request.getParameter("0mdos")!=null && !request.getParameter("0mdos").equals("")) {
             //comienzo con el primer partido
             PartidoDTO p1 = new PartidoDTO();
             TablaPosicionesDTO pos1 = new TablaPosicionesDTO();//posiciones del 1 equipo
@@ -115,32 +115,9 @@ public class GestionLiga extends HttpServlet {
             p1.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p1);
             
-            //actualizo en tabla al primero
-            pos1.setIdtorneo(idTorneo);
-            pos1.setIdequipo(p1.getEquipo1());
-            pos1.setGolesAnotados(p1.getMarcador1());
-            pos1.setGolesRecibidos(p1.getMarcador2());
-            pos1.setPartidosEmpatados(p1.getMarcador1() == p1.getMarcador2()? 1 : 0);
-            pos1.setPartidosGanados(p1.getMarcador1() > p1.getMarcador2()? 1 : 0);
-            pos1.setPartidosPerdidos(p1.getMarcador1() > p1.getMarcador2()? 1 : 0);
-            pos1.setPartidosJugados(1);
-            pos1.setPosicion(0);
-            pos1.setPuntos(p1.getMarcador1() > p1.getMarcador2()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos1);
+            //ahora actualizo la tabla de posiciones
             
-            
-            //posiciones del 2
-            pos2.setIdtorneo(idTorneo);
-            pos2.setIdequipo(p1.getEquipo1());
-            pos2.setGolesAnotados(p1.getMarcador2());
-            pos2.setGolesRecibidos(p1.getMarcador1());
-            pos2.setPartidosEmpatados(p1.getMarcador1() == p1.getMarcador2()? 1 : 0);
-            pos2.setPartidosGanados(p1.getMarcador2() > p1.getMarcador1()? 1 : 0);
-            pos2.setPartidosPerdidos(p1.getMarcador2() > p1.getMarcador1()? 1 : 0);
-            pos2.setPartidosJugados(1);
-            pos2.setPosicion(0);
-            pos2.setPuntos(p1.getMarcador2() > p1.getMarcador1()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos2);
+            facadeTorneo.insertarPosicion(p1);
             
             
             //correos
@@ -172,7 +149,7 @@ public class GestionLiga extends HttpServlet {
             //fin del primer partido
             }
             //pregunto asi hay 2 p
-            if(!request.getParameter("1muno").equals("") && !request.getParameter("1mdos").equals("") ){
+            if(request.getParameter("1muno")!=null && !request.getParameter("1muno").equals("") && request.getParameter("1mdos")!=null && !request.getParameter("1mdos").equals("") ){
             //comienzo con el segundo
             PartidoDTO p2 = new PartidoDTO();   
             TablaPosicionesDTO pos1 = new TablaPosicionesDTO();//posiciones del 1 equipo
@@ -189,32 +166,8 @@ public class GestionLiga extends HttpServlet {
             p2.setIdTorneo(idTorneo);
             facadeTorneo.insertarMarcador(p2);
             
-            //actualizo en tabla al primero
-            pos1.setIdtorneo(idTorneo);
-            pos1.setIdequipo(p2.getEquipo1());
-            pos1.setGolesAnotados(p2.getMarcador1());
-            pos1.setGolesRecibidos(p2.getMarcador2());
-            pos1.setPartidosEmpatados(p2.getMarcador1() == p2.getMarcador2()? 1 : 0);
-            pos1.setPartidosGanados(p2.getMarcador1() > p2.getMarcador2()? 1 : 0);
-            pos1.setPartidosPerdidos(p2.getMarcador1() > p2.getMarcador2()? 1 : 0);
-            pos1.setPartidosJugados(1);
-            pos1.setPosicion(0);
-            pos1.setPuntos(p2.getMarcador1() > p2.getMarcador2()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos1);
-            
-            
-            //posiciones del 2
-            pos2.setIdtorneo(idTorneo);
-            pos2.setIdequipo(p2.getEquipo1());
-            pos2.setGolesAnotados(p2.getMarcador2());
-            pos2.setGolesRecibidos(p2.getMarcador1());
-            pos2.setPartidosEmpatados(p2.getMarcador1() == p2.getMarcador2()? 1 : 0);
-            pos2.setPartidosGanados(p2.getMarcador2() > p2.getMarcador1()? 1 : 0);
-            pos2.setPartidosPerdidos(p2.getMarcador2() > p2.getMarcador1()? 1 : 0);
-            pos2.setPartidosJugados(1);
-            pos2.setPosicion(0);
-            pos2.setPuntos(p2.getMarcador2() > p2.getMarcador1()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos2);
+            //actualizo la tabla de posiciones
+            facadeTorneo.insertarPosicion(p2);
             
             
             StringBuilder emailsp2 = new StringBuilder("");//emails 
@@ -245,7 +198,7 @@ public class GestionLiga extends HttpServlet {
             //fin del segundo
             }
             //pregunto si hay parametros del tercer partido
-            if(!request.getParameter("2muno").equals("") && !request.getParameter("2mdos").equals("")){
+            if(request.getParameter("2muno")!=null && !request.getParameter("2muno").equals("") && request.getParameter("2mdos")!=null && !request.getParameter("2mdos").equals("")){
             //comienzo con el tercero
             PartidoDTO p3 = new PartidoDTO();
             TablaPosicionesDTO pos1 = new TablaPosicionesDTO();//posiciones del 1 equipo
@@ -263,34 +216,10 @@ public class GestionLiga extends HttpServlet {
             facadeTorneo.insertarMarcador(p3);
             
             
-            //actualizo en tabla al primero
-            pos1.setIdtorneo(idTorneo);
-            pos1.setIdequipo(p3.getEquipo1());
-            pos1.setGolesAnotados(p3.getMarcador1());
-            pos1.setGolesRecibidos(p3.getMarcador2());
-            pos1.setPartidosEmpatados(p3.getMarcador1() == p3.getMarcador2()? 1 : 0);
-            pos1.setPartidosGanados(p3.getMarcador1() > p3.getMarcador2()? 1 : 0);
-            pos1.setPartidosPerdidos(p3.getMarcador1() > p3.getMarcador2()? 1 : 0);
-            pos1.setPartidosJugados(1);
-            pos1.setPosicion(0);
-            pos1.setPuntos(p3.getMarcador1() > p3.getMarcador2()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos1);
+            //actualizo la t posiciones
+            facadeTorneo.insertarPosicion(p3);
             
-            
-            //posiciones del 2
-            pos2.setIdtorneo(idTorneo);
-            pos2.setIdequipo(p3.getEquipo1());
-            pos2.setGolesAnotados(p3.getMarcador2());
-            pos2.setGolesRecibidos(p3.getMarcador1());
-            pos2.setPartidosEmpatados(p3.getMarcador1() == p3.getMarcador2()? 1 : 0);
-            pos2.setPartidosGanados(p3.getMarcador2() > p3.getMarcador1()? 1 : 0);
-            pos2.setPartidosPerdidos(p3.getMarcador2() > p3.getMarcador1()? 1 : 0);
-            pos2.setPartidosJugados(1);
-            pos2.setPosicion(0);
-            pos2.setPuntos(p3.getMarcador2() > p3.getMarcador1()? 3 : 0);
-            facadeTorneo.insertarPosicion(pos2);
-            
-            
+            //envio de correos
             StringBuilder emailsp3 = new StringBuilder("");//emails 
             ArrayList<String> correosp3eq = new ArrayList();
             //array list con los correos de los jugadores de estos dos equipos
@@ -320,7 +249,7 @@ public class GestionLiga extends HttpServlet {
             }
             
             //reenvio
-            response.sendRedirect("paginas/torneos/misTorneos.jsp?idTorneo="+idTorneo+"octavos=asignados");
+            response.sendRedirect("paginas/torneos/misTorneos.jsp?idTorneo="+idTorneo+"&octavos=asignados");
         }//fin asignar marcador primera ronda 
         
           else {
