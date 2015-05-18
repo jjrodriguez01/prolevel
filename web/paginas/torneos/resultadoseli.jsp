@@ -164,7 +164,7 @@ ronda = 1
 and idTorneo = ? <sql:param value="${param.idTorneo}"/> 
 and numero = 1;
 </sql:query>
-                    <table id="eq1" class="table table-bordered">
+                    <table id="primerp" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p1.rows}" >
                             <tr>
@@ -198,7 +198,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 2;
 </sql:query>
 <div id="p2">
-                    <table id="eq2" class="table table-bordered">
+                    <table id="segundop" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p2.rows}" >
                             <tr>
@@ -233,7 +233,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 3;
 </sql:query>
 <div id="p3">
-                    <table id="eq3" class="table table-bordered">
+                    <table id="tercerp" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p3.rows}" >
                             <tr>
@@ -268,7 +268,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 4;
 </sql:query>
 <div id="p4">
-                    <table id="eq3" class="table table-bordered">
+                    <table id="cuartop" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p4.rows}" >
                             <tr>
@@ -303,7 +303,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 5;
 </sql:query>
 <div id="p5">
-                    <table id="eq3" class="table table-bordered">
+                    <table id="quintop" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p5.rows}" >
                             <tr>
@@ -338,7 +338,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 6;
 </sql:query>
 <div id="p6">
-                    <table id="eq3" class="table table-bordered">
+                    <table id="sextop" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p6.rows}" >
                             <tr>
@@ -372,7 +372,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 7;
 </sql:query>
 <div id="p7">
-                    <table id="eq7"  class="table table-bordered">
+                    <table id="septimop"  class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p7.rows}" >
                             <tr>
@@ -407,7 +407,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 8;
 </sql:query>
 <div id="p8">
-                    <table id="eq8" class="table table-bordered">
+                    <table id="octavop" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p8.rows}" >
                             <tr>
@@ -442,7 +442,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 1;
 </sql:query>
 <div id="cuartos1">
-                    <table id="eqc1" class="table table-bordered">
+                    <table id="cuartosuno" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p1cuartos.rows}" >
                             <tr>
@@ -476,7 +476,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 2;
 </sql:query>
 <div id="cuartos2">
-                    <table id="eqc2" class="table table-bordered">
+                    <table id="cuartosdos" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p2cuartos.rows}" >
                             <tr>
@@ -511,7 +511,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 3;
 </sql:query>
 <div id="cuartos3">
-                    <table id="eqc3" class="table table-bordered">
+                    <table id="cuartostres" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p3cuartos.rows}" >
                             <tr>
@@ -546,7 +546,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 4;
 </sql:query>
 <div id="cuartos4">
-                    <table id="eqc3" class="table table-bordered">
+                    <table id="cuartoscuatro" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p4cuartos.rows}" >
                             <tr>
@@ -582,7 +582,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 1;
 </sql:query>
 <div id="semi1">
-                    <table id="eqs1" class="table table-bordered">
+                    <table id="semiuno" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p4cuartos.rows}" >
                             <tr>
@@ -618,7 +618,7 @@ and idTorneo = ? <sql:param value="${param.idTorneo}"/>
 and numero = 2;
 </sql:query>
 <div id="semi2">
-                    <table id="eqs2" class="table table-bordered">
+                    <table id="semidos" class="table table-bordered">
                         <tbody>
                             <c:forEach var="row" items="${p4cuartos.rows}" >
                             <tr>

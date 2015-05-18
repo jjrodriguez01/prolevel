@@ -39,31 +39,7 @@ public class RegistroEquipos extends HttpServlet {
             String nombre = request.getParameter("nombre");//nombre equipo
             FachadaTorneos facadetorneos = new FachadaTorneos();                       
   
-            int codigo = facadetorneos.existeEquipo(nombre);
-            //si el codigo no es cero significa que este equipo ya esta registrado solo lo insertamos al torneo 
-            if (codigo!=0) {
-                String  nuevoequipo = facadetorneos.inscribirEquipos(codigo, idTorneo);//insertamos en la tabla equipos del torneo
-                if (nuevoequipo.equals("Se inserto el equipo al torneo")) {
-    //ahora borro los jugadores de ese equipo anteriormente
-                    facadetorneos.eliminarJugadoresEquipo(codigo);
-    //ahora inscribo los nuevos jugadores
-    long juno = Long.parseLong(request.getParameter("juno"));
-    long jdos = Long.parseLong(request.getParameter("jdos"));
-    long jtres = Long.parseLong(request.getParameter("jtres"));
-    long jcuatro = Long.parseLong(request.getParameter("jcuatro"));
-    long jcinco = Long.parseLong(request.getParameter("jcinco"));
-    long jseis = Long.parseLong(request.getParameter("jseis"));
-    long jsiete = Long.parseLong(request.getParameter("jsiete"));
-    long jocho = Long.parseLong(request.getParameter("jocho"));
-    //creo un array con los documentos
-    long[] docs = {juno,jdos,jtres,jcuatro,jcinco,jseis,jsiete,jocho};
-        for (int i = 0; i < docs.length; i++) {
-            facadetorneos.inscribirJugadorAEquipo(codigo, docs[i]);
-        }
-        response.sendRedirect("paginas/torneos/inscribirEquipos.jsp?idTorneo="+idTorneo+"&registro=Se registraron el equipo y los jugadores");
-                }//si el codigo de equipo es cero es porq no esta registrado
-                //hay que registrarlo y repetir el proceso
-            }else{
+            
                 String registroequipo = facadetorneos.insertarEquipo(nombre);
                 if (registroequipo.equals("Se inserto el equipo")) {//si se registro correctamente
                     //hay q buscar el codigo con el que se inserto el equipo
@@ -93,21 +69,8 @@ public class RegistroEquipos extends HttpServlet {
                     response.sendError(500, registroequipo);
                 }
             }
-            
         }
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegistroEquipos</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegistroEquipos at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
