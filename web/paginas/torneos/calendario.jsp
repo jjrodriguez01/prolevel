@@ -21,6 +21,10 @@
 <sql:query var="torneo" dataSource="jdbc/pro-level">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
+<%--  Query con los numeros de las canchas --%>
+<sql:query var="numcanchas" dataSource="jdbc/pro-level">
+    SELECT numeroCancha FROM cancha
+</sql:query>
 <%--  Query para que el contexto sea el torneo --%>
 <sql:query var="infotorneo" dataSource="jdbc/pro-level">
     SELECT *  FROM torneo
@@ -41,15 +45,27 @@
         <link href="../../css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/bootstrap/datepicker/css/datepicker.css" rel="stylesheet" type="text/css">
         <link href="../../js/clock/jquery.timepicker.css" rel="stylesheet" type="text/css">
+        <link href="../../js/jquery-toastmessage-plugin-jquery-toastmessage-plugin-0.2.0/src/main/resources/css/jquery.toastmessage.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/jquery.validate.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/datepicker/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../js/clock/jquery.timepicker.js"></script>
+        <script type="text/javascript" src="../../js/jquery-toastmessage-plugin-jquery-toastmessage-plugin-0.2.0/src/main/javascript/jquery.toastmessage.js"></script>
         <style>
             .menu-opciones{
                  clear: both;
                 padding-top: 10px;
+            }
+            table td:hover{
+                background-color: #01bd24;
+                color: white;
+            }
+            input,select{
+                color: black;
+            }
+            p.fechas{
+                color: green;
             }
         </style>
 <script>
@@ -230,11 +246,9 @@ $('[data-toggle="popover"]').popover(
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -296,22 +310,22 @@ var hora7 = (document.calendar.hora7.value !== null) ? document.calendar.hora7.v
 var partido8 = cancha7+fecha7+hora7;
 
         if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
     else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");   
     }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
     }else if(partido4 === partido1 || partido4 === partido2 || partido4 === partido3 || partido4 === partido5 || partido4 === partido6 || partido4 === partido7 || partido4 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else if(partido5 === partido1 || partido5 === partido2 || partido5 === partido3 || partido5 === partido4 || partido5 === partido6 || partido5 === partido7 || partido5 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
     }else if(partido6 === partido1 || partido6 === partido2 || partido6 === partido3 || partido6 === partido4 || partido6 === partido5 || partido6 === partido7 || partido6 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
     }else if(partido7 === partido1 || partido7 === partido2 || partido7 === partido3 || partido7 === partido4 || partido7 === partido5 || partido7 === partido6 || partido7 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");   
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");   
     }else if(partido8 === partido1 || partido8 === partido2 || partido8 === partido3 || partido8 === partido4 || partido8 === partido5 || partido8 === partido6 || partido8 === partido7){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
     }else{//si nada fue igual envio
         $("#calendar").submit();
     }
@@ -375,13 +389,11 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                                 <td><span>-</span></td>
                                 <td>${row.eq2}</td>
                                 <td>
-                                    <select name="cp${vs.index}">
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -425,14 +437,14 @@ var hora3 = (document.calendarcuartos.hora3.value !== null) ? document.calendarc
 var partido4 = cancha3+fecha3+hora3;
     
     if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
     else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
     }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else if(partido4 === partido1 || partido4 === partido2 || partido4 === partido3){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else{//si nada fue igual envio
         $("#calendarcuartos").submit();
     }
@@ -491,13 +503,11 @@ var partido4 = cancha3+fecha3+hora3;
                                 <td><span>-</span></td>
                                 <td>${row.eq2}</td>
                                 <td>
-                                    <select name="cp${vs.index}">
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
@@ -530,7 +540,7 @@ var hora1 = (document.calendarsemi.hora1.value !== null) ? document.calendarsemi
 var partido2 = cancha1+fecha1+hora1;
     
         if (partido1 === partido2) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }else{//si nada fue igual envio
         $("#calendarsemi").submit();
     }
@@ -596,13 +606,11 @@ var partido2 = cancha1+fecha1+hora1;
                                 <td><span>-</span></td>
                                 <td>${row.eq2}</td>
                                 <td>
-                                    <select name="cp${vs.index}">
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
@@ -674,13 +682,11 @@ var partido2 = cancha1+fecha1+hora1;
                                 <td><span>-</span></td>
                                 <td>${row.eq2}</td>
                                 <td>
-                                    <select name="cp${vs.index}">
+                                    <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" class="datepicker" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
@@ -707,7 +713,7 @@ var partido2 = cancha1+fecha1+hora1;
 
 
 
-
+<%--si es liga--%>
 <c:if test="${detallestorneo.tipo==2}">
     <div class="row">
         <div class="col-lg-12">
@@ -736,8 +742,8 @@ var partido2 = cancha1+fecha1+hora1;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 1
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Octavos De Final</div>
-                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                    <div class="panel-heading">Primera Ronda</div>
+                    <form action="../../GestionLiga" name="pliga" id="pliga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -759,11 +765,9 @@ var partido2 = cancha1+fecha1+hora1;
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -777,37 +781,38 @@ var partido2 = cancha1+fecha1+hora1;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="fIgualesR1()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
-<input type="hidden" name="foctavos" value="octavos" />
+<input type="hidden" name="primeraronda" value="primera" />
+<% if(request.getParameter("primera")!=null){%><p class="fechas"><%=request.getParameter("primera")%></p> <%} %>
                     </form>
 <script>
-    function validarIguales(){
+    function fIgualesR1(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
+var cancha0 = (document.pliga.cp0.value !== null) ? document.pliga.cp0.value : 'cancha0';   
+var fecha0 = (document.pliga.fecha0.value !== null) ? document.pliga.fecha0.value: 'fecha0';
+var hora0 = (document.pliga.hora0.value !== null) ? document.pliga.hora0.value : 'hora0';
 var partido1 = cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
+var cancha1 = (document.pliga.cp1.value !== null) ? document.pliga.cp1.value : 'cancha1';
+var fecha1 = (document.pliga.fecha1.value !== null) ? document.pliga.fecha1.value: 'fecha1';
+var hora1 = (document.pliga.hora1.value !== null) ? document.pliga.hora1.value : 'hora1';
 var partido2 = cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
+var cancha2 = (document.pliga.cp2.value !== null) ? document.pliga.cp2.value : 'cancha2';
+var fecha2 = (document.pliga.fecha2.value !== null) ? document.pliga.fecha2.value: 'fecha2';
+var hora2 = (document.pliga.hora2.value !== null) ? document.pliga.hora2.value : 'hora2';
 var partido3 = cancha2+fecha2+hora2;
 
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        if (partido1 === partido2 || partido1 === partido3) {
+      $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    else if(partido2 === partido1 || partido2 === partido3 ){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
+    }else if(partido3 === partido1 || partido3 === partido2 ){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
     }else{//si nada fue igual envio
-        $("#calendar").submit();
+        $("#pliga").submit();
     }
 }
 </script>
@@ -842,7 +847,7 @@ var partido3 = cancha2+fecha2+hora2;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 2
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Octavos De Final</div>
+                    <div class="panel-heading">Segunda Ronda</div>
                     <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
@@ -865,11 +870,9 @@ var partido3 = cancha2+fecha2+hora2;
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -906,12 +909,12 @@ var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.v
 var partido3 = cancha2+fecha2+hora2;
 
         if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
     else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
     }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
     }else{//si nada fue igual envio
         $("#calendar").submit();
     }
@@ -973,11 +976,9 @@ var partido3 = cancha2+fecha2+hora2;
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -1014,12 +1015,12 @@ var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.v
 var partido3 = cancha2+fecha2+hora2;
 
         if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
     else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
     }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else{//si nada fue igual envio
         $("#calendar").submit();
     }
@@ -1080,11 +1081,9 @@ var partido3 = cancha2+fecha2+hora2;
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>
@@ -1187,11 +1186,9 @@ var partido3 = cancha2+fecha2+hora2;
                                 <td>
                                     <select name="cp${vs.index}" id="cp${vs.index}">
                                         <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
+                                        <c:forEach var="canchas" items="${numcanchas.rows}">
+                                            <option <c:if test="${canchas.numeroCancha == row.cancha}">selected</c:if>>${canchas.numeroCancha}</option>    
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td><input type="text" name="fecha${vs.index}" id="fecha${vs.index}" class="datepicker"  <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if>/></td>

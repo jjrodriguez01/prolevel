@@ -55,7 +55,7 @@
                 background-color: #01bd24;
                 color: white;
             }
-            input{
+            input,select{
                 color: black;
             }
         </style>
