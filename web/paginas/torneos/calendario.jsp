@@ -60,6 +60,15 @@
             table td:hover{
                 background-color: #01bd24;
                 color: white;
+                transition: all 0.5s;
+            }
+            td.day:hover{
+                background: #1ae832;
+                color: black;
+                -ms-transform: rotate(7deg); /* IE 9 */
+                -webkit-transform: rotate(7deg); /* Chrome, Safari, Opera */
+                transform: rotate(7deg);
+                transition: all 2s;
             }
             input,select{
                 color: black;
@@ -269,45 +278,45 @@ $('[data-toggle="popover"]').popover(
 <script>
     function validarIguales(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.calendar.cp0.value;   
+var fecha0 = document.calendar.fecha0.value;
+var hora0 = document.calendar.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.calendar.cp1.value;
+var fecha1 = document.calendar.fecha1.value;
+var hora1 = document.calendar.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.calendar.cp2.value;
+var fecha2 = document.calendar.fecha2.value;
+var hora2 = document.calendar.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
-var cancha3 = (document.calendar.cp3.value !== null) ? document.calendar.cp3.value : 'cancha3';
-var fecha3 = (document.calendar.fecha3.value !== null) ? document.calendar.fecha3.value: 'fecha3';
-var hora3 = (document.calendar.hora3.value !== null) ? document.calendar.hora3.value : 'hora3';
-var partido4 = cancha3+fecha3+hora3;
+var cancha3 = document.calendar.cp3.value;
+var fecha3 = document.calendar.fecha3.value;
+var hora3 = document.calendar.hora3.value;
+var partido4 = cancha3+fecha3+hora3 == '' ? 'partido4' : cancha3+fecha3+hora3;
 
-var cancha4 = (document.calendar.cp4.value !== null) ? document.calendar.cp4.value : 'cancha4';
-var fecha4 = (document.calendar.fecha4.value !== null) ? document.calendar.fecha4.value: 'fecha4';
-var hora4 = (document.calendar.hora4.value !== null) ? document.calendar.hora4.value : 'hora4';
-var partido5 = cancha4+fecha4+hora4;
+var cancha4 = document.calendar.cp4.value;
+var fecha4 = document.calendar.fecha4.value;
+var hora4 = document.calendar.hora4.value;
+var partido5 = cancha4+fecha4+hora4 == '' ? 'partido5' : cancha4+fecha4+hora4;
 
-var cancha5 = (document.calendar.cp5.value !== null) ? document.calendar.cp5.value : 'cancha5';
-var fecha5 = (document.calendar.fecha5.value !== null) ? document.calendar.fecha5.value: 'fecha5';
-var hora5 = (document.calendar.hora5.value !== null) ? document.calendar.hora5.value : 'hora5';
-var partido6 = cancha5+fecha5+hora5;
+var cancha5 = document.calendar.cp5.value;
+var fecha5 = document.calendar.fecha5.value;
+var hora5 = document.calendar.hora5.value;
+var partido6 = cancha5+fecha5+hora5 == '' ? 'partido6' : cancha5+fecha5+hora5;
                 
-var cancha6 = (document.calendar.cp6.value !== null) ? document.calendar.cp6.value : 'cancha6';
-var fecha6 = (document.calendar.fecha6.value !== null) ? document.calendar.fecha6.value: 'fecha6';
-var hora6 = (document.calendar.hora6.value !== null) ? document.calendar.hora6.value : 'hora6';
-var partido7 = cancha6+fecha6+hora6;
+var cancha6 = document.calendar.cp6.value;
+var fecha6 = document.calendar.fecha6.value;
+var hora6 = document.calendar.hora6.value;
+var partido7 = cancha6+fecha6+hora6 == '' ? 'partido7' : cancha6+fecha6+hora6;
 
-var cancha7 = (document.calendar.cp7.value !== null) ? document.calendar.cp7.value : 'cancha7';
-var fecha7 = (document.calendar.fecha7.value !== null) ? document.calendar.fecha7.value: 'fecha7';
-var hora7 = (document.calendar.hora7.value !== null) ? document.calendar.hora7.value : 'hora7';
-var partido8 = cancha7+fecha7+hora7;
+var cancha7 = document.calendar.cp7.value;
+var fecha7 = document.calendar.fecha7.value;
+var hora7 = document.calendar.hora7.value;
+var partido8 = cancha7+fecha7+hora7 == '' ? 'partido8' : cancha7+fecha7+hora7;
 
         if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
@@ -337,11 +346,6 @@ var partido8 = cancha7+fecha7+hora7;
 
         <div class="row">
             <div class="col-lg-12" id="ccuartos">
-                <div class="page-header">
-                    <h1 id="hfechascuartos" data-toggle="popover" 
-title="Hecho" data-content="Se han establecido las fechas"
-data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
-                </div>
                 <div class="panel panel-success">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
@@ -416,39 +420,39 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
     function igualesCuartos(){
     //paso el input a una variable y si es null le asigno algo 
     
-var cancha0 = (document.calendarcuartos.cp0.value !== null) ? document.calendarcuartos.cp0.value : 'cancha0';   
-var fecha0 = (document.calendarcuartos.fecha0.value !== null) ? document.calendarcuartos.fecha0.value: 'fecha0';
-var hora0 = (document.calendarcuartos.hora0.value !== null) ? document.calendarcuartos.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.calendarcuartos.cp0.value;   
+var fecha0 = document.calendarcuartos.fecha0.value;
+var hora0 = document.calendarcuartos.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendarcuartos.cp1.value !== null) ? document.calendarcuartos.cp1.value : 'cancha1';
-var fecha1 = (document.calendarcuartos.fecha1.value !== null) ? document.calendarcuartos.fecha1.value: 'fecha1';
-var hora1 = (document.calendarcuartos.hora1.value !== null) ? document.calendarcuartos.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.calendarcuartos.cp1.value;
+var fecha1 = document.calendarcuartos.fecha1.value;
+var hora1 = document.calendarcuartos.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendarcuartos.cp2.value !== null) ? document.calendarcuartos.cp2.value : 'cancha2';
-var fecha2 = (document.calendarcuartos.fecha2.value !== null) ? document.calendarcuartos.fecha2.value: 'fecha2';
-var hora2 = (document.calendarcuartos.hora2.value !== null) ? document.calendarcuartos.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.calendarcuartos.cp2.value;
+var fecha2 = document.calendarcuartos.fecha2.value;
+var hora2 = document.calendarcuartos.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2 ;
 
-var cancha3 = (document.calendarcuartos.cp3.value !== null) ? document.calendarcuartos.cp3.value : 'cancha3';
-var fecha3 = (document.calendarcuartos.fecha3.value !== null) ? document.calendarcuartos.fecha3.value: 'fecha3';
-var hora3 = (document.calendarcuartos.hora3.value !== null) ? document.calendarcuartos.hora3.value : 'hora3';
-var partido4 = cancha3+fecha3+hora3;
+var cancha3 = document.calendarcuartos.cp3.value;
+var fecha3 = document.calendarcuartos.fecha3.value;
+var hora3 = document.calendarcuartos.hora3.value;
+var partido4 = cancha3+fecha3+hora3 == '' ? 'partido4' : cancha3+fecha3+hora3;
     
-    if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4) {
+    if (partido1 == partido2 || partido1 == partido3 || partido1 == partido4) {
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4){
+    else if(partido2 == partido1 || partido2 == partido3 || partido2 == partido4){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4){
+    }else if(partido3 == partido1 || partido3 == partido2 || partido3 == partido4){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
-    }else if(partido4 === partido1 || partido4 === partido2 || partido4 === partido3){
+    }else if(partido4 == partido1 || partido4 == partido2 || partido4 == partido3){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else{//si nada fue igual envio
         $("#calendarcuartos").submit();
     }
-        
+      
     }
 </script>
                 </div>
@@ -544,7 +548,7 @@ var partido2 = cancha1+fecha1+hora1;
         }else{//si nada fue igual envio
         $("#calendarsemi").submit();
     }
-        
+
     }
 </script>
                 </div>
@@ -713,9 +717,17 @@ var partido2 = cancha1+fecha1+hora1;
 
 
 
+
+
+
+
+
+
+
+
 <%--si es liga--%>
 <c:if test="${detallestorneo.tipo==2}">
-    <div class="row">
+    <div class="row" id="primerar">
         <div class="col-lg-12">
 <%--query de la primera ronda liga de seis--%> 
                     <sql:query var="primera" dataSource="jdbc/pro-level">
@@ -789,20 +801,20 @@ var partido2 = cancha1+fecha1+hora1;
 <script>
     function fIgualesR1(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.pliga.cp0.value !== null) ? document.pliga.cp0.value : 'cancha0';   
-var fecha0 = (document.pliga.fecha0.value !== null) ? document.pliga.fecha0.value: 'fecha0';
-var hora0 = (document.pliga.hora0.value !== null) ? document.pliga.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.pliga.cp0.value;   
+var fecha0 = document.pliga.fecha0.value;
+var hora0 = document.pliga.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.pliga.cp1.value !== null) ? document.pliga.cp1.value : 'cancha1';
-var fecha1 = (document.pliga.fecha1.value !== null) ? document.pliga.fecha1.value: 'fecha1';
-var hora1 = (document.pliga.hora1.value !== null) ? document.pliga.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.pliga.cp1.value;
+var fecha1 = document.pliga.fecha1.value;
+var hora1 = document.pliga.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.pliga.cp2.value !== null) ? document.pliga.cp2.value : 'cancha2';
-var fecha2 = (document.pliga.fecha2.value !== null) ? document.pliga.fecha2.value: 'fecha2';
-var hora2 = (document.pliga.hora2.value !== null) ? document.pliga.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.pliga.cp2.value;
+var fecha2 = document.pliga.fecha2.value;
+var hora2 = document.pliga.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
         if (partido1 === partido2 || partido1 === partido3) {
       $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");  
@@ -820,7 +832,7 @@ var partido3 = cancha2+fecha2+hora2;
         </div>
     </div>
 
-<div class="row">
+<div class="row" id="segundar">
     <div class="col-lg-12">
         <%--query de la segunda ronda --%> 
                     <sql:query var="segunda" dataSource="jdbc/pro-level">
@@ -848,7 +860,7 @@ var partido3 = cancha2+fecha2+hora2;
                     </sql:query>
                     <div class="panel panel-success">
                     <div class="panel-heading">Segunda Ronda</div>
-                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                    <form action="../../GestionLiga" name="sliga" id="sliga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -886,37 +898,38 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="fIgualesR2()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
-<input type="hidden" name="foctavos" value="octavos" />
+<input type="hidden" name="segundaronda" value="octavos" />
+<% if(request.getParameter("segunda")!=null){%><p class="fechas"><%=request.getParameter("segunda")%></p> <%} %>
                     </form>
 <script>
-    function validarIguales(){
+    function fIgualesR2(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.sliga.cp0.value;   
+var fecha0 = document.sliga.fecha0.value;
+var hora0 = document.sliga.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.sliga.cp1.value;
+var fecha1 = document.sliga.fecha1.value;
+var hora1 = document.sliga.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.sliga.cp2.value;
+var fecha2 = document.sliga.fecha2.value;
+var hora2 = document.sliga.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+        if (partido1 === partido2 || partido1 === partido3) {
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    else if(partido2 === partido1 || partido2 === partido3){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    }else if(partido3 === partido1 || partido3 === partido2){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
     }else{//si nada fue igual envio
-        $("#calendar").submit();
+        $("#sliga").submit();
     }
 }
 </script>
@@ -926,7 +939,7 @@ var partido3 = cancha2+fecha2+hora2;
 
 
 
-<div class="row">
+<div class="row" id="tercerar">
     <div class="col-lg-12">
         <%--query de la tercera ronda --%> 
                     <sql:query var="tercera" dataSource="jdbc/pro-level">
@@ -953,8 +966,8 @@ var partido3 = cancha2+fecha2+hora2;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 3
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Octavos De Final</div>
-                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                    <div class="panel-heading">Tercera Ronda</div>
+                    <form action="../../GestionLiga" name="tliga" id="tliga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -992,37 +1005,38 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="fIgualesR3()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
-<input type="hidden" name="foctavos" value="octavos" />
+<input type="hidden" name="terceraronda" value="tercer" />
+<% if(request.getParameter("tercera")!=null){%><p class="fechas"><%=request.getParameter("tercera")%></p> <%} %>
                     </form>
 <script>
-    function validarIguales(){
+    function fIgualesR3(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.tliga.cp0.value;   
+var fecha0 = document.tliga.fecha0.value;
+var hora0 = document.tliga.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.tliga.cp1.value;
+var fecha1 = document.tliga.fecha1.value;
+var hora1 = document.tliga.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.tliga.cp2.value;
+var fecha2 = document.tliga.fecha2.value;
+var hora2 = document.tliga.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
+        if (partido1 === partido2 || partido1 === partido3 ) {
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
+    else if(partido2 === partido1 || partido2 === partido3){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
+    }else if(partido3 === partido1 || partido3 === partido2){
     $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
     }else{//si nada fue igual envio
-        $("#calendar").submit();
+        $("#tliga").submit();
     }
 }
 </script>
@@ -1031,7 +1045,7 @@ var partido3 = cancha2+fecha2+hora2;
 </div>
 
 
-<div class="row">
+<div class="row" id="cuartar">
     <div class="col-lg-12">
         <%--query de la cuarta ronda --%> 
                     <sql:query var="cuarta" dataSource="jdbc/pro-level">
@@ -1058,8 +1072,8 @@ var partido3 = cancha2+fecha2+hora2;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 4
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Octavos De Final</div>
-                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                    <div class="panel-heading">Cuarta Ronda</div>
+                    <form action="../../GestionLiga" name="cliga" id="cliga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -1097,37 +1111,38 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="fIgualesR4()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
-<input type="hidden" name="foctavos" value="octavos" />
+<input type="hidden" name="cuartaronda" value="octavos" />
+<% if(request.getParameter("cuarta")!=null){%><p class="fechas"><%=request.getParameter("cuarta")%></p> <%} %>
                     </form>
 <script>
-    function validarIguales(){
+    function fIgualesR4(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.cliga.cp0.value;   
+var fecha0 = document.cliga.fecha0.value;
+var hora0 = document.cliga.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.cliga.cp1.value;
+var fecha1 = document.cliga.fecha1.value;
+var hora1 = document.cliga.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.cliga.cp2.value;
+var fecha2 = document.cliga.fecha2.value;
+var hora2 = document.cliga.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        if (partido1 === partido2 || partido1 === partido3) {
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    else if(partido2 === partido1 || partido2 === partido3){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");        
+    }else if(partido3 === partido1 || partido3 === partido2){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");     
     }else{//si nada fue igual envio
-        $("#calendar").submit();
+        $("#cliga").submit();
     }
 }
 </script>
@@ -1136,7 +1151,7 @@ var partido3 = cancha2+fecha2+hora2;
 </div>
 
 
-<div class="row">
+<div class="row" id="quintar">
     <div class="col-lg-12">
         <%--query de la quinta ronda --%> 
                     <sql:query var="quinta" dataSource="jdbc/pro-level">
@@ -1163,8 +1178,8 @@ var partido3 = cancha2+fecha2+hora2;
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/> AND partidos.ronda = 5
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Octavos De Final</div>
-                    <form action="../../GestionEliminatoria" name="calendar" id="calendar" autocomplete="off">
+                    <div class="panel-heading">Quinta Ronda</div>
+                    <form action="../../GestionLiga" name="qliga" id="qliga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
@@ -1202,37 +1217,38 @@ var partido3 = cancha2+fecha2+hora2;
                         </tbody>
                     </table>
 <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
-<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="validarIguales()">Añadir Fechas</button>
+<button class="btn btn-success" id="fechasOctavos" name="validarCampos" type="button" onclick="fIgualesR5()">Añadir Fechas</button>
 <input type="hidden" name="asignarfechas" value="fechas" />                    
-<input type="hidden" name="foctavos" value="octavos" />
+<input type="hidden" name="quintaronda" value="quinta" />
+<% if(request.getParameter("quinta")!=null){%><p class="fechas"><%=request.getParameter("quinta")%></p> <%} %>
                     </form>
 <script>
-    function validarIguales(){
+    function fIgualesR5(){
     //paso el input a una variable y si es null le asigno algo 
-var cancha0 = (document.calendar.cp0.value !== null) ? document.calendar.cp0.value : 'cancha0';   
-var fecha0 = (document.calendar.fecha0.value !== null) ? document.calendar.fecha0.value: 'fecha0';
-var hora0 = (document.calendar.hora0.value !== null) ? document.calendar.hora0.value : 'hora0';
-var partido1 = cancha0+fecha0+hora0;
+var cancha0 = document.qliga.cp0.value;   
+var fecha0 = document.qliga.fecha0.value;
+var hora0 = document.qliga.hora0.value;
+var partido1 = cancha0+fecha0+hora0 == '' ? 'partido1' : cancha0+fecha0+hora0;
 
-var cancha1 = (document.calendar.cp1.value !== null) ? document.calendar.cp1.value : 'cancha1';
-var fecha1 = (document.calendar.fecha1.value !== null) ? document.calendar.fecha1.value: 'fecha1';
-var hora1 = (document.calendar.hora1.value !== null) ? document.calendar.hora1.value : 'hora1';
-var partido2 = cancha1+fecha1+hora1;
+var cancha1 = document.qliga.cp1.value;
+var fecha1 = document.qliga.fecha1.value;
+var hora1 = document.qliga.hora1.value;
+var partido2 = cancha1+fecha1+hora1 == '' ? 'partido2' : cancha1+fecha1+hora1;
 
-var cancha2 = (document.calendar.cp2.value !== null) ? document.calendar.cp2.value : 'cancha2';
-var fecha2 = (document.calendar.fecha2.value !== null) ? document.calendar.fecha2.value: 'fecha2';
-var hora2 = (document.calendar.hora2.value !== null) ? document.calendar.hora2.value : 'hora2';
-var partido3 = cancha2+fecha2+hora2;
+var cancha2 = document.qliga.cp2.value;
+var fecha2 = document.qliga.fecha2.value;
+var hora2 = document.qliga.hora2.value;
+var partido3 = cancha2+fecha2+hora2 == '' ? 'partido3' : cancha2+fecha2+hora2;
 
-        if (partido1 === partido2 || partido1 === partido3 || partido1 === partido4 || partido1 === partido5 || partido1 === partido6 || partido1 === partido7 || partido1 === partido8 ) {
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");
+        if (partido1 === partido2 || partido1 === partido3) {
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
         }
-    else if(partido2 === partido1 || partido2 === partido3 || partido2 === partido4 || partido2 === partido5 || partido2 === partido6 || partido2 === partido7 || partido2 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");    
-    }else if(partido3 === partido1 || partido3 === partido2 || partido3 === partido4 || partido3 === partido5 || partido3 === partido6 || partido3 === partido7 || partido3 === partido8){
-    alert("!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora"); 
+    else if(partido2 === partido1 || partido2 === partido3){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");        
+    }else if(partido3 === partido1 || partido3 === partido2){
+    $().toastmessage('showWarningToast', "!Atención¡ Está intentando asignar calendarios iguales, puede ser un partido en la misma cancha el mismo día a la misma hora");     
     }else{//si nada fue igual envio
-        $("#calendar").submit();
+        $("#qliga").submit();
     }
 }
 </script>

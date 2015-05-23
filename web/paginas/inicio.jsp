@@ -61,6 +61,7 @@
 <div class="main">
     <section class="container">
 <header>
+    <div style="float: right"><span class="label label-success">Bienvenido <%=udto.getPrimerNombre()%> te has logueado como:</span><span class="badge">Administrador</span></div>
     <nav class="navbar">
     <ul id="nav" class="nav">
       		<li><a href="inicio.jsp"><img src="../imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
@@ -102,9 +103,11 @@
             </ul>
         </div>
         </li>
-    </ul>
+    </ul> 
 </nav>
+   
 </header>
+        
     <div class="row">
         <div class="well">
             <div class="page-header">

@@ -325,6 +325,7 @@ $(document).ready(function() {
         </li>
     </ul>
 </nav>
+    <div><span class="label label-success">Bienvenido <%=udto.getPrimerNombre()%></span></div>
 </header>
 <!-- InstanceBeginEditable name="body" -->
 <main>
