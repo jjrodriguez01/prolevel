@@ -58,9 +58,9 @@ nav{
         <li><a href="index.jsp">Ingresar</a></li>
         <li><a href="registro.jsp">Registrarme</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-left" role="search" action="Buscador">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Buscar...">
+          <input type="text" name="palabra" maxlength="20" class="form-control" placeholder="Buscar...">
         </div>
         <button type="submit" class="btn btn-default">Buscar en Pro-level</button>
       </form>

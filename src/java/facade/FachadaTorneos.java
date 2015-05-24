@@ -84,6 +84,10 @@ public class FachadaTorneos {
         return tdao.ListarTodo(conexion);
     }
     
+    public List<TorneoDTO> buscar(String palabra) throws MiExcepcion{
+        return tdao.buscar(palabra, conexion);
+    }
+    
     public boolean HayTercerPuestoEli(int idTorneo) throws MiExcepcion{
         return tdao.hayTercerPuestoEli(idTorneo, conexion);
     }

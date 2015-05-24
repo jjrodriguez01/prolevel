@@ -68,6 +68,10 @@
         <servlet-name>Jugadores</servlet-name>
         <servlet-class>controlador.Jugadores</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Buscador</servlet-name>
+        <servlet-class>controlador.Buscador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -147,6 +151,10 @@
     <servlet-mapping>
         <servlet-name>Jugadores</servlet-name>
         <url-pattern>/Jugadores</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Buscador</servlet-name>
+        <url-pattern>/Buscador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

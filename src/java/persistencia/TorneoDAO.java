@@ -147,4 +147,31 @@ public class TorneoDAO {
         }
         return tercer;
     }
+    
+    public List<TorneoDTO> buscar(String palabra,Connection conexion) throws MiExcepcion{
+        
+        ArrayList<TorneoDTO> listarCopas = new ArrayList();
+        try{
+            String sql= "select torneo.nombre, torneo.fechaInicio, torneo.fechaFin, torneo.genero from torneo "
++"where torneo.nombre like '%"+palabra+"%' or torneo.genero like '%"+palabra+"%';";
+                                         
+            statement = conexion.prepareStatement(sql);
+            rs=statement.executeQuery();
+            
+            while(rs.next()){
+                TorneoDTO cup = new TorneoDTO();                
+                cup.setNombre(rs.getString("nombre"));
+                cup.setFechaInicio(rs.getString("fechaInicio"));
+                cup.setFechaFin(rs.getString("fechaFin"));
+                cup.setGenero(rs.getString("genero"));
+                           
+                listarCopas.add(cup);
+                
+            }
+            
+        }catch(SQLException sqle){
+            throw new MiExcepcion("Error al listar los torneos", sqle);
+        }
+        return listarCopas;
+    }
 }
