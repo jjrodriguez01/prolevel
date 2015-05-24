@@ -510,9 +510,9 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
             <div class="col-lg-12">
                 <div class="page-header">
                     <h1>Asigna Marcadores</h1>
-                    <h3>Primera Ronda</h3>
-                    <%--query de la primera ronda octavos en eli de 16 equipos--%> 
-                    <sql:query var="calendario" dataSource="jdbc/pro-level">
+                </div>
+                    <%--query de la primera ronda importantisimo ordenar todo por numero de partido o me cambia el numero cuando llegue al controlador--%> 
+                    <sql:query var="lpronda" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -534,7 +534,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 1
-                         
+                        order by numero 
                     </sql:query>
                     <div class="panel panel-success">
                     <div class="panel-heading">Primera Ronda</div>
@@ -542,7 +542,7 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${lpronda.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
                                 <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> /></c:if><span>${row.marcador1}</span></td>
@@ -563,17 +563,14 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                     <input type="hidden" name="primera" value="octavos" />
                     </form>
                 </div>
-                </div>
             </div>
         </div>
 
 <%--segunda ronda--%>
 <div class="row">
             <div class="col-lg-12">
-                <div class="page-header">
-                    <h3>Segunda Ronda</h3>
-                    <%--query de la primera ronda octavos en eli de 16 equipos--%> 
-                    <sql:query var="calendario" dataSource="jdbc/pro-level">
+                    <%--query de la segunda ronda --%> 
+                    <sql:query var="lsronda" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -595,15 +592,15 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                         INNER JOIN cancha 
                         ON partidos.cancha = cancha.numeroCancha 
                         WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 2
-                         
+                         order by numero
                     </sql:query>
                     <div class="panel panel-success">
-                    <div class="panel-heading">Primera Ronda</div>
+                    <div class="panel-heading">Segunda Ronda</div>
                     <form name="marcadores" action="../../GestionLiga" autocomplete="off">
                         <table class="table table-hover table-responsive">
                         <tbody>
 <%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
-                            <c:forEach var="row" items="${calendario.rows}" varStatus="vs">
+                            <c:forEach var="row" items="${lsronda.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.eq1}</td>
                                 <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> /></c:if><span>${row.marcador1}</span></td>
@@ -624,6 +621,180 @@ var marcador2 = $("#${vs.index}mdoss").val() != null?$("#${vs.index}mdoss").val(
                     <input type="hidden" name="segundaronda" value="segunda" />
                     </form>
                 </div>
+            </div>
+        </div>
+
+<%--tercera ronda--%>
+<div class="row">
+            <div class="col-lg-12">
+                    <%--query de la primera ronda octavos en eli de 16 equipos--%> 
+                    <sql:query var="ltronda" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.marcador1,
+                        partidos.marcador2,
+                        partidos.ronda,
+                        partidos.numero,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 3
+                         order by numero
+                    </sql:query>
+                    <div class="panel panel-success">
+                    <div class="panel-heading">Tercera Ronda</div>
+                    <form name="marcadores" action="../../GestionLiga" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${ltronda.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> /></c:if><span>${row.marcador1}</span></td>
+                                <td><span>vs</span></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></c:if><span>${row.marcador2}</span></td>
+                                <td>${row.eq2}</td>                     
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-success" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
+                    <input type="hidden" name="terceraronda" value="tercera" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+<%--cuarta ronda--%>
+<div class="row">
+            <div class="col-lg-12">
+                    <%--query de la 4--%> 
+                    <sql:query var="lcronda" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.marcador1,
+                        partidos.marcador2,
+                        partidos.ronda,
+                        partidos.numero,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 4
+                         order by numero
+                    </sql:query>
+                    <div class="panel panel-success">
+                    <div class="panel-heading">Cuarta Ronda</div>
+                    <form name="marcadores" action="../../GestionLiga" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${lcronda.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> /></c:if><span>${row.marcador1}</span></td>
+                                <td><span>vs</span></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></c:if><span>${row.marcador2}</span></td>
+                                <td>${row.eq2}</td>                     
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-success" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
+                    <input type="hidden" name="cuartaronda" value="cuarta" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+<%--quinta ronda--%>
+<div class="row">
+            <div class="col-lg-12">
+                    <%--query de la quinta ronda--%> 
+                    <sql:query var="lqronda" dataSource="jdbc/pro-level">
+                        SELECT DISTINCT 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
+                        (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
+                        torneo.nombre as Torneo, 
+                        partidos.marcador1,
+                        partidos.marcador2,
+                        partidos.ronda,
+                        partidos.numero,
+                        partidos.equipo1 as ceq1, 
+                        partidos.equipo2 as ceq2
+                        FROM 
+                        partidos 
+                        INNER JOIN equiposdeltorneo 
+                        ON partidos.equipo1 = equiposdeltorneo.equipoCodigo 
+                        INNER JOIN equipo
+                        ON equiposdeltorneo.equipoCodigo = equipo.codigo 
+                        INNER JOIN torneo 
+                        ON partidos.idTorneo = torneo.idTorneo 
+                        INNER JOIN cancha 
+                        ON partidos.cancha = cancha.numeroCancha 
+                        WHERE torneo.idtorneo = ? <sql:param value="${param.idTorneo}"/>  AND partidos.ronda = 5
+                         order by numero
+                    </sql:query>
+                    <div class="panel panel-success">
+                    <div class="panel-heading">Cuarta Ronda</div>
+                    <form name="marcadores" action="../../GestionLiga" autocomplete="off">
+                        <table class="table table-hover table-responsive">
+                        <tbody>
+<%-- varstatus me da el estado de la variable el metodo index me da la posicion parece q no toma los alias de el equipo 1--%>
+                            <c:forEach var="row" items="${lqronda.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.eq1}</td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}muno" name="${vs.index}muno" <c:if test="${row.marcador1 !=null}"> value="${row.marcador1}"</c:if> /></c:if><span>${row.marcador1}</span></td>
+                                <td><span>vs</span></td>
+                                <td><c:if test="${row.marcador1 ==null}"><input type="number" id="${vs.index}mdos" name="${vs.index}mdos" <c:if test="${row.marcador2 !=null}"> value="${row.marcador2}"</c:if> /></c:if><span>${row.marcador2}</span></td>
+                                <td>${row.eq2}</td>                     
+                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
+                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
+                                <input type="hidden" value="${row.numero}" name="numero" />
+                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
+                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+<input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+<button class="btn btn-success" id="asignarMarcador" name="asignarMarcador">Añadir Marcador</button>
+                    <input type="hidden" name="quintaronda" value="quinta" />
+                    </form>
                 </div>
             </div>
         </div>

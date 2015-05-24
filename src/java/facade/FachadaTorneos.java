@@ -272,6 +272,10 @@ public class FachadaTorneos {
         return partidodao.listarUno(ronda, idTorneo, conexion);
     }
     
+    
+    public int getNumeroPartido(PartidoDTO p) throws MiExcepcion{
+        return partidodao.getNumeroPartido(p, conexion);
+    }
 //    AHORA SIGO CON TARJETAS
     
     public String insertarTarjetas(TarjetasDTO tarjeta) throws MiExcepcion{

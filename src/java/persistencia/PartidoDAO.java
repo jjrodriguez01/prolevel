@@ -453,6 +453,35 @@ public class PartidoDAO {
 //        }
         return mensaje;
     }
+    
+    public int getNumeroPartido(PartidoDTO p, Connection conexion) throws MiExcepcion{
+        int numero = 0;
+        try {
+            statement = conexion.prepareStatement("SELECT numero FROM partidos WHERE equipo1=? "
+                    + "AND equipo2 =? AND idTorneo=? AND ronda=?;");
+            statement.setInt(1, p.getEquipo1());
+            statement.setInt(2, p.getEquipo2());
+            statement.setInt(3, p.getIdTorneo());
+            statement.setInt(4, p.getRonda());
+            rs = statement.executeQuery();
+            while(rs.next()){
+                numero = rs.getInt("numero");
+            }
+            
+        } catch (SQLException ex) {
+            throw new MiExcepcion("No se inserto el equipo a cuartos error: "+ex.getMessage(), ex);
+        }
+//        finally{
+//            try {
+//                if (statement != null) {
+//                        statement.close();    
+//                    }
+//            } catch (SQLException ex) {
+//                mensaje = "Ha ocurrido un error "+ex.getMessage();
+//            }
+//        }
+        return numero;
+    }
 
 }
   
