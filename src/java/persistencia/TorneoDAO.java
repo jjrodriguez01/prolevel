@@ -174,4 +174,49 @@ public class TorneoDAO {
         }
         return listarCopas;
     }
+    
+    public StringBuilder nombresTorneos(Connection conexion) throws MiExcepcion{
+        
+        StringBuilder nombres = new StringBuilder("");
+        try{
+            String sql= "select torneo.nombre " +
+"from torneo ";
+                                         
+            statement = conexion.prepareStatement(sql);
+            rs=statement.executeQuery();
+            
+            while(rs.next()){
+                nombres.append("''");
+                nombres.append(rs.getString("nombre"));
+                nombres.append("''");
+                nombres.append(",");
+            }
+            
+        }catch(SQLException sqle){
+            throw new MiExcepcion("Error al listar los torneos", sqle);
+        }
+        return nombres;
+    }
+    public StringBuilder golesTorneos(Connection conexion) throws MiExcepcion{
+        
+        StringBuilder nombres = new StringBuilder("");
+        try{
+            String sql= "select sum(tablagoleadores.numeroGoles) as goles  " +
+"from torneo inner join tablagoleadores " +
+"on torneo.idTorneo = tablagoleadores.idTorneo " +
+"group by tablagoleadores.idtorneo;";
+                                         
+            statement = conexion.prepareStatement(sql);
+            rs=statement.executeQuery();
+            
+            while(rs.next()){
+                nombres.append(rs.getString("goles"));
+                nombres.append(",");
+            }
+            
+        }catch(SQLException sqle){
+            throw new MiExcepcion("Error al listar los torneos", sqle);
+        }
+        return nombres;
+    }
 }

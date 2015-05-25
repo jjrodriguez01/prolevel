@@ -92,6 +92,14 @@ public class FachadaTorneos {
         return tdao.hayTercerPuestoEli(idTorneo, conexion);
     }
     
+    public StringBuilder nombresTorneos() throws MiExcepcion{
+        return tdao.nombresTorneos(conexion);
+    }
+    
+    public StringBuilder goleTorneos() throws MiExcepcion{
+        return tdao.golesTorneos(conexion);
+    }
+    
 //    SIGO CON CANCHASDAO
     
     public String insertarCancha(CanchaDTO cancha){

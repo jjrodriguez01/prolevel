@@ -145,20 +145,42 @@
     </table>
 
 </section>
-    <section class="container">
-        <div>
-            <div class="alert alert-info" role="alert">
-                <strong>Grafico De Goles</strong>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div>
+                <div class="alert alert-info" role="alert">
+                    <strong>Gráfico De Goles</strong>
+                </div>
             </div>
-        </div>
-        <article>
-            <div style="width: 50%">
-                <canvas id="canvas" height="450" width="600"></canvas>
-                <span class="label label-primary">
-                    Este gráfico muestra el total de goles anotados en los torneos
-                </span>
+            <article>
+                <div style="width: 40%">
+                    <canvas id="canvasgoles" height="450" width="600"></canvas>
+                    <span class="label label-primary">
+                        Este gráfico muestra el total de goles anotados en los torneos
+                    </span>
+                </div>
+            </article>
             </div>
-        </article>        
+        
+        
+        
+            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div>
+                <div class="alert alert-info" role="alert">
+                    <strong>Gráfico Progreso de inscripciones</strong>
+                </div>
+            </div>
+            <article>
+                <div style="width: 40%">
+                    <canvas id="canvasprogreso" height="450" width="600"></canvas>
+                    <span class="label label-primary">
+                        Este gráfico muestra el total de equipos inscritos actualmente al torneo
+                    </span>
+                </div>
+            </article>
+            </div>
+       </div>
     </section>
     <section class="campeones">
         <div class="container-fluid">
@@ -207,17 +229,21 @@
 </div>
 </footer>
 </div>
+<sql:query var="nombres" dataSource="jdbc/pro-level">
+select torneo.nombre
+from torneo
+</sql:query>
 <sql:query var="goles" dataSource="jdbc/pro-level">
-select torneo.nombre, sum(tablagoleadores.numeroGoles) as goles
-from torneo inner join tablagoleadores
+select sum(tablagoleadores.numeroGoles) as goles 
+from torneo inner join tablagoleadores 
 on torneo.idTorneo = tablagoleadores.idTorneo
+group by tablagoleadores.idtorneo
 </sql:query>
     <script>
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
 	var barChartData = {
 		labels : [//aqui va un label con nombres de torneos en la grafica
-                    <c:forEach var="row" items="${goles.rows}">
+                    <c:forEach var="row" items="${nombres.rows}">
             "${row.nombre}",
                     </c:forEach>
                 
@@ -238,13 +264,58 @@ on torneo.idTorneo = tablagoleadores.idTorneo
 
 	}
 	window.onload = function(){
-		var ctx = document.getElementById("canvas").getContext("2d");
+		var ctx = document.getElementById("canvasgoles").getContext("2d");
 		window.myBar = new Chart(ctx).Bar(barChartData, {
 			responsive : true
 		});
 	}
 
 	</script>
+        
+        
+        
+<sql:query var="nombrescapacidad" dataSource="jdbc/pro-level">
+select concat(nombre,'(', capacidadEquipos,')') as torneo
+from torneo 
+</sql:query>
+<sql:query var="einscritos" dataSource="jdbc/pro-level">
+SELECT count(equiposdeltorneo.equipoCodigo) as inscritos FROM dbprolevel.equiposdeltorneo
+group by equiposdeltorneo.torneoIdTorneo
+</sql:query>
+<%--
+
+    <script>
+
+	var barChartData = {
+		labels : [//aqui va un label con nombres de torneos en la grafica
+                    <c:forEach var="row" items="${nombrescapacidad.rows}">
+            "${row.torneo}",
+                    </c:forEach>
+                
+            ],
+		datasets : [
+			{//aqui van los datos de la grafica, los numeros
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [
+                    <c:forEach var="row" items="${einscritos.rows}">
+                        "${row.inscritos}",
+                    </c:forEach>
+                                ]
+			}
+		]
+
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvasprogreso").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+	}
+
+	</script>--%>
 </body>
 </html>
 <% }//si el rol fue uno se muestra la anterior pagina
