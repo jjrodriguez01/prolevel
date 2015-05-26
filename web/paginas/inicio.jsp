@@ -85,15 +85,6 @@
           </div>
         </div>
       </li>
-      <li><a href="#"><span><img src="../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-        <div class="subs">
-          <ul>
-            <li><a href="#"><img src="imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-            <li><a href="#"><img src="imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-            <li><a href="#"><img src="imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-          </ul>
-        </div>
-        </li>
       <li><a href="#"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
       <li><a href="#"><span><img src="../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
       	<div class="subs">
@@ -145,42 +136,21 @@
     </table>
 
 </section>
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 col-sm-12 col-xs-12">
-            <div>
-                <div class="alert alert-info" role="alert">
-                    <strong>Gráfico De Goles</strong>
-                </div>
+    <section class="container">
+        <div>
+            <div class="alert alert-info" role="alert">
+                <strong>Grafico De Inscripciones</strong>
             </div>
-            <article>
-                <div style="width: 40%">
-                    <canvas id="canvasgoles" height="450" width="600"></canvas>
-                    <span class="label label-primary">
-                        Este gráfico muestra el total de goles anotados en los torneos
-                    </span>
-                </div>
-            </article>
+        </div>
+        <article>
+            <div style="width: 50%">
+                <canvas id="canvas" height="450" width="600"></canvas>
+                <span class="label label-primary">
+                    Este gráfico muestra el total de equipos inscritos a los torneos, el número en 
+                    paréntesis muestra la capacidad total del torneo
+                </span>
             </div>
-        
-        
-        
-            <div class="col-md-6 col-sm-12 col-xs-12">
-            <div>
-                <div class="alert alert-info" role="alert">
-                    <strong>Gráfico Progreso de inscripciones</strong>
-                </div>
-            </div>
-            <article>
-                <div style="width: 40%">
-                    <canvas id="canvasprogreso" height="450" width="600"></canvas>
-                    <span class="label label-primary">
-                        Este gráfico muestra el total de equipos inscritos actualmente al torneo
-                    </span>
-                </div>
-            </article>
-            </div>
-       </div>
+        </article>        
     </section>
     <section class="campeones">
         <div class="container-fluid">
@@ -221,59 +191,15 @@
     <div class="col-lg-4"></div>
         </div>
     </div>
+        <footer>
+            <div id="pie">
+                <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#">
+                <img src="../imagenes/english.png" width="40" height="30" /></a></p>  
+            </div>
+        </footer>
     </section>
-<footer>
-<div id="pie">
-<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#">
-        <img src="../imagenes/english.png" width="40" height="30" /></a></p>  
+
 </div>
-</footer>
-</div>
-<sql:query var="nombres" dataSource="jdbc/pro-level">
-select torneo.nombre
-from torneo
-</sql:query>
-<sql:query var="goles" dataSource="jdbc/pro-level">
-select sum(tablagoleadores.numeroGoles) as goles 
-from torneo inner join tablagoleadores 
-on torneo.idTorneo = tablagoleadores.idTorneo
-group by tablagoleadores.idtorneo
-</sql:query>
-    <script>
-
-	var barChartData = {
-		labels : [//aqui va un label con nombres de torneos en la grafica
-                    <c:forEach var="row" items="${nombres.rows}">
-            "${row.nombre}",
-                    </c:forEach>
-                
-            ],
-		datasets : [
-			{//aqui van los datos de la grafica, los numeros
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [
-                    <c:forEach var="row" items="${goles.rows}">
-                        "${row.goles}",
-                    </c:forEach>
-                                ]
-			}
-		]
-
-	}
-	window.onload = function(){
-		var ctx = document.getElementById("canvasgoles").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true
-		});
-	}
-
-	</script>
-        
-        
-        
 <sql:query var="nombrescapacidad" dataSource="jdbc/pro-level">
 select concat(nombre,'(', capacidadEquipos,')') as torneo
 from torneo 
@@ -282,8 +208,6 @@ from torneo
 SELECT count(equiposdeltorneo.equipoCodigo) as inscritos FROM dbprolevel.equiposdeltorneo
 group by equiposdeltorneo.torneoIdTorneo
 </sql:query>
-<%--
-
     <script>
 
 	var barChartData = {
@@ -309,13 +233,14 @@ group by equiposdeltorneo.torneoIdTorneo
 
 	}
 	window.onload = function(){
-		var ctx = document.getElementById("canvasprogreso").getContext("2d");
+		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new Chart(ctx).Bar(barChartData, {
 			responsive : true
 		});
 	}
 
-	</script>--%>
+	</script>
+
 </body>
 </html>
 <% }//si el rol fue uno se muestra la anterior pagina
@@ -385,16 +310,7 @@ group by equiposdeltorneo.torneoIdTorneo
           </div>
         </div>
       </li>
-      <li><a href="#"><span><img src="../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-        <div class="subs">
-          <ul>
-            <li><a href="#"><img src="imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-            <li><a href="#"><img src="imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-            <li><a href="#"><img src="imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-          </ul>
-        </div>
-        </li>
-      <li><a href="#"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+      <li><a href="servicios.jsp"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
       <li><a href="#"><span><img src="../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
       	<div class="subs">
         	<ul>
@@ -497,18 +413,20 @@ group by equiposdeltorneo.torneoIdTorneo
     <div class="col-lg-4"></div>
         </div>
     </div>
-    </section>
-<footer>
+        <footer>
 <div id="pie">
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma <a href="#">
         <img src="../imagenes/english.png" width="40" height="30" /></a></p>  
 </div>
 </footer>
+    </section>
+
 </div>
 <sql:query var="goles" dataSource="jdbc/pro-level">
-select torneo.nombre, sum(tablagoleadores.numeroGoles) as goles
-from torneo inner join tablagoleadores
+select sum(tablagoleadores.numeroGoles) as goles 
+from torneo inner join tablagoleadores 
 on torneo.idTorneo = tablagoleadores.idTorneo
+group by tablagoleadores.idtorneo
 </sql:query>
     <script>
 	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};

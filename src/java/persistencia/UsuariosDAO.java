@@ -102,7 +102,8 @@ public class UsuariosDAO {
             statement.setString(4, usu.getSegundoApellido());
             statement.setString(5, usu.getTelefono());
             statement.setString(6, usu.getEmail());
-            statement.setString(7, usu.getContraseña());
+            byte[] pass = encriptar(usu.getContraseña());
+            statement.setBytes(7, pass);
             statement.setLong(8, usu.getIdUsuario());
             //el resulset trae el numero de rows afectadas
             rtdo = statement.executeUpdate();
@@ -111,8 +112,8 @@ public class UsuariosDAO {
             } else {
                 mensaje = "Error";
             }
-        } catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error actualizando usuario", sqlexception);
+        } catch (SQLException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException ex) {
+            throw new MiExcepcion("Error actualizando usuario "+ex.getMessage(), ex);
         }
         return mensaje;
     }

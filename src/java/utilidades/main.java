@@ -28,7 +28,7 @@ public class main {
 
             FachadaUsuarios fusu = new FachadaUsuarios();
             String pas="12345";
-            long id = 1;
+            long id = 2;
              System.out.println(fusu.cambiarPass(id, pas));  
             
 //        Map<Integer,String> equipos = new TreeMap<Integer,String>();

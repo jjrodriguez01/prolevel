@@ -35,7 +35,7 @@ public class Recuperar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        if (request.getParameter("email")!=null  && request.getParameter("g-recaptcha-response")!= null) {
+        if (request.getParameter("email")!=null  && !request.getParameter("g-recaptcha-response").equals("")) {
             
             String email = request.getParameter("email").trim();
             String asunto = "Recordatorio contraseña Pro-level";
@@ -52,8 +52,8 @@ public class Recuperar extends HttpServlet {
             }else{
                 response.sendRedirect("reestablecer.jsp?recuperar=no"+email);
             }    
-        }else if(request.getParameter("g-recaptcha-response")== null){
-            response.sendRedirect("reestablecer.jsp?capcha=invalido");
+        }else if(request.getParameter("g-recaptcha-response").equals("")){
+            response.sendRedirect("reestablecer.jsp?captcha=invalido");
         }
         else{
             response.sendRedirect("reestablecer.jsp?capcha=invalido");

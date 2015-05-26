@@ -269,7 +269,7 @@ li img {
     </div>
   </div>
   <div class="form-group">
-    <label for="pass" class="col-sm-4 control-label">Contraseñs:</label>
+    <label for="pass" class="col-sm-4 control-label">Contraseña:</label>
     <div class="col-sm-6">
       <input type="password" class="form-control" id="pass" name="pass" placeholder="Ingrese su contraseña">
     </div>

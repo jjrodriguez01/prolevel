@@ -305,16 +305,7 @@ $(document).ready(function() {
           </div>
         </div>
       </li>
-      <li><a href="#"><span><img src="../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-        <div class="subs">
-          <ul>
-            <li><a href="#"><img src="../imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-            <li><a href="#"><img src="../imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-            <li><a href="#"><img src="../imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-          </ul>
-        </div>
-        </li>
-      <li><a href="#"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+      <li><a href="servicios.jsp"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
       <li><a href="#"><span><img src="../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
       	<div class="subs">
         	<ul>
@@ -325,7 +316,7 @@ $(document).ready(function() {
         </li>
     </ul>
 </nav>
-    <div><span class="label label-success">Bienvenido <%=udto.getPrimerNombre()%></span></div>
+    <div class="pull-right"><span class="label label-success"> <%=udto.getPrimerNombre()%></span><span class="badge">Administrador</span></div>
 </header>
 <!-- InstanceBeginEditable name="body" -->
 <main>
@@ -848,15 +839,304 @@ $(document).ready(function() {
 <footer>
 <p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
     <a href="#"><img src="../imagenes/english.png" width="30" height="25" alt="idioma" />
-    </a>Contáctanos<a href="#"><img src="../imagenes/phone.png" width="40" height="40" alt="tel"/></a></p> 
+    </a></p> 
 </footer>
 </body>
 </html>
 <%
     }//si el rol fue uno
                     else if (rol == 2) {
-                            
-                        }
+%>
+<!doctype html>
+<html lang="es">
+<head>
+<link rel="shortcut icon" href="../imagenes/favicon.ico">
+<link href="../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
+<link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../css/perfiladmin.css" rel="stylesheet" type="text/css">
+<link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
+<link href="../js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript" src="../js/datepicker/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/listaTorneo.js"></script>
+<script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../js/dataTables/js/datatablesbootstrap.js"></script>
+<script>
+$(document).ready(function() {
+   $( ".datepicker" ).datepicker( "option", "minDate", 0 );
+   $( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+ });
+</script>
+<script>
+$(document).ready(function() {
+    $( ".datepicker" ).datepicker({
+	inline: true
+});
+
+// Hover states on the static widgets
+$( "#dialog-link, #icons li" ).hover(
+	function() {
+		$( this ).addClass( "ui-state-hover" );
+	},
+	function() {
+		$( this ).removeClass( "ui-state-hover" );
+	}
+);
+});
+</script>
+<script>
+   $().ready(function(){
+       $("#datosp").validate({
+	            rules:{
+                                cc:{
+                                    minlength: 0,
+                                    maxlength: 11,
+                                    digits: true
+				  },
+                                nombre:{
+				    required: true,
+                                    minlength: 3,
+                                    maxlength: 15
+				  },
+                                snombre:{
+                                    minlength: 3,
+                                    maxlength: 15
+        			  },
+                                ape:{
+                                    required:true,
+                                    minlength: 3,
+                                    maxlength: 15
+						  },
+                                sape:{
+                                    minlength: 3,
+                                    maxlength: 50
+				  },
+          			nac:{
+                                    date:true
+                                    },
+                                tel:{
+                                    digits:true
+				  },
+                                email:{
+                                    required: true,
+                                    email: true,
+                                    minlength: 6,
+                                    maxlength: 45,
+                                    },
+				pass:{
+                                    required: true,
+                                    minlength: 5,
+                                    maxlength: 45,
+                                    },
+				confpass:{
+                                    required: true,
+                                    minlength: 5,
+                                    maxlength: 45,
+                                    equalTo: pass
+					},
+		       },
+		        messages:{
+                             cc:{
+                                    minlength: "Minimo {0} carácteres",
+                                    maxlength: "Maximo {0} carácteres",
+                                    digits: true
+				  },
+                                nombre:{
+                                    required:"campo requerido",
+				    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres"					  
+				   },
+                                snombre:{
+                                    maxlength:"campo requerido",
+                                    minlength:"maximo 4 digitos ",
+                                        },
+                                ape:{
+                                    required:"campo requerido",
+				    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres"
+					  },
+				sape:{
+				    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres"
+                                    },
+                                nac:{
+                                    date:"Ingrese una fecha válida" 
+                                    },
+                                email:{
+                                    required:"campo requerido",
+                                    email:"Ingrese un correo electrónico válido",
+                                    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres"
+					  },
+                                pass:{
+                                    required:"campo requerido",
+                                    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres"
+                                    },
+                                confpass:{
+                                    required:"campo requerido",
+                                    minlength:"Minimo {0} carácteres",
+                                    maxlength:"Maximo {0} carácteres",
+                                    equalTo:"Las contraseñas deben coincidir"
+                                    },
+                                tel:{
+                                    digits:"Sólo numeros",
+			 },			  
+		    }
+	      });
+	   });
+</script>
+	
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pro-level :: Mi Perfil</title>
+</head>
+<body>   
+<header>
+    <nav class="navbar">
+    <ul id="nav" class="nav">
+      		<li><a href="inicio.jsp"><img src="../imagenes/inicio.png" width="24" height="24" alt="inicio" /> INICIO</a></li>
+      		<li><a href="#"><span><img src="../imagenes/copa.png" width="24" height="24" alt="copa" /> TORNEOS</span></a><
+        <div class="subs">
+          <div class="col">
+            <ul>
+                <li><a><img src="../imagenes/micopa.png" width="24" height="24" alt="micopa"/>MIS TORNEOS</a>
+              		<div class="subs">
+                    	<div class="col">
+                                    <ul>
+                                        <c:forEach var="row" items="${torneo.rows}">
+                                            <li><a href="jugador/vermisTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
+                                        </c:forEach>
+                                    </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li><a href="servicios.jsp"><img src="../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+      <li><a href="#"><span><img src="../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
+      	<div class="subs">
+        	<ul>
+            	<li><a href="admin.jsp"><img src="../imagenes/ajustes.png" width="24" height="24" alt="ajustes" />ADMINISTRAR</a></li>
+                <li><a href="../Ingreso?logout=cerrar"><img src="../imagenes/out.png" width="24" height="24" alt="cerrar" />CERRAR CESIÓN</a></li>
+            </ul>
+        </div>
+        </li>
+    </ul>
+</nav>
+</header>
+<!-- InstanceBeginEditable name="body" -->
+<main>
+<div class="" id="contenedor">
+
+<section id="formulario" class="item">
+<div id="usuario" class="container">
+<div>
+    <ol class="breadcrumb">
+        <li><a href="inicio.jsp">Inicio</a></li>
+        <li class="active" id="migadatos">Datos Personales</li>
+    </ol>
+</div> 
+<h2>Datos Personales</h2>
+<form id="datosp" name="datospers" method="get" action="../RegistroUsuario" class="form-horizontal center-block">
+    <div class="form-group">
+        <label for="cc" class="control-label col-md-6">Cedula</label>
+            <div class="col-md-6">
+                    <input type="text" id="cc" name="cc" value="<%=udto.getIdUsuario()%>" readonly="readonly"/>
+            </div>
+    </div>
+    <div class="form-group">
+    <label for="nombre" class="control-label col-md-6">Primer Nombre</label>
+        <div class="col-md-6">
+            <input type="text" id="nombre" name="nombre" placeholder="<%=udto.getPrimerNombre()%>"/>
+        </div>
+    </div>
+    <div class="form-group">
+    <label for="snombre" class="control-label col-md-6">Segundo Nombre</label>
+        <div class="col-md-6">
+            <input type="text" id="snombre" name="snombre" placeholder="<%=udto.getSegundoNombre()%>"/>
+        </div>
+    </div>
+    <div class="form-group">
+    <label for="ape" class="control-label col-md-6">Primer Apellido</label>
+        <div class="col-md-6">
+            <input type="text" id="ape" name="ape" placeholder="<%=udto.getPrimerApellido()  %>"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="sape" class="control-label col-md-6">Segundo Apellido</label>
+            <div class="col-md-6">
+                <input type="text" id="sape" name="sape" placeholder="<%=udto.getSegundoApellido()%>"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="nac"  class="control-label col-md-6">Fecha De Nacimiento</label>
+            <div class="col-md-6">
+                <input type="text" id="nac" name="nac" value="<%=udto.getFecha()%>" readonly="readonly"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="tel"  class="control-label col-md-6">Telefono</label>
+            <div class="col-md-6">
+                <input type="text" id="tel" name="tel" placeholder="<%=udto.getTelefono()%>"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="email"  class="control-label col-md-6">Correo Electrónico</label>
+            <div class="col-md-6">
+                <input type="email" id="email" name="email" placeholder="<%=udto.getEmail()%>"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="pass"  class="control-label col-md-6">Contraseña</label>
+            <div class="col-md-6">
+                <input type="password" id="pass" name="pass" placeholder="****"/>
+            </div>
+    </div>
+    <div class="form-group">
+        <label for="confpass"  class="control-label col-md-6">Confirmar Contraseña</label>
+            <div class="col-md-6">
+                <input type="password" id="confpass" name="confpass" placeholder="****"/>
+            </div>
+    </div>
+    <div class="center-block btn">
+        <button name="actudatos" class="btn btn-primary">Guardar Cambios</button>
+        <input type="hidden" name="datos" value="datos" />
+    </div>
+    </form>
+<%-- si hubo exito actualizando datos autoclick en icono perfil mostrar mensaje --%>
+<% 
+    if (request.getParameter("conf")!=null) { 
+%>
+<script>
+    $(document).ready(function(){
+         $("#datos").trigger("click");
+    });
+</script>
+<div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong><span class="glyphicon glyphicon-ok"></span><%=request.getParameter("conf")%></strong>
+</div> 
+<%            
+       }
+%>
+</div>
+</section>
+
+</div>
+</main>
+<footer>
+<p class="pie">2014 PRO-LEVEL - Todos los derechos reservados | Cambiar idioma 
+    <a href="#"><img src="../imagenes/english.png" width="30" height="25" alt="idioma" />
+    </a></p> 
+</footer>
+</body>
+</html>
+<%
+                        }//si el rol fue 2
   
     }else{
                 response.sendRedirect("../../../index.jsp");
