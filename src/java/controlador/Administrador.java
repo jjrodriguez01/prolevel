@@ -34,12 +34,14 @@ public class Administrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
-        
+        if (request.getParameter("cambiar")!=null) {
         Long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
         int numRol = Integer.parseInt(request.getParameter("numRol"));
         FachadaUsuarios facade = new FachadaUsuarios();
         String cambio = facade.cambiarRol(numRol, idUsuario);
         response.sendRedirect("superadmin/administracion.jsp?cambio="+cambio);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

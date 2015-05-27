@@ -45,7 +45,9 @@ public class Ingreso extends HttpServlet {
                 if (email.equals("superadmin@prolevel.com") && contraseña.equals("prolevel")) {
                     HttpSession miSesion = request.getSession(true);
                     int rolSuperadmin = 3;
+                    String usuario = "";
                     miSesion.setAttribute("rol", rolSuperadmin);
+                    miSesion.setAttribute("usr", usuario);
                     response.sendRedirect("superadmin/administracion.jsp");
                 }else{
                 long cc = facadeUsu.validarUsuario(email, contraseña);

@@ -54,10 +54,14 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
         <script type="text/javascript" src="../../js/jugadoresEquipos.js"></script>
 
         <style>
+            body{
+                background-color: white;
+            }
             .menu-opciones{
                  clear: both;
                 padding-top: 10px;
             }
+
         </style>
         <script>
             $(document).ready(function(){
@@ -156,31 +160,48 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                     </table>
             </div>
         </div>
-                <div class="row">
-                    <%=tab.toString()%>
-            <div class="ui divided selection list">
-  <a class="item">
-    <div class="ui red horizontal label">Partidos Jugados</div>
-    <a class="ui black circular label">
-        <%=tab.getPartidosJugados()%>
-    </a>
-  </a>
-  <a class="item">
-    <div class="ui purple horizontal label">Candy</div>
-    Ice Cream
-  </a>
-  <a class="item">
-    <div class="ui red horizontal label">Fruit</div>
-    Orange
-  </a>
-  <a class="item">
-    <div class="ui horizontal label">Dog</div>
-    Poodle
-  </a>
-</div>
-        
+    <div class="row">
+                 
+    <div class="col-xs-12 col-sm-12 col-md-2">
+      <div class="ui red horizontal label">Partidos Jugados
+      <a class="ui purple circular label"><%=tab.getPartidosJugados()%></a>
+      </div>
     </div>
-                </div>
+    <div class="col-xs-12 col-sm-12 col-md-2">
+      <div class="ui red horizontal label">Partidos Ganados
+      <a class="ui purple circular label"><%=tab.getPartidosGanados()%></a>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-2">
+      <div class="ui red horizontal label">Partidos Empatados
+      <a class="ui purple circular label"><%=tab.getPartidosEmpatados() %></a>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-2">
+      <div class="ui red horizontal label">Partidos Perdidos
+      <a class="ui black circular label"><%=tab.getPartidosPerdidos()%></a>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-2">
+    <div class="ui red horizontal label">Goles Anotados
+    <a class="ui purple circular label"><%=tab.getGolesAnotados() %></a>
+    </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-2">
+    <div class="ui red horizontal label">Goles Recibidos
+    <a class="ui black circular label"><%=tab.getGolesRecibidos() %></a>
+    </div>
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-2">
+    <div class="ui red horizontal label">Diferencia De Goles
+        <% int diferencia = tab.getGolesAnotados()-tab.getGolesRecibidos();%>
+    <a class="ui black circular label"><%=diferencia%></a>
+    </div>
+  </div>
+    </div>
+
 </main>
     </body>
 </html>

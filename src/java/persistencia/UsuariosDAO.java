@@ -182,9 +182,9 @@ public class UsuariosDAO {
         ArrayList<UsuariosDTO> listarUsuarios = new ArrayList();
 
         try {
-            statement = conexion.prepareStatement("SELECT * FROM usuarios "
-                    + "inner join rol_usuario on"
-                    + "usuarios.idusuario = rol_usuario;");
+            statement = conexion.prepareStatement("SELECT * FROM usuarios " +
+                        "inner join rol_usuario on " +
+                        "usuarios.idusuario = rol_usuario.usuarioidusuario;");
             rs = statement.executeQuery();
             if(rs != null){            //mientras que halla registros cree un nuevo dto y pasele la info
             while (rs.next()) {
@@ -209,7 +209,7 @@ public class UsuariosDAO {
             }
         }
         } catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error sql", sqlexception);
+            throw new MiExcepcion("Error sql"+sqlexception.getMessage(), sqlexception);
 
         } 
 //        finally {
