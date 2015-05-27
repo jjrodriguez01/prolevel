@@ -47,7 +47,9 @@ public class FachadaUsuarios {
     public List<UsuariosDTO> listarUsuarios() throws MiExcepcion{
         return udao.listarTodo(conexion);
     }
-    
+    public List<UsuariosDTO> listarUsuariosConRoles() throws MiExcepcion{
+        return udao.listarUsuariosRol(conexion);
+    }
     public UsuariosDTO getUsuario(long id) throws MiExcepcion{
         return udao.listarUno(id, conexion);
     }
@@ -83,6 +85,10 @@ public class FachadaUsuarios {
     public int getRol(UsuariosDTO udto) throws MiExcepcion{
         return roldao.getRol(udto, conexion);
     } 
+    
+    public String cambiarRol(int nuevoRol, long idusuario) throws MiExcepcion{
+        return roldao.actualizar(nuevoRol, idusuario, conexion);
+    }
     
     /**
      * Retorna el numero de rol del objeto UsuariosDTO

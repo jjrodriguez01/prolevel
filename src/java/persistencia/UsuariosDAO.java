@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import modelo.RolUsuarioDTO;
 import utilidades.MiExcepcion;
 public class UsuariosDAO {
 
@@ -157,6 +158,52 @@ public class UsuariosDAO {
                 usu.setEmail(rs.getString("email"));
                 usu.setTelefono(rs.getString("telefono"));
                 usu.setContraseña(rs.getString("contraseña"));
+                //agregamos el objeto dto al arreglo
+                listarUsuarios.add(usu);
+            }
+        }
+        } catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error sql", sqlexception);
+
+        } 
+//        finally {
+//            try {
+//                statement.close();
+//            } catch (SQLException ex) {
+//                throw new MiExcepcion("Error cerrando prepare",ex);
+//            }
+//        }
+        //devolvemos el arreglo
+        return listarUsuarios;
+    }
+    
+     public List<UsuariosDTO> listarUsuariosRol(Connection conexion) throws MiExcepcion {
+        //creamos el array que va a contener los datos de la consulta    
+        ArrayList<UsuariosDTO> listarUsuarios = new ArrayList();
+
+        try {
+            statement = conexion.prepareStatement("SELECT * FROM usuarios "
+                    + "inner join rol_usuario on"
+                    + "usuarios.idusuario = rol_usuario;");
+            rs = statement.executeQuery();
+            if(rs != null){            //mientras que halla registros cree un nuevo dto y pasele la info
+            while (rs.next()) {
+                //crea un nuevo dto
+                UsuariosDTO usu = new UsuariosDTO();
+                //le pasamos los datos que se encuentren
+                usu.setIdUsuario(rs.getLong("idUsuario"));
+                usu.setPrimerNombre(rs.getString("primerNombre"));
+                usu.setSegundoNombre(rs.getString("segundoNombre"));
+                usu.setPrimerApellido(rs.getString("primerApellido"));
+                usu.setSegundoApellido(rs.getString("segundoApellido"));
+                usu.setFecha(rs.getString("fechaNac"));
+                usu.setEmail(rs.getString("email"));
+                usu.setTelefono(rs.getString("telefono"));
+                usu.setContraseña(rs.getString("contraseña"));
+                RolUsuarioDTO rol = new RolUsuarioDTO();
+                rol.setRolesidRol(rs.getInt("rolesIdRol"));
+                rol.setUsuarioIdUsuario(rs.getLong("usuarioIdUsuario"));
+                usu.setRol(rol);
                 //agregamos el objeto dto al arreglo
                 listarUsuarios.add(usu);
             }

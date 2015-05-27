@@ -8,23 +8,19 @@ package controlador;
 import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.UsuariosDTO;
 import utilidades.MiExcepcion;
 
 /**
  *
  * @author jeisson
  */
-public class Ingreso extends HttpServlet {
+public class Administrador extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,41 +33,13 @@ public class Ingreso extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, MiExcepcion {
-            if (request.getParameter("ingresar") != null) {
-                String email = request.getParameter("email").trim();
-                String contraseña = request.getParameter("pass").trim();
-                FachadaUsuarios facadeUsu = new FachadaUsuarios();
-                UsuariosDTO datosUsuario = new UsuariosDTO();
-                if (email.equals("superadmin@prolevel.com") && contraseña.equals("prolevel")) {
-                    HttpSession miSesion = request.getSession(true);
-                    int rolSuperadmin = 3;
-                    miSesion.setAttribute("rol", rolSuperadmin);
-                    response.sendRedirect("superadmin/administracion.jsp");
-                }else{
-                long cc = facadeUsu.validarUsuario(email, contraseña);
-                if (cc != 0) {
-                    datosUsuario = facadeUsu.getUsuario(cc);
-                    int numerorol = facadeUsu.getRol(datosUsuario);
-                    if(datosUsuario!=null && numerorol!=0){   
-                    HttpSession miSesion = request.getSession(true);
-                    miSesion.setAttribute("usr", datosUsuario);
-                    miSesion.setAttribute("rol", numerorol);
-                    response.sendRedirect("paginas/inicio.jsp"); 
-                    }              
-                }else {
-                response.sendRedirect("index.jsp?auth=noauth");
-                }
-            }
-            }else if(request.getParameter("logout")!=null){
-                    HttpSession miSesion = request.getSession(false);
-                    miSesion.removeAttribute("usr");
-                    miSesion.removeAttribute("rol");
-                    miSesion.invalidate();
-                    response.sendRedirect("index.jsp?sesion=cerrada");
-            }
-            else{
-                response.sendRedirect("index.jsp?action=noaction");
-            }
+        response.setContentType("text/html;charset=UTF-8");
+        
+        Long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+        int numRol = Integer.parseInt(request.getParameter("numRol"));
+        FachadaUsuarios facade = new FachadaUsuarios();
+        String cambio = facade.cambiarRol(numRol, idUsuario);
+        response.sendRedirect("superadmin/administracion.jsp?cambio="+cambio);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -89,7 +57,7 @@ public class Ingreso extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,7 +75,7 @@ public class Ingreso extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(Ingreso.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,4 +88,5 @@ public class Ingreso extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

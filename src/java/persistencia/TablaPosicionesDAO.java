@@ -176,35 +176,48 @@ public class TablaPosicionesDAO {
         
         return mensaje;
     }
-//     public TablaPosicionesDTO listarUno(Connection conexion) {
-//         TablaPosicionesDTO tab = new TablaPosicionesDTO();
-//        try {
-//            //preparamos la consulta       
-//            statement = conexion.prepareStatement("SELECT * from tablaPosiciones "
-//                    + "where idTorneo = ? and idEquipo=?;");
-//            statement.setInt(1, tab.getIdtorneo());
-//            statement.setInt(1, tab.getIdequipo());
-//            rs = statement.executeQuery();
-//            //mientras halla registros
-//            while (rs.next()) {
-//                tab.setIdtorneo(rs.getInt("idTorneo"));
-//                tab.setIdequipo(rs.getInt("idEquipo"));
-//                tab.setPosicion(rs.getInt("Posicion"));
-//                tab.setPuntos(rs.getInt("Puntos"));
-//                tab.setPartidosJugados(rs.getInt("PartidosJugados"));
-//                tab.setPartidosGanados(rs.getInt("PartidosGanados"));
-//                tab.setPartidosEmpatados(rs.getInt("PartidosEmpatados"));
-//                tab.setPartidosPerdidos(rs.getInt("PartidosPerdidos"));
-//                tab.setGolesAnotados(rs.getInt("GolesAnotados"));
-//                tab.setGolesRecibidos(rs.getInt("Golesresividos"));             
-//            }
-//
-//        } catch (SQLException ex) {
-//            mensaje = "Error inesperado: " + ex.getMessage() + " codigo de error " + ex.getErrorCode();
-//        }
-//        //devolvemos el usuario que se encontro
-//        return tab;
-//    }
+     public TablaPosicionesDTO listarUno(int idtorneo,int codigoequipo,Connection conexion) throws MiExcepcion {
+         TablaPosicionesDTO tab = new TablaPosicionesDTO();
+
+        try {
+            //preparamos la consulta       
+            statement = conexion.prepareStatement("SELECT tablaposiciones.idTorneo, "
+                    + "tablaposiciones.idEquipo, "
+                    + "tablaposiciones.partidosJugados, " +
+"tablaposiciones.posicion, " +
+"tablaposiciones.partidosGanados, " +
+"tablaposiciones.partidosEmpatados," +
+"tablaposiciones.partidosPerdidos, " +
+"tablaposiciones.golesAnotados, " +
+"tablaposiciones.golesRecibidos, " +
+"tablaposiciones.golesAnotados-tablaposiciones.golesRecibidos, " +
+"tablaposiciones.puntos " +
+"FROM tablaposiciones "
++ "WHERE tablaposiciones.idTorneo = ? " +
+"AND " +
+"tablaposiciones.idEquipo = ?;");
+            statement.setInt(1, idtorneo);
+            statement.setInt(2, codigoequipo);
+            rs = statement.executeQuery();
+            //mientras halla registros
+            while(rs.next()){
+                tab.setIdtorneo(rs.getInt("idTorneo"));
+                tab.setIdequipo(rs.getInt("idEquipo"));
+                tab.setPosicion(rs.getInt("posicion"));
+                tab.setPuntos(rs.getInt("puntos"));
+                tab.setPartidosJugados(rs.getInt("partidosJugados"));
+                tab.setPartidosGanados(rs.getInt("partidosGanados"));
+                tab.setPartidosEmpatados(rs.getInt("partidosEmpatados"));
+                tab.setPartidosPerdidos(rs.getInt("partidosPerdidos"));
+                tab.setGolesAnotados(rs.getInt("golesAnotados"));
+                tab.setGolesRecibidos(rs.getInt("GolesRecibidos"));             
+            }
+
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error "+ex.getMessage(),ex);
+        }
+        return tab;
+    }
     
 //    public List ListarTodo(Connection conexion){
 //        

@@ -17,7 +17,7 @@ public class UsuariosDTO {
     private String telefono;
     private String email;
     private String contraseña;
-
+    private RolUsuarioDTO rol;
     /**
      * @return the idJugador
      */
@@ -164,6 +164,14 @@ public class UsuariosDTO {
      +"\n telefono"+ telefono 
      +"\n email="+ email
      +"\n contraseña ="+contraseña;
+    }
+
+    public RolUsuarioDTO getRol() {
+        return rol;
+    }
+
+    public void setRol(RolUsuarioDTO rol) {
+        this.rol = rol;
     }
 }
 

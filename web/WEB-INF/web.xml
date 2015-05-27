@@ -72,6 +72,10 @@
         <servlet-name>Buscador</servlet-name>
         <servlet-class>controlador.Buscador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Administrador</servlet-name>
+        <servlet-class>controlador.Administrador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registroUsuario</servlet-name>
         <url-pattern>/registroUsuario</url-pattern>
@@ -113,10 +117,6 @@
         <url-pattern>/Recuperar</url-pattern>
     </servlet-mapping>
     <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/errorPages/error.jsp</location>
-    </error-page>
-    <error-page>
         <error-code>500</error-code>
         <location>/errorPages/error.jsp</location>
     </error-page>
@@ -155,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>Buscador</servlet-name>
         <url-pattern>/Buscador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Administrador</servlet-name>
+        <url-pattern>/Administrador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -74,7 +74,7 @@ $(document).ready(function() {
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos?${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="vermisTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -82,15 +82,6 @@ $(document).ready(function() {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                    </li>
-                    <li><a href="#"><span><img src="../../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-                        <div class="subs">
-                            <ul>
-                                <li><a href="#"><img src="../../imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-                                <li><a href="#"><img src="../../imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-                                <li><a href="#"><img src="../../imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-                            </ul>
                         </div>
                     </li>
                     <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
@@ -133,53 +124,7 @@ $(document).ready(function() {
     <section>
         <div class="row">
             <div class="col-lg-12">
-                <div class="page-header">
-                    <h1 id="hfechasoctavos" data-toggle="popover" 
-title="Hecho" data-content="Se han establecido las fechas"
-data-placement="top">Modifica Fechas Y Horas <small>octavos</small></h1>
-                </div>
-<%--confirmacion de fechas octavos--%>
-<%
-if (request.getParameter("octavos")!=null) {
-%>
-<script>
-    $(document).ready(function(){
-        $("#hfechasoctavos").trigger("click");
-    });
-</script>
-<script>
-$('[data-toggle="popover"]').popover(
-                {
-                    trigger: 'click',
-                    html: true,
-                    delay: 500,
-                }
-            );
-</script>
-<%
-    }
-%>
-<%--confirmacion de fechas cuartos--%>
-<%
-if (request.getParameter("cuartos")!=null) {
-%>
-<script>
-    $(document).ready(function(){
-        $("#hfechascuartos").trigger("click");
-    });
-</script>
-<script>
-$('[data-toggle="popover"]').popover(
-                {
-                    trigger: 'click',
-                    html: true,
-                    delay: 500,
-                }
-            );
-</script>
-<%
-    }
-%>
+
                     <%--query de la primera ronda octavos en eli de 16 equipos--%> 
                     <sql:query var="calendario" dataSource="jdbc/pro-level">
                         SELECT DISTINCT 
@@ -239,11 +184,7 @@ $('[data-toggle="popover"]').popover(
 
         <div class="row">
             <div class="col-lg-12" id="ccuartos">
-                <div class="page-header">
-                    <h1 id="hfechascuartos" data-toggle="popover" 
-title="Hecho" data-content="Se han establecido las fechas"
-data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
-                </div>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
@@ -349,21 +290,10 @@ data-placement="top">Modifica Fechas Y Horas <small>cuartos</small></h1>
                                 <td><span>-</span></td>
                                 <td>${row.eq2}</td>
                                 <td>
-                                    <select name="cp${vs.index}">
-                                        <option></option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==1}"> selected</c:if>>1</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==2}"> selected</c:if>>2</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==3}"> selected</c:if>>3</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==4}"> selected</c:if>>4</option>
-                                        <option <c:if test="${row.cancha !=null && row.cancha==5}"> selected</c:if>>5</option>
-                                    </select>
+                                    <span><c:out value="${row.cancha}" /></span> 
                                 </td>
-                                <td><input type="text" class="datepicker" name="fecha${vs.index}" <c:if test="${row.fecha !=null}"> value="${row.fecha}"</c:if> /></td>
-                                <td><input type="text" name="hora${vs.index}" class="clockpick" <c:if test="${row.hora !=null}"> value="${row.hora}"</c:if> /></td>
-                                <input type="hidden" value="${row.equipo1}" name="${vs.index}equipo1" />
-                                <input type="hidden" value="${row.equipo2}" name="${vs.index}equipo2" />
-                                <input type="hidden" value="${row.eq1}" name="${vs.index}nequipo1" />
-                                <input type="hidden" value="${row.eq2}" name="${vs.index}nequipo2" />
+                                <td><c:out value="${row.fecha}"/> </td>
+                                <td><c:out value="${row.hora}" /></td>
                             </tr>
                         </c:forEach>
                         </tbody>

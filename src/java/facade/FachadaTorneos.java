@@ -353,6 +353,9 @@ public class FachadaTorneos {
     public String posEquipo2(PartidoDTO p) throws MiExcepcion{
         return tpdao.posEquipo2(p, conexion);
     } 
+    public TablaPosicionesDTO listarUno(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return tpdao.listarUno(idTorneo, codigoEquipo, conexion);
+    }
     
     //AHORA TERCEROSDAO
     

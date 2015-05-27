@@ -3,6 +3,8 @@
     Created on : 4/04/2015, 12:17:36 AM
     Author     : jeisson
 --%>
+<%@page import="modelo.TablaPosicionesDTO"%>
+<%@page import="facade.FachadaTorneos"%>
 <%@page import="persistencia.UsuariosDAO"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
@@ -14,6 +16,9 @@
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
+                    FachadaTorneos facade = new FachadaTorneos();
+                    TablaPosicionesDTO tab = new TablaPosicionesDTO();
+                    tab = facade.listarUno(Integer.parseInt(request.getParameter("idTorneo")), Integer.parseInt(request.getParameter("codigoEquipo")));
                     if(rol == 2){
 %>
 <%--  Query con la info del torneo --%>
@@ -42,15 +47,12 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
-        <link href="../../css/estilosMisTorneos.css" rel="stylesheet" type="text/css">
-        <link href="../../js/dataTables/css/dataTablesBootstrap.css" rel="stylesheet" type="text/css">
+        <link href="../../css/estilosMisTorneos.css" rel="stylesheet" type="text/css">  
+        <link href="../../css/semantic/semantic.min.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
-        <script type="text/javascript" src="../../js/jquery.validate.js"></script>
         <script type="text/javascript" src="../../css/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../js/jugadoresEquipos.js"></script>
-        <script type="text/javascript" src="../../js/dataTables/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../js/dataTables/js/datatablesbootstrap.js"></script>
-        <script type="text/javascript" src="../../js/validaDocumento.js"></script>
+
         <style>
             .menu-opciones{
                  clear: both;
@@ -86,15 +88,6 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                 
                                 </ul>
                             </div>
-                        </div>
-                    </li>
-                    <li><a href="#"><span><img src="../../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-                        <div class="subs">
-                            <ul>
-                                <li><a href="#"><img src="../../imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-                                <li><a href="#"><img src="../../imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-                                <li><a href="#"><img src="../../imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-                            </ul>
                         </div>
                     </li>
                     <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
@@ -163,7 +156,31 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                     </table>
             </div>
         </div>
-
+                <div class="row">
+                    <%=tab.toString()%>
+            <div class="ui divided selection list">
+  <a class="item">
+    <div class="ui red horizontal label">Partidos Jugados</div>
+    <a class="ui black circular label">
+        <%=tab.getPartidosJugados()%>
+    </a>
+  </a>
+  <a class="item">
+    <div class="ui purple horizontal label">Candy</div>
+    Ice Cream
+  </a>
+  <a class="item">
+    <div class="ui red horizontal label">Fruit</div>
+    Orange
+  </a>
+  <a class="item">
+    <div class="ui horizontal label">Dog</div>
+    Poodle
+  </a>
+</div>
+        
+    </div>
+                </div>
 </main>
     </body>
 </html>

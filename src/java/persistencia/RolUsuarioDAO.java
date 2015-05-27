@@ -31,12 +31,12 @@ public class RolUsuarioDAO {
 
         try {
             //sentencia sql
-            String sql = "INSERT INTO RolUsuario(UsuarioIdUsuario,RolesIdRol)VALUES(?,?)";
+            String sql = "INSERT INTO Rol_Usuario(UsuarioIdUsuario,RolesIdRol)VALUES(?,?)";
             //pasamos la sentencia la conexion mediante el prepare staement
             statement = conexion.prepareStatement(sql);
             //obtenemos los datos del dto de la tabla
             statement.setInt(1, usu.getRolesidRol());
-            statement.setInt(2, usu.getUsuarioIdUsuario());           
+            statement.setLong(2, usu.getUsuarioIdUsuario());           
 
             //ejecuta el insert
             rtdo = statement.executeUpdate();
@@ -55,10 +55,10 @@ public class RolUsuarioDAO {
         return mensaje;
     }
 
-    public String actualizar(int rol, long idUsuario,Connection conexion) {
+    public String actualizar(int rol, long idUsuario,Connection conexion) throws MiExcepcion {
         try {
             //preparamos la sentencia sql
-            String sql = "UPDATE Rol_Usuario SET RolesidRol=? WHERE UsuarioIdUsuario=?;";
+            String sql = "UPDATE Rol_Usuario SET RolesIdRol=? WHERE UsuarioIdUsuario=?;";
             //pasamos el query a la conexion
            //sacamos los datos del dto de la tabla
             statement = conexion.prepareStatement(sql);
@@ -69,14 +69,13 @@ public class RolUsuarioDAO {
             rtdo = statement.executeUpdate();
             if (rtdo != 0) {
 
-              mensaje="El Campo Se a modificado:" + rtdo + "saludes";
+              mensaje="Se ha cambiado el rol del usuario satisfactoriamente";
 
             } else {
                 mensaje = "Error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
-
+            throw new MiExcepcion("Error "+sqlexception.getMessage(),sqlexception);
         }
 
         return mensaje;
