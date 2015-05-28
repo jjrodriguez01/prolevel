@@ -127,7 +127,7 @@ public class UsuariosDAO {
             rtdo = statement.executeUpdate();
 
             if (rtdo != 0) {
-                System.out.println("Se elimino " + rtdo + " registro corretamente");
+                mensaje = ("Usuario eliminado satisfactoriamente");
             } else {
                 mensaje = "Ocurrio Un Error";
             }

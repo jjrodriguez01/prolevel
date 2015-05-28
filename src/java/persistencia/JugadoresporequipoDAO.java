@@ -268,6 +268,37 @@ public class JugadoresporequipoDAO {
         return jugadoreseq;
 
     }
+    
+    public long existeJugador(long idUsuario, Connection conexion) throws MiExcepcion {
+        //creamos el array que va a contener los datos de la consulta    
+        long id = 0;
+
+        try {
+
+            statement = conexion.prepareStatement("select codigojugador from jugadoresporequipo "
+                    + "where codigojugador = ?;");
+            statement.setLong(1, idUsuario);
+            rs = statement.executeQuery();
+            //mientras que halla registros cree un nuevo dto y pasele la info
+            while (rs.next()) {
+                //crea un nuevo dto
+                id = rs.getLong("codigoJugador");
+            }
+        } catch (SQLException sqle) {
+            throw new MiExcepcion("Error "+sqle.getMessage(), sqle);
+
+        }
+//        finally{
+//            try {
+//                statement.close();
+//            } catch (SQLException sqlexception) {
+//                throw new MiExcepcion("Error listando jugadores", sqlexception);
+//            }
+//        }
+        //devolvemos el arreglo
+        return id;
+
+    }
 }
   
 

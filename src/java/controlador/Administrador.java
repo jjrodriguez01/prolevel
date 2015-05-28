@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaTorneos;
 import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,6 +41,21 @@ public class Administrador extends HttpServlet {
         FachadaUsuarios facade = new FachadaUsuarios();
         String cambio = facade.cambiarRol(numRol, idUsuario);
         response.sendRedirect("superadmin/administracion.jsp?cambio="+cambio);
+        }else if(request.getParameter("eliminar")!=null){
+            if (request.getParameter("confirmo")==null) {
+                response.sendRedirect("superadmin/administracion.jsp?confirmacion=Debe confirmar que desea eliminar al usuario");
+            }else{
+                FachadaTorneos ftorneos = new FachadaTorneos();
+                long id = Long.parseLong(request.getParameter("idUsuario"));
+                long jugador = ftorneos.existeJugador(id);
+                if (jugador!=0) {
+                    response.sendRedirect("superadmin/administracion.jsp?existejugador=Este usuario es jugador en un equipo de un torneo en curso");
+                }else{
+                    FachadaUsuarios fusu = new FachadaUsuarios();
+                    String eliminado = fusu.eliminarUsuario(id);
+                    response.sendRedirect("superadmin/administracion.jsp?eliminado="+eliminado);
+                }
+            }
         }
         
     }

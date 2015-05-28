@@ -214,7 +214,13 @@ public class FachadaTorneos {
     public List<JugadoresporequipoDTO> jugadoresDeEquipo(int equipo) throws MiExcepcion{
         return jequipodao.listarJugadoresEq(equipo, conexion);
     }
-    
+    /**
+    *Verifica que un usuario este en la tabla jugadoresporequipo
+    *@return 0 si no encuentra jugador con el id especificado, o el numero del id si se encuentra
+    */
+    public long existeJugador(long idUsuario) throws MiExcepcion{
+        return jequipodao.existeJugador(idUsuario, conexion);
+    }
 //    AHORA PARTIDODAO
     
     public String insertarPartido(PartidoDTO partido) throws MiExcepcion{
@@ -224,7 +230,7 @@ public class FachadaTorneos {
      * Inserta un equipo a cuertos en un torneo
      * @param idTorneo
      * @param codigoEquipo
-     * @return
+     * @return String confirmando accion
      * @throws MiExcepcion 
      */
     public String insertarACuartos(int idTorneo, int codigoEquipo) throws MiExcepcion{

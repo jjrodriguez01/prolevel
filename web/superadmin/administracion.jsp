@@ -56,7 +56,8 @@
                     } 
                 });
         $('select.dropdown').dropdown();
-        $('.message').fadeOut(2500);
+        $('.message').fadeOut(25000);
+        $('.ui.checkbox').checkbox();
     });
         </script>
     </head>
@@ -92,6 +93,36 @@
             <%
                     }
             %> 
+<%
+                    if(request.getParameter("confirmacion")!=null){
+            %>
+<div class="ui positive message">
+  <div class="header">
+    <%=request.getParameter("confirmacion")%>
+  </div>
+</div>
+            <%
+                    }
+if(request.getParameter("existejugador")!=null){
+            %>
+<div class="ui negative message">
+  <div class="header">
+    <%=request.getParameter("existejugador")%>
+  </div>
+  <p>Ingrese al sistema y elimine al usuario en el torneo en el cual es participante</p>
+</div>
+            <%
+                    }
+if(request.getParameter("eliminado")!=null){
+            %>
+<div class="ui positive message">
+  <div class="header">
+    <%=request.getParameter("eliminado")%>
+  </div>
+</div>
+            <%
+                    }
+            %>         
             <table id="tusuarios" class="ui table">
                 <thead>
                     <th>Documento</th>
@@ -100,14 +131,15 @@
                     <th>Rol Actual</th>
                     <th>Nuevo Rol</th>
                     <th>Cambiar Rol</th>
+                    <th>Eliminar</th>
                 </thead>
                 
                     <%
                     for(UsuariosDTO usu : listarUsuarios){
                     %>
             <tr>
-                    <form action="../Administrador">
-                        <td><%=usu.getIdUsuario()%><input type="hidden" name="idUsuario" value="<%=usu.getIdUsuario()%>"</td>
+            <form action="../Administrador" class="ui form">
+                        <td><%=usu.getIdUsuario()%><input type="hidden" name="idUsuario" value="<%=usu.getIdUsuario()%>" /></td>
                 <td><%=usu.getPrimerNombre()%></td>
                 <td><%=usu.getPrimerApellido()%></td>
                 <td><%=usu.getRol().getRolesidRol()%></td>
@@ -117,8 +149,18 @@
                         <option value="2">2</option>
                     </select>
                 </td>
-                <td><button name="cambiar" class="positive ui button">Cambiar rol</button></td>
-                </form>
+                <td><button name="cambiar" class="positive ui button">Cambiar rol</button></form></td>
+                <td>
+                    <form class="ui form" action="../Administrador">
+                        <input type="hidden" name="idUsuario" value="<%=usu.getIdUsuario()%>" />
+                        
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" name="confirmo">
+                            <label>Confirmo</label>
+                        </div>
+                    <button name="eliminar" class="negative ui button">Eliminar</button>
+                    </form>
+                </td>
             </tr>
                     <%
                         }    

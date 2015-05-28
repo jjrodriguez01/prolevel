@@ -39,6 +39,7 @@
 <link href="../css/perfiladmin.css" rel="stylesheet" type="text/css">
 <link href="../css/estiloslayout.css" rel="stylesheet" type="text/css">
 <link href="../js/datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="../js/sweetalert.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
 <script type="text/javascript" src="../js/datepicker/jquery-ui.js"></script>
@@ -46,6 +47,7 @@
 <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/dataTables/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="../js/dataTables/js/datatablesbootstrap.js"></script>
+<script type="text/javascript" src="../js/sweetalert.min.js"></script>
 <script>
 $(document).ready(function() {
    $( ".datepicker" ).datepicker( "option", "minDate", 0 );
@@ -277,6 +279,15 @@ $(document).ready(function() {
     });
 });
 </script>	
+<script>
+   function confirmar()
+{
+	if(confirm('¿Seguro que desea eliminar la cancha?'))
+		return true;
+	else
+		return false;
+}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pro-level :: Mi Perfil</title>
 </head>
@@ -691,7 +702,7 @@ $(document).ready(function() {
                                     <button name="actucancha" value="editcancha" class="glyphicon glyphicon-check"></button>
                                 </form>
                             </td>
-                            <td><a class="glyphicon glyphicon-trash" href="../Canchas?ecancha=eliminar&numero=${row.numeroCancha}"></a></td>
+                            <td><a onclick="return confirmar();" href="../Canchas?ecancha=eliminar&numero=${row.numeroCancha}" class="glyphicon glyphicon-trash"></a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
