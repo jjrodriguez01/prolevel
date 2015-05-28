@@ -86,10 +86,10 @@ public class CanchaDAO {
             if (rtdo != 0) {
                mensaje="Se elimino la cancha";
             } else {
-                mensaje = "Ocurrio Un Error";
+                mensaje = "Ha ocurrido un error";
             }
         } catch (SQLException sqlexception) {
-            mensaje = "Ha ocurrido un error "+ sqlexception.getMessage();
+            mensaje = "Ha ocurrido un error";
 
         }
 
@@ -130,7 +130,7 @@ public class CanchaDAO {
         CanchaDTO can = new CanchaDTO();
         try {
             //preparamos la consulta 
-            statement = conexion.prepareStatement("SELECT numeroCancha,descripcion "
+            statement = conexion.prepareStatement("SELECT numeroCancha,descripcion FROM cancha"
                     + "WHERE numeroCancha =? ;");
             statement.setInt(1, numeroCancha);
             rs = statement.executeQuery();
@@ -145,6 +145,26 @@ public class CanchaDAO {
         }
         //devolvemos el usuario que se encontro
         return can;
+    }
+    
+    public boolean existecancha(int numeroCancha, Connection conexion) throws MiExcepcion {
+        boolean existe = false;
+        try {
+            //preparamos la consulta 
+            statement = conexion.prepareStatement("SELECT numeroCancha,descripcion FROM cancha "
+                    + "WHERE numeroCancha=?;");
+            statement.setInt(1, numeroCancha);
+            rs = statement.executeQuery();
+            //mientras halla registros
+            while (rs.next()) {
+                existe = true;
+            }
+
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error al listar la cancha"+ex.getMessage(), ex);
+        }
+        //devolvemos el usuario que se encontro
+        return existe;
     }
 
 }   

@@ -146,15 +146,6 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="#"><span><img src="../../imagenes/telefono.png" width="24" height="24" alt="reservar" />RESERVAS</span></a>
-                        <div class="subs">
-                            <ul>
-                                <li><a href="#"><img src="../../imagenes/cancha.png" width="24" height="24" alt="reservas" />RESERVAR</a></li>
-                                <li><a href="#"><img src="../../imagenes/instructivo.png" width="24" height="24" alt="ins" />INSTRUCTIVO</a></li>
-                                <li><a href="#"><img src="../../imagenes/informe.png" width="24" height="24" alt="info" />INFORME DE RESERVAS</a></li>
-                            </ul>
-                        </div>
-                    </li>
                     <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
                     <li><a href="#"><span><img src="../../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
                         <div class="subs">
@@ -190,6 +181,7 @@
     </div>
             <hgroup>
                 <h1 id="titulo">${detallestorneo.nombre}</h1>
+                <c:if test="${detallestorneo.tipo == 1 || detallestorneo.tipo == 2}">
                 <h3 class="tablatit">Tabla De Posiciones</h3>
             </hgroup>
             <div class="row">
@@ -231,6 +223,7 @@
                     </table>
                 </div>
             </div>
+                </c:if>
             <div class="row">
                 <div class="col-md-6 col-sm-4 col-xs-12">
                     <h3 class="tablatit">Tabla Goleadores</h3>

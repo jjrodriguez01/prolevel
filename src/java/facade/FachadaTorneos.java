@@ -121,6 +121,15 @@ public class FachadaTorneos {
     public CanchaDTO listarCancha (int numero) throws MiExcepcion{
         return cdao.listarUno(numero,conexion);
     }
+    /**
+     * Valida si el numero de cancha ya esta registrado
+     * @param numeroCancha numero de la cancha a buscar en bd
+     * @return falso si la cahcha no existe, true si ya esta en bd
+     * @throws MiExcepcion 
+     */
+    public boolean existeCancha(int numeroCancha) throws MiExcepcion{
+        return cdao.existecancha(numeroCancha, conexion);
+    }
     
 //    SIGO CON EQUIPODAO
     

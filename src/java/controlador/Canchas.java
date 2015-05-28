@@ -40,15 +40,30 @@ public class Canchas extends HttpServlet {
         if (request.getParameter("ecancha")!=null) {
             facadetorneos = new FachadaTorneos();
             int numeroCancha = Integer.parseInt(request.getParameter("numero"));
+            
             String eliminada = facadetorneos.eliminarCancha(numeroCancha);
+            //si el string devuelve mensaje de error no se puede eliminar la cancha
+            //lo mas probable error de clave foranea y no deja eliminarla
+            if (eliminada.equals("Ha ocurrido un error")) {
+                response.sendRedirect("paginas/admin.jsp?noeliminada=fail");
+            }else{
             response.sendRedirect("paginas/admin.jsp?eliminada="+eliminada);
+            }
+            
         }else if (request.getParameter("icancha")!=null) {
             cdto = new CanchaDTO();
             facadetorneos = new FachadaTorneos();
             cdto.setNumeroCancha(Integer.parseInt(request.getParameter("numero")));
             cdto.setDescripcion(request.getParameter("des"));
+            boolean existe;
+            //existe cancha devuelve false si el numero de cancha no esta registrado
+            existe = facadetorneos.existeCancha(cdto.getNumeroCancha());
+            if (existe) {
+                response.sendRedirect("paginas/admin.jsp?existecancha=existe");
+            }else{
             String ins = facadetorneos.insertarCancha(cdto);
             response.sendRedirect("paginas/admin.jsp?inscancha="+ins);
+            }
         }else if (request.getParameter("ac")!=null & request.getParameter("confirmac")!=null){
             cdto = new CanchaDTO();
             facadetorneos = new FachadaTorneos();
@@ -71,11 +86,13 @@ public class Canchas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(Canchas.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendError(500, ex.toString());
         }
+       
     }
 
     /**
@@ -89,11 +106,13 @@ public class Canchas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         try {
             processRequest(request, response);
         } catch (MiExcepcion ex) {
-            Logger.getLogger(Canchas.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendError(500, ex.toString());
         }
+       
     }
 
     /**

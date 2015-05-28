@@ -57,7 +57,8 @@ body{
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        <h2>Lo sentimos, ha ocurrido un error <%=exception.getMessage()%></h2>
+                        <h2>Lo sentimos, ha ocurrido un error interno</h2>
+                        <p>Inténtelo de nuevo más tarde</p>
                     <a href="javascript:window.history.back();">&laquo; Volver atrás</a>
                     </div>
                 </div>

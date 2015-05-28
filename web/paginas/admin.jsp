@@ -668,6 +668,45 @@ $(document).ready(function() {
 </section>
 <section id="cancha" class="item">
     <div id="canchacontainer" class="container">
+<%
+    if (request.getParameter("existecancha")!=null) {
+%>
+<script>
+    $(document).ready(function(){
+         $("#campos").trigger("click");
+    });
+</script>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Este número de cancha ya está registrado!</strong>
+        </div>
+    </div>
+</div>
+<%
+        }
+%>
+<%
+    if (request.getParameter("noeliminada")!=null) {
+%>
+<script>
+    $(document).ready(function(){
+         $("#campos").trigger("click");
+    });
+</script>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Esta cancha no se puede eliminar!</strong>
+            <p>Puede que hallan partidos pendientes en ella</p>
+        </div>
+    </div>
+</div>
+<%
+        }
+%>
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 <div>
@@ -1038,6 +1077,7 @@ $( "#dialog-link, #icons li" ).hover(
         </li>
     </ul>
 </nav>
+    <div class="pull-right"><span class="label label-success"> <%=udto.getPrimerNombre()%></span><span class="badge">Jugador</span></div>
 </header>
 <!-- InstanceBeginEditable name="body" -->
 <main>
