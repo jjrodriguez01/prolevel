@@ -110,20 +110,23 @@ table td{
     <div class="col-lg-9 col-md-9 col-sm-12">
         <table class="table table-condensed table-responsive">
             <thead>
-            <th>Nombre</th>
-            <th>Fecha de inicio</th>
-            <th>Fecha fin</th>
-            <th>Genero</th>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha de inicio</th>
+                    <th>Fecha fin</th>
+                    <th>Genero</th>
+                </tr>
             </thead>
             <tbody>
 <%
         for(TorneoDTO t : torneos){
  %>
+ <tr>
             <td><%=t.getNombre()%></td>
             <td><%=t.getFechaInicio()%></td>
             <td><%=t.getFechaFin()%></td>
             <td><%=t.getGenero()%><td>
-            
+ </tr>
  <%
         }
 %>

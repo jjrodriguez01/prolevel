@@ -77,7 +77,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -88,7 +88,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                             </div>
                         </div>
                     </li>
-                    <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+                    <li><a href="../servicios.jsp"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
                     <li><a href="#"><span><img src="../../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
                         <div class="subs">
                             <ul>
@@ -125,7 +125,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
     </div>
         
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="page-header">
                     <h1>Jugadores del equipo ${param.nombre}</h1>
                 </div>
@@ -169,13 +169,70 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                             <c:forEach var="row" items="${jugadores.rows}" varStatus="vs">
                             <tr>
                                 <td>${row.jugador}</td>
-                                <td><a href="editarjugadores.jsp?codigoEquipo=${param.codigoEquipo}&nombre=${param.nombre}&idTorneo=${param.idTorneo}&idUsuario=${row.idUsuario}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                <td><a href="editarjugadores.jsp?codigoEquipo=${param.codigoEquipo}&nombre=${param.nombre}&idTorneo=${param.idTorneo}&idUsuario=${row.idUsuario}&nombreUsuario=${row.jugador}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                             </tr>
                             </c:forEach>
                         </tbody>
                         <tfoot>
                         <button class="btn btn-success" data-toggle="modal" data-target="#plusjugadores" data-backdrop="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Añadir Jugador</button>
                         </tfoot>
+                    </table>
+            </div>
+<div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="page-header">
+                    <h1>Jugadores Con tarjetas acumuladas</h1>
+                </div>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Los siguientes jugadores acumulas más de 2 tarjetas rojas</strong>
+    </div>
+    <%--respuestas del controlador--%>
+    <% if (request.getParameter("disminuir")!=null && request.getParameter("disminuir").equals("ok")) {
+%>
+<div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong><span class="glyphicon glyphicon-ok"></span>Se retiró la(s) tarjeta</strong>
+</div>
+<%
+                    }
+%>
+<% if (request.getParameter("disminuir")!=null && request.getParameter("disminuir").equals("no")) {
+%>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong><span class="glyphicon glyphicon-ok"></span>Trató de retirar más tarjetas de las que el jugador tiene</strong>
+</div>
+<%
+                    }
+%>
+    <sql:query var="tarjetas" dataSource="jdbc/pro-level">
+        SELECT concat(usuarios.primernombre,' ',usuarios.primerapellido) jugador, usuarios.idUsuario, tarjetas.tarjetaRoja
+        FROM usuarios
+        INNER JOIN jugadoresporequipo ON
+        usuarios.idUsuario = jugadoresporequipo.codigoJugador
+        INNER JOIN equipo ON
+        equipo.codigo = jugadoresporequipo.codigoEquipo
+        INNER JOIN tarjetas on
+        tarjetas.idJugador = jugadoresporequipo.codigoJugador
+        WHERE equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/> and tarjetas.tarjetaRoja >= 2; 
+    </sql:query>
+        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Jugador</th>
+                                <th>Tarjetas Acumuladas</th>
+                                <th>Disminuir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="row" items="${tarjetas.rows}" varStatus="vs">
+                            <tr>
+                                <td>${row.jugador}</td>
+                                <td>${row.tarjetaRoja}</td>
+                                <td><a href="editarjugadores.jsp?codigoEquipo=${param.codigoEquipo}&nombre=${param.nombre}&idTorneo=${param.idTorneo}&idJugador=${row.idUsuario}&nombreJugador=${row.jugador}"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
                     </table>
             </div>
         </div>
@@ -241,6 +298,12 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
                 <div class="form-group">
             <input type="text" value="${param.idUsuario}" name="idUsuario" readonly="readonly" />
                 </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                </div>
+                <div class="form-group">
+            <input type="text" value="${param.nombreUsuario}" name="nombreUsuario" readonly="readonly" />
+                </div>
             <input type="hidden" value="${param.codigoEquipo}" name="codigoEquipo" />
             <input type="hidden" value="${param.nombre}" name="nombreEquipo" />
             <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
@@ -254,6 +317,72 @@ where equipo.codigo = ?  <sql:param value="${param.codigoEquipo}"/>
     </div>
   </div>
 </div>
+            
+            
+
+            
+<% if (request.getParameter("nombreJugador")!=null && !request.getParameter("nombreJugador").equals("")) {
+%>
+<input type="hidden" data-toggle="modal" data-target="#disminuir" id="mdisminuir"/>
+<script>
+    $(document).ready(function(){
+        $("#mdisminuir").trigger("click");
+    });
+</script>
+<%
+    }
+%>
+            <%--modal de dismuniur tarjeta--%>
+<div class="modal fade" id="disminuir">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar Jugador</h4>
+        </div>
+        <div class="modal-body">
+            <form action="../../Tarjetas">
+                <div class="form-group">
+            <span class="label label-danger">Retirar tarjetas</span>
+                </div>
+                <div class="form-group">
+                    <label>Identificación</label>
+                </div>
+                <div class="form-group">
+            <input type="text" value="${param.idJugador}" name="idJugador" readonly="readonly" />
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                </div>
+                <div class="form-group">
+            <input type="text" value="${param.nombreJugador}" name="idUsuario" readonly="readonly" />
+                </div>
+                <div class="form-group">
+                    <label>Número de tarjetas a retirar</label>
+                </div>
+                <div class="form-group">
+                    <select name="numero" required>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            <input type="hidden" value="${param.codigoEquipo}" name="codigoEquipo" />
+            <input type="hidden" value="${param.nombre}" name="nombreEquipo" />
+            <input type="hidden" value="${param.idTorneo}" name="idTorneo" />
+            <button class="btn btn-primary" name="disminuir"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Retirar</button>
+            <input type="hidden" name="retirar" />
+            </form>
+        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+    </div>
+  </div>
+</div>
+        
 </main>
     </body>
 </html>

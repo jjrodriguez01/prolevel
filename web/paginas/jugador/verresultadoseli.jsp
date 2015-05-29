@@ -18,7 +18,7 @@
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
-                    if(rol == 1){
+                    if(rol == 2){
 %>
 <%--  Query con la info del torneo --%>
 <sql:query var="torneo" dataSource="jdbc/pro-level">
@@ -95,11 +95,10 @@
     <div class="row">
     <div class="col-lg-12 menu-opciones">
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
-            <li role="presentation" class="active"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
-            <li role="presentation"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
-            <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
+            <li role="presentation"><a href="verCentro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li role="presentation"><a href="verCalendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
+            <li role="presentation" class="active"><a <c:if test="${detallestorneo.tipo==3}"> href="verresultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="verMarcadores.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation"><a href="vermisTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>           
         </ul>
     </div>
     </div>
@@ -125,7 +124,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
-                    <h1>Octavos</h1><a href="marcadores.jsp?idTorneo=${param.idTorneo}">Asigna marcadores</a>
+                    <h1>Octavos</h1>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <h1>Cuartos</h1>
@@ -713,7 +712,7 @@ and numero = 1;
     </body>
 </html>
 <% 
-    }//si el rol fue uno
+    }//si el rol fue 2
             }//si hay sesion
                     else{
                         response.sendRedirect("../../index.jsp?auth=prohibido");

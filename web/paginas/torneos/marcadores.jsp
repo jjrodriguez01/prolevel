@@ -83,7 +83,7 @@ $(document).ready(function() {
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos?${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="misTorneos.jsp?${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -94,7 +94,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </li>
-                    <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+                    <li><a href="../servicios.jsp"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
                     <li><a href="#"><span><img src="../../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
                         <div class="subs">
                             <ul>
@@ -813,9 +813,6 @@ $( "#dialog-link, #icons li" ).hover(
 </html>
 <% 
     }//si el rol fue uno
-                    else if(rol==2){
-                        
-                    }//si el rol fue 2
             }//si hay sesion
                     else{
                         response.sendRedirect("../../index.jsp?auth=prohibido");

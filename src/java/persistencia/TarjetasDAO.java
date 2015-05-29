@@ -54,6 +54,33 @@ public class TarjetasDAO {
         //devolvemos el mensaje al usuario
         return mensaje;
     }
+    
+    public synchronized int disminuir(int numero,int idJugador, int idTorneo, Connection conexion) throws MiExcepcion{
+        int salida = 3;//tres es porq el procedimiento devuelve 0 si falla y 1 si es exitoso 3 entonces si falla el codigo java
+        try {
+        call = conexion.prepareCall("{call sp_disminuirtarjeta(?,?,?,?) }");
+        call.setInt(1, numero);
+        call.setInt(2, idJugador);
+        call.setInt(3, idTorneo);
+
+        call.registerOutParameter(4, Types.INTEGER);
+        call.execute();
+        salida = call.getInt(4);
+        
+        }catch(SQLException sqle){
+            throw new MiExcepcion("Error "+sqle.getMessage(),sqle);
+        }
+//        finally{
+//                try {
+//                    if (call != null) {
+//                    call.close();    
+//                    }   
+//                }catch (SQLException sqlexception) {
+//                    mensaje = "No se pudo crear la eliminatoria.";
+//                }
+//        }
+        return salida;//devuelvo la salida del procedimiento
+    } 
     public String insertarPrimer (TarjetasDTO tar, Connection conexion) throws MiExcepcion{
         try {
             statement = conexion.prepareStatement("INSERT INTO tarjetas "

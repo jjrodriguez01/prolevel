@@ -325,6 +325,10 @@ public class FachadaTorneos {
         return tardao.listarUno(torneo, jugador, conexion);
     }
     
+    public int disminuir(int numero, int idJugador, int idTorneo) throws MiExcepcion{
+        return tardao.disminuir(numero, idJugador, idTorneo, conexion);
+    }
+    
 //    AHORA GOLEADORES DAO
     
     public String insertarGoles(GoleadoresDTO gol) throws MiExcepcion{
@@ -370,6 +374,10 @@ public class FachadaTorneos {
     } 
     public TablaPosicionesDTO listarUno(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return tpdao.listarUno(idTorneo, codigoEquipo, conexion);
+    }
+    
+    public List<PartidoDTO> partidosUnEquipo(int idTorneo, int codigoEquipo) throws MiExcepcion{
+        return tpdao.partidosUnEquipo(idTorneo, codigoEquipo, conexion);
     }
     
     //AHORA TERCEROSDAO

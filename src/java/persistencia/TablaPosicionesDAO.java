@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.EquipoDTO;
 import modelo.PartidoDTO;
 import utilidades.MiExcepcion;
 
@@ -217,6 +218,46 @@ public class TablaPosicionesDAO {
             throw new MiExcepcion("Error "+ex.getMessage(),ex);
         }
         return tab;
+    }
+     
+     public List<PartidoDTO> partidosUnEquipo(int idtorneo,int codigoequipo,Connection conexion) throws MiExcepcion {
+         ArrayList<PartidoDTO> listapartidos = new ArrayList();
+        try {
+            //preparamos la consulta       
+            statement = conexion.prepareStatement("SELECT  " +
+                        "(select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, " +
+                        "partidos.marcador1, " +
+                        "(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, " +
+                        "partidos.marcador2 " +
+                        "FROM " +
+                        "partidos " +
+                        "INNER JOIN equiposdeltorneo " +
+                        "ON partidos.equipo1 = equiposdeltorneo.equipoCodigo " +
+                        "INNER JOIN equipo " +
+                        "ON equiposdeltorneo.equipoCodigo = equipo.codigo " +
+                        "WHERE partidos.equipo1 = ? or partidos.equipo2 =? and partidos.idTorneo = ?");
+            statement.setInt(1, codigoequipo);
+            statement.setInt(2, codigoequipo);
+            statement.setInt(3, idtorneo);
+            rs = statement.executeQuery();
+            //mientras halla registros
+            while(rs.next()){
+                PartidoDTO p = new PartidoDTO();
+                EquipoDTO e1 = new EquipoDTO(); 
+                e1.setNombre(rs.getString("eq1"));
+                p.setMarcador1(rs.getInt("marcador1"));
+                EquipoDTO e2 = new EquipoDTO();
+                e2.setNombre(rs.getString("eq2"));
+                p.setMarcador2(rs.getInt("marcador2"));
+                p.setEquipouno(e1);
+                p.setEquipodos(e2);
+                listapartidos.add(p);
+            }
+
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error "+ex.getMessage(),ex);
+        }
+        return listapartidos;
     }
     
 //    public List ListarTodo(Connection conexion){

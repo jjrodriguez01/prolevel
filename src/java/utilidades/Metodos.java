@@ -5,6 +5,7 @@
  */
 package utilidades;
 import facade.FachadaTorneos;
+import java.util.ArrayList;
 import modelo.*;
 /**
  *
@@ -13,9 +14,14 @@ import modelo.*;
 public class Metodos {
     public static void main(String[] args) throws MiExcepcion{
         FachadaTorneos facade = new FachadaTorneos();
-        TablaPosicionesDTO tab = new TablaPosicionesDTO();
-        tab = facade.listarUno(30, 44);
-        System.out.println(tab.toString());
+        ArrayList<PartidoDTO> partidos = new ArrayList();
+                    partidos = (ArrayList) facade.partidosUnEquipo(29, 1);
+                    for (PartidoDTO p : partidos) {
+                        System.out.println(p.getEquipouno().getNombre());
+                        System.out.println(p.getMarcador1());
+                        System.out.println(p.getMarcador2());
+                        System.out.println(p.getEquipodos().getNombre());
+        }
     }
     
     

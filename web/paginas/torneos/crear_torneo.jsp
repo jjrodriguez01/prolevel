@@ -70,7 +70,7 @@ $(document).ready(function() {
                 </div>
             </div>
                     </li>
-                    <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+                    <li><a href="../servicios.jsp"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
                     <li><a href="#"><span><img src="../../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
                         <div class="subs">
                             <ul>
@@ -135,7 +135,7 @@ $('[data-toggle="popover"]').popover(
     
     <div class="container">        
     <div id="ftorneos" class="row">
-        <div class="col-lg-4 col-md-4 col-sm-10 col-xs-12">
+        <div class="hide">
             <div class="row">
                 <header>
                     <img src="../../imagenes/balon.png" width="40" height="40" alt="copa">
@@ -235,7 +235,7 @@ $('[data-toggle="popover"]').popover(
                 
             </div>
         </div><%--fin col de copa--%>
-        <div class="col-lg-4 col-md-4 col-sm-10 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
            <div class="row">
                 <header>
                     <img src="../../imagenes/balon.png" width="40" height="40" alt="copa">
@@ -300,7 +300,7 @@ $('[data-toggle="popover"]').popover(
   
             %>
         </div><%--col de eli--%>
-        <div class="col-lg-4 col-md-4 col-sm-10 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="row">
                 <header>
                     <img src="../../imagenes/balon.png" width="40" height="40" alt="copa">

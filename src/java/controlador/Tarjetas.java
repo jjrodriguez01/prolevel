@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,11 +35,11 @@ public class Tarjetas extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MiExcepcion {
         response.setContentType("text/html;charset=UTF-8");
        
             if (request.getParameter("asigtarjetas")!=null && request.getParameter("tarjetas")!=null) {
-                try{
+             
                 TarjetasDTO tar = new TarjetasDTO();
                 tar.setIdJugador(Integer.parseInt(request.getParameter("jugadores")));
                 tar.setIdtorneo(Integer.parseInt(request.getParameter("idTorneo")));
@@ -56,8 +58,21 @@ public class Tarjetas extends HttpServlet {
                     String itarjetas = facadeTorneo.insertarTarjetas(tar);
                     response.sendRedirect("paginas/torneos/misTorneos.jsp?tarjetas="+itarjetas+"&idTorneo="+tar.getIdtorneo()+"#tablatarjetas");
                 }
-                }catch(MiExcepcion mie){
-                    response.sendError(500, mie.getMessage());
+            }else if(request.getParameter("disminuir") != null && request.getParameter("retirar") != null){
+                String nombreEquipo = request.getParameter("nombreEquipo");//necesito devolver codigo y nombre del equipo
+                int codigoEquipo = Integer.parseInt(request.getParameter("codigoEquipo"));
+                int numero = Integer.parseInt(request.getParameter("numero"));
+                int idJugador = Integer.parseInt(request.getParameter("idJugador"));
+                int idTorneo = Integer.parseInt(request.getParameter("idTorneo"));
+                
+                FachadaTorneos facadeTorneo = new FachadaTorneos();
+                //el metodo disminuir me devuelve 0 si el numero q se mando fue mayor a las tarjetas q habian
+                //entonces no se disminuye nada y 1 si se logro disminuir correctamente o 3 si hubo algun error
+                int respuesta = facadeTorneo.disminuir(numero, idJugador, idTorneo);
+                if (respuesta == 1) {
+                    response.sendRedirect("paginas/torneos/editarjugadores.jsp?codigoEquipo="+codigoEquipo+"&nombre="+nombreEquipo+"&idTorneo="+idTorneo+"&disminuir=ok");
+                }else{
+                    response.sendRedirect("paginas/torneos/editarjugadores.jsp?codigoEquipo="+codigoEquipo+"&nombre="+nombreEquipo+"&idTorneo="+idTorneo+"&disminuir=no");
                 }
             }
             
@@ -76,7 +91,11 @@ public class Tarjetas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.toString());
+        }
     }
 
     /**
@@ -90,7 +109,11 @@ public class Tarjetas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (MiExcepcion ex) {
+            response.sendError(500, ex.toString());
+        }
     }
 
     /**

@@ -72,7 +72,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                                             <div class="col">
                                                 <ul>
                                                     <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
+                                                        <li><a href="misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -83,7 +83,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                             </div>
                         </div>
                     </li>
-                    <li><a href="#"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
+                    <li><a href="../servicios.jsp"><img src="../../imagenes/servicios.png" width="24" height="24" alt="servicios" />SERVICIOS</a></li>
                     <li><a href="#"><span><img src="../../imagenes/perfil.png" width="24" height="24" alt="perfil" />PERFIL</span></a>
                         <div class="subs">
                             <ul>
