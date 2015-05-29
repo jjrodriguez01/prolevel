@@ -21,7 +21,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
             try{
-            if (request.getSession()!=null) {
+            if (request.getSession()!=null request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
                     FachadaTorneos facadeTorneos = new FachadaTorneos();
                     HttpSession miSession=request.getSession(false);

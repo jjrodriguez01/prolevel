@@ -12,7 +12,7 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
-            if (request.getSession()!=null) {
+            if (request.getSession()!=null && request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
                     UsuariosDAO udao = new UsuariosDAO();
                     HttpSession miSession=request.getSession(false);
@@ -88,6 +88,7 @@
                     </li>
                 </ul>
             </nav>
+            <div class="pull-right"><span class="label label-success"> <%=udto.getPrimerNombre()%></span><span class="badge">Administrador</span></div>
         </header>
 <main>
     <section class="container">

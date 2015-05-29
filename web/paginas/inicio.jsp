@@ -11,7 +11,10 @@
 </sql:query>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
-            if (request.getSession() != null) { 
+    response.setHeader("Cache - Control", "no - cache");
+    response.setHeader("Cache - Control", "no - store");
+    response.setDateHeader("Expires",0);
+            if (request.getSession() != null && request.getSession().getAttribute("usr")!=null) { 
                     UsuariosDTO udto = new UsuariosDTO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
@@ -321,6 +324,7 @@ group by equiposdeltorneo.torneoIdTorneo
         </li>
     </ul>
 </nav>
+    <div class="pull-right"><span class="label label-success">Bienvenido <%=udto.getPrimerNombre()%></span> te has logueado como<span class="badge">Jugador</span></div>
 </header>
     <div class="row">
         <div class="well">

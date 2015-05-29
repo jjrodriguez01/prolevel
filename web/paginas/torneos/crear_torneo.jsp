@@ -11,7 +11,7 @@
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%
-    if (request.getSession() != null) { 
+    if (request.getSession() != null && request.getSession().getAttribute("usr")!=null) { 
                 UsuariosDTO udto = new UsuariosDTO();
                     UsuariosDAO udao = new UsuariosDAO();
                     HttpSession miSession=request.getSession(false);
@@ -81,6 +81,7 @@ $(document).ready(function() {
                     </li>
     </ul>
 </nav>
+    <div class="pull-right"><span class="label label-success"> <%=udto.getPrimerNombre()%></span><span class="badge">Administrador</span></div>
 </header>  
 <main>
     <div id="encabezado" class="row">

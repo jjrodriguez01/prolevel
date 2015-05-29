@@ -11,7 +11,7 @@
 </sql:query>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
-            if (request.getSession() != null) { 
+            if (request.getSession() != null && request.getSession().getAttribute("usr")!=null) { 
                     UsuariosDTO udto = new UsuariosDTO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");

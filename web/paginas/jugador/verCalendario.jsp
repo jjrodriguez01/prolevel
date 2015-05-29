@@ -10,7 +10,7 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
-            if (request.getSession()!=null) {
+            if (request.getSession()!=null && request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
@@ -95,6 +95,7 @@ $(document).ready(function() {
                     </li>
                 </ul>
             </nav>
+            <div class="pull-right"><span class="label label-success"> <%=udto.getPrimerNombre()%></span><span class="badge">Jugador</span></div>
         </header>
 <main class="container">
     <div class="row">
