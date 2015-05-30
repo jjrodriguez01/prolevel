@@ -175,25 +175,25 @@ public class PartidoDAO {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<PartidoDTO> listar = new ArrayList();
         try {
-            String query = "SELECT DISTINCT\n" +
-"    ronda,\n" +
-"    marcador1,\n" +
-"    (select equipo.nombre from equipo where codigo=partidos.equipo1)as equipo1,\n" +
-"    (select equipo.nombre from equipo where codigo=partidos.equipo2)as equipo2,\n" +
-"    marcador2,\n" +
-"    fecha,\n" +
-"    hora,\n" +
-"    torneo.nombre as Torneo,\n" +
-"    cancha.descripcion as descripcion\n" +
-"FROM\n" +
-"    partidos\n" +
-"INNER JOIN equiposdeltorneo\n" +
-"ON partidos.equipo1 = equiposdeltorneo.equipoCodigo\n" +
-"INNER JOIN equipo\n" +
-"ON equiposdeltorneo.equipoCodigo = equipo.codigo\n" +
-"INNER JOIN torneo\n" +
-"ON partidos.idTorneo = torneo.idTorneo\n" +
-"INNER JOIN cancha\n" +
+            String query = "SELECT DISTINCT " +
+"    ronda, " +
+"    marcador1, " +
+"    (select equipo.nombre from equipo where codigo=partidos.equipo1)as equipo1, " +
+"    (select equipo.nombre from equipo where codigo=partidos.equipo2)as equipo2, " +
+"    marcador2, " +
+"    fecha, " +
+"    hora, " +
+"    torneo.nombre as Torneo, " +
+"    cancha.descripcion as descripcion " +
+"FROM " +
+"    partidos " +
+"INNER JOIN equiposdeltorneo " +
+"ON partidos.equipo1 = equiposdeltorneo.equipoCodigo " +
+"INNER JOIN equipo " +
+"ON equiposdeltorneo.equipoCodigo = equipo.codigo " +
+"INNER JOIN torneo " +
+"ON partidos.idTorneo = torneo.idTorneo " +
+"INNER JOIN cancha " +
 "ON partidos.cancha = cancha.numeroCancha;";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
@@ -258,7 +258,7 @@ public class PartidoDAO {
                 +"ON partidos.idTorneo = torneo.idTorneo " 
                 +"INNER JOIN cancha " 
                 +"ON partidos.cancha = cancha.numeroCancha " 
-                +"WHERE torneo.idtorneo = 11 AND partidos.ronda = 1;");
+                +"WHERE torneo.idtorneo = ? AND partidos.ronda = 1;");
             statement.setInt(1, idtorneo);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info

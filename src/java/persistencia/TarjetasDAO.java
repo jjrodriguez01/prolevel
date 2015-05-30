@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
+import modelo.EquipoDTO;
+import modelo.UsuariosDTO;
 import utilidades.MiExcepcion;
 public class TarjetasDAO {
 
@@ -160,24 +162,43 @@ public class TarjetasDAO {
         return mensaje;
     }
 
-    public List<TarjetasDTO> listarTodo(int jugador, int torneo, Connection conexion) throws MiExcepcion {
+    public List<TarjetasDTO> listarTodo(int idTorneo,Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
-        LinkedList<TarjetasDTO> listar = new LinkedList();
+        ArrayList<TarjetasDTO> listar = new ArrayList();
 
         try {
-            String query = "SELECT  * "
-                    + " FROM tarjetas ";
+            String query = "SELECT DISTINCT concat(usuarios.primerNombre,' ', usuarios.primerApellido) nombres, " +
+"    tarjetas.tarjetaAzul, tarjetas.tarjetaRoja, equipo.nombre " +
+"    FROM tarjetas " +
+"    INNER JOIN  jugadoresporequipo " +
+"    ON tarjetas.idJugador = jugadoresporequipo.codigoJugador " +
+"    INNER JOIN  usuarios " +
+"    ON jugadoresporequipo.codigoJugador = usuarios.idUsuario " +
+"    INNER JOIN equipo " +
+"    ON jugadoresporequipo.codigoEquipo = equipo.codigo " +
+"	INNER JOIN equiposdeltorneo " +
+"	On jugadoresporequipo.codigoEquipo = equiposdeltorneo.equipoCodigo " +
+"    WHERE tarjetas.idTorneo =? " +
+"	and equiposdeltorneo.torneoIdTorneo =?;";
             statement = conexion.prepareStatement(query);
+            statement.setInt(1, idTorneo);
+            statement.setInt(2, idTorneo);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info
             while (rs.next()) {
                 //crea un nuevo dto
                 TarjetasDTO tarjetas = new TarjetasDTO();
+                UsuariosDTO usu = new UsuariosDTO();
+                //lleno los nombres de usuario
+                usu.setPrimerNombre(rs.getString("nombres"));
+                tarjetas.setUsu(usu);//paso al usuario
+                //datos de equipo
+                EquipoDTO equipo = new EquipoDTO();
+                equipo.setNombre(rs.getString("nombre"));
+                tarjetas.setEquipo(equipo);//paso al equipo
                 //le pasamos los datos que se encuentren
-                tarjetas.setIdtorneo(rs.getInt("idTorneo"));
                 tarjetas.setTarjetaAzul(rs.getInt("tarjetaAzul"));
                 tarjetas.setTarjetaRoja(rs.getInt("tarjetaRoja"));
-                tarjetas.setIdJugador(rs.getInt("idJugador"));
                 //agregamos el objeto dto al arreglo
                 listar.add(tarjetas);
 

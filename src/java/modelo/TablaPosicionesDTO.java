@@ -17,7 +17,9 @@ public class TablaPosicionesDTO {
     private int partidosPerdidos;
     private int golesAnotados;
     private int golesRecibidos;
-
+    private int diferencia;
+    private EquipoDTO equipo;
+    
     public int getIdtorneo() {
         return Idtorneo;
     }
@@ -101,6 +103,22 @@ public class TablaPosicionesDTO {
     @Override
     public String toString() {
         return "TablaPosicionesDTO{" + "Idtorneo=" + Idtorneo + ", Idequipo=" + Idequipo + ", posicion=" + posicion + ", puntos=" + puntos + ", partidosJugados=" + partidosJugados + ", partidosGanados=" + partidosGanados + ", partidosEmpatados=" + partidosEmpatados + ", partidosPerdidos=" + partidosPerdidos + ", golesAnotados=" + golesAnotados + ", golesRecibidos=" + golesRecibidos + '}';
+    }
+
+    public EquipoDTO getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(EquipoDTO equipo) {
+        this.equipo = equipo;
+    }
+
+    public int getDiferencia() {
+        return diferencia;
+    }
+
+    public void setDiferencia(int diferencia) {
+        this.diferencia = diferencia;
     }
     
     

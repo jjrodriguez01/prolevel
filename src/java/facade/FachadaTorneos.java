@@ -329,6 +329,9 @@ public class FachadaTorneos {
         return tardao.disminuir(numero, idJugador, idTorneo, conexion);
     }
     
+    public List<TarjetasDTO> listarTodoTarjetas(int idTorneo) throws MiExcepcion{
+        return tardao.listarTodo(idTorneo, conexion);
+    }
 //    AHORA GOLEADORES DAO
     
     public String insertarGoles(GoleadoresDTO gol) throws MiExcepcion{
@@ -343,6 +346,9 @@ public class FachadaTorneos {
         return goleadoresdao.insertarPrimer(gol, conexion);
     }
     
+    public List<GoleadoresDTO> listarTodosGoleadores(int idTorneo) throws MiExcepcion{
+        return goleadoresdao.listarTodo(idTorneo, conexion);
+    }
 //    AHORA POSICIONES
     /**
      * Actualiza la tabla de posiciones inserta los puntos y demas
@@ -378,6 +384,10 @@ public class FachadaTorneos {
     
     public List<PartidoDTO> partidosUnEquipo(int idTorneo, int codigoEquipo) throws MiExcepcion{
         return tpdao.partidosUnEquipo(idTorneo, codigoEquipo, conexion);
+    }
+    
+    public List<TablaPosicionesDTO> listarPosiciones(int idTorneo) throws MiExcepcion{
+        return tpdao.listarPosiciones(idTorneo, conexion);
     }
     
     //AHORA TERCEROSDAO

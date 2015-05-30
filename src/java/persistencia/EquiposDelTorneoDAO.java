@@ -33,7 +33,7 @@ public class EquiposDelTorneoDAO {
     
     public synchronized String insertar(int codigoequipo, int idTorneo, Connection conexion){
         try {
-            statement = conexion.prepareStatement("INSERT INTO equiposdeltorneo (equipocodigo, torneoidtorneo)"
+            statement = conexion.prepareStatement("INSERT INTO equiposdeltorneo (equipoCodigo, torneoIdTorneo)"
                     + " VALUES (?,?);");
             statement.setInt(1, codigoequipo);
             statement.setInt(2, idTorneo);
@@ -62,14 +62,14 @@ public class EquiposDelTorneoDAO {
     public List<EquiposdeltorneoDTO> listarTodo(int idTorneo, Connection conexion) throws MiExcepcion{
         ArrayList<EquiposdeltorneoDTO> equipos = new ArrayList();
         try {
-            statement = conexion.prepareStatement("SELECT equipocodigo, torneoidtorneo "
-                    + "FROM equiposdeltorneo WHERE torneoidtorneo =?;");
+            statement = conexion.prepareStatement("SELECT equipoCodigo, torneoIdTorneo "
+                    + "FROM equiposdeltorneo WHERE torneoIdTorneo =?;");
             statement.setInt(1, idTorneo);
             rs = statement.executeQuery();
             while(rs.next()){
                 EquiposdeltorneoDTO eq = new EquiposdeltorneoDTO();
-                eq.setEquipoCodigo(rs.getInt("equipocodigo"));
-                eq.setTorneoIdTorneo(rs.getInt("torneoidtorneo"));
+                eq.setEquipoCodigo(rs.getInt("equipoCodigo"));
+                eq.setTorneoIdTorneo(rs.getInt("torneoIdTorneo"));
                 equipos.add(eq);
             }
         } catch (SQLException ex) {

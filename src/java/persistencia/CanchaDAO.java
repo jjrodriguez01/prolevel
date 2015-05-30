@@ -78,7 +78,7 @@ public class CanchaDAO {
 
     public String eliminar(int numero, Connection conexion) {
         try {
-            statement = conexion.prepareStatement("Delete from Cancha where numeroCancha=?;");
+            statement = conexion.prepareStatement("Delete from cancha where numeroCancha=?;");
             //obtenemos el id del item a eliminar del dto
             statement.setInt(1, numero);
             rtdo = statement.executeUpdate();
@@ -101,8 +101,8 @@ public class CanchaDAO {
         ArrayList<CanchaDTO> listarCancha = new ArrayList();
 
         try {
-            String query = "SELECT  Cancha as numeroCancha, descripcion "
-                    + " FROM Cancha; ";
+            String query = "SELECT  cancha as numeroCancha, descripcion "
+                    + " FROM cancha; ";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info

@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.EquipoDTO;
+import modelo.UsuariosDTO;
 import utilidades.MiExcepcion;
 
 /**
@@ -139,26 +141,49 @@ public class GoleadoresDAO {
         return mensaje;
     }
 
-    public List<GoleadoresDTO> listarTodo( Connection conexion) throws MiExcepcion {
+    public List<GoleadoresDTO> listarTodo(int idTorneo,Connection conexion) throws MiExcepcion {
         //creamos el array que va a contener los datos de la consulta    
         ArrayList<GoleadoresDTO> listarGoleadores = new ArrayList();
 
         try {
-            String query = "SELECT  Cancha as numeroCancha, descripcion "
-                    + " FROM Cancha ";
+            String query = "SELECT DISTINCT usuarios.primerNombre, " +
+"    usuarios.primerApellido, tablagoleadores.numeroGoles, tablagoleadores.idEquipo, "+ 
+"    tablagoleadores.idTorneo,tablagoleadores.idJugador, " +
+"    equipo.nombre " +
+"    FROM tablagoleadores " +
+"    INNER JOIN jugadoresporequipo " +
+"    ON tablagoleadores.idJugador = jugadoresporequipo.codigoJugador " +
+"    INNER JOIN usuarios " +
+"    ON jugadoresporequipo.codigoJugador = usuarios.idUsuario " +
+"    INNER JOIN equiposdeltorneo " +
+"    ON tablagoleadores.idEquipo = equiposdeltorneo.equipoCodigo " +
+"    INNER JOIN equipo " +
+"    ON equiposdeltorneo.equipoCodigo = equipo.codigo " +
+"    INNER JOIN torneo " +
+"    ON tablagoleadores.idTorneo = torneo.idTorneo " +
+"    WHERE tablagoleadores.idTorneo = ? " +
+"    AND equiposdeltorneo.torneoIdTorneo=? " +
+"    ORDER BY numeroGoles DESC";
             statement = conexion.prepareStatement(query);
+            statement.setInt(1, idTorneo);
+            statement.setInt(2, idTorneo);
             rs = statement.executeQuery();
             //mientras que halla registros cree un nuevo dto y pasele la info
             while (rs.next()) {
                 //crea un nuevo dto
                 GoleadoresDTO gol = new GoleadoresDTO();
+                UsuariosDTO usu = new UsuariosDTO();
+                EquipoDTO equipo = new EquipoDTO();
                 //le pasamos los datos que se encuentren
                 gol.setNumeroGoles(rs.getInt("numeroGoles"));
                 gol.setIdEquipo(rs.getInt("idEquipo"));
                 gol.setIdTorneo(rs.getInt("idTorneo"));
                 gol.setIdJugador(rs.getLong("idJugador"));
-                
-               
+                usu.setPrimerNombre(rs.getString("primerNombre"));
+                usu.setPrimerApellido(rs.getString("primerApellido"));
+                gol.setUsu(usu);//paso el usuario al objeto 
+                equipo.setNombre(rs.getString("nombre"));
+                gol.setEquipo(equipo);
                 //agregamos el objeto dto al arreglo
                 listarGoleadores.add(gol);
 

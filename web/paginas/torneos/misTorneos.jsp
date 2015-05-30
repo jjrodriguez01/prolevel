@@ -3,97 +3,42 @@
     Created on : 10/02/2015, 07:20:21 PM
     Author     : jeisson
 --%>
+<%@page import="modelo.TarjetasDTO"%>
+<%@page import="modelo.TorneoDTO"%>
+<%@page import="modelo.TablaPosicionesDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.GoleadoresDTO"%>
 <%@page import="utilidades.MiExcepcion"%>
 <%@page import="facade.FachadaTorneos"%>
 <%@page import="modelo.UsuariosDTO"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="modelo.EquipoDTO"%>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% 
             if (request.getSession()!=null && request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
                     HttpSession miSession=request.getSession(false);
                     udto = (UsuariosDTO)miSession.getAttribute("usr");
                     int rol = (Integer)miSession.getAttribute("rol");
+                    GoleadoresDTO gol = new GoleadoresDTO();
+                    UsuariosDTO usu = new UsuariosDTO();
+                    EquipoDTO equipo = new EquipoDTO();
+                    FachadaTorneos facade = new FachadaTorneos();
+                    ArrayList<GoleadoresDTO> listarTodosGoleadores = (ArrayList) facade.listarTodosGoleadores(Integer.parseInt(request.getParameter("idTorneo")));
+                    ArrayList<TablaPosicionesDTO> listarPosiciones = (ArrayList) facade.listarPosiciones(Integer.parseInt(request.getParameter("idTorneo")));
+                    TorneoDTO torneo = new TorneoDTO();
+                    torneo = facade.listarTorneo(Integer.parseInt(request.getParameter("idTorneo")));
+                    ArrayList<TorneoDTO> torneos = (ArrayList) facade.listarTorneos();
+                    ArrayList<TarjetasDTO> tarjetas = (ArrayList) facade.listarTodoTarjetas(Integer.parseInt(request.getParameter("idTorneo")));
                     if(rol == 1){
         %>
-<%--  Query para con la info de torneos --%>
-<sql:query var="torneo" dataSource="jdbc/pro-level">
-    SELECT idTorneo, nombre FROM torneo
-</sql:query>
-<%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="jdbc/pro-level">
-    SELECT *  FROM torneo
-    WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
-</sql:query>
-<sql:query var="tposregistros" dataSource="jdbc/pro-level">
-    SELECT count(*) from tablaposiciones where idTorneo = ? <sql:param value="${param.idTorneo}"/>
-</sql:query>    
-<c:set var="detallestorneo" value="${infotorneo.rows[0]}"/>
-<%--  Query para la tabla de posiciones --%>
-<sql:query var="tablaposiciones" dataSource="jdbc/pro-level">
-    SELECT equipo.nombre, 
-    tablaposiciones.partidosJugados as PJ,
-    tablaposiciones.partidosGanados as PG, 
-    tablaposiciones.partidosEmpatados as PE,
-    tablaposiciones.partidosPerdidos as PP, 
-    tablaposiciones.golesAnotados as Goles,
-    tablaposiciones.golesRecibidos as GC,
-    tablaposiciones.golesAnotados-tablaposiciones.golesRecibidos AS GD,
-    tablaposiciones.puntos as pts
-    FROM equipo
-    inner join equiposdeltorneo
-    on equipo.codigo = equiposdeltorneo.equipoCodigo
-    inner join tablaPosiciones
-    on equiposdeltorneo.equipoCodigo = tablaposiciones.idEquipo
-    WHERE equiposdeltorneo.torneoidtorneo=? <sql:param value="${param.idTorneo}"/> 
-    and
-    tablaposiciones.idTorneo = ? <sql:param value="${param.idTorneo}"/>
-    ORDER BY puntos DESC
-</sql:query>
-<%--  Query para la tabla de goleadores --%>            
-<sql:query var="tablagoleadores" dataSource="jdbc/pro-level">
-    SELECT DISTINCT usuarios.primerNombre, 
-    usuarios.primerApellido, tablagoleadores.numeroGoles, 
-    equipo.nombre
-    FROM tablagoleadores
-    INNER JOIN jugadoresporequipo
-    ON tablagoleadores.idJugador = jugadoresporequipo.codigoJugador
-    INNER JOIN usuarios
-    ON jugadoresporequipo.codigoJugador = usuarios.idUsuario
-    INNER JOIN equiposdeltorneo
-    ON tablagoleadores.idEquipo = equiposdeltorneo.equipoCodigo
-    INNER JOIN equipo
-    ON equiposdeltorneo.equipoCodigo = equipo.codigo
-    INNER JOIN torneo
-    ON tablagoleadores.idTorneo = torneo.idTorneo
-    WHERE tablagoleadores.idTorneo = ? <sql:param value="${param.idTorneo}"/>
-    AND equiposdeltorneo.torneoIdTorneo=? <sql:param value="${param.idTorneo}"/>
-    ORDER BY numeroGoles DESC
-</sql:query>
-<%--  Query para la tabla de tarjetas --%>  
-<sql:query var="tarjetas" dataSource="jdbc/pro-level">
-    SELECT DISTINCT concat(usuarios.primerNombre,' ', usuarios.primerApellido), 
-    tarjetas.tarjetaAzul, tarjetas.tarjetaRoja, equipo.nombre
-    FROM tarjetas
-    INNER JOIN  jugadoresporequipo
-    ON tarjetas.idJugador = jugadoresporequipo.codigoJugador
-    INNER JOIN  usuarios
-    ON jugadoresporequipo.codigoJugador = usuarios.idUsuario
-    INNER JOIN equipo 
-    ON jugadoresporequipo.codigoequipo = equipo.codigo
-	INNER JOIN equiposdeltorneo
-	On jugadoresporequipo.codigoEquipo = equiposdeltorneo.equipoCodigo
-    WHERE tarjetas.idTorneo =? <sql:param value="${param.idTorneo}"/>
-	and equiposdeltorneo.torneoIdTorneo =? <sql:param value="${param.idTorneo}"/>
-</sql:query>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>${detallestorneo.nombre}</title>
+        <title><%=torneo.getNombre()%></title>
         <link rel="shortcut icon" href="../../imagenes/favicon.ico">
         <link href="../../css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../../css/estiloslayout.css" rel="stylesheet" type="text/css">
@@ -134,9 +79,9 @@
                                         <div class="subs">
                                             <div class="col">
                                                 <ul>
-                                                    <c:forEach var="row" items="${torneo.rows}">
-                                                        <li><a href="misTorneos.jsp?idTorneo=${row.idTorneo}">${row.nombre}</a></li>
-                                                    </c:forEach>
+                                                    <% for(TorneoDTO tor : torneos){%>
+                                                    <li><a href="misTorneos.jsp?idTorneo=<%=tor.getIdTorneo()%>"><%=tor.getNombre()%></a></li>
+                                                    <% } %>
                                                 </ul>
                                             </div>
                                         </div>
@@ -165,9 +110,9 @@
         <ul class="nav nav-tabs nav-justified">
             <li role="presentation"><a href="centro.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li role="presentation"><a href="calendario.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Calendario</a></li>
-            <li role="presentation"><a <c:if test="${detallestorneo.tipo==3}"> href="resultadoseli.jsp?idTorneo=${param.idTorneo}"</c:if> href="marcadores.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
-            <li role="presentation" class="active"><a href="misTorneos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
-            <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=${param.idTorneo}"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
+            <li role="presentation"><a <% if(torneo.getTipo() == 3) {%> href="resultadoseli.jsp?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"<% } else {%> href="marcadores.jsp?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"<% } %>><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>Resultados</a></li>
+            <li role="presentation" class="active"><a href="misTorneos.jsp?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Tablas</a></li>
+            <li role="presentation"><a href="inscribirEquipos.jsp?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Inscribir equipos</a></li>
         </ul>
     </div>
     </div>
@@ -175,14 +120,14 @@
         <div class="col-md-4 col-sm-2 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="../inicio.jsp">Inicio</a></li>
-                <li><a href="misTorneos.jsp?idTorneo=${param.idTorneo}">Torneos</a></li>
+                <li><a href="misTorneos.jsp?idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>">Torneos</a></li>
                 <li class="active">Tablas</li>
             </ol>
         </div>
     </div>
             <hgroup>
-                <h1 id="titulo">${detallestorneo.nombre}</h1>
-                <c:if test="${detallestorneo.tipo == 1 || detallestorneo.tipo == 2}">
+                <h1 id="titulo"><%=torneo.getNombre()%></h1>
+                <%if(torneo.getTipo() == 1 || torneo.getTipo() == 2){%>
                 <h3 class="tablatit">Tabla De Posiciones</h3>
             </hgroup>
             <div class="row">
@@ -206,25 +151,30 @@
                         <!-- column data -->
                         <tbody>
                             <%!  int pos = 0;  %>
-                            <c:forEach var="row" items="${tablaposiciones.rowsByIndex}" varStatus="vs">
+                            <% for(TablaPosicionesDTO p : listarPosiciones){%>
                                 <tr>
                                     <% 
-                                       pos += 1;
+                                       pos ++;
                                     %>
-                                    <td>${vs.index+1}</td>
-                                    <c:forEach var="column" items="${row}">
-                                        <td><c:out value="${column}"/></td>
-                                    </c:forEach>
+                                    <td><%=pos%></td>
+                                    <td><%=p.getEquipo().getNombre()%></td>
+                                    <td><%=p.getPartidosJugados()%></td>
+                                    <td><%=p.getPartidosGanados()%></td>
+                                    <td><%=p.getPartidosEmpatados()%></td>
+                                    <td><%=p.getPartidosPerdidos()%></td>
+                                    <td><%=p.getGolesAnotados()%></td>
+                                    <td><%=p.getGolesRecibidos()%></td>
+                                    <td><%=p.getDiferencia()%></td>
                                 </tr>
-                            </c:forEach>
+                            <% } %>
                         </tbody>
                         <tfoot>
-                        <a href="../../Reportes?tabla=posiciones&idTorneo=${param.idTorneo}"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
+                        <a href="../../Reportes?tabla=posiciones&idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
                         </tfoot>
                     </table>
                 </div>
             </div>
-            </c:if>
+            <% } %>
             <div class="row">
                 <div class="col-md-6 col-sm-4 col-xs-12">
                     <h3 class="tablatit">Tabla Goleadores</h3>
@@ -242,18 +192,19 @@
                         <!-- column data -->
                         <tbody>
                         <%!  int pgol = 0;  %>
-                        <c:forEach var="row" items="${tablagoleadores.rowsByIndex}" varStatus="vs">
-                                <% pgol += 1; %>
+                        <% for(GoleadoresDTO g : listarTodosGoleadores){ %>
+                                <% pgol++; %>
                                 <tr>
-                                    <td>${vs.index+1}</td>
-                                    <c:forEach var="column" items="${row}">
-                                        <td><c:out value="${column}"/></td>
-                                    </c:forEach>
+                                    <td><%=pgol%></td>
+                                    <td><%=g.getUsu().getPrimerNombre()%></td>
+                                    <td><%=g.getUsu().getPrimerApellido()%></td>
+                                    <td><%=g.getNumeroGoles()%></td>
+                                    <td><%=g.getEquipo().getNombre()%></td>
                                 </tr>
-                            </c:forEach>
+                            <%  }  %>
                         </tbody>
                         <tfoot>
-                        <a href="../../Reportes?tabla=goleadores&idTorneo=${param.idTorneo}"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
+                        <a href="../../Reportes?tabla=goleadores&idTorneo=<%=Integer.parseInt(request.getParameter("idTorneo"))%>"><i class="fa fa-file-pdf-o"></i> Exportar esta tabla a PDF</a>
                         </tfoot>
                     </table>
                     <button class="btn btn-success" id="btntar" data-toggle="modal" data-target="#goles"><i class="fa fa-futbol-o"></i> Asignar Goles</button>
@@ -279,13 +230,14 @@
                         </thead>
                         <!-- column data -->
                         <tbody>
-                            <c:forEach var="row" items="${tarjetas.rowsByIndex}">
+                            <% for(TarjetasDTO tar : tarjetas){ %>
                                 <tr>
-                                    <c:forEach var="column" items="${row}">
-                                        <td><c:out value="${column}"/></td>
-                                    </c:forEach>
+                                    <td><%=tar.getUsu().getPrimerNombre()%></td>
+                                    <td><%=tar.getTarjetaAzul()%></td>
+                                    <td><%=tar.getTarjetaRoja()%></td>
+                                    <td><%=tar.getEquipo().getNombre()%></td>
                                 </tr>
-                            </c:forEach>
+                            <% } %>
                         </tbody>
                     </table>
                     <button class="btn btn-success" id="btntar" data-toggle="modal" data-target="#tarjetas"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Asignar Tarjetas</button>
@@ -337,7 +289,7 @@
                     <span id="amarillas"><img src="../../imagenes/tarjeta_amarilla.png" width="21" height="30" alt="tarjeta_amarilla"/>
                     </span>
                     <input type="text" name="azules"/>
-                    <input type="hidden" name="idTorneo" value="${param.idTorneo}"/>
+                    <input type="hidden" name="idTorneo" value="<%=Integer.parseInt(request.getParameter("idTorneo"))%>"/>
                     <input type="submit" name="asigtarjetas" value="Asignar" class="btn"/>
                     <input type="hidden" name="tarjetas" />
                 </form>
@@ -384,7 +336,7 @@
                     </span>
                     <input type="number" name="nrogoles" maxlength="2" required/>
                     
-                    <input type="hidden" name="idTorneo" value="${param.idTorneo}"/>
+                    <input type="hidden" name="idTorneo" value="<%=Integer.parseInt(request.getParameter("idTorneo"))%>"/>
                     <input type="submit" name="asignargoles" value="Asignar" class="btn"/>
                     <input type="hidden" name="goles" value="goles" />
                 </form>

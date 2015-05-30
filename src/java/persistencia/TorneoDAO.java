@@ -93,6 +93,7 @@ public class TorneoDAO {
                 torneo.setFechaInicio(rs.getString("fechaInicio"));
                 torneo.setFechaFin(rs.getString("fechaFin"));
                 torneo.setGenero(rs.getString("genero"));
+                torneo.setTipo(rs.getInt("tipo"));
             }
 
         } catch (SQLException ex) {
@@ -119,7 +120,7 @@ public class TorneoDAO {
                 cup.setFechaFin(rs.getString("fechaFin"));
                 cup.setGenero(rs.getString("genero"));
                 cup.setCapacidadEquipos(rs.getInt("capacidadEquipos"));
-                           
+                cup.setTipo(rs.getInt("tipo"));
                 listarCopas.add(cup);
                 
             }

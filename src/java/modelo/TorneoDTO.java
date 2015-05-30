@@ -107,17 +107,17 @@ public class TorneoDTO {
         this.idaVuelta = idaVuelta;
     }
 
-    @Override
-    public String toString() {
-        return "TorneoDTO{" + "idTorneo=" + idTorneo + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", genero=" + genero + ", capacidadEquipos=" + capacidadEquipos + ", tercerPuesto=" + tercerPuesto + ", equiposGrupos=" + equiposGrupos + ", octavosCuartosSemifinalFinalIdaVuelta=" + octavosCuartosSemifinalFinalIdaVuelta + ", finalidavuelta=" + finalidavuelta + ", idaVuelta=" + idaVuelta + '}';
-    }
-
     public int getTipo() {
         return tipo;
     }
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "TorneoDTO{" + "idTorneo=" + idTorneo + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", genero=" + genero + ", capacidadEquipos=" + capacidadEquipos + ", tipo=" + tipo + ", tercerPuesto=" + tercerPuesto + ", equiposGrupos=" + equiposGrupos + ", octavosCuartosSemifinalFinalIdaVuelta=" + octavosCuartosSemifinalFinalIdaVuelta + ", finalidavuelta=" + finalidavuelta + ", idaVuelta=" + idaVuelta + '}';
     }
     
     

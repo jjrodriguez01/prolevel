@@ -127,10 +127,10 @@ public class TablaPosicionesDAO {
     public String eliminar(TablaPosicionesDTO tab,Connection conexion) {
 
         try {
-            statement = conexion.prepareStatement("Delete from tablaposiciones where idTorneo = ? and idEquipo;");
+            statement = conexion.prepareStatement("Delete from tablaposiciones where idTorneo = ? and idEquipo=?;");
             //obtenemos el id del item a eliminar del dto
-            statement.setInt(1, tab.getIdequipo());
-            statement.setInt(2,tab.getIdtorneo());
+            statement.setInt(2, tab.getIdequipo());
+            statement.setInt(1,tab.getIdtorneo());
             rtdo = statement.executeUpdate();
 
             if (rtdo != 0) {
@@ -293,4 +293,51 @@ public class TablaPosicionesDAO {
 //        return listarTablaPosiciones;
 //    }
     
+     
+     public List<TablaPosicionesDTO> listarPosiciones(int idTorneo,Connection conexion) throws MiExcepcion {
+         ArrayList<TablaPosicionesDTO> posiciones = new ArrayList();
+        try {
+            //preparamos la consulta       
+            statement = conexion.prepareStatement("SELECT equipo.nombre, " +
+"    tablaposiciones.partidosJugados as PJ," +
+"    tablaposiciones.partidosGanados as PG, " +
+"    tablaposiciones.partidosEmpatados as PE," +
+"    tablaposiciones.partidosPerdidos as PP, " +
+"    tablaposiciones.golesAnotados as GA, " +
+"    tablaposiciones.golesRecibidos as GR, " +
+"    tablaposiciones.golesAnotados-tablaposiciones.golesRecibidos as GD, " +
+"    tablaposiciones.puntos as pts " +
+"    FROM equipo " +
+"    inner join equiposdeltorneo " +
+"    on equipo.codigo = equiposdeltorneo.equipoCodigo " +
+"    inner join tablaPosiciones " +
+"    on equiposdeltorneo.equipoCodigo = tablaposiciones.idEquipo " +
+"    WHERE equiposdeltorneo.torneoidtorneo=? " +
+"    and " +
+"    tablaposiciones.idTorneo = ? " +
+"    ORDER BY puntos DESC");
+            statement.setInt(1, idTorneo);
+            statement.setInt(2, idTorneo);
+            rs = statement.executeQuery();
+            //mientras halla registros
+            while(rs.next()){
+                TablaPosicionesDTO tab = new TablaPosicionesDTO();
+                EquipoDTO eq = new EquipoDTO();
+                eq.setNombre(rs.getString("nombre"));
+                tab.setEquipo(eq);
+                tab.setPuntos(rs.getInt("pts"));
+                tab.setPartidosJugados(rs.getInt("PJ"));
+                tab.setPartidosGanados(rs.getInt("PG"));
+                tab.setPartidosEmpatados(rs.getInt("PE"));
+                tab.setPartidosPerdidos(rs.getInt("PP"));
+                tab.setGolesAnotados(rs.getInt("GA"));
+                tab.setGolesRecibidos(rs.getInt("GR")); 
+                tab.setDiferencia(rs.getInt("GD"));
+            }
+
+        } catch (SQLException ex) {
+            throw new MiExcepcion("Error "+ex.getMessage(),ex);
+        }
+        return posiciones;
+    }
 }

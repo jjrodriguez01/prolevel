@@ -6,8 +6,8 @@ public class TarjetasDTO {
  private int tarjetaAzul;
  private int tarjetaRoja;
  private int idJugador;
-
-
+private UsuariosDTO usu;
+private EquipoDTO equipo;
 
     @Override
     public String toString() {
@@ -48,6 +48,22 @@ public class TarjetasDTO {
 
     public void setIdJugador(int idJugador) {
         this.idJugador = idJugador;
+    }
+
+    public UsuariosDTO getUsu() {
+        return usu;
+    }
+
+    public void setUsu(UsuariosDTO usu) {
+        this.usu = usu;
+    }
+
+    public EquipoDTO getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(EquipoDTO equipo) {
+        this.equipo = equipo;
     }
  
 }
